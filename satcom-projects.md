@@ -6,5 +6,5 @@ author: Lucas Teske
 layout: page
 guid: http://www.teske.net.br/lucas/?page_id=311
 ---
-  * [Satellite Projects](https://www.teske.net.br/lucas/satellite-projects/)
+  * [Satellite Projects]({{ '/satcom-projects/satellite-projects' | prepend: site.baseurl }})
   * [Sample Basebands](https://www.teske.net.br/lucas/satellite-projects/sample-baseband-files/)

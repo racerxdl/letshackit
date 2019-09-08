@@ -26,6 +26,7 @@
     @include transition(all .3s ease-out);
     color: $default-color;
     position: absolute;
+    font-size: 5.0rem;
 
     &:hover,
     &:focus {
@@ -36,9 +37,11 @@
 
   .left {
     left: 0;
+    top: -40px;
   }
 
   .right {
     right: 0;
+    top: -40px;
   }
 }
