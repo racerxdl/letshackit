@@ -1,0 +1,31 @@
+<hr />
+<div class="fb-comments" data-href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url | uri_escape}}" data-width="100%" data-numposts="5"></div>
+
+<hr />
+<div class="sharebuttons">
+  <ul>
+    <li>
+      <p class="sharetitle"> Share this: </p>
+    </li>
+    <li class="reddit">
+      <a href="http://www.reddit.com/submit?url={{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url | uri_escape}}&title={{ page.title | default:"" | uri_escape }}" target="_blank">
+        {% include social/reddit.svg %}
+      </a>
+    </li>
+    <li class="hn">
+      <a href="http://news.ycombinator.com/submitlink?u={{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url | uri_escape}}&t={{ page.title | default:"" | uri_escape}}" target="_blank">
+        {% include social/ycombinator.svg %}
+      </a>
+    </li>
+    <li class="twitter">
+      <a href="https://twitter.com/intent/tweet?via=lucasteske&url={{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url | uri_escape}}&text={{ page.title | default:"" | uri_escape}}" target="_blank">
+        {% include social/twitter.svg %}
+      </a>
+    </li>
+    <li class="linkedin">
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url | uri_escape}}&title={{ page.title | default:"" | uri_escape}}" target="_blank">
+        {% include social/linkedin.svg %}
+      </a>
+    </li>
+  </ul>
+</div>

@@ -4,6 +4,8 @@
   {% include head.html %}
 
   <body>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v4.0&appId=1209208119176770&autoLogAppEvents=1"></script>
     <main class="site">
       {% include navigation.html %}
       {{ content }}

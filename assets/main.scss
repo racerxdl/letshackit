@@ -51,3 +51,94 @@ body .topbar {
 .navul {
   width: 90%;
 }
+
+/* Share buttons */
+.sharebuttons {
+  width: 300px;
+  margin: 0 auto 0 auto;
+}
+
+.sharebuttons ul {
+  margin: 20px 0 0 0;
+  text-align: center;
+}
+
+.sharebuttons ul li {
+  display: inline;
+}
+
+.sharebuttons ul li a {
+  text-decoration: none;
+}
+
+.sharebuttons ul li svg {
+  width: 40px;
+  height: 40px;
+}
+
+.sharebuttons .reddit svg {
+  fill: #FF4500;
+}
+
+.sharebuttons .hn svg {
+  fill: #F0652F;
+}
+
+.sharebuttons .twitter svg {
+  fill: #1DA1F2;
+}
+
+/* Social Network Icons */
+.social-icon {
+  margin: 0 auto 0 auto;
+  box-shadow: 0 2px 2px -2px rgba(0,0,0,0.2);
+  padding-bottom: 15px;
+}
+
+.social-icon ul li {
+  display: inline;
+  padding-left: 8px;
+  padding-right: 8px;
+  vertical-align: middle;
+  line-height: 40px;
+}
+
+.social-icon ul {
+  margin: 20px 0 0 0;
+  text-align: center;
+}
+
+.social-icon ul li svg {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}
+
+.social-icon ul li a {
+  text-decoration: none;
+}
+
+
+.btn-reddit svg {
+  fill: #FF4500;
+}
+
+.btn-twitter svg {
+  fill: #1DA1F2;
+}
+
+.btn-linkedin svg {
+  fill: #0077B5;
+}
+
+.btn-facebook svg {
+  fill: #4172B8;
+}
+
+.btn-instagram svg {
+  fill: #E4405F
+}
+
+.btn-github svg {
+  fill: #181717
+}
