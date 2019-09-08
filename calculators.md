@@ -2,7 +2,7 @@
 id: 335
 title: Calculators
 date: 2017-04-23T03:48:07-03:00
-author: racerxdl
+author: Lucas Teske
 layout: page
 guid: http://www.teske.net.br/lucas/?page_id=335
 ---

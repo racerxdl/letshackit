@@ -2,7 +2,7 @@
 id: 60
 title: Motivos pelos quais eu não gostei do Intel Galileo
 date: 2014-02-08T20:57:35-03:00
-author: racerxdl
+author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=60
 permalink: /2014/02/motivos-pelos-quais-eu-nao-gostei-do-intel-galileo/

@@ -2,7 +2,7 @@
 id: 19
 title: Apontador com Laser Vermelho de DVD
 date: 2014-10-01T19:05:22-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/?p=19
 permalink: /2014/10/15-revision-v1/

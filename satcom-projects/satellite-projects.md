@@ -2,7 +2,7 @@
 id: 204
 title: Satellite Projects
 date: 2016-10-28T12:50:22-03:00
-author: racerxdl
+author: Lucas Teske
 layout: page
 guid: http://www.teske.net.br/lucas/?page_id=204
 image: /wp-content/uploads/2016/10/Sem-título.png

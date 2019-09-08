@@ -2,7 +2,7 @@
 id: 311
 title: Satcom Projects
 date: 2017-02-18T14:56:33-03:00
-author: racerxdl
+author: Lucas Teske
 layout: page
 guid: http://www.teske.net.br/lucas/?page_id=311
 ---

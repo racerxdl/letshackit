@@ -2,7 +2,7 @@
 id: 141
 title: LeMaker Guitar Review
 date: 2016-02-01T22:57:39-03:00
-author: racerxdl
+author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=141
 permalink: /2016/02/lemaker-guitar-review/

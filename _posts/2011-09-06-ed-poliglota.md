@@ -2,7 +2,7 @@
 id: 6
 title: Ed Poliglota
 date: 2011-09-06T12:42:24-03:00
-author: racerxdl
+author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=6
 permalink: /2011/09/ed-poliglota/

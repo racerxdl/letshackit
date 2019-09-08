@@ -2,7 +2,7 @@
 id: 35
 title: Electronics Hacking
 date: 2014-10-01T16:25:16-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/?p=35
 permalink: /2014/10/34-revision-v1/

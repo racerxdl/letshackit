@@ -2,7 +2,7 @@
 id: 256
 title: 137MHz Bandpass filter for NOAA / Meteor Satellites
 date: 2016-11-13T14:44:12-03:00
-author: racerxdl
+author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=256
 permalink: /2016/11/137mhz-bandpass-filter-for-noaa-meteor-satellites/

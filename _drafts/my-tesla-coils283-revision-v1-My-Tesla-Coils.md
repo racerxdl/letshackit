@@ -2,7 +2,7 @@
 id: 285
 title: My Tesla Coils
 date: 2016-11-28T02:03:18-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/2016/11/283-revision-v1/
 permalink: /2016/11/283-revision-v1/

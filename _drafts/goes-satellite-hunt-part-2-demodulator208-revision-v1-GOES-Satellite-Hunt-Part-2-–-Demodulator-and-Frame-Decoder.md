@@ -2,7 +2,7 @@
 id: 211
 title: GOES Satellite Hunt (Part 2 – Demodulator and Frame Decoder)
 date: 2016-10-30T21:05:27-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/2016/10/208-revision-v1/
 permalink: /2016/10/208-revision-v1/

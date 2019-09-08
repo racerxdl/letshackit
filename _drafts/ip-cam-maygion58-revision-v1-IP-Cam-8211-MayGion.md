@@ -2,7 +2,7 @@
 id: 113
 title: 'IP Cam &#8211; MayGion'
 date: 2016-01-24T23:24:14-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/2016/01/58-revision-v1/
 permalink: /2016/01/58-revision-v1/

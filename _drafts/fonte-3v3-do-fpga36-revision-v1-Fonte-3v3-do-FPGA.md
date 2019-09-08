@@ -2,7 +2,7 @@
 id: 37
 title: Fonte 3v3 do FPGA
 date: 2014-10-01T16:25:57-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/?p=37
 permalink: /2014/10/36-revision-v1/

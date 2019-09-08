@@ -2,7 +2,7 @@
 id: 32
 title: Função Javascript para Múltiplos e Submúltiplos
 date: 2011-10-09T19:24:31-03:00
-author: racerxdl
+author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=32
 permalink: /2011/10/funcao-javascript-para-multiplos-e-submultiplos-2/

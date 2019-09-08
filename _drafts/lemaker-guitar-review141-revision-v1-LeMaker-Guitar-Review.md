@@ -2,7 +2,7 @@
 id: 146
 title: LeMaker Guitar Review
 date: 2016-02-01T23:00:35-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/2016/02/141-revision-v1/
 permalink: /2016/02/141-revision-v1/

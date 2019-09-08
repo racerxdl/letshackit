@@ -2,7 +2,7 @@
 id: 147
 title: Recording NOAA APT Signals with GQRX and RTL-SDR on Linux
 date: 2016-02-04T22:26:57-03:00
-author: racerxdl
+author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=147
 permalink: /2016/02/recording-noaa-apt-signals-with-gqrx-and-rtl-sdr-on-linux/

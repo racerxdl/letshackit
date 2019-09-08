@@ -2,7 +2,7 @@
 id: 120
 title: QFH Antenna and my first reception of NOAA!
 date: 2016-01-25T00:55:41-03:00
-author: racerxdl
+author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=120
 permalink: /2016/01/qfh-antenna-and-my-first-reception-of-noaa/

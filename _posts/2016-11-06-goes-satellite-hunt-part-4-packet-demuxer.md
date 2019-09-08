@@ -2,7 +2,7 @@
 id: 232
 title: GOES Satellite Hunt (Part 4 – Packet Demuxer)
 date: 2016-11-06T00:56:44-03:00
-author: racerxdl
+author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=232
 permalink: /2016/11/goes-satellite-hunt-part-4-packet-demuxer/

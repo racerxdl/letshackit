@@ -2,7 +2,7 @@
 id: 40
 title: Função C para múltiplos e submúltiplos (REVISADO)
 date: 2011-10-30T17:50:21-03:00
-author: racerxdl
+author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=40
 permalink: /2011/10/funcao-c-para-multiplos-e-submultiplos-revisado/

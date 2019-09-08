@@ -2,7 +2,7 @@
 id: 31
 title: Função Javascript para Multiplos e Submultiplos
 date: 2014-10-01T16:21:49-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/?p=31
 permalink: /2014/10/30-revision-v1/

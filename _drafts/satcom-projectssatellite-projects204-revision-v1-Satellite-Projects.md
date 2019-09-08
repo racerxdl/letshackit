@@ -2,7 +2,7 @@
 id: 343
 title: Satellite Projects
 date: 2017-08-19T19:08:09-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/2017/08/204-revision-v1/
 permalink: /2017/08/204-revision-v1/

@@ -2,7 +2,7 @@
 id: 41
 title: Função C para múltiplos e submúltiplos (REVISADO)
 date: 2014-10-01T16:28:27-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/?p=41
 permalink: /2014/10/40-revision-v1/

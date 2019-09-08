@@ -2,7 +2,7 @@
 id: 251
 title: GOES Satellite Hunt (Part 5 – File Assembler)
 date: 2016-11-07T21:03:09-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/2016/11/245-revision-v1/
 permalink: /2016/11/245-revision-v1/

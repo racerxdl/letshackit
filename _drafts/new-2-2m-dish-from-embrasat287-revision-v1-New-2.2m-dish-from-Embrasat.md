@@ -2,7 +2,7 @@
 id: 289
 title: New 2.2m dish from Embrasat!
 date: 2016-12-16T16:42:02-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/2016/12/287-revision-v1/
 permalink: /2016/12/287-revision-v1/

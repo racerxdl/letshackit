@@ -2,7 +2,7 @@
 id: 294
 title: Sample Baseband Files
 date: 2017-01-24T02:26:49-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/2016/12/290-autosave-v1/
 permalink: /2017/01/290-autosave-v1/

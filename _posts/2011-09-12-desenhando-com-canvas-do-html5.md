@@ -2,7 +2,7 @@
 id: 25
 title: Desenhando com Canvas do HTML5
 date: 2011-09-12T16:10:53-03:00
-author: racerxdl
+author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=25
 permalink: /2011/09/desenhando-com-canvas-do-html5/

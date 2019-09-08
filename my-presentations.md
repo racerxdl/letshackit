@@ -2,7 +2,7 @@
 id: 273
 title: My Presentations
 date: 2016-11-26T02:51:28-03:00
-author: racerxdl
+author: Lucas Teske
 layout: page
 guid: http://www.teske.net.br/lucas/?page_id=273
 image: /wp-content/uploads/2016/11/DSC0357-624x533.jpg

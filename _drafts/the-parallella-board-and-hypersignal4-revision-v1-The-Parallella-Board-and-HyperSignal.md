@@ -2,7 +2,7 @@
 id: 111
 title: The Parallella Board and HyperSignal
 date: 2016-01-24T23:23:27-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/2016/01/4-revision-v1/
 permalink: /2016/01/4-revision-v1/

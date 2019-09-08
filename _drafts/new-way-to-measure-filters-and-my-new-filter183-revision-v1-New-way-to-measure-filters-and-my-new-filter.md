@@ -2,7 +2,7 @@
 id: 194
 title: New way to measure filters and my new filter
 date: 2016-07-22T19:30:36-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/2016/07/183-revision-v1/
 permalink: /2016/07/183-revision-v1/

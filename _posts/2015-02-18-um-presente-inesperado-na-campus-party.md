@@ -2,7 +2,7 @@
 id: 92
 title: Um presente inesperado na Campus Party!
 date: 2015-02-18T17:40:39-03:00
-author: racerxdl
+author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=92
 permalink: /2015/02/um-presente-inesperado-na-campus-party/

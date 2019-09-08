@@ -2,7 +2,7 @@
 id: 253
 title: GOES Satellite Hunt (Part 3 – Frame Decoder)
 date: 2016-11-11T01:10:03-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/2016/11/216-revision-v1/
 permalink: /2016/11/216-revision-v1/

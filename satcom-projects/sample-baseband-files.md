@@ -2,7 +2,7 @@
 id: 290
 title: Sample Baseband Files
 date: 2016-12-20T13:48:12-03:00
-author: racerxdl
+author: Lucas Teske
 layout: page
 guid: http://www.teske.net.br/lucas/?page_id=290
 image: /wp-content/uploads/2016/12/0xAmxzb-624x463.png

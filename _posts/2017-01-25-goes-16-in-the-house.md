@@ -2,7 +2,7 @@
 id: 299
 title: GOES 16 in the house!
 date: 2017-01-25T15:29:20-03:00
-author: racerxdl
+author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=299
 permalink: /2017/01/goes-16-in-the-house/

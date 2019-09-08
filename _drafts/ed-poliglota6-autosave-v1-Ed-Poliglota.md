@@ -2,7 +2,7 @@
 id: 9
 title: Ed Poliglota
 date: 2014-10-01T18:55:11-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/?p=9
 permalink: /2014/10/6-autosave-v1/

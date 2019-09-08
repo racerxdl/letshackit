@@ -2,7 +2,7 @@
 id: 112
 title: Motivos pelos quais eu não gostei do Intel Galileo
 date: 2016-01-24T23:23:58-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/2016/01/60-revision-v1/
 permalink: /2016/01/60-revision-v1/

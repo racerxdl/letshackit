@@ -2,7 +2,7 @@
 id: 116
 title: Interruptor MIDI Polifônico com PIC 16F628A
 date: 2016-01-24T23:26:49-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/2016/01/42-revision-v1/
 permalink: /2016/01/42-revision-v1/

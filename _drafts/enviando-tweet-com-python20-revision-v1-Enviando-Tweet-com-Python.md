@@ -2,7 +2,7 @@
 id: 22
 title: Enviando Tweet com Python
 date: 2014-10-01T19:07:40-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/?p=22
 permalink: /2014/10/20-revision-v1/

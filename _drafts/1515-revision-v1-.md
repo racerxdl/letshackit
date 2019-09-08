@@ -1,7 +1,7 @@
 ---
 id: 17
 date: 2014-10-01T19:04:31-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/?p=17
 permalink: /2014/10/15-revision-v1/

@@ -2,7 +2,7 @@
 id: 330
 title: Some LNA tests for HRIT/LRIT
 date: 2017-04-14T00:24:25-03:00
-author: racerxdl
+author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=330
 permalink: /2017/04/some-lna-tests-for-hritlrit/

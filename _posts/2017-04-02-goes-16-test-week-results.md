@@ -2,7 +2,7 @@
 id: 323
 title: GOES 16 Test Week Results
 date: 2017-04-02T02:50:37-03:00
-author: racerxdl
+author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=323
 permalink: /2017/04/goes-16-test-week-results/

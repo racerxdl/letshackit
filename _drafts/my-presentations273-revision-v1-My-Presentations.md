@@ -2,7 +2,7 @@
 id: 365
 title: My Presentations
 date: 2019-09-07T23:43:10-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: https://www.teske.net.br/lucas/2019/09/273-revision-v1/
 permalink: /2019/09/273-revision-v1/

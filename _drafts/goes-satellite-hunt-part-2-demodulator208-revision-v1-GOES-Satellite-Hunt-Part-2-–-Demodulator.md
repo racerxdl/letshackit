@@ -2,7 +2,7 @@
 id: 254
 title: GOES Satellite Hunt (Part 2 – Demodulator)
 date: 2016-11-11T01:12:18-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/2016/11/208-revision-v1/
 permalink: /2016/11/208-revision-v1/

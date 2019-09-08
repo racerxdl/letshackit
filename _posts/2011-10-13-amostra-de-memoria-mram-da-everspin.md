@@ -2,7 +2,7 @@
 id: 38
 title: Amostra de Memória MRAM da Everspin
 date: 2011-10-13T16:42:09-03:00
-author: racerxdl
+author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=38
 permalink: /2011/10/amostra-de-memoria-mram-da-everspin/

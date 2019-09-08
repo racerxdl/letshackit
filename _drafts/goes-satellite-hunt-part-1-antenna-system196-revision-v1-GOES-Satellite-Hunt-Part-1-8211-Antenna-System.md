@@ -2,7 +2,7 @@
 id: 355
 title: 'GOES Satellite Hunt (Part 1 &#8211; Antenna System)'
 date: 2017-10-15T13:16:48-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/2017/10/196-revision-v1/
 permalink: /2017/10/196-revision-v1/

@@ -2,7 +2,7 @@
 id: 348
 title: GOES GRB First Light!
 date: 2017-10-15T12:27:04-03:00
-author: racerxdl
+author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=348
 permalink: /2017/10/goes-grb-first-light/

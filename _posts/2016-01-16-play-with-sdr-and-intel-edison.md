@@ -2,7 +2,7 @@
 id: 99
 title: Play with SDR and Intel Edison!
 date: 2016-01-16T00:25:25-03:00
-author: racerxdl
+author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=99
 permalink: /2016/01/play-with-sdr-and-intel-edison/

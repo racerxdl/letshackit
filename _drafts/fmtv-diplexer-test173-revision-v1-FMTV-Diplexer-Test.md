@@ -2,7 +2,7 @@
 id: 181
 title: FM/TV Diplexer Test
 date: 2016-04-30T21:25:45-03:00
-author: racerxdl
+author: Lucas Teske
 layout: revision
 guid: http://www.teske.net.br/lucas/2016/04/173-revision-v1/
 permalink: /2016/04/173-revision-v1/
