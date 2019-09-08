@@ -1,6 +1,3 @@
-theme: tale
-permalink:  /:year-:month-:day/:title
-paginate:   5
 url: https://lucas.teske.com.br/
 name: Lets Hack It
 title: Lets Hack It
@@ -11,4 +8,30 @@ author:
   name:         Lucas Teske
   url:          https://lucas.teske.com.br
   email:        letshackit@nvx.li
+
+
+markdown:       kramdown
+include:
+  - _pages
+
+sass:
+  sass_dir:     _sass
+  style:        compressed
+
+plugins:
+  - jekyll-feed
+  - jekyll-paginate
+  - jekyll-seo-tag
+  - jekyll-paginate
+  - jemoji #Uncomment this to allow emoji in your post
+
+# Permalinks
+permalink:      /:year-:month-:day/:title
+paginate:       5
+
+# Google Analytics
+google_analytics: UA-32251405-1
+
+# Excludes
+exclude: [ Gemfile, Gemfile.lock ]
 

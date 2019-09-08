@@ -1,0 +1,50 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+
+@import 'tale';
+
+body {
+  background-image: url("/assets/bg1.jpg");
+  background-position: left top;
+  background-size: auto;
+  background-repeat: repeat;
+  background-attachment: fixed;
+}
+
+body .site {
+  padding: 0 40px;
+  padding: 0 2.857142857rem;
+  margin-top: 48px;
+  margin-top: 3.428571429rem;
+  margin-bottom: 48px;
+  margin-bottom: 3.428571429rem;
+  box-shadow: 0 2px 6px rgba(100, 100, 100, 0.3);
+  background-color: #fff;
+  max-width: 960px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+body .nav {
+  width: 100%;
+  background-color: #fff;
+}
+
+body .topbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  content-align: center;
+  background-color: #fff;
+  height: 45px;
+  text-align: center;
+  -webkit-box-shadow: 0px 10px 16px -9px rgba(0,0,0,0.7);
+  -moz-box-shadow: 0px 10px 16px -9px rgba(0,0,0,0.7);
+  box-shadow: 0px 10px 16px -9px rgba(0,0,0,0.7);
+}
+
+.navul {
+  width: 90%;
+}
