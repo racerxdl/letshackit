@@ -48,6 +48,12 @@ body .topbar {
   box-shadow: 0px 10px 16px -9px rgba(0,0,0,0.7);
 }
 
+.like-box {
+  position: fixed;
+  right: 40px;
+  top: 40px;
+}
+
 .post-image {
   max-height: 400px;
 }
