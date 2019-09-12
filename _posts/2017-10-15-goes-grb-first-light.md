@@ -1,5 +1,5 @@
 ---
-id: 37
+id: 38
 title: GOES GRB First Light!
 date: 2017-10-15T12:27:04-03:00
 author: Lucas Teske
@@ -31,6 +31,7 @@ tags:
   - Septum Feed
   - SZIP
 ---
+
 When the GOES-16 was first announced I got interested in their GRB Downlink (although the first try was at HRIT downlink). Basically GRB is a replacement for the old PDR downlink in GOES 13/14/15 generation, which gives few advantages over the old link:
 
   * Uses market standard DVB-S2 Generic Stream
