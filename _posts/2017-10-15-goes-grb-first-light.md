@@ -1,5 +1,5 @@
 ---
-id: 348
+id: 37
 title: GOES GRB First Light!
 date: 2017-10-15T12:27:04-03:00
 author: Lucas Teske

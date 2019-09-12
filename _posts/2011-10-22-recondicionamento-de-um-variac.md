@@ -1,5 +1,5 @@
 ---
-id: 46
+id: 13
 title: Recondicionamento de um Variac
 date: 2011-10-22T12:50:43-03:00
 author: Lucas Teske

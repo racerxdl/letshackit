@@ -32,5 +32,5 @@ paginate:       5
 google_analytics: UA-32251405-1
 
 # Excludes
-exclude: [ Gemfile, Gemfile.lock, site.conf, run.sh, Dockerfile ]
+exclude: [ Gemfile, Gemfile.lock, site.conf, run.sh, Dockerfile, lets-hack-it.sublime-project, lets-hack-it.sublime-workspace ]
 

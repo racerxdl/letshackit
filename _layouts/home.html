@@ -10,7 +10,7 @@ layout: default
         <h1 class="catalogue-title">{{ post.title }}</h1>
         <div class="catalogue-line"></div>
         {% if post.image %}
-          <center><img src="{{ post.image }}"/></center>
+          <center><img src="{{ post.image }}" class="post-image"/></center>
         {% endif %}
         <p>
           {{ post.content | strip_html | truncatewords: 100 }}

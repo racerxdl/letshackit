@@ -1,5 +1,5 @@
 ---
-id: 6
+id: 1
 title: Ed Poliglota
 date: 2011-09-06T12:42:24-03:00
 author: Lucas Teske

@@ -1,5 +1,5 @@
 ---
-id: 40
+id: 14
 title: Função C para múltiplos e submúltiplos (REVISADO)
 date: 2011-10-30T17:50:21-03:00
 author: Lucas Teske

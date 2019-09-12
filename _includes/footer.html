@@ -3,3 +3,11 @@
     &copy; <time datetime="{{ site.time }}">{{ site.time | date: '%Y' }}</time> {{ site.author.name }}. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span>
 </footer>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="{{ site.url }}{url}">{date} - {title}</a></li>'
+  })
+</script>

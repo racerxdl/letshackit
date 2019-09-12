@@ -1,5 +1,5 @@
 ---
-id: 60
+id: 16
 title: Motivos pelos quais eu não gostei do Intel Galileo
 date: 2014-02-08T20:57:35-03:00
 author: Lucas Teske

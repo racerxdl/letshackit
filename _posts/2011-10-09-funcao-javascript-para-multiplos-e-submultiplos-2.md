@@ -1,5 +1,5 @@
 ---
-id: 32
+id: 7
 title: Função Javascript para Múltiplos e Submúltiplos
 date: 2011-10-09T19:24:31-03:00
 author: Lucas Teske

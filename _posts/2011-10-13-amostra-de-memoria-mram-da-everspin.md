@@ -1,5 +1,5 @@
 ---
-id: 38
+id: 8
 title: Amostra de Memória MRAM da Everspin
 date: 2011-10-13T16:42:09-03:00
 author: Lucas Teske
