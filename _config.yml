@@ -29,7 +29,7 @@ permalink:      /:year-:month-:day/:title
 paginate:       5
 
 # Google Analytics
-google_analytics: UA-32251405-1
+google_analytics: UA-32251405-2
 
 # Excludes
 exclude: [ Gemfile, Gemfile.lock, site.conf, run.sh, Dockerfile, lets-hack-it.sublime-project, lets-hack-it.sublime-workspace ]
