@@ -51,7 +51,7 @@ body .topbar {
 .like-box {
   position: fixed;
   right: 40px;
-  top: 40px;
+  bottom: 40px;
 }
 
 .post-image {
@@ -113,6 +113,10 @@ body .topbar {
   fill: #1DA1F2;
 }
 
+.sharebuttons .youtube svg {
+  fill: #1DA1F2;
+}
+
 /* Social Network Icons */
 .social-icon {
   margin: 0 auto 0 auto;
@@ -125,11 +129,12 @@ body .topbar {
   padding-left: 8px;
   padding-right: 8px;
   vertical-align: middle;
-  line-height: 40px;
+  line-height: 20px;
 }
 
 .social-icon ul {
   margin: 20px 0 0 0;
+  padding: 0 0 0 0;
   text-align: center;
 }
 
@@ -166,4 +171,8 @@ body .topbar {
 
 .btn-github svg {
   fill: #181717
+}
+
+.btn-youtube svg {
+  fill: #FF0000
 }

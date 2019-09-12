@@ -22,7 +22,7 @@ plugins:
   - jekyll-paginate
   - jekyll-seo-tag
   - jekyll-paginate
-  - jemoji #Uncomment this to allow emoji in your post
+  - jemoji
 
 # Permalinks
 permalink:      /:year-:month-:day/:title
