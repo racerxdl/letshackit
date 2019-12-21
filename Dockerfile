@@ -4,7 +4,7 @@ FROM alpine
 WORKDIR /app
 
 RUN apk update && apk add ruby build-base ruby-dev libffi-dev zlib-dev
-RUN gem install bundler --no-ri --no-rdoc
+RUN gem install bundler
 
 COPY . /app
 RUN bundle update --bundler
