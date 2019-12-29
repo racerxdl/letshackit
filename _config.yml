@@ -31,6 +31,27 @@ paginate:       5
 # Google Analytics
 google_analytics: UA-32251405-2
 
+# SEO
+twitter:
+  username: lucasteske
+  card: summary
+
+facebook:
+  app_id: 1209208119176770
+  publisher: https://www.facebook.com/teskeslab
+  admins: 1234
+
+social:
+  name: Lucas Teske
+  links:
+    - https://twitter.com/lucasteske
+    - https://www.facebook.com/elenic.racerxdl
+    - https://instagram.com/racerxdl/
+    - https://github.com/racerxdl
+    - https://keybase.io/racerxdl
+    - https://www.linkedin.com/in/lucas-teske-8206301b/
+    - https://www.youtube.com/c/TeskesLab
+
 # Excludes
 exclude: [ Gemfile, Gemfile.lock, site.conf, run.sh, Dockerfile, lets-hack-it.sublime-project, lets-hack-it.sublime-workspace ]
 
