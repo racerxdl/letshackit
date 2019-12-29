@@ -34,7 +34,7 @@ google_analytics: UA-32251405-2
 # SEO
 twitter:
   username: lucasteske
-  card: summary
+  card: summary_large_image
 
 facebook:
   app_id: 1209208119176770
