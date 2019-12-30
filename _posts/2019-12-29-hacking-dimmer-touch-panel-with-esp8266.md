@@ -11,17 +11,17 @@ categories:
   - English
   - LimeSDR
   - Hacking
-  - SDR
+  - Home Assistant
   - Linux
+  - ESPHome
 tags:
   - Camera
   - Hacking
-  - SDR
-  - Ubuntu
-  - GSM
-  - BTS
-  - Osmocom
-  - Sysmocom
+  - Home Assistant
+  - Arduino
+  - ESP8266
+  - ESP32
+  - ESPHome
 ---
 
 # Hacking Dimmer Touch Panel with ESP8266
