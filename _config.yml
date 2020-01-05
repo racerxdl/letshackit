@@ -1,4 +1,4 @@
-url: https://lucas.teske.com.br
+url: https://lucasteske.dev
 name: Lets Hack It
 title: Lets Hack It
 description: 'Sou Lucas Teske, gosto de Eletrônica, Computação, Física.  Todos os hacks que eu fizer, serão colocados aqui. Aceito sugestões :D'
@@ -6,7 +6,7 @@ description: 'Sou Lucas Teske, gosto de Eletrônica, Computação, Física.  Tod
 
 author:
   name:         Lucas Teske
-  url:          https://lucas.teske.com.br
+  url:          https://lucasteske.dev
   email:        letshackit@nvx.li
 
 markdown:       kramdown
@@ -22,6 +22,7 @@ plugins:
   - jekyll-paginate
   - jekyll-seo-tag
   - jekyll-paginate
+  - jekyll-sitemap
   - jemoji
 
 # Permalinks
