@@ -52,6 +52,10 @@ body .topbar {
   position: fixed;
   right: 40px;
   bottom: 40px;
+  @media (max-width: 700px) {
+    right: 5px;
+    bottom: 5px;
+  }
 }
 
 .post-image {

@@ -10,7 +10,10 @@ footer,
   display: block;
   margin: 0 auto;
   max-width: 800px;
-  width: 80%;
+  width: 90%;
+  @media (max-width: 700px) {
+    width: 100%;
+  }
 }
 
 .nav {
