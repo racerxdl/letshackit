@@ -5,6 +5,7 @@ date: 2016-11-26T02:51:28-03:00
 author: Lucas Teske
 layout: page
 guid: http://www.teske.net.br/lucas/?page_id=273
+permalink: /my-presentations
 image: /wp-content/uploads/2016/11/DSC0357-624x533.jpg
 ---
 These are my presentations. I usually don&#8217;t do good slides for the presentations so please be kind. Hope the information is useful. Most of them are in Portuguese.

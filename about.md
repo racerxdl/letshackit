@@ -2,7 +2,7 @@
 layout: post
 title: "About"
 author: "Lucas Teske"
-permalink: /about/
+permalink: /about
 image: /assets/banner-about.jpeg
 ---
 

@@ -54,5 +54,12 @@ social:
     - https://www.youtube.com/c/TeskesLab
 
 # Excludes
-exclude: [ Gemfile, Gemfile.lock, site.conf, run.sh, Dockerfile, lets-hack-it.sublime-project, lets-hack-it.sublime-workspace ]
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - site.conf
+  - run.sh
+  - Dockerfile
+  - lets-hack-it.sublime-project
+  - lets-hack-it.sublime-workspace
 

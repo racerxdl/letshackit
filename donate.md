@@ -2,7 +2,7 @@
 layout: post
 title: "Donate"
 author: "Lucas Teske"
-permalink: /donate/
+permalink: /donate
 ---
 
 Want to buy me an ice tea?

@@ -5,8 +5,9 @@ date: 2016-11-28T01:59:17-03:00
 author: Lucas Teske
 layout: page
 guid: http://www.teske.net.br/lucas/?page_id=278
+permalink: /my-tesla-coils
 ---
-  
+
 Here are some of the Tesla Coils I built over time. It has been a long time since I built (or even powered one). But they&#8217;re still amazing.
 
 PS: The dates are actually when the videos was sent, not when recorded. Although the difference shouldn&#8217;t be much between recording and uploading.
@@ -32,7 +33,7 @@ So this was my latest Tesla Coil built. It is a small SSTC drived by two IRFP250
 
 That was a circuit I designed. Its basically a Half-Wave rectified Driverless SSTC. There is a Current Transformer on the secondary that feed the energy directly to mosfet gates to switch it. I never optimized the circuit, but it works.
 
-<img src="https://i.imgur.com/Th0JOug.png" /> 
+<img src="https://i.imgur.com/Th0JOug.png" />
 
 <hr/>
 
@@ -64,7 +65,7 @@ That was basically the final setup of ZARC. An polyphonic FPGA Interrupter (4 ch
 
 Now I remade the base of my ZARC DRSSTC and tuned a bit more. This is basically my final Setup for ZARC DRSSTC. 1kW input,  110V doubled mains ( about 320VDC in the bus). 300A peak in the fullbridge of IRG4PC50UD
 
-<a title="New Base Top-Front look" href="https://www.flickr.com/photos/energylabs/5583127713/in/album-72157626476042126/" data-flickr-embed="true"><img src="https://c2.staticflickr.com/6/5180/5583127713_041b5428d4_n.jpg" alt="New Base Top-Front look" width="320" height="240" /></a><a title="New Base Front look" href="https://www.flickr.com/photos/energylabs/5583715958/in/album-72157626476042126/" data-flickr-embed="true"><img src="https://c7.staticflickr.com/6/5142/5583715958_dd2a87e698_n.jpg" alt="New Base Front look" width="320" height="240" /></a><a title="Leds for illumination" href="https://www.flickr.com/photos/energylabs/5578809376/in/album-72157626476042126/" data-flickr-embed="true"><img src="https://c1.staticflickr.com/6/5096/5578809376_7a91391356_n.jpg" alt="Leds for illumination" width="320" height="240" /></a><a title="My DRSSTC at half power :D" href="https://www.flickr.com/photos/energylabs/5620107121/in/album-72157626476042126/" data-flickr-embed="true"><img src="https://c2.staticflickr.com/6/5143/5620107121_cb3cc9f639_n.jpg" alt="My DRSSTC at half power :D" width="320" height="180" /></a>  
+<a title="New Base Top-Front look" href="https://www.flickr.com/photos/energylabs/5583127713/in/album-72157626476042126/" data-flickr-embed="true"><img src="https://c2.staticflickr.com/6/5180/5583127713_041b5428d4_n.jpg" alt="New Base Top-Front look" width="320" height="240" /></a><a title="New Base Front look" href="https://www.flickr.com/photos/energylabs/5583715958/in/album-72157626476042126/" data-flickr-embed="true"><img src="https://c7.staticflickr.com/6/5142/5583715958_dd2a87e698_n.jpg" alt="New Base Front look" width="320" height="240" /></a><a title="Leds for illumination" href="https://www.flickr.com/photos/energylabs/5578809376/in/album-72157626476042126/" data-flickr-embed="true"><img src="https://c1.staticflickr.com/6/5096/5578809376_7a91391356_n.jpg" alt="Leds for illumination" width="320" height="240" /></a><a title="My DRSSTC at half power :D" href="https://www.flickr.com/photos/energylabs/5620107121/in/album-72157626476042126/" data-flickr-embed="true"><img src="https://c2.staticflickr.com/6/5143/5620107121_cb3cc9f639_n.jpg" alt="My DRSSTC at half power :D" width="320" height="180" /></a>
 Funny that is probably my best Eletronical Engineering project lol.
 
 <hr/>
