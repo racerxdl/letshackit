@@ -144,7 +144,7 @@ body .topbar {
 
 .social-icon ul li svg {
   width: 20px;
-  height: 20px;
+  height: 40px;
   vertical-align: middle;
 }
 
@@ -152,33 +152,54 @@ body .topbar {
   text-decoration: none;
 }
 
-
-.btn-reddit svg {
-  fill: #FF4500;
+.btn-svg svg {
+  margin-top: -2.5px;
+  fill: #FFFFFF;
 }
 
-.btn-twitter svg {
-  fill: #1DA1F2;
+.btn-a a {
+  color: #FFFFFF;
+  padding: 5px 10px 5px 10px;
+  border-radius: 10px 10px 10px 10px;
+  -moz-border-radius: 10px 10px 10px 10px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  border: 0px solid #000000;
 }
 
-.btn-linkedin svg {
-  fill: #0077B5;
+.btn-reddit a {
+  background-color: #FF4500;
 }
 
-.btn-facebook svg {
-  fill: #4172B8;
+.btn-twitter a {
+  background-color: #1DA1F2;
 }
 
-.btn-instagram svg {
-  fill: #E4405F
+.btn-linkedin a {
+  background-color: #0077B5;
 }
 
-.btn-github svg {
-  fill: #181717
+.btn-linkedin a {
+  background-color: #0077B5;
 }
 
-.btn-youtube svg {
-  fill: #FF0000
+.btn-facebook a {
+  background-color: #4172B8;
+}
+
+.btn-instagram a {
+  background-color: #E4405F
+}
+
+.btn-github a {
+  background-color: #181717
+}
+
+.btn-youtube a {
+  background-color: #FF0000
+}
+
+.btn-twitch a {
+  background-color: #9146FF;
 }
 
 .site-build {
