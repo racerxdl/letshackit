@@ -62,4 +62,4 @@ exclude:
   - Dockerfile
   - lets-hack-it.sublime-project
   - lets-hack-it.sublime-workspace
-
+  - vendor
