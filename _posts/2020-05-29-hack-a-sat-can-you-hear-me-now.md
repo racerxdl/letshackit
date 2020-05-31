@@ -19,6 +19,7 @@ tags:
   - Hackasat
   - CTF Writeup
   - Satellite
+  - XTCE
 ---
 
 # Hack-a-sat — Can you hear me now?
