@@ -7,6 +7,9 @@ global:
   my-tesla-coils: Bobinas de Tesla
   donate: Doação
   search-posts: Procurar por conteúdo
+  written-by: Escrito por
+  dateon: em
+
 langs:
   en: English
   pt: Português

@@ -7,9 +7,12 @@ global:
   satcom-projects: Satcom Projects
   my-tesla-coils: My Tesla Coils
   search-posts: Search blog posts...
+  written-by: Written by
+  dateon: "on"
 langs:
   en: English
   pt: Português
 pages:
+  written-by: Written by
 titles:
   pagination: Pagination
