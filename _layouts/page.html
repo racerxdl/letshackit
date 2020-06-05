@@ -2,12 +2,19 @@
 layout: default
 ---
 
+{% capture i18n_date %}
+  {{ page.date | date: "%-d" }}
+  {% assign m = page.date | date: "%-m" | minus: 1 %}
+  {{ site.data[site.lang].months[m] }}
+  {{ page.date | date: "%Y" }}
+{% endcapture %}
+
 <div class="post">
   <div class="post-info">
     {% if page.image %}
       <img src="{{ page.image }}"/>
     {% endif %}
-    <span>Written by</span>
+    <span>{% t global.written-by %}</span>
     {% if page.author %}
         {{ page.author }}
     {% else %}
@@ -16,7 +23,7 @@ layout: default
 
     {% if page.date %}
       <br>
-      <span>on&nbsp;</span><time datetime="{{ page.date }}">{{ page.date | date: "%B %d, %Y" }}</time>
+      <span>{% t global.dateon %} </span><time datetime="{{ page.date }}">{{ i18n_date }}</time>
     {% endif %}
   </div>
 

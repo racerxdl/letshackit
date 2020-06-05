@@ -9,12 +9,21 @@
   <div class="nav-container" style="height: 50px">
     <ul class="navul">
       <li><a href="{{ site.baseurl }}/">Home</a></li>
+    {% if site.lang == "en" %}
+      <li><a href="/donate">{% t global.donate %}</a></li>
+      <li><a href="/calculators">{% t global.calculators %}</a></li>
+      <li><a href="/my-presentations">{% t global.my-presentations %}</a></li>
+      <li><a href="/satcom-projects">{% t global.satcom-projects %}</a></li>
+      <li><a href="/my-tesla-coils">{% t global.my-tesla-coils %}</a></li>
+      <li><a href="/about">{% t global.about %}</a></li>
+    {% else %}
       <li><a href="/{{ site.lang }}/donate">{% t global.donate %}</a></li>
       <li><a href="/{{ site.lang }}/calculators">{% t global.calculators %}</a></li>
       <li><a href="/{{ site.lang }}/my-presentations">{% t global.my-presentations %}</a></li>
       <li><a href="/{{ site.lang }}/satcom-projects">{% t global.satcom-projects %}</a></li>
       <li><a href="/{{ site.lang }}/my-tesla-coils">{% t global.my-tesla-coils %}</a></li>
       <li><a href="/{{ site.lang }}/about">{% t global.about %}</a></li>
+    {% endif %}
     </ul>
   </div>
 </nav>
