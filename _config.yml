@@ -32,7 +32,7 @@ exclude_from_localizations: ["javascript", "images", "css", "assets"]
 
 
 # Permalinks
-permalink:      /:year-:month-:day/:title
+permalink:      /:year/:month/:title
 paginate:       5
 
 # Google Analytics
