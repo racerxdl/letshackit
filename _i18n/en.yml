@@ -14,5 +14,7 @@ langs:
   pt: Português
 pages:
   written-by: Written by
+  donate:
+    description: "Quer comprar um chá pra mim?"
 titles:
   pagination: Pagination

@@ -2,7 +2,7 @@ url: https://lucasteske.dev
 name: Lets Hack It
 title: Lets Hack It
 description: 'Sou Lucas Teske, gosto de Eletrônica, Computação, Física.  Todos os hacks que eu fizer, serão colocados aqui. Aceito sugestões :D'
-
+image: '/assets/cropped-logo.png'
 
 author:
   name:         Lucas Teske
@@ -20,11 +20,11 @@ sass:
 plugins:
   - jekyll-feed
   - jekyll-paginate
-  - jekyll-seo-tag
   - jekyll-paginate
   - jekyll-sitemap
   - jemoji
   - jekyll-multiple-languages-plugin
+  - jekyll-seo-tag
 
 # Multiple Languages
 languages: ["en", "pt"]

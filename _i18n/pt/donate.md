@@ -1,10 +1,10 @@
-Want to buy me an ice tea?
+Quer me comprar um chá?
 =========================
 
-Want to buy me an Ice Tea? Or maybe help me in the next project? You can donate via Crypto, Ethereum, Paypal, Pagseguro or PicPay
+Quer comprar um chá pra mim? Ou talvez me ajudar no próximo projeto? Você pode doar via Cripto-moedas, Paypal, Pagseguro ou Picpay!
 
 
-Crypto Coins
+Cripto-moedas
 ============
 
 **BTC**: 14SXvxghjMNfEpaBg2eCG3pav4mk97NtF6
@@ -43,7 +43,7 @@ PayPal
 PicPay
 ======
 
-Donate to me on PicPay using [https://picpay.me/lucas.teske](https://picpay.me/lucas.teske) or scan the QR Code
+Doe para mim usando PicPay [https://picpay.me/lucas.teske](https://picpay.me/lucas.teske) ou escaneie o QR Code
 
 <center>
   <img src="/assets/picpay.jpg" width="240"/>

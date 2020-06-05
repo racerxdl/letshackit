@@ -1,18 +1,16 @@
-Lucas Teske, born November, 8 of 1991 in São José dos Campos (São Paulo / Brazil). Lives in South of the São Paulo capital and has great interest in tecnological researchs.
+Lucas Teske, nascido em 8 de novembro de 1991 em São José dos Campos (São Paulo / Brasil). Vive na região sul da capital de São Paulo e tem um grande interesse em pesquisas tecnológicas.
 
-It is Creator of OpenSatelliteProject, SegDSP and other stuff (check github!).
+É o criador do OpenSatelliteProject, SegDSP e outras coisas (olhe o github!)
 
-HAM Callsign: PU2NVX
+Indicativo de Rádio Amador: PU2NVX
 
-Likes:
-  * High Voltage
-  * Chemistry
-  * Programming
+Gosta de:
+  * Alta Tensão
+  * Química
+  * Programação
   * Hacking
   * SDR
-  * Satellites
-  * Dishes
-  * Tesla Coils
+  * Satélites
+  * Parabólicas
+  * Bobinas de Tesla
   * Drones
-
-HUEBR

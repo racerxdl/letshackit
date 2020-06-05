@@ -1,8 +1,94 @@
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" property="viewport" content="width=device-width, initial-scale=1.0">
 
-  {% seo %}
+  {% capture locale_title %}{% t page.title %}{% endcapture %}
+  {% capture locale_description %}{% t page.description %}{% endcapture %}
+
+  {% capture page_title %}{% if {{locale_title}} != blank %}{% t page.title %}{% elsif page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %} | {{ site.name }}{% endcapture %}
+
+  {% capture page_description %}{% if {{locale_description}} != blank %}{% t page.description %}{% elsif page.description %}{{ page.description }}{% else %}{{ page.content | strip_html | truncatewords: 50 }}{% endif %}{% endcapture %}
+
+  {% capture canonical_url %}{{ site.url }}{{ page.url }}{% endcapture %}
+
+  {% capture page_image %}{{ site.url }}{% if page.image %}{{ page.image }}{% else %}{{ site.image }}{% endif %}{% endcapture %}
+
+  <title>{{ page_title }}</title>
+
+  <!-- Global -->
+  <link rel="canonical" href="{{ canonical_url }}" />
+  <meta name="generator"              property="generator"              content="Jekyll v{{ jekyll.version }}" />
+  <meta name="author"                 property="author"                 content="{{ site.author.name }}" />
+  <meta name="description"            property="description"            content="{{ page_description | escape }}" />
+  {%if page.tags %}
+  <meta name="keywords" content="{{ page.tags | join: ', ' | escape }}"/>
+  {%endif %}
+  <!-- Open Graph -->
+  <meta name="og:locale"              property="og:locale"              content="{{ site.lang | replace:'-','_' }}">
+  <meta name="og:type"                property="og:type"                content="article">
+  <meta name="og:title"               property="og:title"               content="{{ page_title }}">
+  <meta name="og:url"                 property="og:url"                 content="{{ canonical_url }}">
+  <meta name="og:image"               property="og:image"               content="{{ page_image }}" />
+  <meta name="og:site_name"           property="og:site_name"           content="{{ site.title }}">
+  <meta name="og:description"         property="og:description"         content="{{ page_description | escape }}">
+
+  <!-- Article -->
+  <meta name="article:author"         property="article:author"         content="{{ site.facebook.publisher }}" />
+  <meta name="article:publisher"      property="article:publisher"      content="{{ site.facebook.publisher }}" />
+  <meta name="article:published_time" property="article:published_time" content="{{ page.date | date_to_xmlschema }}" />
+
+  <!-- Facebook -->
+  <meta name="fb:admins"              property="fb:admins"              content="{{ site.facebook.admins }}" />
+  <meta name="fb:app_id"              property="fb:app_id"              content="{{ site.facebook.app_id }}" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card"           property="twitter:card"           content="{{ site.twitter.card }}" />
+  <meta name="twitter:title"          property="twitter:title"          content="{{ page_title }}" />
+  <meta name="twitter:site"           property="twitter:site"           content="@{{ site.twitter.username }}" />
+  <meta name="twitter:creator"        property="twitter:creator"        content="@{{ site.twitter.username }}" />
+  <meta name="twitter:description"    property="twitter:description"    content="{{ page_description | escape }}" />
+  <meta name="twitter:image"          property="twitter:image"          content="{{ page_image }}"/>
+  <meta name="twitter:image:alt"      property="twitter:image:alt"      content="{{ page_description | escape }}"/>
+
+  <!-- JSON LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "url": {{ canonical_url | jsonify }},
+    "name": {{ page_title | jsonify }},
+    "headline": {{ page_title | jsonify }},
+    "keywords": {{ page.tags | join: ',' | jsonify }},
+    "description": {{ page_description | strip_newlines | strip | jsonify }},
+    "articleBody": {{ page.content | strip_html | truncatewords: 200 | jsonify }},
+    "datePublished": {{ page.date | jsonify }},
+    "dateModified": {{ page.last_modified_at | default: page.date | jsonify }},
+    "author": {
+      "@type": "Person",
+      "name": {{ site.author.name | jsonify }},
+      "email": {{ site.author.email | jsonify }}
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": {{ site.title | jsonify }},
+      "url": {{ site.url | jsonify }},
+      "logo": {
+        "@type": "ImageObject",
+        "width": 32,
+        "height": 32,
+        "url": "{{ site.url }}/icon/favicon.ico"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": {{ canonical_url | jsonify }}
+    },
+    "image": {
+      "@type": "ImageObject",
+      "url": {{ page_image | jsonify }}
+    }
+  }
+  </script>
 
   <!-- CSS -->
   <link rel="stylesheet" href="{{ site.baseurl_root }}/assets/main.css">
@@ -17,9 +103,9 @@
   <link rel="manifest" href="{{ site.baseurl_root }}/assets/site.webmanifest">
   <link rel="mask-icon" href="{{ site.baseurl_root }}/assets/safari-pinned-tab.svg" color="#5bbad5">
   <link rel="shortcut icon" href="{{ site.baseurl_root }}/assets/favicon.ico">
-  <meta name="msapplication-TileColor" content="#da532c">
-  <meta name="msapplication-config" content="/assets/browserconfig.xml">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="msapplication-TileColor" property="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-config" property="msapplication-config" content="/assets/browserconfig.xml">
+  <meta name="theme-color" property="theme-color" content="#ffffff">
 
   <!-- Custom Scripts -->
   <script async src="{{ site.baseurl_root }}/assets/syntaxhighlighter.min.js"></script>
