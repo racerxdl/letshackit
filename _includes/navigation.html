@@ -2,8 +2,10 @@
 <BR/>
 <img src="{{ '/assets/cropped-logo.png' | prepend: site.baseurl_root }}" style="margin-left: auto; margin-right: auto;" />
 <ul class="language-bar">
-  <a class="link-pt flag-icon flag-icon-us" href="{{ site.baseurl_root }}/"></a>
-  <a class="link-en flag-icon flag-icon-br" href="{{ site.baseurl_root }}/pt"></a>
+  {% capture enuslink %}{{ site.baseurl_root }}{{ page.url }}{% endcapture %}
+  {% capture ptbrlink %}{{ site.baseurl_root }}/pt{{ page.url }}{% endcapture %}
+  <a class="link-pt flag-icon flag-icon-us" href="{{ enuslink }}"></a>
+  <a class="link-en flag-icon flag-icon-br" href="{{ ptbrlink }}"></a>
 </ul>
 <nav class="nav">
   <div class="nav-container" style="height: 50px">
