@@ -1,0 +1,15 @@
+global:
+  tagline: Português
+  about: Sobre
+  calculators: Calculadoras
+  my-presentations: Minhas Apresentações
+  satcom-projects: Projetos de Satélite
+  my-tesla-coils: Bobinas de Tesla
+  donate: Doação
+  search-posts: Procurar por conteúdo
+langs:
+  en: English
+  pt: Português
+pages:
+titles:
+  pagination: Pagination

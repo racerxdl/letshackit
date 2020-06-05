@@ -24,6 +24,12 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jemoji
+  - jekyll-multiple-languages-plugin
+
+# Multiple Languages
+languages: ["en", "pt"]
+exclude_from_localizations: ["javascript", "images", "css", "assets"]
+
 
 # Permalinks
 permalink:      /:year-:month-:day/:title

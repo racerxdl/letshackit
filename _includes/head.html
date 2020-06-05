@@ -5,24 +5,25 @@
   {% seo %}
 
   <!-- CSS -->
-  <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
+  <link rel="stylesheet" href="{{ site.baseurl_root }}/assets/main.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
-  <link rel="stylesheet" href="{{ "/assets/theme.css" }}">
+  <link rel="stylesheet" href="{{ site.baseurl_root }}/assets/theme.css">
+  <link rel="stylesheet" href="{{ site.baseurl_root }}/assets/flag-icon.min.css">
 
   <!-- Favicon -->
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
-  <link rel="manifest" href="/assets/site.webmanifest">
-  <link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5">
-  <link rel="shortcut icon" href="/assets/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ site.baseurl_root }}/assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ site.baseurl_root }}/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ site.baseurl_root }}/assets/favicon-16x16.png">
+  <link rel="manifest" href="{{ site.baseurl_root }}/assets/site.webmanifest">
+  <link rel="mask-icon" href="{{ site.baseurl_root }}/assets/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="{{ site.baseurl_root }}/assets/favicon.ico">
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="msapplication-config" content="/assets/browserconfig.xml">
   <meta name="theme-color" content="#ffffff">
 
   <!-- Custom Scripts -->
-  <script async src="{{ site.baseurl }}/assets/syntaxhighlighter.min.js"></script>
-  <script async src="{{ site.baseurl }}/assets/simple-jekyll-search.min.js"></script>
+  <script async src="{{ site.baseurl_root }}/assets/syntaxhighlighter.min.js"></script>
+  <script async src="{{ site.baseurl_root }}/assets/simple-jekyll-search.min.js"></script>
 
   <!-- RSS -->
   {% feed_meta %}
