@@ -1,4 +1,4 @@
-These are my presentations. I usually don&#8217;t do good slides for the presentations so please be kind. Hope the information is useful. Most of them are in Portuguese.
+Essas são as minhas apresentações. Geralmente eu sou péssimo para fazer os slides da apresentação, então por favor seja gentil. Espero que as informações sejam úteis. A maioria delas está em português.
 
   * Hackeando Satélites da NASA ( [Slides](https://www.teske.net.br/lucas/palestras/cpgoias1/) \| [Video](https://www.youtube.com/watch?v=lujJhiD4SxY&feature=youtu.be) ) (Portuguese) &#8211; [SecurityCast](https://securitycast.com.br/) 2020
   * GraphQL with GoLang ( [Slides](https://www.teske.net.br/lucas/palestras/GraphQLSP01/) \| [Video](https://www.facebook.com/reactconf/videos/178346083229691/) ) (Portuguese) &#8211; Meetup [GraphQLSP01](https://www.meetup.com/pt-BR/GraphQL-SP/)
