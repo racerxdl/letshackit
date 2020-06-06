@@ -22,7 +22,7 @@ layout: default
         {{ site.author.name }}
     {% endif %}
     {% if page.translated-by %}
-        {% t global.translated-by %} {{ page.translated-by }}
+         <span>{% t global.translated-by %}</span> {{ page.translated-by }}
     {% endif %}
 
     {% if page.date %}
