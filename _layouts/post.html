@@ -21,6 +21,9 @@ layout: default
     {% else %}
         {{ site.author.name }}
     {% endif %}
+    {% if page.translated-by %}
+        {% t global.translated-by %} {{ page.translated-by }}
+    {% endif %}
 
     {% if page.date %}
       <br>

@@ -9,6 +9,7 @@ global:
   search-posts: Search blog posts...
   written-by: Written by
   dateon: "on"
+  translated-by: and translated by
 langs:
   en: English
   pt: Portuguese
