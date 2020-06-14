@@ -13,6 +13,7 @@ categories:
   - Linux
   - CTF
   - SDR
+
 tags:
   - Camera
   - Hacking
@@ -21,6 +22,7 @@ tags:
   - CTF Writeup
   - Satellite
   - XTCE
+
 ---
 # Hack a Sat — Talk to me, Goose
 
