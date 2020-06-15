@@ -252,7 +252,7 @@ Ontem alguém me mandou um link que não era relacionado ao tópico, mas me fez 
 [**Lib(X)SVF - A library for implementing SVF and XSVF JTAG players**
 *JTAG (IEEE 1149.1, aka "Boundary Scan") is a standard IC testing, debugging and programming port. SVF (Serial Vector…*www.clifford.at](http://www.clifford.at/libxsvf/)
 
-Basicamente ela foi escrita pela mesma pessoa que fez a engenharia reversa do bistream dos FPGA ICE40 (e muitos outrios) e era uma biblioteca para reproduzir arquivos SVF e XSVF. Foi bem simples implementar um programador usando o ESP32. Você apenas precisava implementar algumas funções e tudo funcionava.
+Basicamente ela foi escrita pela mesma pessoa que fez a engenharia reversa do bistream dos FPGA ICE40 (e muitos outros) e era uma biblioteca para reproduzir arquivos SVF e XSVF. Foi bem simples implementar um programador usando o ESP32. Você apenas precisava implementar algumas funções e tudo funcionava.
 
 Teve muito trabalho para deixar legal de usar, então eu não vou explicar em detalhes aqui. Porém o código fonte está disponível aqui: [https://github.com/racerxdl/esp32-rjtag](https://github.com/racerxdl/esp32-rjtag)
 
