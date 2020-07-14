@@ -1,6 +1,7 @@
 These are my presentations. I usually don&#8217;t do good slides for the presentations so please be kind. Hope the information is useful. Most of them are in Portuguese.
 
-  * He4rt Talks #05 "Hackeei o satélite da Nasa" com Lucas Teske (@lucasteske) ( [Video](https://www.youtube.com/watch?v=qmLAG5OW8Lc) )
+  * Movimento maker: hackeando de impressoras 3D a satélites da NASA ( [Video](https://www.youtube.com/watch?v=lo5ShiO_a3c&feature=youtu.be) ) (Portuguese) &#8211; #CPDigitalGoiás 2020
+  * He4rt Talks #05 "Hackeei o satélite da Nasa" com Lucas Teske (@lucasteske) ( [Video](https://www.youtube.com/watch?v=qmLAG5OW8Lc) ) (Portuguese) &#8211; He4rt Devs
   * Hackeando Satélites da NASA ( [Slides](https://www.teske.net.br/lucas/palestras/cpgoias1/) \| [Video](https://www.youtube.com/watch?v=lujJhiD4SxY&feature=youtu.be) ) (Portuguese) &#8211; [SecurityCast](https://securitycast.com.br/) 2020
   * GraphQL with GoLang ( [Slides](https://www.teske.net.br/lucas/palestras/GraphQLSP01/) \| [Video](https://www.facebook.com/reactconf/videos/178346083229691/) ) (Portuguese) &#8211; Meetup [GraphQLSP01](https://www.meetup.com/pt-BR/GraphQL-SP/)
   * Hackeando Satélites da NASA ( [Slides](https://www.teske.net.br/lucas/palestras/cpgoias1) \| [Video](https://www.facebook.com/reactconf/videos/2025160057588659/) ) (Portuguese) &#8211; Meetup [ReactSP35](https://www.meetup.com/pt-BR/ReactJS-SP/)
