@@ -1,6 +1,32 @@
 ---
 layout: default
 ---
+<BR/>
+<div id="twitch-embed" class="twitch-embed"></div>
+
+<!-- Load the Twitch embed script -->
+<script src="https://embed.twitch.tv/embed/v1.js"></script>
+<script>
+  fetch('https://live-snippet.rxdl.workers.dev/')
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (content) {
+      if (content.online) {
+        console.log("IS ONLINE");
+        new Twitch.Embed("twitch-embed", {
+          width: 854,
+          height: 480,
+          channel: content.user_name,
+          allowfullscreen: true,
+          layout: 'video',
+        });
+      }
+    })
+    .catch(function (error) {
+      console.log("Error loading twitch snippet: ", error)
+    })
+</script>
 
 <div class="catalogue">
   {% for post in paginator.posts %}
