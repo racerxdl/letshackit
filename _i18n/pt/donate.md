@@ -49,3 +49,9 @@ Doe para mim usando PicPay [https://picpay.me/lucas.teske](https://picpay.me/luc
   <img src="/assets/picpay.jpg" width="240"/>
 </center>
 
+Chave PIX
+=========
+
+Agora com o [sistema de pagamentos instantâneos](https://www.bcb.gov.br/estabilidadefinanceira/pagamentosinstantaneos) do Banco Central do Brasil (PIX) você pode transferir sua doação por estes identificadores (somente vindo de contas brasileiras):
+
+* `lucas@teske.net.br`

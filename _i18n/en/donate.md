@@ -49,3 +49,10 @@ Donate to me on PicPay using [https://picpay.me/lucas.teske](https://picpay.me/l
   <img src="/assets/picpay.jpg" width="240"/>
 </center>
 
+
+PIX Key
+=========
+
+Now with the [Instant Payment System](https://www.bcb.gov.br/estabilidadefinanceira/pagamentosinstantaneos) from Brazillian Central Bank (PIX) you can transfer using these identifiers (only from Brazillian accounts):
+
+* `lucas@teske.net.br`
