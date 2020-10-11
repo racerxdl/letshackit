@@ -9,8 +9,12 @@ layout: default
   {{ page.date | date: "%Y" }}
 {% endcapture %}
 
+{% capture locale_title %}{% t page.title %}{% endcapture %}
+
+{% capture page_title %}{% if {{locale_title}} != blank %}{% t page.title %}{% elsif page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}{% endcapture %}
+
 <div class="post">
-  <h1 class="post-title">{% t page.title %}</h1>
+  <h1 class="post-title">{{ page_title }}</h1>
   <div class="post-info">
     {% if page.image %}
       <img src="{{ page.image }}"/>

@@ -1,6 +1,6 @@
 ---
 id: 204
-title: Satellite Projects
+title: global.satellite-projects
 date: 2016-10-28T12:50:22-03:00
 author: Lucas Teske
 layout: page

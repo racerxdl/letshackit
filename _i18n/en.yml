@@ -5,6 +5,8 @@ global:
   calculators: Calculators
   my-presentations: My Presentations
   satcom-projects: Satcom Projects
+  satellite-projects: Satellite Projects
+  sample-baseband-files: Sample Baseband Files
   my-tesla-coils: My Tesla Coils
   search-posts: Search blog posts...
   written-by: Written by

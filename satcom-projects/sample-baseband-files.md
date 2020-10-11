@@ -1,6 +1,6 @@
 ---
 id: 290
-title: Sample Baseband Files
+title: global.sample-baseband-files
 date: 2016-12-20T13:48:12-03:00
 author: Lucas Teske
 layout: page

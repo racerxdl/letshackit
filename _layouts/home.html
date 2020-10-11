@@ -30,13 +30,15 @@ layout: default
 
 <div class="catalogue">
   {% for post in paginator.posts %}
-    <a href="{{ post.url | prepend: site.baseurl }}" class="catalogue-item">
+    <a href="{{ post.url | prepend: site.baseurl }}" class="catalogue-item catalogue-item-2">
       <div>
         <time datetime="{{ post.date }}" class="catalogue-time">{{ post.date | date: "%B %d, %Y" }}</time>
         <h1 class="catalogue-title">{{ post.title }}</h1>
         <div class="catalogue-line"></div>
         {% if post.image %}
-          <center><img src="{{ post.image }}" class="post-image"/></center>
+          <div class="post-image-div">
+            <img src="{{ post.image }}" class="post-image post-image-2"/>
+          </div>
         {% endif %}
         <p>
           {{ post.content | strip_html | truncatewords: 100 }}
