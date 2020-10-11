@@ -99,3 +99,6 @@ data:
       - Outubro
       - Novembro
       - Dezembro
+
+graphviz:
+  options: "-Tsvg" # 'dot' command option

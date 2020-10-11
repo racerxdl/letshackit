@@ -224,3 +224,58 @@ body .topbar {
 .twitch-embed {
   width: 100%;
 }
+
+.post-image-div {
+  display: flex;
+  width: 100%;
+  text-align: center;
+  align-content: center;
+}
+
+.post-image-2 {
+  margin: 0 auto;
+}
+
+.catalogue-item-2 {
+  width: 100%;
+}
+
+div.truth-table-holder {
+  width: 100%;
+    display: flex;
+}
+
+div.truth-table-container {
+  flex-grow: 1;
+}
+
+/* Truth Table */
+table.truth {
+  border-collapse:collapse;
+  margin:0 auto;
+}
+
+table.truth th {
+  border-bottom:1px solid black;
+  text-align: center;
+  padding:.4em;
+  font-weight: normal;
+}
+
+table.truth td {
+  border:0;
+  padding:.4em;
+  text-align: center;
+}
+
+table.truth .dv {
+  border-right:1px solid black;
+}
+
+table.truth .mc {
+  color:red;
+}
+table.truth .tv {
+  color:green;
+  font-weight: bold;
+}
