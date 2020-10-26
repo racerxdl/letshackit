@@ -26,6 +26,8 @@ tags:
 
 Esta é a primeira parte do guia de programação para FPGAs! Este guia irá virar eventualmente um `verilog4noobs` para qualquer pessoa que quiser iniciar na área de programação de hardware possa ter um jeito fácil de conseguir! Iremos começar a explicar o que é um FPGA e como ele funciona.
 
+Para quem preferir, este artigo foi feito em base na Livestream sobre Verilog que fiz a um tempo atrás e está disponível no YouTube: [https://www.youtube.com/watch?v=BcKwqju5gxA](https://www.youtube.com/watch?v=BcKwqju5gxA)
+
 # O que é um FPGA
 
 FPGA é uma abreviatura para Field Programmable Gate Array, ou Matriz de Portas Programáveis em Campo. O termo `campo` usado aqui se refere ao fato de que o chip pode ser programado após sair da fábrica. O termo `portas` se referem a portas lógicas.

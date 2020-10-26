@@ -101,15 +101,15 @@ PLATFORMS
 
 DEPENDENCIES
   bigdecimal
-  jekyll-feed
+  jekyll-feed (>= 0.13.0)
   jekyll-graphviz
-  jekyll-multiple-languages-plugin
+  jekyll-multiple-languages-plugin (>= 1.6.1)
   jekyll-paginate
-  jekyll-seo-tag
-  jekyll-sitemap
-  jemoji
+  jekyll-seo-tag (>= 2.6.1)
+  jekyll-sitemap (>= 1.4.0)
+  jemoji (>= 0.12.0)
   json
-  tale
+  tale (>= 0.2.0)
 
 BUNDLED WITH
    2.1.4
