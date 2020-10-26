@@ -9,7 +9,7 @@
 
   {% capture page_description %}{% if {{locale_description}} != blank %}{% t page.description %}{% elsif page.description %}{{ page.description }}{% else %}{{ page.content | strip_html | truncatewords: 50 }}{% endif %}{% endcapture %}
 
-  {% capture canonical_url %}{{ site.url }}{{ page.url }}{% endcapture %}
+  {% capture canonical_url %}{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url | uri_escape}}{% endcapture %}
 
   {% capture page_image %}{{ site.url }}{% if page.image %}{{ page.image }}{% else %}{{ site.image }}{% endif %}{% endcapture %}
 
