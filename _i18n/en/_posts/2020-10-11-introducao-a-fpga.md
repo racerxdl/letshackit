@@ -24,5 +24,6 @@ tags:
   - Verilog
 ---
 
-{% capture link1 %}{{ site.baseurl_root }}{{ page.url}}{% endcapture %}
-(So far) only available in portuguese <a href="{{ link1 }}" >{% t langs.pt %}</a>
+
+{% capture link1 %}{{ site.baseurl_root }}/pt{{ page.url}}{% endcapture %}
+(So far) Only available in <a href="{{ link1 }}" >{% t langs.pt %}</a>

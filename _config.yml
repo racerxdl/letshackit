@@ -25,6 +25,7 @@ plugins:
   - jemoji
   - jekyll-multiple-languages-plugin
   - jekyll-seo-tag
+  - jekyll-redirect-from
 
 # Multiple Languages
 languages: ["en", "pt"]

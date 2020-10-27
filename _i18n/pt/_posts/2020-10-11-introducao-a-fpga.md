@@ -4,6 +4,9 @@ date: 2020-10-11T23:59:00-03:00
 author: Lucas Teske
 layout: post
 image: /assets/FPGA.jpg
+redirect_from:
+  - /2020/06/introducao-a-fpga
+
 categories:
   - Portugues
   - Hacking
