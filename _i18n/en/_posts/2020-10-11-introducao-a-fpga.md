@@ -1,6 +1,6 @@
 ---
 title: Introduction to FPGA
-date: 2020-06-14T16:17:00-03:00
+date: 2020-10-11T23:59:00-03:00
 author: Lucas Teske
 layout: post
 image: /assets/FPGA.jpg
