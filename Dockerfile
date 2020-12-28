@@ -3,7 +3,7 @@ FROM alpine
 
 WORKDIR /app
 
-RUN apk update && apk add ruby build-base ruby-dev libffi-dev zlib-dev graphviz
+RUN apk update && apk add ruby-full build-base ruby-dev libffi-dev zlib-dev graphviz 
 RUN gem install bundler
 COPY Gemfile /app
 COPY Gemfile.lock /app
