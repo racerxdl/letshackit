@@ -17,6 +17,8 @@ sass:
   sass_dir:     _sass
   style:        compressed
 
+plugins_dir: ./_plugins
+
 plugins:
   - jekyll-feed
   - jekyll-paginate
