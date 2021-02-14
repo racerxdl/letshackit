@@ -12,3 +12,4 @@ group :jekyll_plugins do
 end
 gem 'jekyll-multiple-languages-plugin', '>= 1.6.1'
 gem 'jekyll-redirect-from'
+gem 'jekyll-spaceship'

@@ -16,30 +16,34 @@ class LatexTag < Liquid::Block
 
     result = system( "pdflatex -interaction=nonstopmode -aux-directory=/tmp -output-directory=/tmp -jobname=#{job} #{f.path} ")
     f.unlink()
-    logData = File.read("/tmp/#{job}.log")
+    logData = File.read("/tmp/#{job}.log").gsub("\n", "<BR>")
     File.delete("/tmp/#{job}.log") if File.exist?("/tmp/#{job}.log")
     File.delete("/tmp/#{job}.aux") if File.exist?("/tmp/#{job}.aux")
 
     if ! result
-      return "<p> ERROR GENERATING LATEX #{logData} </p>"
+      return "<p> ERROR GENERATING LATEX(#{result})<BR> #{logData} </p>"
     end
 
-    result = system( "pdf2svg /tmp/#{job}.pdf /tmp/#{job}.svg")
+    system ( "pdfcrop /tmp/#{job}.pdf /tmp/#{job}-crop.pdf")
+    File.delete("/tmp/#{job}.pdf") if File.exist?("/tmp/#{job}.pdf")
+
+    result = system( "inkscape --export-filename=\"/tmp/#{job}.svg\" --export-type=\"svg\" \"/tmp/#{job}-crop.pdf\"")
+    # result = system( "pdf2svg /tmp/#{job}-crop.pdf /tmp/#{job}.svg")
     if ! result
       return "<p> ERROR GENERATING LATEX </p>"
     end
-    File.delete("/tmp/#{job}.pdf") if File.exist?("/tmp/#{job}.pdf")
+    File.delete("/tmp/#{job}-crop.pdf") if File.exist?("/tmp/#{job}-crop.pdf")
     File.delete("/tmp/#{job}.aux") if File.exist?("/tmp/#{job}.aux")
 
-    result = system( "svgo /tmp/#{job}.svg")
-    if ! result
-      return "<p> ERROR GENERATING LATEX </p>"
-    end
+    # result = system( "svgo /tmp/#{job}.svg")
+    # if ! result
+    #   return "<p> ERROR GENERATING LATEX </p>"
+    # end
 
     svg = File.read("/tmp/#{job}.svg")
     File.delete("/tmp/#{job}.svg") if File.exist?("/tmp/#{job}.svg")
 
-    return svg
+    return "<div class=\"latex\">#{svg}</div>"
   end
 end
 Liquid::Template.register_tag('ltx', LatexTag)
