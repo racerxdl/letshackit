@@ -3,7 +3,7 @@ FROM alpine
 
 WORKDIR /app
 
-RUN apk update && apk add ruby-full build-base ruby-dev libffi-dev zlib-dev graphviz texlive-full npm
+RUN apk update && apk add ruby-full build-base ruby-dev libffi-dev zlib-dev graphviz texlive-full npm inkscape
 RUN apk update && apk add pdf2svg --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing
 RUN gem install bundler
 RUN npm -g install svgo
