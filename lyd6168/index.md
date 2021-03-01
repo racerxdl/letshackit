@@ -27,7 +27,7 @@ The software for upgrading can be found at colorlight website: [Colorlight LEDUp
 
 Also since the 5A-75B Ethernet clocks are fixed, it will **only work on gigabit ethernet**
 
-After some trouble to get it working, I managed to upgrade it with a **S-PWM Ready** firmware which was at least trying to display something. Funny enough in Colorlight LED software, selecting the LYD6168 preset **doesn't work**. I had to test **manually every supported controller** to see which one displayed the image correctly. The LYD6168 seens to display something but it was completely wrong. Finally I found out that LYD6168 panel correspond to MBI5153 made by Macroblocks and that Leyard does silicon OEM of their chips. Sadly, some people reported that their LYD6168 chips worked as a ICN2035 (which it doesn't here). That probably means leyard just threw shit at the fan by selling the same IC package with different silicon inside.
+After some trouble to get it working, I managed to upgrade it with a **S-PWM Ready** firmware which was at least trying to display something. Funny enough in Colorlight LED software, selecting the LYD6168 preset **doesn't work**. I had to test **manually every supported controller** to see which one displayed the image correctly. The LYD6168 seens to display something but it was completely wrong. Finally I found out that LYD6168 panel correspond to MBI5153 made by Macroblocks and that Leyard does silicon OEM of their chips. Sadly, some people reported that their LYD6168 chips worked as a ICN2053 (which it doesn't here). That probably means leyard just threw shit at the fan by selling the same IC package with different silicon inside.
 
 ![Displaying a gameboy screenshot 1:1](/assets/lyd6168/20201029_001922.jpg)
 
@@ -44,8 +44,117 @@ The good thing about MBI5153 that there is a [datasheet available](/assets/lyd61
 
 So here we have a 14-bit counter for 16 bit comparators which outputs PWM for 16 outputs, which means we have 14-bit per color control. So after that data is latched into the MB5153, it will generate the led brightness by itself. That enables low speed microcontrollers to control that.
 
-Also, they can hold up to 32 scanlines, which means my 128x64 panel **can hold an entire frame**. This means if I want to display a static image, I can just "send" the image to the panel, and keep pulsing the **GCLK** signal to display the image and controlling the **line address** bits for changing the scanlines.
+Also, they can hold up to 32 scanlines, which means my 128x64 panel **can hold an entire frame**. This means if I want to display a static image, I can just "send" the image to the panel, and keep pulsing the **GCLK** signal to display the image and controlling the **line address** bits for changing the scanlines. The chip also holds two frame-buffers which are switch using a V-SYNC command. That allows you to write the next frame while displaying the current one without aliasing the image.
+
+The control commands are pretty similar to ICN2053, it is only controlled by two pins: `LE` and `DCLK`. Basically you clock the `DCLK` pins for 16 clocks with last `N` clocks with the `LE` asserted. The `N` tells you which command it will execute. Some commands need a pre-activation (which is another command). The commands are on the table below.
 
 
+|#|:          Command Name          :|: Need Pre-active :|: DCLK :|:                 Action                :|
+|1| Data Latch / stop error detect   |:        N        :|:   1  :|: Latches the data to internal buffer    |
+|2| VSYNC                            |:        N        :|:   2  :|: Switches the internal buffers          |
+|3| Write Configuration 1            |:        Y        :|:   4  :|: Latches the data to register 1         |
+|4| Read Configuration 1             |:        N        :|:   5  :|: Reads the data from register 1         |
+|5| Start compulsory error detect    |:        N        :|:   7  :|: Starts the compulsory LED open detect  |
+|6| Write Configuration 2            |:        Y        :|:   8  :|: Latches the data to register 2         |
+|7| Read Configuration 2             |:        N        :|:   9  :|: Reads the data from register 2         |
+|8| Software Reset                   |:        N        :|:  10  :|: Resets the entire IC except config     |
+|9| Pre-Active                       |:        N        :|:  14  :|: Enables write to registers             |
 
+
+Besides that, when clocking `DCLK` the chip is continuously reading the `SDI` pin and outputing data to `SDO`.
+
+* For the commands 2,4,5,7,8,9 the SDI should be tied low.
+* For commands 1,3,6 the `SDI` is used for latching the data.
+* For commands 4,7 the `SDO` will output the data in next 16 clocks after finishing the command. The LE should be kept low.
+* The `LE` is sampled at rising-edge of `DCLK` (The vertical red line in the timing diagrams)
+* For any command that requires data to be sent to the chips, you should only issue `LE` in the _last_ 16 bit group
+  * Since data is shifted across all devices, the data for the last chip in the chain is sent first.
+
+
+## Write Configuration Register 1 (N=4)
+
+Should issue [Pre-Active Command](#pre-active-n14) first.
+
+<center>
+{% ltx %}
+\documentclass{standalone}
+\usepackage{tikz-timing}
+\usetikztiminglibrary[new={char=Q,reset char=R}]{counters}
+
+\begin{document}
+\begin{tikztimingtable}[timing/xunit=4,timing/yunit=18]
+  Sample \# &       3U       ; [fill=white] 4Q 4Q 4Q 4Q     4Q     4Q     4Q     4Q     4Q     4Q     4Q     4Q     4Q     4Q     4Q     5Q  ;   [dashed]7D{...}                  ; [fill=white] 6D{16N} 4D{+1} 4D{+2} 4D{+3} 4D{+4} 4D{+5} 4D{+4} 4D{+7} 4D{+8} 4D{+9} 4D{+10} 4D{+11} 4D{+12}  4D{+13} 4D{+14} 5D{+15}  ;  [dashed]6U  ;  \\
+  LE        & LL [dotted]; L ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ;  LL  ; [dashed]6L                  ; LL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; HHHH ; HHHH ; HHHH ; HHHH ; LL ; [dashed]LLLL \\
+  DCLK      & LL [dotted]; L ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ;  LL  ; [dashed]6L                  ; LL ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LL ; [dashed]LLLL\\
+  DO        & LL [dotted]; L ; HHHH ; HHHH ; LLLL ; HHHH ; LLLL ; HHHH ; LLLL ; LLLL ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; LLLL ; LLLL ; HHHH ;  LL  ; [dashed]6L                  ; LL ; HHHH ; HHHH ; LLLL ; HHHH ; LLLL ; HHHH ; LLLL ; LLLL ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; LLLL ; LLLL ; HHHH ; LL ; [dashed]LLLL\\
+  GCLK      & LL [dotted]; L ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ;  LL  ; [dashed]6L                  ; LL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LL ; [dashed]LLLL\\
+  Chip \#   &     4D{xx}R    ;                                       [fill=white]64D{Last Chip}                                                                ; [dashed,fill=white]6D{...}  ;                                                          [fill=white]68D{First Chip}                                               ; [dashed]6D{xx}    \\
+\extracode
+  \begin{pgfonlayer}{background}
+    \begin{scope}[semitransparent,semithick]
+      \vertlines[red]{5.1,9.1,...,66.1}
+      \vertlines[red]{79.1,83.1,...,140.1}
+    \end{scope}
+  \end{pgfonlayer}
+\end{tikztimingtable}
+\end{document}
+{% endltx %}
+</center>
+
+## Reset command (N=10)
+
+<center>
+
+{% ltx %}
+
+\documentclass{standalone}
+\usepackage{tikz-timing}
+\usetikztiminglibrary[new={char=Q,reset char=R}]{counters}
+
+\begin{document}
+\begin{tikztimingtable}[timing/xunit=8,timing/yunit=18]
+  Sample \# &       3U       ;  [fill=blue,text=white]4Q  ;  [fill=blue,text=white]4Q  ;  [fill=blue,text=white]4Q  ;  [fill=blue,text=white]4Q  ;  [fill=blue,text=white]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  4Q  ; 2U;          \\
+  LE        & LL [dotted]; L ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; LLLL ; LL [dotted]; \\
+  DCLK      & LL [dotted]; L ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLLL ; LL [dotted]; \\
+  DO        & LL [dotted]; L ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LL [dotted]; \\
+  GCLK      & LL [dotted]; L ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LL [dotted]; \\
+\extracode
+  \begin{pgfonlayer}{background}
+    \begin{scope}[semitransparent,semithick]
+      \vertlines[red]{5.1,9.1,...,66.1}
+    \end{scope}
+  \end{pgfonlayer}
+\end{tikztimingtable}
+\end{document}
+{% endltx %}
+
+</center>
+
+## Pre-active (N=14)
+
+<center>
+
+{% ltx %}
+\documentclass{standalone}
+\usepackage{tikz-timing}
+\usetikztiminglibrary[new={char=Q,reset char=R}]{counters}
+
+\begin{document}
+\begin{tikztimingtable}[timing/xunit=8,timing/yunit=18]
+  Sample \# &       3U       ;  [fill=blue,text=white]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  4Q  ; 2U;          \\
+  LE        & LL [dotted]; L ; LLLL ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHLL ; LLLL ; LL [dotted]; \\
+  DCLK      & LL [dotted]; L ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLLL ; LL [dotted]; \\
+  DO        & LL [dotted]; L ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LL [dotted]; \\
+  GCLK      & LL [dotted]; L ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LL [dotted]; \\
+\extracode
+  \begin{pgfonlayer}{background}
+    \begin{scope}[semitransparent,semithick]
+      \vertlines[red]{5.1,9.1,...,66.1}
+    \end{scope}
+  \end{pgfonlayer}
+\end{tikztimingtable}
+\end{document}
+{% endltx %}
+
+</center>
 
