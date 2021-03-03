@@ -12,10 +12,15 @@ global:
   written-by: Escrito por
   dateon: em
   translated-by: e traduzido por
-
 langs:
   en: Inglês
   pt: Português
 pages:
+  home:
+    title: Início
+  donate:
+    description: "Quer comprar um chá pra mim?"
 titles:
   pagination: Pagination
+
+"Big Gate Boy": "Big Gate Boy"

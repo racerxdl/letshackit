@@ -11,7 +11,7 @@ layout: default
 
 {% capture locale_title %}{% t page.title %}{% endcapture %}
 
-{% capture page_title %}{% if {{locale_title}} != blank %}{% t page.title %}{% elsif page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}{% endcapture %}
+{% capture page_title %}{% if locale_title != blank %}{% t page.title %}{% elsif page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}{% endcapture %}
 
 <div class="post">
   <h1 class="post-title">{{ page_title }}</h1>

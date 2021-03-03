@@ -5,7 +5,7 @@
   {% capture locale_title %}{% t page.title %}{% endcapture %}
   {% capture locale_description %}{% t page.description %}{% endcapture %}
 
-  {% capture page_title %}{% if {{locale_title}} != blank %}{% t page.title %}{% elsif page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %} | {{ site.name }}{% endcapture %}
+  {% capture page_title %}{% if locale_title != blank %}{% t page.title %}{% elsif page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %} | {{ site.name }}{% endcapture %}
 
   {% capture page_description %}{% if {{locale_description}} != blank %}{% t page.description %}{% elsif page.description %}{{ page.description }}{% else %}{{ page.content | strip_html | truncatewords: 50 }}{% endif %}{% endcapture %}
 

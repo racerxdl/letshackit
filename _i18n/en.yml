@@ -16,8 +16,10 @@ langs:
   en: English
   pt: Portuguese
 pages:
+  home:
+    title: Home
   written-by: Written by
   donate:
-    description: "Quer comprar um chá pra mim?"
+    description: "Want to buy me some tea?"
 titles:
   pagination: Pagination
