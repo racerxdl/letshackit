@@ -5,14 +5,12 @@ author: Lucas Teske
 layout: post
 image: /assets/posts/tracker-mount/head.jpg
 categories:
-  - English
   - Reverse Engineering
   - Satellite
   - SDR
 tags:
   - Airspy
   - EMWIN
-  - English
   - GOES
   - Hearsat
   - LRIT
