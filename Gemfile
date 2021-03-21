@@ -11,5 +11,5 @@ group :jekyll_plugins do
   gem 'jekyll-graphviz'
 end
 gem 'jekyll-multiple-languages-plugin', '>= 1.6.1'
-gem 'jekyll-redirect-from'
-gem 'jekyll-spaceship'
+gem 'jekyll-redirect-from', '>= 0.16.0'
+gem 'jekyll-spaceship', '>= 0.9.8'
