@@ -115,10 +115,10 @@ DEPENDENCIES
   jekyll-graphviz
   jekyll-multiple-languages-plugin (>= 1.6.1)
   jekyll-paginate
-  jekyll-redirect-from
+  jekyll-redirect-from (>= 0.16.0)
   jekyll-seo-tag (>= 2.6.1)
   jekyll-sitemap (>= 1.4.0)
-  jekyll-spaceship
+  jekyll-spaceship (>= 0.9.8)
   jemoji (>= 0.12.0)
   json
   tale (>= 0.2.0)

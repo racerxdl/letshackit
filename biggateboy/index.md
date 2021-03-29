@@ -10,7 +10,7 @@ Here I will gather all information about the Big Gate Boy project! The FPGA Game
 
 * [Project Github](https://github.com/racerxdl/biggateboy/)
 * [YouTube Playlist](https://www.youtube.com/playlist?list=PLEP_M2UAh9q7uSd0U_beeeF6FGvOSb_zy)
-* [Microcode](microcode)
-* [Cycle Info](cycle)
+* [Microcode](/biggateboy/microcode)
+* [Cycle Info](/biggateboy/cycle)
 * [LYD6168 Panels](/lyd6168)
 
