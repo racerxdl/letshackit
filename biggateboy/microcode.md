@@ -139,10 +139,17 @@ I also did some ALU opcode, call/jump conditions mask grouping. Along with that,
 |: 1 Y Y {:y-style} :|: 0 0 0 {:z-style} :| <span class="op">JR</span> <a href="#condition-group" class="table-ref">COND[Y]</a> <span class="s8">s8</span>                          ||||||||||
 |: Y Y 0 {:y-style} :|: 0 0 1 {:z-style} :| <span class="op">LD</span> <a href="#register-1-group" class="table-ref">RG1[Y]</a>, <span class="u16">u16</span>                       ||||||||||
 |: Y Y 1 {:y-style} :|: 0 0 1 {:z-style} :| <span class="op">ADD</span> <span class="reg">HL</span>, <a href="#register-1-group" class="table-ref">RG1[Y]</a>                       ||||||||||
-|: 0 0 1 {:y-style} :|: 0 1 0 {:z-style} :| <span class="op">LD</span> [<span class="reg">BC</span>], <span class="reg">A</span>  ||||||||||
-|: 0 1 1 {:y-style} :|: 0 1 0 {:z-style} :| <span class="op">LD</span> [<span class="reg">DE</span>], <span class="reg">A</span>  ||||||||||
-|: 1 0 1 {:y-style} :|: 0 1 0 {:z-style} :| <span class="op">LD</span> [<span class="reg">HL</span>+], <span class="reg">A</span> ||||||||||
-|: 1 1 1 {:y-style} :|: 0 1 0 {:z-style} :| <span class="op">LD</span> [<span class="reg">HL</span>-], <span class="reg">A</span> ||||||||||
+
+|: 0 0 0 {:y-style} :|: 0 1 0 {:z-style} :| <span class="op">LD</span> [<span class="reg">BC</span>], <span class="reg">A</span>  ||||||||||
+|: 0 0 1 {:y-style} :|: 0 1 0 {:z-style} :| <span class="op">LD</span> <span class="reg">A</span>, [<span class="reg">BC</span>]  ||||||||||
+|: 0 1 0 {:y-style} :|: 0 1 0 {:z-style} :| <span class="op">LD</span> [<span class="reg">DE</span>], <span class="reg">A</span>  ||||||||||
+|: 0 1 1 {:y-style} :|: 0 1 0 {:z-style} :| <span class="op">LD</span> <span class="reg">A</span>, [<span class="reg">DE</span>]  ||||||||||
+
+|: 1 0 0 {:y-style} :|: 0 1 0 {:z-style} :| <span class="op">LD</span> [<span class="reg">HL</span>+], <span class="reg">A</span> ||||||||||
+|: 1 0 1 {:y-style} :|: 0 1 0 {:z-style} :| <span class="op">LD</span> <span class="reg">A</span>, [<span class="reg">HL</span>+] ||||||||||
+|: 1 1 0 {:y-style} :|: 0 1 0 {:z-style} :| <span class="op">LD</span> [<span class="reg">HL</span>-], <span class="reg">A</span> ||||||||||
+|: 1 1 1 {:y-style} :|: 0 1 0 {:z-style} :| <span class="op">LD</span> <span class="reg">A</span>, [<span class="reg">HL</span>-] ||||||||||
+
 |: Y Y 0 {:y-style} :|: 0 1 1 {:z-style} :| <span class="op">INC</span> <a href="#register-group-1" class="table-ref">RG1[Y]</a>                           ||||||||||
 |: Y Y 1 {:y-style} :|: 0 1 1 {:z-style} :| <span class="op">DEC</span> <a href="#register-group-1" class="table-ref">RG1[Y]</a>                           ||||||||||
 |: Y Y Y {:y-style} :|: 1 0 0 {:z-style} :| <span class="op">INC</span> <a href="#register-group-0" class="table-ref">RG0[Y]</a>                       ||||||||||
@@ -202,6 +209,15 @@ I also did some ALU opcode, call/jump conditions mask grouping. Along with that,
 |: y y y {:y-style} :|: 1 1 0 {:z-style} :| <a href="#alu-operations-group-0" class="table-ref"> ALUOP0[Y] </a> <span class="reg">A</span>, <span class="u8">u8</span> ||||||||||
 |: y y y {:y-style} :|: 1 1 1 {:z-style} :| <span class="op">RST</span> <span class="const">0b00</span><span class="table-ref">YYY</span><span class="const">000</span>                        ||||||||||
 
+# Prefix CB
+After a `0xCB` byte, the next byte should determine the instruction to execute
+
+|:XX{:head-style}:|: Y Y Y {: head-style }:|: Z Z Z {: head-style }:|:Instruction  {: head-style }                                                                                                        :|||||||||
+|:00{:x-style}   :|: Y Y Y {:y-style}     :|: Z Z Z {:z-style}     :| <a href="#alu-operations-group-2" class="table-ref"> ALUOP2[Y] </a> <a href="#register-group-0" class="table-ref"> RG0[Z] </a>       |||||||||
+|:01{:x-style}   :|: Y Y Y {:y-style}     :|: Z Z Z {:z-style}     :| BIT <span class="u16">Y</span>, <a href="#register-group-0" class="table-ref"> RG0[Z] </a>                                           |||||||||
+|:10{:x-style}   :|: Y Y Y {:y-style}     :|: Z Z Z {:z-style}     :| RES <span class="u16">Y</span>, <a href="#register-group-0" class="table-ref"> RG0[Z] </a>                                           |||||||||
+|:11{:x-style}   :|: Y Y Y {:y-style}     :|: Z Z Z {:z-style}     :| SET <span class="u16">Y</span>, <a href="#register-group-0" class="table-ref"> RG0[Z] </a>                                           |||||||||
+
 
 # References
 
@@ -241,3 +257,8 @@ I also did some ALU opcode, call/jump conditions mask grouping. Along with that,
 |: Index{: head-style } :|:  0   :|:   1  :|:  2  :|:  3  :|:  4  :|:  5  :|:  6  :|:  7  :|
 |: Value{: head-style } :|: RLCA :|: RRCA :|: RLA :|: RRA :|: DAA :|: CPL :|: SCF :|: CCF :|
 
+## ALU Operations Group 2
+
+|:                                 ALU Operation 2                    {: head-style } :|||||||||
+|: Index{: head-style } :|:  0   :|:   1  :|:  2  :|:  3  :|:  4  :|:  5  :|:  6  :|:  7  :|
+|: Value{: head-style } :|: RLC :|: RRC :|: RL :|: RR :|: SLA :|: SRA :|: SWAP :|: SRL :|
