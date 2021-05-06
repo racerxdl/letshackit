@@ -1,5 +1,6 @@
 Essas são as minhas apresentações. Geralmente eu sou péssimo para fazer os slides da apresentação, então por favor seja gentil. Espero que as informações sejam úteis. A maioria delas está em português.
 
+  * MC 1:1 ( [Video](https://www.youtube.com/watch?v=Z_Qv01rwEPs) ) (Portuguese)  &#8211; - Marcel Campos
   * Hackeando Ondas com Lucas Teske ( [Video](https://www.youtube.com/watch?v=fwN-ZO5jYAo)  ) (Portuguese) &#8211;  DCG5554 - Defcon Group Caxias do Sul
   * Movimento maker: hackeando de impressoras 3D a satélites da NASA ( [Video](https://www.youtube.com/watch?v=lo5ShiO_a3c&feature=youtu.be) ) (Portuguese) &#8211; #CPDigitalGoiás 2020
   * He4rt Talks #05 "Hackeei o satélite da Nasa" com Lucas Teske (@lucasteske) ( [Video](https://www.youtube.com/watch?v=qmLAG5OW8Lc) ) (Portuguese) &#8211; He4rt Devs
