@@ -1,5 +1,6 @@
 Essas são as minhas apresentações. Geralmente eu sou péssimo para fazer os slides da apresentação, então por favor seja gentil. Espero que as informações sejam úteis. A maioria delas está em português.
 
+  * Goroutines ( [Video](https://www.youtube.com/watch?v=fAxXzADKdMo) ) (Portuguese)  &#8211; Golang SP 2021/07
   * MC 1:1 ( [Video](https://www.youtube.com/watch?v=Z_Qv01rwEPs) ) (Portuguese)  &#8211; - Marcel Campos
   * Hackeando Ondas com Lucas Teske ( [Video](https://www.youtube.com/watch?v=fwN-ZO5jYAo)  ) (Portuguese) &#8211;  DCG5554 - Defcon Group Caxias do Sul
   * Movimento maker: hackeando de impressoras 3D a satélites da NASA ( [Video](https://www.youtube.com/watch?v=lo5ShiO_a3c&feature=youtu.be) ) (Portuguese) &#8211; #CPDigitalGoiás 2020
