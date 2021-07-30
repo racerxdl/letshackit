@@ -48,6 +48,7 @@ RUN chown -R nginx.nginx /var/www/ && \
 
 WORKDIR /opt
 COPY site.conf /etc/nginx/conf.d/default.conf
+COPY site.conf /etc/nginx/http.d/default.conf
 COPY run.sh .
 RUN chmod 777 /opt/run.sh
 
