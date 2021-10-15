@@ -1,5 +1,6 @@
 These are my presentations. I usually don&#8217;t do good slides for the presentations so please be kind. Hope the information is useful. Most of them are in Portuguese.
 
+  * TRUE open "stack" com RISC-V e FPGA ( [Video](https://youtu.be/varbE04kwQI?t=18051) \| [Slides](https://docs.google.com/presentation/d/e/2PACX-1vRGiBuinNEMNHDr84cPZdrZrqdfwdMwOhuSwAwhwy_fjhR3GoObExmX_o_JiF5_eTP1r-jLkB_D93E4/pub?start=false&loop=false&delayms=3000) ) (Portuguese) &#8211; Latinoware 2021
   * Goroutines ( [Video](https://www.youtube.com/watch?v=fAxXzADKdMo) ) (Portuguese)  &#8211; Golang SP 2021/07
   * MC 1:1 ( [Video](https://www.youtube.com/watch?v=Z_Qv01rwEPs) ) (Portuguese)  &#8211; Marcel Campos
   * Hackeando Ondas com Lucas Teske ( [Video](https://www.youtube.com/watch?v=fwN-ZO5jYAo)  ) (Portuguese) &#8211;  DCG5554 - Defcon Group Caxias do Sul
