@@ -1,6 +1,6 @@
 Essas são as minhas apresentações. Geralmente eu sou péssimo para fazer os slides da apresentação, então por favor seja gentil. Espero que as informações sejam úteis. A maioria delas está em português.
 
-  * TRUE open "stack" com RISC-V e FPGA ( [Video](https://youtu.be/varbE04kwQI?t=18051) \| [Slides](https://docs.google.com/presentation/d/e/2PACX-1vRGiBuinNEMNHDr84cPZdrZrqdfwdMwOhuSwAwhwy_fjhR3GoObExmX_o_JiF5_eTP1r-jLkB_D93E4/pub?start=false&loop=false&delayms=3000) ) (Portuguese) &#8211; Latinoware 2021
+  * TRUE open "stack" com RISC-V e FPGA ( [Video](https://www.youtube.com/watch?v=rmUWfHOK5Ic) \| [Slides](https://docs.google.com/presentation/d/e/2PACX-1vRGiBuinNEMNHDr84cPZdrZrqdfwdMwOhuSwAwhwy_fjhR3GoObExmX_o_JiF5_eTP1r-jLkB_D93E4/pub?start=false&loop=false&delayms=3000) ) (Portuguese) &#8211; Latinoware 2021
   * Goroutines ( [Video](https://www.youtube.com/watch?v=fAxXzADKdMo) ) (Portuguese)  &#8211; Golang SP 2021/07
   * MC 1:1 ( [Video](https://www.youtube.com/watch?v=Z_Qv01rwEPs) ) (Portuguese)  &#8211; - Marcel Campos
   * Hackeando Ondas com Lucas Teske ( [Video](https://www.youtube.com/watch?v=fwN-ZO5jYAo)  ) (Portuguese) &#8211;  DCG5554 - Defcon Group Caxias do Sul
