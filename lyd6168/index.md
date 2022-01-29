@@ -16,7 +16,7 @@ Everything started when I bought 6 of these panels (thanks to [my supporters at 
 
 Then I got the suprise that the 6 panels (which were not cheap for Brazillian standards) were a totally different chip: LYD6168
 
-The thing that scared me about it was that besides knowing the LYD was a short for [Leyard](http://leyard.com/), there were actually zero information about the chip on the internet. I spend some of the live streams together with my supporters trying to find a datasheet or any info about the chip (searching even in chinese search engines). The only information we got was S-PWM. Also any code from the internet to control HUB75 panels, didn't even lit the panel. I couldn't be sure if my panels were dead or just were completely different than anything.
+The thing that scared me about it was that besides knowing the LYD was a short for [Leyard](http://leyard.com/), there were actually zero information about the chip on the internet. I spend some of the live streams together with my supporters trying to find a datasheet or any info about the chip (searching even in chinese search engines). The only information we got was S-PWM. Also any code from the internet to control HUB75 panels, didn"t even lit the panel. I couldn't be sure if my panels were dead or just were completely different than anything.
 
 
 I tried to reach Leyard from china, Leyard from Brazil. But chinese leyard just ignored me, and Brazillian Leyard said they don't know any LYD6168 panel. I also tried to reach the Chinese Seller and he said it is compatible with my [Colorlight Hub 5A-75B board](https://s.click.aliexpress.com/e/_AbrRvE).
@@ -76,85 +76,58 @@ Besides that, when clocking `DCLK` the chip is continuously reading the `SDI` pi
 Should issue [Pre-Active Command](#pre-active-n14) first.
 
 <center>
-{% ltx %}
-\documentclass{standalone}
-\usepackage{tikz-timing}
-\usetikztiminglibrary[new={char=Q,reset char=R}]{counters}
-
-\begin{document}
-\begin{tikztimingtable}[timing/xunit=4,timing/yunit=18]
-  Sample \# &       3U       ; [fill=white] 4Q 4Q 4Q 4Q     4Q     4Q     4Q     4Q     4Q     4Q     4Q     4Q     4Q     4Q     4Q     5Q  ;   [dashed]7D{...}                  ; [fill=white] 6D{16N} 4D{+1} 4D{+2} 4D{+3} 4D{+4} 4D{+5} 4D{+4} 4D{+7} 4D{+8} 4D{+9} 4D{+10} 4D{+11} 4D{+12}  4D{+13} 4D{+14} 5D{+15}  ;  [dashed]6U  ;  \\
-  LE        & LL [dotted]; L ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ;  LL  ; [dashed]6L                  ; LL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; HHHH ; HHHH ; HHHH ; HHHH ; LL ; [dashed]LLLL \\
-  DCLK      & LL [dotted]; L ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ;  LL  ; [dashed]6L                  ; LL ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LL ; [dashed]LLLL\\
-  DO        & LL [dotted]; L ; HHHH ; HHHH ; LLLL ; HHHH ; LLLL ; HHHH ; LLLL ; LLLL ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; LLLL ; LLLL ; HHHH ;  LL  ; [dashed]6L                  ; LL ; HHHH ; HHHH ; LLLL ; HHHH ; LLLL ; HHHH ; LLLL ; LLLL ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; LLLL ; LLLL ; HHHH ; LL ; [dashed]LLLL\\
-  GCLK      & LL [dotted]; L ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ;  LL  ; [dashed]6L                  ; LL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LL ; [dashed]LLLL\\
-  Chip \#   &     4D{xx}R    ;                                       [fill=white]64D{Last Chip}                                                                ; [dashed,fill=white]6D{...}  ;                                                          [fill=white]68D{First Chip}                                               ; [dashed]6D{xx}    \\
-\extracode
-  \begin{pgfonlayer}{background}
-    \begin{scope}[semitransparent,semithick]
-      \vertlines[red]{5.1,9.1,...,66.1}
-      \vertlines[red]{79.1,83.1,...,140.1}
-    \end{scope}
-  \end{pgfonlayer}
-\end{tikztimingtable}
-\end{document}
-{% endltx %}
+{% wavedrom %}
+{ signal : [
+  {name: "Sample #",  wave: "x5555555555555555\|5555555555555555xx", data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, "", "N", "+1", "+2", "+3", "+4", "+5", "+6", "+7", "+8", "+9", "10", "11", "12", "13", "14", "15"]},
+  {name: "LE",        wave: "l................\|............1...0x"},
+  {name: "DCLK",      wave: "P................\|.................x"},
+  {name: "DO",        wave: "01.01010.1....0.1\|01.01010.1....0.1x"},
+  {name: "GCLK",      wave: "l................\|.................x"},
+  {name: "Chip #",    wave: "x3...............\|3................x", data: ["Last Chip","First Chip"]}
+],
+  "config": {
+    "skin": "narrow",
+    "hscale": 1,
+  }
+}
+{% endwavedrom %}
 </center>
 
 ## Reset command (N=10)
 
 <center>
-
-{% ltx %}
-
-\documentclass{standalone}
-\usepackage{tikz-timing}
-\usetikztiminglibrary[new={char=Q,reset char=R}]{counters}
-
-\begin{document}
-\begin{tikztimingtable}[timing/xunit=8,timing/yunit=18]
-  Sample \# &       3U       ;  [fill=blue,text=white]4Q  ;  [fill=blue,text=white]4Q  ;  [fill=blue,text=white]4Q  ;  [fill=blue,text=white]4Q  ;  [fill=blue,text=white]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  4Q  ; 2U;          \\
-  LE        & LL [dotted]; L ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; LLLL ; LL [dotted]; \\
-  DCLK      & LL [dotted]; L ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLLL ; LL [dotted]; \\
-  DO        & LL [dotted]; L ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LL [dotted]; \\
-  GCLK      & LL [dotted]; L ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LL [dotted]; \\
-\extracode
-  \begin{pgfonlayer}{background}
-    \begin{scope}[semitransparent,semithick]
-      \vertlines[red]{5.1,9.1,...,66.1}
-    \end{scope}
-  \end{pgfonlayer}
-\end{tikztimingtable}
-\end{document}
-{% endltx %}
-
+{% wavedrom %}
+{ signal: [
+  { name: "Sample #",   wave: "x5555555555555555x", data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]},
+  { name: "LE",         wave: "x0...1..........0x"},
+  { name: "DCLK",       wave: "x0P..............x"},
+  { name: "DO",         wave: "x0...............x"},
+  { name: "GCLK",       wave: "x0...............x"},
+],
+  "config": {
+    "skin": "narrow",
+    "hscale": 2,
+  }
+}
+{% endwavedrom %}
 </center>
 
 ## Pre-active (N=14)
 
 <center>
-
-{% ltx %}
-\documentclass{standalone}
-\usepackage{tikz-timing}
-\usetikztiminglibrary[new={char=Q,reset char=R}]{counters}
-
-\begin{document}
-\begin{tikztimingtable}[timing/xunit=8,timing/yunit=18]
-  Sample \# &       3U       ;  [fill=blue,text=white]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  [fill=green,text=black]4Q  ;  4Q  ; 2U;          \\
-  LE        & LL [dotted]; L ; LLLL ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHHH ; HHLL ; LLLL ; LL [dotted]; \\
-  DCLK      & LL [dotted]; L ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLHH ; LLLL ; LL [dotted]; \\
-  DO        & LL [dotted]; L ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LL [dotted]; \\
-  GCLK      & LL [dotted]; L ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LLLL ; LL [dotted]; \\
-\extracode
-  \begin{pgfonlayer}{background}
-    \begin{scope}[semitransparent,semithick]
-      \vertlines[red]{5.1,9.1,...,66.1}
-    \end{scope}
-  \end{pgfonlayer}
-\end{tikztimingtable}
-\end{document}
-{% endltx %}
-
+{% wavedrom %}
+{ signal: [
+  { name: "Sample #",   wave: "x5555555555555555x", data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]},
+  { name: "LE",         wave: "x01.............0x"},
+  { name: "DCLK",       wave: "x0P..............x"},
+  { name: "DO",         wave: "x0...............x"},
+  { name: "GCLK",       wave: "x0...............x"},
+],
+  "config": {
+    "skin": "narrow",
+    "hscale": 2,
+  }
+}
+{% endwavedrom %}
 </center>
 

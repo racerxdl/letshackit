@@ -133,4 +133,4 @@ jekyll-spaceship:
       class: emoji
     src: https://github.githubassets.com/images/icons/emoji/
 
-incremental: true
+#incremental: true
