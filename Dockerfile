@@ -10,11 +10,12 @@ RUN npm -g install svgo
 COPY Gemfile /app
 COPY Gemfile.lock /app
 
+RUN bundle config set --local path 'vendor/bundle'
 RUN bundle update --bundler
 RUN bundle install
 
 COPY . /app
-RUN JEKYLL_ENV=production jekyll build
+RUN JEKYLL_ENV=production bundle exec jekyll build
 
 # Run environment
 FROM alpine

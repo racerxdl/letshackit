@@ -42,7 +42,7 @@ GEM
     jekyll-feed (0.16.0)
       jekyll (>= 3.7, < 5.0)
     jekyll-graphviz (0.1.0)
-    jekyll-multiple-languages-plugin (1.8.0)
+    jekyll-multiple-languages-plugin (1.7.0)
       jekyll (>= 2.0, < 5.0)
     jekyll-paginate (1.1.0)
     jekyll-redirect-from (0.16.0)
@@ -110,7 +110,7 @@ DEPENDENCIES
   bigdecimal
   jekyll-feed (>= 0.13.0)
   jekyll-graphviz
-  jekyll-multiple-languages-plugin (>= 1.6.1)
+  jekyll-multiple-languages-plugin (= 1.7.0)
   jekyll-paginate
   jekyll-redirect-from (>= 0.16.0)
   jekyll-seo-tag (>= 2.6.1)
