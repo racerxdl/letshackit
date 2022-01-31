@@ -32,4 +32,4 @@ The way I did is use a [Colorlight Hub 5A-75B board](https://s.click.aliexpress.
   * ![Drivers](/assets/lyd6168/photo_2021-02-28_04-18-44.jpg)
 
 
-[Next: MBI5153](/lyd6168/#mbi5153)
+[Next: MBI5153](/lyd6168#mbi5153)
