@@ -66,10 +66,75 @@ Besides that, when clocking `DCLK` the chip is continuously reading the `SDI` pi
 * For the commands 2,4,5,7,8,9 the SDI should be tied low.
 * For commands 1,3,6 the `SDI` is used for latching the data.
 * For commands 4,7 the `SDO` will output the data in next 16 clocks after finishing the command. The LE should be kept low.
-* The `LE` is sampled at rising-edge of `DCLK` (The vertical red line in the timing diagrams)
+* The `LE` is sampled at rising-edge of `DCLK`
 * For any command that requires data to be sent to the chips, you should only issue `LE` in the _last_ 16 bit group
   * Since data is shifted across all devices, the data for the last chip in the chain is sent first.
+  * If you want to send the same data for all devices, you need to repeat the 16 bit group for every device
+* Data is **MSB First**
 
+For the diagrams below, I assume Samples starting at 1 (so 1 to 16 range).
+
+## DATA (N=1)
+
+MBI5153 latches data to internal SRAM using 16 bits. But the PWM memory is "vertical" and the latch is "horizontal". So when you latch data, you're latching one bit from each channel. So the latch actually sends one bit per channel.
+
+Assuming channels: **A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P** and bit **0** from channel **A** being **A0**.
+
+<center>
+{% wavedrom %}
+{ signal: [
+  { name: "Sample #",   wave: "x5555555555555555x", data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]},
+  { name: "LE",         wave: "x0..............10"},
+  { name: "DCLK",       wave: "x0P..............x"},
+  { name: "DO",         wave: "x3434343434343434x", data: ["A0","B0","C0","D0","E0","F0","G0","H0","I0","J0","K0","L0","M0","N0","O0","P0"]},
+  { name: "GCLK",       wave: "x0...............x"},
+],
+  "config": {
+    "skin": "narrow",
+    "hscale": 2,
+  }
+}
+{% endwavedrom %}
+</center>
+<br/>
+<br/>
+<center>
+{% wavedrom %}
+{ signal: [
+  { name: "Sample #",   wave: "4.54\|.54\|.54\|.54", data: ["...",16,"...",16,"...",16,"...",16,"...",16]},
+  { name: "LE",         wave: "0.10\|.10\|.10\|.10"},
+  { name: "DCLK",       wave: "P...\|...\|...\|..."},
+  { name: "DO",         wave: "3..4\|..3\|..4\|..3", data: ["Bits #0","Bits #1","Bits #2","Bits #3"]},
+  { name: "GCLK",       wave: "0...\|...\|...\|..."},
+],
+  "config": {
+    "skin": "narrow",
+    "hscale": 2,
+  }
+}
+{% endwavedrom %}
+</center>
+
+## VSync (N=2)
+
+Switch internal screen buffer. The MBI5153 can hold two buffers of the entire image. So you can write one buffer and display another simultaneously.
+
+<center>
+{% wavedrom %}
+{ signal: [
+  { name: "Sample #",   wave: "x5555555555555555x", data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]},
+  { name: "LE",         wave: "x0.............1.0"},
+  { name: "DCLK",       wave: "x0P..............x"},
+  { name: "DO",         wave: "x0...............x"},
+  { name: "GCLK",       wave: "x0...............x"},
+],
+  "config": {
+    "skin": "narrow",
+    "hscale": 2,
+  }
+}
+{% endwavedrom %}
+</center>
 
 ## Write Configuration Register 1 (N=4)
 
@@ -81,8 +146,30 @@ Should issue [Pre-Active Command](#pre-active-n14) first.
   {name: "Sample #",  wave: "x5555555555555555\|5555555555555555xx", data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, "", "N", "+1", "+2", "+3", "+4", "+5", "+6", "+7", "+8", "+9", "10", "11", "12", "13", "14", "15"]},
   {name: "LE",        wave: "l................\|............1...0x"},
   {name: "DCLK",      wave: "P................\|.................x"},
-  {name: "DO",        wave: "01.01010.1....0.1\|01.01010.1....0.1x"},
-  {name: "GCLK",      wave: "l................\|.................x"},
+  {name: "DO",        wave: "x4..............x\|.4...............x", data: ["Last Chip Register Data","First Register Chip Data"]},
+  {name: "GCLK",      wave: "x0...............\|.................x"},
+  {name: "Chip #",    wave: "x3...............\|3................x", data: ["Last Chip","First Chip"]}
+],
+  "config": {
+    "skin": "narrow",
+    "hscale": 1,
+  }
+}
+{% endwavedrom %}
+</center>
+
+## Write Configuration Register 2 (N=8)
+
+Should issue [Pre-Active Command](#pre-active-n14) first.
+
+<center>
+{% wavedrom %}
+{ signal : [
+  {name: "Sample #",  wave: "x5555555555555555\|5555555555555555xx", data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, "", "N", "+1", "+2", "+3", "+4", "+5", "+6", "+7", "+8", "+9", "10", "11", "12", "13", "14", "15"]},
+  {name: "LE",        wave: "l................\|........1.......0x"},
+  {name: "DCLK",      wave: "P................\|.................x"},
+  {name: "DO",        wave: "x4..............x\|.4...............x", data: ["Last Chip Register Data","First Register Chip Data"]},
+  {name: "GCLK",      wave: "x0...............\|.................x"},
   {name: "Chip #",    wave: "x3...............\|3................x", data: ["Last Chip","First Chip"]}
 ],
   "config": {
@@ -99,7 +186,7 @@ Should issue [Pre-Active Command](#pre-active-n14) first.
 {% wavedrom %}
 { signal: [
   { name: "Sample #",   wave: "x5555555555555555x", data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]},
-  { name: "LE",         wave: "x0...1..........0x"},
+  { name: "LE",         wave: "x0.....1.........0"},
   { name: "DCLK",       wave: "x0P..............x"},
   { name: "DO",         wave: "x0...............x"},
   { name: "GCLK",       wave: "x0...............x"},
@@ -118,7 +205,7 @@ Should issue [Pre-Active Command](#pre-active-n14) first.
 {% wavedrom %}
 { signal: [
   { name: "Sample #",   wave: "x5555555555555555x", data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]},
-  { name: "LE",         wave: "x01.............0x"},
+  { name: "LE",         wave: "x0.1.............0"},
   { name: "DCLK",       wave: "x0P..............x"},
   { name: "DO",         wave: "x0...............x"},
   { name: "GCLK",       wave: "x0...............x"},
