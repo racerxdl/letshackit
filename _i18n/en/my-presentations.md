@@ -1,5 +1,6 @@
 These are my presentations. I usually don&#8217;t do good slides for the presentations so please be kind. Hope the information is useful. Most of them are in Portuguese.
 
+  * Fault Injection ( [Video](https://www.youtube.com/watch?v=BFj93s1lGI8) \| [Slides](https://docs.google.com/presentation/d/e/2PACX-1vSAg1Liox9Uu8sHm_hgog2_O25e3mYkHBNlPXHm1gWGK0mGuG2dUvqCCFytXHvEdSDAatuwoKwIXdOw/pub?start=false&loop=false&delayms=3000) )  (Portuguese) &#8211; BSides VIX 2022
   * TRUE open "stack" com RISC-V e FPGA ( [Video](https://www.youtube.com/watch?v=rmUWfHOK5Ic) \| [Slides](https://docs.google.com/presentation/d/e/2PACX-1vRGiBuinNEMNHDr84cPZdrZrqdfwdMwOhuSwAwhwy_fjhR3GoObExmX_o_JiF5_eTP1r-jLkB_D93E4/pub?start=false&loop=false&delayms=3000) ) (Portuguese) &#8211; Latinoware 2021
   * Goroutines ( [Video](https://www.youtube.com/watch?v=fAxXzADKdMo) ) (Portuguese)  &#8211; Golang SP 2021/07
   * MC 1:1 ( [Video](https://www.youtube.com/watch?v=Z_Qv01rwEPs) ) (Portuguese)  &#8211; Marcel Campos
