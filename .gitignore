@@ -6,3 +6,4 @@ _site/
 *.sublime-project
 .bundle
 vendor
+.vscode

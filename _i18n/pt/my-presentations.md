@@ -1,5 +1,6 @@
 Essas são as minhas apresentações. Geralmente eu sou péssimo para fazer os slides da apresentação, então por favor seja gentil. Espero que as informações sejam úteis. A maioria delas está em português.
 
+  * Fault Injection ( [Video](https://youtu.be/YcwwKnnRJjk?t=5417) \| [Slides](https://docs.google.com/presentation/d/1OJJfyzHfPZx7ctUYytGZ_xhn55dlfD_2A4d1KD5JdRk/edit?usp=sharing) )  (Portuguese) &#8211; II Semana Aratu - Boitatech
   * Fault Injection ( [Video](https://www.youtube.com/watch?v=BFj93s1lGI8) \| [Slides](https://docs.google.com/presentation/d/e/2PACX-1vSAg1Liox9Uu8sHm_hgog2_O25e3mYkHBNlPXHm1gWGK0mGuG2dUvqCCFytXHvEdSDAatuwoKwIXdOw/pub?start=false&loop=false&delayms=3000) )  (Portuguese) &#8211; BSides VIX 2022
   * TRUE open "stack" com RISC-V e FPGA ( [Video](https://www.youtube.com/watch?v=rmUWfHOK5Ic) \| [Slides](https://docs.google.com/presentation/d/e/2PACX-1vRGiBuinNEMNHDr84cPZdrZrqdfwdMwOhuSwAwhwy_fjhR3GoObExmX_o_JiF5_eTP1r-jLkB_D93E4/pub?start=false&loop=false&delayms=3000) ) (Portuguese) &#8211; Latinoware 2021
   * Goroutines ( [Video](https://www.youtube.com/watch?v=fAxXzADKdMo) ) (Portuguese)  &#8211; Golang SP 2021/07
