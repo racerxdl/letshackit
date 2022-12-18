@@ -1,0 +1,37 @@
+name: Build Page (GH)
+on:
+  push:
+    branches:
+      - 'master'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ github.head_ref }}
+        fetch-depth: 0
+    - name: Prepare env
+      run: |
+        sudo apt install -y graphviz texlive-full npm inkscape pdf2svg
+        sudo gem install bundler
+        npm -g install svgo
+        bundle config set --local path 'vendor/bundle'
+        bundle update --bundler
+        bundle install
+    - name: Build Jekyll
+      run: |
+        JEKYLL_ENV=production bundle exec jekyll build
+        cp -Rv _site ../site_temp
+    - name: Commit files
+      run: |
+        rm Gemfile.lock
+        git checkout gh-pages
+        cp -Rv ../site_temp/* .
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git commit -a -m "Site updated at `date`"
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        branch: gh-pages
