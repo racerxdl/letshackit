@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://lucasteske.dev/sitemap_index.xml

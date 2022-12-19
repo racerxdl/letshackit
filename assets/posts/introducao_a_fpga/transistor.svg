@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="500"
+   height="350"
+   viewBox="0 0 132.29166 92.604169"
+   version="1.1"
+   id="svg1556"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="transistor.svg">
+  <defs
+     id="defs1550" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="198.40421"
+     inkscape:cy="143.12175"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1642"
+     inkscape:window-height="971"
+     inkscape:window-x="2050"
+     inkscape:window-y="33"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata1553">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       style="fill:#008400;fill-opacity:0;stroke:#008400;stroke-width:60;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       id="g1250"
+       transform="matrix(0.00254,0,0,0.00254,-74.71924,-14.36884)" />
+    <g
+       style="fill:#840000;fill-opacity:0;stroke:#840000;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       id="g984"
+       transform="matrix(0.02032,0,0,0.02032,-956.25497,-400.73792)">
+      <g
+         id="g938" />
+      <g
+         style="fill:#840000;fill-opacity:0;stroke:#840000;stroke-width:100;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         id="g942">
+        <circle
+           cx="51000"
+           cy="22000"
+           r="1110"
+           id="circle940" />
+      </g>
+      <g
+         style="fill:#840000;fill-opacity:0;stroke:#840000;stroke-width:60;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         id="g948">
+        <path
+           style="fill:none;fill-opacity:0;stroke:#840000;stroke-width:60;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+           d="m 50750,21750 750,-750"
+           id="path944" />
+        <path
+           style="fill:none;fill-opacity:0;stroke:#840000;stroke-width:60;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+           d="m 50750,22250 750,750 v 0"
+           id="path946" />
+      </g>
+      <g
+         style="fill:#840000;fill-opacity:0;stroke:#840000;stroke-width:200;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         id="g952">
+        <path
+           style="fill:none;fill-opacity:0;stroke:#840000;stroke-width:200;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+           d="m 50750,21250 v 1500 0"
+           id="path950" />
+      </g>
+      <g
+         style="fill:#840000;fill-opacity:1;stroke:#840000;stroke-width:60;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         id="g956">
+        <path
+           style="fill:#840000;fill-opacity:1;fill-rule:evenodd;stroke:#840000;stroke-width:60;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+           d="m 51000,22700 200,-200 200,400 z"
+           id="path954" />
+      </g>
+      <g
+         style="fill:#840000;fill-opacity:0;stroke:#840000;stroke-width:60;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         id="g982">
+        <path
+           d="m 51500,23000 v 1000"
+           id="path958" />
+        <g
+           transform="rotate(-90,51600,23500)"
+           id="g962">
+          <text
+             x="51600"
+             y="24000"
+             textLength="540"
+             font-size="660px"
+             lengthAdjust="spacingAndGlyphs"
+             text-anchor="middle"
+             opacity="0"
+             id="text960">1</text>
+        </g>
+        <path
+           d="m 52070,23350 v 290"
+           id="path964" />
+        <path
+           d="m 52070,23500 h -500 l 70,40 50,50 20,50"
+           id="path966" />
+        <path
+           d="M 50750,22000 H 48500"
+           id="path968" />
+        <text
+           x="49620"
+           y="22600"
+           textLength="540"
+           font-size="660px"
+           lengthAdjust="spacingAndGlyphs"
+           text-anchor="middle"
+           opacity="0"
+           id="text970">2</text>
+        <path
+           d="m 49470,22120 30,-20 40,-30 h 120 l 50,30 20,20 30,50 v 40 l -30,80 -280,280 h 310"
+           id="path972" />
+        <path
+           d="M 51500,21000 V 20000"
+           id="path974" />
+        <g
+           transform="rotate(-90,51600,20500)"
+           id="g978">
+          <text
+             x="51600"
+             y="21000"
+             textLength="540"
+             font-size="660px"
+             lengthAdjust="spacingAndGlyphs"
+             text-anchor="middle"
+             opacity="0"
+             id="text976">3</text>
+        </g>
+        <path
+           d="m 51570,20660 v -310 l 190,170 v -70 l 30,-50 20,-20 50,-30 h 120 l 40,30 30,20 20,50 v 140 l -20,50 -30,20"
+           id="path980" />
+      </g>
+    </g>
+  </g>
+</svg>

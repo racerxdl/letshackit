@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" property="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  <title>The Parallella Board and HyperSignal | Lets Hack It</title>
+
+  <!-- Global -->
+  <link rel="canonical" href="https://lucasteske.dev/2014/10/the-parallella-board-and-hypersignal/">
+  <meta name="generator" property="generator" content="Jekyll v4.2.2">
+  <meta name="author" property="author" content="Lucas Teske">
+  <meta name="description" property="description" content="I&amp;#8217;ve got my Parallella board a few months ago (at Campus Party Brazil of 2014 to be exact). I&amp;#8217;ve already studyied the Epiphany Processor ManyCore Architecture before, and I was excited to get one of those boards at my hand. The first thing I imagine to do, is a Matrix...">
+  
+  <meta name="keywords" content="ARM, Bootleneck, Epiphany, Manycore, Multithreading, Parallella, Performance, Power, x86">
+  
+  <!-- Open Graph -->
+  <meta name="og:locale" property="og:locale" content="en">
+  <meta name="og:type" property="og:type" content="article">
+  <meta name="og:title" property="og:title" content="The Parallella Board and HyperSignal | Lets Hack It">
+  <meta name="og:url" property="og:url" content="https://lucasteske.dev/2014/10/the-parallella-board-and-hypersignal/">
+  <meta name="og:image" property="og:image" content="https://lucasteske.dev/assets/cropped-logo.png">
+  <meta name="og:site_name" property="og:site_name" content="Lets Hack It">
+  <meta name="og:description" property="og:description" content="I&amp;#8217;ve got my Parallella board a few months ago (at Campus Party Brazil of 2014 to be exact). I&amp;#8217;ve already studyied the Epiphany Processor ManyCore Architecture before, and I was excited to get one of those boards at my hand. The first thing I imagine to do, is a Matrix...">
+
+  <!-- Article -->
+  <meta name="article:author" property="article:author" content="https://www.facebook.com/teskeslab">
+  <meta name="article:publisher" property="article:publisher" content="https://www.facebook.com/teskeslab">
+  <meta name="article:published_time" property="article:published_time" content="2014-10-01T20:18:48-03:00">
+
+  <!-- Facebook -->
+  <meta name="fb:admins" property="fb:admins" content="1234">
+  <meta name="fb:app_id" property="fb:app_id" content="1209208119176770">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" property="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" property="twitter:title" content="The Parallella Board and HyperSignal | Lets Hack It">
+  <meta name="twitter:site" property="twitter:site" content="@lucasteske">
+  <meta name="twitter:creator" property="twitter:creator" content="@lucasteske">
+  <meta name="twitter:description" property="twitter:description" content="I&amp;#8217;ve got my Parallella board a few months ago (at Campus Party Brazil of 2014 to be exact). I&amp;#8217;ve already studyied the Epiphany Processor ManyCore Architecture before, and I was excited to get one of those boards at my hand. The first thing I imagine to do, is a Matrix...">
+  <meta name="twitter:image" property="twitter:image" content="https://lucasteske.dev/assets/cropped-logo.png">
+  <meta name="twitter:image:alt" property="twitter:image:alt" content="I&amp;#8217;ve got my Parallella board a few months ago (at Campus Party Brazil of 2014 to be exact). I&amp;#8217;ve already studyied the Epiphany Processor ManyCore Architecture before, and I was excited to get one of those boards at my hand. The first thing I imagine to do, is a Matrix...">
+
+  <!-- JSON LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "url": "https://lucasteske.dev/2014/10/the-parallella-board-and-hypersignal/",
+    "name": "The Parallella Board and HyperSignal | Lets Hack It",
+    "headline": "The Parallella Board and HyperSignal | Lets Hack It",
+    "keywords": "ARM,Bootleneck,Epiphany,Manycore,Multithreading,Parallella,Performance,Power,x86",
+    "description": "I&#8217;ve got my Parallella board a few months ago (at Campus Party Brazil of 2014 to be exact). I&#8217;ve already studyied the Epiphany Processor ManyCore Architecture before, and I was excited to get one of those boards at my hand. The first thing I imagine to do, is a Matrix...",
+    "articleBody": "I&#8217;ve got my Parallella board a few months ago (at Campus Party Brazil of 2014 to be exact). I&#8217;ve already studyied the Epiphany Processor ManyCore Architecture before, and I was excited to get one of those boards at my hand. The first thing I imagine to do, is a Matrix Upscaler Interpolator for my project HyperSignal (its offline now, but I will get it online soon and code at github) because the simple nature of a interpolation algorithm drops all the overhead of multithreading over the memory controller, that has limited number of simultaneous access and also depends on how the operating system manages that. So I have in my mind the old timings that I usually take for rendering the Image tiles (the matrix upscaled). I had about a 8 milion matrix componentes to be upscaled on Google Maps Tiles. Obviously each Google Maps Tiles only use a few hundred of values for upscaling. So it was about 5600 tiles and was taking about 5 hours to do that in a i7 980 running at 6 threads 3.2GHz, 24GB of DDR3 RAM @ 1333MHz. That was really concerning me because of the speed, 5 hours for just 5 thousand...",
+    "datePublished": "2014-10-01 20:18:48 -0300",
+    "dateModified": "2014-10-01 20:18:48 -0300",
+    "author": {
+      "@type": "Person",
+      "name": "Lucas Teske",
+      "email": "letshackit@nvx.li"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Lets Hack It",
+      "url": "https://lucasteske.dev",
+      "logo": {
+        "@type": "ImageObject",
+        "width": 32,
+        "height": 32,
+        "url": "https://lucasteske.dev/icon/favicon.ico"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://lucasteske.dev/2014/10/the-parallella-board-and-hypersignal/"
+    },
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://lucasteske.dev/assets/cropped-logo.png"
+    }
+  }
+  </script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/assets/theme.css">
+  <link rel="stylesheet" href="/assets/flag-icon.min.css">
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="manifest" href="/assets/site.webmanifest">
+  <link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="/assets/favicon.ico">
+  <meta name="msapplication-TileColor" property="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-config" property="msapplication-config" content="/assets/browserconfig.xml">
+  <meta name="theme-color" property="theme-color" content="#ffffff">
+
+  <!-- Custom Scripts -->
+  <script async src="/assets/syntaxhighlighter.min.js"></script>
+  <script async src="/assets/simple-jekyll-search.min.js"></script>
+
+  <!-- RSS -->
+  <link type="application/atom+xml" rel="alternate" href="https://lucasteske.dev/feed.xml" title="Lets Hack It">
+
+  <!-- Google Analytics-->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-32251405-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-32251405-2');
+</script>
+  
+</head>
+
+  <body>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&amp;version=v4.0&amp;appId=1209208119176770&amp;autoLogAppEvents=1"></script>
+    <div class="like-box">
+      <div class="fb-like" data-href="https://lucasteske.dev/2014/10/the-parallella-board-and-hypersignal/" data-width="" data-layout="box_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+    </div>
+    <a href="https://github.com/racerxdl/letshackit" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#70B7FD; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+    <main class="site">
+      
+<br>
+<img src="/assets/cropped-logo.png" style="margin-left: auto; margin-right: auto;">
+<ul class="language-bar">
+  
+  
+  <a class="link-pt flag-icon flag-icon-us" href="/2014/10/the-parallella-board-and-hypersignal/"></a>
+  <a class="link-en flag-icon flag-icon-br" href="/pt/2014/10/the-parallella-board-and-hypersignal/"></a>
+</ul>
+<nav class="nav">
+  <div class="nav-container" style="height: 50px">
+    <ul class="navul">
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/donate">Donate</a></li>
+      <li><a href="/calculators">Calculators</a></li>
+      <li><a href="/my-presentations">My Presentations</a></li>
+      <li><a href="/satcom-projects">Satcom Projects</a></li>
+      <li><a href="/my-tesla-coils">My Tesla Coils</a></li>
+      <li><a href="/biggateboy">Big Gate Boy</a></li>
+      <li><a href="/about">About</a></li>
+    
+    </ul>
+  </div>
+</nav>
+<div class="social-icon">
+  <ul>
+    <li class="btn-a btn-svg btn-twitch">
+      <a href="https://twitch.tv/racerxdl">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><title>Twitch icon</title>
+<path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"></path></svg>
+
+        RacerXDL
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-twitter">
+      <a href="https://twitter.com/lucasteske">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Twitter icon</title>
+<path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"></path></svg>
+        @lucasteske
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-instagram">
+      <a href="https://instagram.com/racerxdl/">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Instagram icon</title>
+<path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"></path></svg>
+        @racerxdl
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-facebook">
+      <a href="https://www.facebook.com/teskeslab">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Facebook icon</title>
+<path d="M23.9981 11.9991C23.9981 5.37216 18.626 0 11.9991 0C5.37216 0 0 5.37216 0 11.9991C0 17.9882 4.38789 22.9522 10.1242 23.8524V15.4676H7.07758V11.9991H10.1242V9.35553C10.1242 6.34826 11.9156 4.68714 14.6564 4.68714C15.9692 4.68714 17.3424 4.92149 17.3424 4.92149V7.87439H15.8294C14.3388 7.87439 13.8739 8.79933 13.8739 9.74824V11.9991H17.2018L16.6698 15.4676H13.8739V23.8524C19.6103 22.9522 23.9981 17.9882 23.9981 11.9991Z"></path></svg>
+        Teske's Lab
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-github">
+      <a href="https://github.com/racerxdl">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub icon</title>
+<path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg>
+        @racerxdl
+      </a>
+    </li>
+<br>
+    <li class="btn-a btn-svg btn-youtube">
+      <a href="https://www.youtube.com/c/TeskesLab">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><title>YouTube icon</title>
+<path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"></path></svg>
+        Teske's Lab
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-linkedin">
+      <a href="https://www.linkedin.com/in/lucas-teske-8206301b/">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn icon</title>
+<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+        Lucas Teske
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-code-stats">
+      <a href="https://codestats.net/users/racerxdl">
+        <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="360px" height="360px" viewbox="0 0 360 360" enable-background="new 0 0 360 360" xml:space="preserve">
+<path d="M174,81.741v27.509C161.913,104,133.5,93.5,109.789,94.6c-23.859,1.107-42.172,7.301-54.859,21.902
+	c-12.689,14.603-19.033,35.71-19.033,63.326c0,27.524,6.344,48.585,19.033,63.186c12.687,14.603,30.974,21.901,54.859,21.901
+	c12.127,0,41.461-5.665,64.211-19.115v29.528c-8.75,2.672-33.75,12.422-65.891,12.818c-31.625,0.39-56.538-9.678-74.731-29.039
+	c-18.193-19.358-27.29-45.784-27.29-79.28c0-33.587,9.097-60.059,27.29-79.42c18.193-19.358,43.113-28.252,74.731-29.039
+	C133,70.75,155.808,77.431,174,81.741z M341.423,82.005v27.569c-10.729-5.13-20.852-8.957-30.368-11.476s-18.707-3.778-27.569-3.778
+	c-15.395,0-27.268,2.987-35.616,8.957c-8.352,5.972-12.525,14.462-12.525,25.47c0,9.236,2.774,16.212,8.327,20.922
+	c5.55,4.712,16.069,8.515,31.558,11.406l17.073,3.499c21.084,4.013,36.643,11.08,46.673,21.202
+	c10.027,10.124,15.044,23.675,15.044,40.654c0,20.247-6.787,35.595-20.362,46.043c-13.575,10.45-33.472,15.674-59.688,15.674
+	c-9.89,0-20.41-1.119-31.558-3.358c-11.15-2.239-22.695-5.55-34.637-9.937v-29.109c11.476,6.438,22.717,11.29,33.727,14.555
+	c11.008,3.267,21.832,4.898,32.468,4.898c16.14,0,28.596-3.171,37.366-9.517c8.769-6.344,13.155-15.395,13.155-27.149
+	c0-10.262-3.149-18.285-9.447-24.071c-6.297-5.783-16.632-10.122-30.998-13.015l-17.213-3.358
+	c-21.086-4.199-36.341-10.776-45.763-19.733c-9.425-8.957-14.135-21.412-14.135-37.366c0-18.473,6.508-33.027,19.522-43.664
+	c13.015-10.636,30.95-15.954,53.81-15.954c9.796,0,19.778,0.888,29.948,2.659C320.383,75.801,330.787,78.46,341.423,82.005z"></path>
+<path d="M86.199,153.037c0-2.98,1.024-5.495,3.074-7.544c2.048-2.048,4.563-3.073,7.544-3.073c3.034,0,5.561,1.011,7.584,3.034
+	c2.022,2.023,3.034,4.55,3.034,7.584s-1.012,5.563-3.034,7.584c-2.023,2.023-4.551,3.034-7.584,3.034
+	c-2.981,0-5.496-1.024-7.544-3.074C87.223,158.533,86.199,156.018,86.199,153.037z M86.199,205.089c0-2.979,1.024-5.509,3.074-7.584
+	c2.048-2.076,4.563-3.113,7.544-3.113c2.98,0,5.495,1.037,7.544,3.113c2.048,2.075,3.074,4.604,3.074,7.584
+	c0,2.981-1.012,5.496-3.034,7.545c-2.023,2.048-4.551,3.073-7.584,3.073s-5.562-1.025-7.584-3.073
+	C87.209,210.585,86.199,208.07,86.199,205.089z M141.135,153.037c0-2.98,1.024-5.495,3.074-7.544
+	c2.048-2.048,4.563-3.073,7.544-3.073c3.034,0,5.561,1.011,7.584,3.034c2.022,2.023,3.034,4.55,3.034,7.584
+	s-1.012,5.563-3.034,7.584c-2.023,2.023-4.551,3.034-7.584,3.034c-2.981,0-5.496-1.024-7.544-3.074
+	C142.159,158.533,141.135,156.018,141.135,153.037z M141.135,205.089c0-2.979,1.024-5.509,3.074-7.584
+	c2.048-2.076,4.563-3.113,7.544-3.113c2.98,0,5.495,1.037,7.544,3.113c2.048,2.075,3.074,4.604,3.074,7.584
+	c0,2.981-1.012,5.496-3.034,7.545c-2.023,2.048-4.551,3.073-7.584,3.073s-5.563-1.025-7.584-3.073
+	C142.146,210.585,141.135,208.07,141.135,205.089z"></path>
+</svg>
+
+        racerxdl
+      </a>
+    </li>
+<br>
+    <li class="btn-a btn-svg btn-telegram">
+      <a href="https://t.me/hardwareHackingBrasil">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><title>Telegram icon</title>
+<path d="M23.91 3.79L20.3 20.84c-.25 1.21-.98 1.5-2 .94l-5.5-4.07-2.66 2.57c-.3.3-.55.56-1.1.56-.72 0-.6-.27-.84-.95L6.3 13.7l-5.45-1.7c-1.18-.35-1.19-1.16.26-1.75l21.26-8.2c.97-.43 1.9.24 1.53 1.73z"></path></svg>
+        Hardware Hacking Brasil
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-patreon">
+      <a href="https://www.patreon.com/teskeslab">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Patreon</title>
+<path d="M0 .48v23.04h4.22V.48zm15.385 0c-4.764 0-8.641 3.88-8.641 8.65 0 4.755 3.877 8.623 8.641 8.623 4.75 0 8.615-3.868 8.615-8.623C24 4.36 20.136.48 15.385.48z"></path></svg>
+        Patreon
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-mastodon">
+      <a rel="me" href="https://infosec.exchange/@lucasteske">
+        <svg width="24px" height="24px" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"><path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"></path></svg>
+        Mastodon
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="search-input">
+  <input type="text" id="search-input" style="margin: 0 auto;" placeholder="Search blog posts...">
+</div>
+<ul id="results-container" class="results-container"></ul>
+
+      
+
+
+
+
+
+<div class="post">
+  <h1 class="post-title">The Parallella Board and HyperSignal</h1>
+  <div class="post-info">
+    
+    <span>Written by</span>
+    
+        Lucas Teske
+    
+    
+
+    
+      <br>
+      <span>on </span><time datetime="2014-10-01 20:18:48 -0300">
+  1
+  
+  October
+  2014
+</time>
+    
+  </div>
+
+  <div class="post-line"></div>
+
+  <p><a href="https://www.teske.net.br/lucas/wp-content/uploads/2014/10/parallella.jpg"><img class="size-medium wp-image-67 aligncenter" src="https://www.teske.net.br/lucas/wp-content/uploads/2014/10/parallella-300x300.jpg" alt="parallella" width="300" height="300" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2014/10/parallella-300x300.jpg 300w, https://www.teske.net.br/lucas/wp-content/uploads/2014/10/parallella-150x150.jpg 150w, https://www.teske.net.br/lucas/wp-content/uploads/2014/10/parallella-624x624.jpg 624w, https://www.teske.net.br/lucas/wp-content/uploads/2014/10/parallella.jpg 640w" sizes="(max-width: 300px) 100vw, 300px"></a></p>
+
+<p style="text-align: justify;">
+  I’ve got my Parallella board a few months ago (at Campus Party Brazil of 2014 to be exact). I’ve already studyied the Epiphany Processor ManyCore Architecture before, and I was excited to get one of those boards at my hand.
+</p>
+
+<p style="text-align: justify;">
+  <!--more-->
+</p>
+
+<p style="text-align: justify;">
+  The first thing I imagine to do, is a Matrix Upscaler Interpolator for my project HyperSignal (its offline now, but I will get it online soon and code at github) because the simple nature of a interpolation algorithm drops all the overhead of multithreading over the memory controller, that has limited number of simultaneous access and also depends on how the operating system manages that.
+</p>
+
+<p style="text-align: justify;">
+  So I have in my mind the old timings that I usually take for rendering the Image tiles (the matrix upscaled). I had about a 8 milion matrix componentes to be upscaled on Google Maps Tiles. Obviously each Google Maps Tiles only use a few hundred of values for upscaling. So it was about 5600 tiles and was taking about 5 hours to do that in a i7 980 running at 6 threads 3.2GHz, 24GB of DDR3 RAM @ 1333MHz. That was really concerning me because of the speed, 5 hours for just 5 thousand tiles. That was basicly just my city signal overlay (São Paulo).
+</p>
+
+<p style="text-align: justify;">
+  I was also aware that this problem is very very easy to scale. Since there is individual tiles that doesnt rely on their neighboars. So I could easily take over 100 computers and reduce 1/100 of the time. But that would be expensive and also consumes a lot of power (My i7 was consuming 400W to do that work).
+</p>
+
+<p style="text-align: justify;">
+  And them, the Parallella Board got my attention in their early notice on the internet ( I think in 2012 or 2013 they was announced), so I decided to give a try. Even with the HyperSignal being just a Mathematics Study for me, messing with that board would also get a good knowledge for me.
+</p>
+
+<p style="text-align: justify;">
+  But I got busy and them just few weeks I managed to get time to mess with it.
+</p>
+
+<h1 style="text-align: justify;">
+  Starting the programming
+</h1>
+
+<p style="text-align: justify;">
+  The HyperSignal project has been shutdown in middle of 2013, mostly because the VPS Service (Hostlocation) has lost ALL of my data including the backups. Now I learned that I should make a backup with another company also. But I still have the most recent program files, I’m just dont have that 8M matrix database. But okay, I dont need it to test it.
+</p>
+
+<p style="text-align: justify;">
+  So the original interpolation code an NxM sample matrix and upscales to WxH tile matrix using a python script to fetch the necessary data from database, organizing the threads and the Weaver Module to do the interpolation in native code. It also was blurring the output matrix to remove few artifacts from the optimization that I did.
+</p>
+
+<p style="text-align: justify;">
+  I had two options of interpolation: Bilinear and Bicosine. Bicosine gets a result near of Bicubic interpolation, but its A LOT faster. Also since the HyperSignal fetches the data using GPS and GPS doesnt have a lot of precision (usually 2.5 meters or more), the bicosine was OK. So we have that two mathematics formula:
+</p>
+
+<p style="text-align: justify;">
+  Bilinear
+</p>
+
+<blockquote>
+  <p>Having f(x,y) as sample lookup if x and y are integers, and</p>
+
+  <p class="ql-center-displayed-equation" style="line-height: 18px;">
+  <span class="ql-right-eqno">   </span><span class="ql-left-eqno">   </span><img src="https://www.teske.net.br/lucas/wp-content/ql-cache/quicklatex.com-d4032d1053408eb7342ad107edb9e434_l3.png" height="18" width="612" class="ql-img-displayed-equation quicklatex-auto-format" alt="\[f(x,y) \approx f(0,0)*(1-x)*(1-y) + f(1,0) * x * (1-y) + f(0,1) * (1-x) * y + f(1,1)*x*y\]" title="Rendered by QuickLaTeX.com">
+</p>
+
+  <p>for non integers</p>
+</blockquote>
+
+<p>Bicosine:</p>
+
+<blockquote>
+  <p>Having mw as matrix width, f(x,y) as sample lookup for integer x and y,</p>
+
+  <p class="ql-center-displayed-equation" style="line-height: 19px;">
+  <span class="ql-right-eqno">   </span><span class="ql-left-eqno">   </span><img src="https://www.teske.net.br/lucas/wp-content/ql-cache/quicklatex.com-9832f449a79dc7fe0cb1c6a2464a07bb_l3.png" height="19" width="221" class="ql-img-displayed-equation quicklatex-auto-format" alt="\[CF(\Delta)=(1-\cos(\Delta*\pi))/2\]" title="Rendered by QuickLaTeX.com">
+</p>
+
+  <p class="ql-center-displayed-equation" style="line-height: 18px;">
+  <span class="ql-right-eqno">   </span><span class="ql-left-eqno">   </span><img src="https://www.teske.net.br/lucas/wp-content/ql-cache/quicklatex.com-54a1cbfaacf9f6eeb377bb73d3010216_l3.png" height="18" width="417" class="ql-img-displayed-equation quicklatex-auto-format" alt="\[CI(y0,y1,mw)=y0*(1-CF(mw))+y1*CF(mw)\]" title="Rendered by QuickLaTeX.com">
+</p>
+
+  <p class="ql-center-displayed-equation" style="line-height: 18px;">
+  <span class="ql-right-eqno">   </span><span class="ql-left-eqno">   </span><img src="https://www.teske.net.br/lucas/wp-content/ql-cache/quicklatex.com-598ad3f832a4d2a85bf1e199ec10d30c_l3.png" height="18" width="209" class="ql-img-displayed-equation quicklatex-auto-format" alt="\[C0 = f(floor(x),floor(y))\]" title="Rendered by QuickLaTeX.com">
+</p>
+
+  <p class="ql-center-displayed-equation" style="line-height: 18px;">
+  <span class="ql-right-eqno">   </span><span class="ql-left-eqno">   </span><img src="https://www.teske.net.br/lucas/wp-content/ql-cache/quicklatex.com-351954798bc9338e4f0b0e5248b02f1d_l3.png" height="18" width="239" class="ql-img-displayed-equation quicklatex-auto-format" alt="\[C1 = f(floor(x)+1,floor(y))\]" title="Rendered by QuickLaTeX.com">
+</p>
+
+  <p class="ql-center-displayed-equation" style="line-height: 18px;">
+  <span class="ql-right-eqno">   </span><span class="ql-left-eqno">   </span><img src="https://www.teske.net.br/lucas/wp-content/ql-cache/quicklatex.com-f57f05d68afedd5c474ff387bcef591a_l3.png" height="18" width="239" class="ql-img-displayed-equation quicklatex-auto-format" alt="\[C2 = f(floor(x),floor(y)+1)\]" title="Rendered by QuickLaTeX.com">
+</p>
+
+  <p class="ql-center-displayed-equation" style="line-height: 18px;">
+  <span class="ql-right-eqno">   </span><span class="ql-left-eqno">   </span><img src="https://www.teske.net.br/lucas/wp-content/ql-cache/quicklatex.com-e3f9da32e0ea125ac78a5521c6f45203_l3.png" height="18" width="269" class="ql-img-displayed-equation quicklatex-auto-format" alt="\[C3 = f(floor(x)+1,floor(y)+1)\]" title="Rendered by QuickLaTeX.com">
+</p>
+
+  <p class="ql-center-displayed-equation" style="line-height: 18px;">
+  <span class="ql-right-eqno">   </span><span class="ql-left-eqno">   </span><img src="https://www.teske.net.br/lucas/wp-content/ql-cache/quicklatex.com-9beeb256ce3aa3c3000132ee3485a5bb_l3.png" height="18" width="247" class="ql-img-displayed-equation quicklatex-auto-format" alt="\[TOP =CI(c0,c1,x - floor(x))\]" title="Rendered by QuickLaTeX.com">
+</p>
+
+  <p class="ql-center-displayed-equation" style="line-height: 18px;">
+  <span class="ql-right-eqno">   </span><span class="ql-left-eqno">   </span><img src="https://www.teske.net.br/lucas/wp-content/ql-cache/quicklatex.com-c459a35598aa6c7b41eccb6f25a769d1_l3.png" height="18" width="293" class="ql-img-displayed-equation quicklatex-auto-format" alt="\[BOTTOM = CI(c2,c3,x - floor(x))\]" title="Rendered by QuickLaTeX.com">
+</p>
+
+  <p class="ql-center-displayed-equation" style="line-height: 18px;">
+  <span class="ql-right-eqno">   </span><span class="ql-left-eqno">   </span><img src="https://www.teske.net.br/lucas/wp-content/ql-cache/quicklatex.com-82eb24a7e8c5aa82bccd5cba60cabcd8_l3.png" height="18" width="353" class="ql-img-displayed-equation quicklatex-auto-format" alt="\[f(x,y) \approx CI(TOP,BOTTOM,y-floor(y));\]" title="Rendered by QuickLaTeX.com">
+</p>
+
+  <p>for non integer x,y.</p>
+
+  <p>CF = CosineFactor, CI = CosineInterpolate</p>
+</blockquote>
+
+<p>So I made a few helper functions in C based on my previous work:</p>
+
+<pre class="brush: cpp; title: ; notranslate" title="">unsigned char bilinear(const unsigned char *data, double x, double y, int mw)	{
+	int rx = (int)(x);
+	int ry = (int)(y);
+	float fracX = x - rx;
+	float fracY = y - ry;
+	float invfracX = 1.f - fracX;
+	float invfracY = 1.f - fracY;
+
+	unsigned char a = val(data,rx,ry,mw);
+	unsigned char b = val(data,rx+1,ry,mw);
+	unsigned char c = val(data,rx,ry+1,mw);
+	unsigned char d = val(data,rx+1,ry+1,mw);
+
+	return ( a * invfracX + b * fracX) * invfracY + ( c * invfracX + d * fracX) * fracY;
+}
+</pre>
+
+<pre class="brush: cpp; title: ; notranslate" title="">inline double cosineInterpolate(double y0, double y1, double mu)	{
+	double mu2 = (1-cos(mu*M_PI))/2;
+	return (y0*(1-mu2)+y1*mu2);
+}
+
+unsigned char bicosine(const unsigned char *data, double x, double y, int mw)	{
+
+	double baseX	=	floor(x);			//	X Integer Part
+	double baseY	=	floor(y);			//	Y Integer Part
+	double fracX	=	x - baseX;			//	Fraction Part of X
+	double fracY	=	y - baseY;			//	Fraction Part of Y
+
+	double y0		=	baseY;			//	Previous Y value
+	double y1		=	baseY+1;		//	Next Y value
+	double x0		=	baseX;			//	Previous X value
+	double x1		=	baseX+1;		//	Next X value
+
+	//	Find c0 = f(x0,y0)  and c1 = f(x1,y0)
+	unsigned char c0 = val(data, y0, x0, mw);
+	unsigned char c1 = val(data, y0, x1, mw);
+
+	//	Find c2 = f(x0,y1) and c3 = f(x1,y1)
+	unsigned char c2 = val(data, y1, x0, mw);
+	unsigned char c3 = val(data, y1, x1, mw);
+
+	//	Interpolate from c0 to c1 to find top = f(fracX,y0)
+	double top	=	cosineInterpolate((double)c0,(double)c1,fracX);
+
+	//	Interpolate from c2 to c3 to find bottom = f(fracX,y1)
+	double bottom	=	cosineInterpolate((double)c2,(double)c3,fracX);
+
+	//	Interpolate from top to bottom to find f(x,y)
+	return cosineInterpolate(top,bottom,fracY);
+
+}
+</pre>
+
+<p>I will not post the entire code here, it will be soon on github.That pieces of code are just for reference when I talk about Epiphany Performance Issues I had.</p>
+
+<p>So for the Host program I did use PThreads for threading. So since I have limited RAM on Epiphany, I need to make a compile time variables to set how much memory the thread can use. The biggest memory use will be on the output matrix, that on my case should be 256×256. Since this would take 65k of unsigned chars, I couldnt fit on only one epiphany core. For that, I made a Work Struct with a compile time Defines for Sample Width and Height and Output Width and Height. Also I set deltas and scale variables so I could split a tile in many and make each core process a piece of the tile. I decided to give a try with 128×128 matrix, that would use 16KB of memory, and should fit nicely on Epiphany Core RAM. So here is my work struct:</p>
+
+<pre class="brush: cpp; title: ; notranslate" title="">#define SAMPLE_WIDTH 8
+#define SAMPLE_HEIGHT 8
+
+#define OUTPUT_WIDTH 128
+#define OUTPUT_HEIGHT 128
+
+#define SAMPLE_SIZE (SAMPLE_WIDTH * SAMPLE_HEIGHT)
+#define OUTPUT_SIZE (OUTPUT_WIDTH * OUTPUT_HEIGHT)
+
+#define CURRENT_POS (0x2000)
+
+#define NUM_WORKS 4
+#define BUF_SIZE 32
+
+#define ALIGN8 8
+
+typedef struct __attribute__((aligned(ALIGN8))) {
+   int workid;							//	Work ID
+   float x0, y0;						//	Coordinates
+   float sx, sy;						//	ScaleX and ScaleY
+   unsigned char sample[SAMPLE_SIZE];				//	Origin Matrix
+   unsigned char output[OUTPUT_SIZE];				//	Output Matrix
+   unsigned char done;						//	Done Flag
+   unsigned char error;						//	Error Flag
+   int coreid;							//	Core ID
+} HSWork;
+
+</pre>
+
+<p>So I could use this as a message between <strong>HOST&lt;&gt;THREADS</strong> or <strong>HOST&lt;&gt;EPIPHANY</strong> with only allocating an array of <strong>HSWork</strong> and telling the threads/epiphany for looking on a specific index. Then after all threads finish their works, I can just run a consolidation of data on the host side.</p>
+
+<h1 id="testing">Testing</h1>
+
+<p>For testing I initialized an <strong>8×8</strong> Sample Matrix and made it output to a <strong>384×384</strong> Matrix. I made a python program to convert the resulting unsigned char matrix to a colorized one just for reference. I’m not couting the performance of the python app, just the interpolation part. Also I’m just couting the work and consolidation time, not the open/close apps overhead.</p>
+
+<p>The sample matrix used in this test was that:</p>
+
+<pre class="brush: cpp; title: ; notranslate" title="">unsigned char Data[] = {
+	157,83 ,153,147,223,114,248,200,
+	120,185,30 ,86 ,50 ,28 ,29 ,180,
+	153,169,225,146,20 ,115,229,108,
+	50 ,206,89 ,51 ,89 ,99 ,19 ,112,
+	74 ,9  ,232,185,36 ,54 ,210,66 ,
+	151,206,52 ,100,232,163,191,135,
+	125,81 ,122,246,20 ,197,194,210,
+	87 ,122,11 ,16 ,163,90 ,1  ,152
+};
+</pre>
+
+<p>And the color output is that:</p>
+
+<div id="attachment_82" style="width: 310px" class="wp-caption alignnone">
+  <a href="https://www.teske.net.br/lucas/wp-content/uploads/2014/10/output_bicosine.png"><img aria-describedby="caption-attachment-82" class="size-medium wp-image-82" src="https://www.teske.net.br/lucas/wp-content/uploads/2014/10/output_bicosine-300x300.png" alt="Output from Bicosine Interpolation" width="300" height="300" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2014/10/output_bicosine-300x300.png 300w, https://www.teske.net.br/lucas/wp-content/uploads/2014/10/output_bicosine-150x150.png 150w, https://www.teske.net.br/lucas/wp-content/uploads/2014/10/output_bicosine.png 384w" sizes="(max-width: 300px) 100vw, 300px"></a>
+  
+  <p id="caption-attachment-82" class="wp-caption-text">
+    Output from Bicosine Interpolation
+  </p>
+</div>
+
+<div id="attachment_83" style="width: 310px" class="wp-caption alignnone">
+  <a href="https://www.teske.net.br/lucas/wp-content/uploads/2014/10/output_bilinear.png"><img aria-describedby="caption-attachment-83" class="size-medium wp-image-83" src="https://www.teske.net.br/lucas/wp-content/uploads/2014/10/output_bilinear-300x300.png" alt="Output from Bilinear Interpolation" width="300" height="300" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2014/10/output_bilinear-300x300.png 300w, https://www.teske.net.br/lucas/wp-content/uploads/2014/10/output_bilinear-150x150.png 150w, https://www.teske.net.br/lucas/wp-content/uploads/2014/10/output_bilinear.png 384w" sizes="(max-width: 300px) 100vw, 300px"></a>
+  
+  <p id="caption-attachment-83" class="wp-caption-text">
+    Output from Bilinear Interpolation
+  </p>
+</div>
+
+<p>So for the performance test, I ran about <strong>100</strong> tests on my notebook (An Intel(R) Core(TM) i7-3630QM CPU @ 2.40GHz with 16GB DDR3 Ram with Ubuntu Linux 14.04 3.12.0-7-generic kernel)  and take an average value from them. The work as <strong>SINGLE THREAD</strong> did the job (single 384×384 output matrix) in <strong>17ms</strong>. For a <strong>4 threads</strong> mode with 128×128 slices, it took <strong>28ms</strong> for ending the job. Also my notebook computer is taking about 150W to do the job.</p>
+
+<p>That values proves me one thing: The overhead of my algorithm is exactly at memory access. Since I cannot explicity set the output to be on CPU Cache, the entire output matrix and sample matrix are on RAM. Even on my Quad Channel Memory Controller, it doubled the work time. So probably my linux kernel isnt managing the memory couting the quadchannel controller. To be honest, I dont know if the linux kernel even know that is a multichannel memory controller. Maybe the CPU Abstracts that for the kernel.</p>
+
+<p>Ok, so now its time to get on Parallella Board!</p>
+
+<h1 id="programming-on-parallella-board-and-first-impressions">Programming on Parallella Board and First Impressions</h1>
+
+<p>So I started my work for Parallella Board. First thing I was trying to make a good communication between the Epiphany core and the Host Program. I noticed that few people maps directly at one defined address. Like if the Epiphany has 0x0 to 0x7FFF memory address range, just picking one start address on this range and assuming that is your variable. So you could use <strong>e_read</strong>/<strong>e_write</strong> on the host to write directly on it. This works fine for small variables (like an int) if you keep out the <strong>IVT</strong> (first 64 bytes of the memory) and out of the C Stack (usually at end of the address space), but for long data like my work, it is a problem. Since linker doesnt know that I’m mapping this address, it could place something important there, or even replace your data. So for solving this, you would need to make a custom linker script to explict say that you have some data there.</p>
+
+<p>I dont know much about compiler stuff, so I was trying to find a different approach. On the Parallella Board you have a 32MB isolated memory that is on the 1GB DRAM, but not mapped inside linux kernel. So basicly, its an unmanaged 32MB RAM Space. Adapteva’s team did that for using that 32MB for shared data between host and epiphany, since both can access the address space. So I have a big space there, with limited throughput because of that is on the same memory that host OS is running, but a good space for storing input/output data. So I decided to do that:</p>
+
+<ol>
+  <li>On the host program initializes an array of <strong>HSWork</strong>
+</li>
+  <li>Put the Sample, Scales, Coordinates at each work</li>
+  <li>Copy that initialized array of work to <strong>Shared DRAM</strong> Space</li>
+  <li>Initializes and start the <strong>Epiphany</strong> cores</li>
+  <li>Wait for all cores finish their works</li>
+  <li>Read all works from <strong>Shared DRAM</strong> to local program</li>
+  <li>Consolidate the data</li>
+  <li>Save and exit</li>
+</ol>
+
+<p>and on the epiphany side:</p>
+
+<ol>
+  <li>Pre-allocated <strong>HSWork</strong> space at internal RAM, defined on the code. So linker will notice its existence.</li>
+  <li>Determine the relative X,Y coords of the core and the work number</li>
+  <li>Copy from <strong>Shared DRAM</strong> the <strong>HSWork</strong> data to Pre-allocated local <strong>HSWork</strong>
+</li>
+  <li>Do the work</li>
+  <li>Write the <strong>HSWork</strong> data (now with output filled) to <strong>Shared DRAM</strong>
+</li>
+  <li>Exit</li>
+</ol>
+
+<p>So with that approach, I will have the best work performance my C Algorithm would do. Also it would use only the minimum writes/reads from Shared DRAM on both sides.</p>
+
+<h1 id="testing-the-epiphany-program-and-performance-issues">Testing the Epiphany Program and Performance Issues</h1>
+
+<p>So as usual, on the first test I just ran and I got scared: It too <strong>10 seconds</strong> to finish the work! That was VERY strange. I was expecting it to be slower than my computer (since my processor runs at 3GHz not 667MHz) but not THAT slower. So I made this post at Parallella Community Forums: <a href="http://www.forums.parallella.org/viewtopic.php?f=23&t=1780">http://www.forums.parallella.org/viewtopic.php?f=23&t=1780</a></p>
+
+<p>But I solved the problem just before anyone presented a solution. So the biggest problem was one GCC *bug* (not really a bug, but for e-gcc could be considered one) that all floating point operations was default to <strong>double</strong>. The Epiphany (at least current one) has a <strong>Single Precision Float Point Unit</strong>, and for making double precision calculations, it need to split the data and do a lot of operations to get the result. Basicly is doing all by software and not hardware. That is <strong>REALLY</strong> slow, and was taking a lot of milliseconds to do an operation. So all constant values I had on Float operations I put the prefix .f , like if I had 2.0 value, I put 2.f or 2.0f. That enforces the var to be Float not Double. This reduced the time from 10 seconds to 120ms!</p>
+
+<p>Also another thing I did to improve more the peformance: Remove all divisions that I could. I had many constants operations like x / 2.f or so. Divisions are slower than multiplications ( see here <a href="http://stackoverflow.com/questions/15745819/why-is-division-more-expensive-than-multiplication">http://stackoverflow.com/questions/15745819/why-is-division-more-expensive-than-multiplication</a> ), but for Epiphany its about 3.5 times slower than a equivalent multiply. So just changing x / 2.f to x * 0.5f would reduce 3.5x the time to do that operation. So I started to review all my formulas and trying to isolate the constants to calculate at compile time (or one time before the interpolation loop). I also added <strong>-O3</strong> optimization flag. So in the end I got an work running at impressive <strong>50ms</strong>!</p>
+
+<p>One good thing to metion, I needed to use 4 cores to build a 256×256 tiles, so this is only 1/4 of the Epiphany E16 chip. But if I build 4 tiles, it takes EXACTLY the same time 50ms time to do all the 4 tiles! That means my work algorithm is very good for scaling up on epiphany! 😀</p>
+
+<p>So since I got a reduction of about 70% of runtime just by optimizing the formulas, I ported the code also to the first version with multithreading. Doing so, made it drop from <strong>17ms</strong> on single thread to <strong>10ms</strong>, and from <strong>28ms </strong>on multithreading to <strong>20ms</strong>.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>So, what that values mean? Epiphany is good for HyperSignal Tile Maker? Lets revise the data we got in best cases:</p>
+
+<ol>
+  <li>On PC: 10ms – 150W</li>
+  <li>On ARM: 60ms – 3W</li>
+  <li>On Epiphany: 50ms – 2W</li>
+</ol>
+
+<p>So you are probably thinking: PC ROCKS! – But I need to say: No, PC Sucks.</p>
+
+<p>Why? Raw performance is not the only factor I’m considering (and also not the only you should). My notebook is really 6 times faster than epiphany, but it consumes a LOT more power. So lets make a rate to define the quality. Since higher tiles per sec we can do with less watts is good, lets do an rate. Lets first calculate how much tiles/sec we can do on each plataform:</p>
+
+<ol>
+  <li>On PC: 10ms per tile, so 100 tiles/sec</li>
+  <li>On ARM: 60ms per tile, so 16 tiles/sec</li>
+  <li>On Epiphany: 50ms per tile, so 20 tiles/sec</li>
+</ol>
+
+<p>Ok so, but this data isnt really correct. All of these plataforms can do more than one tile in parallell right? Yeah, right. Lets do a table for simultaneously work:</p>
+
+<ol>
+  <li>On PC: 28ms per 4 tile, so 7ms per tile, so 142 tiles/sec</li>
+  <li>On ARM: 100ms per 2 tile, 50ms per tile, so 20 tiles/sec</li>
+  <li>On Epiphany: 50ms per 4 tile (on 16 core), so 80 tiles/sec</li>
+</ol>
+
+<p>So we have the data. So epiphany is now more close to the PC. That is pretty impressive, but there is the power factor to consider too! So lets divide the Tiles Per Second Rate by the Power.</p>
+
+<ol>
+  <li>On PC: 142 tiles/sec on 150W – 0,94 Tiles/Second/Watt</li>
+  <li>On ARM: 20 tiles/sec on 3W – 6,6 Tiles/Second/Watt</li>
+  <li>On Epiphany: 80 tiles/sec on 2W – 40 Tiles/Second/Watt</li>
+</ol>
+
+<p>So <strong>WOW</strong>, epiphany ROCKS A LOT on Power Performance! So there is anything more we should consider? Yes there are a few.</p>
+
+<p>The first thing is, I’m not fair with the i7 guy. My notebook is running a lot of stuff (cdrom, LCD Screen, GPU Card ) and many things that isnt on the use of the program but is taking power. Just the standby power of my notebook is about 100W, so the pure i7 would do better.</p>
+
+<p>So considering that, we need to have another way to compare. The best way is using the ARM processor on the Parallella Board, it is an ARM but has similarities with an common x86 Desktop. It does few things faster, other things slower, but its more fair to consider. So considering just the ARM and Epiphany we have a 40 to 6,6 performance at about the same power.  That means the performance of epiphany for that application requires about 6 times less power than a ARM based one. Thats really impressive !</p>
+
+<h1 id="final-considerations">Final considerations</h1>
+
+<p>For the final considerations I should mention: I’m also using a 16 core Epiphany, that consumes a lot of power comparing to the new 64 core one. To be fair, both consume about the same power, but 64 cores … does have 64 core. So since my program scalates easy on epiphany without overhead (because of the epiphany arch) I could easily expand to 64 core version. So for a 64 version I would have 4 times faster processor for the <strong>SAME</strong> power. That menas 160 Tiles / Second / Watt that gives me 160 / 6,6 performance over the arm, or <strong>24X</strong> faster operation with the same power. That is *<strong>*</strong>** fast !</p>
+
+<p>Also according to below pic ( Source: <a href="https://www.kickstarter.com/projects/adapteva/parallella-a-supercomputer-for-everyone">https://www.kickstarter.com/projects/adapteva/parallella-a-supercomputer-for-everyone</a> ), there are 1024 core processor to start be planning in this year. They plan to make that 1024 core run on 40W.</p>
+
+<div id="attachment_88" style="width: 632px" class="wp-caption alignnone">
+  <a href="https://www.teske.net.br/lucas/wp-content/uploads/2014/10/image-168911-full.jpg"><img aria-describedby="caption-attachment-88" class=" wp-image-88" src="https://www.teske.net.br/lucas/wp-content/uploads/2014/10/image-168911-full.jpg" alt="Epiphany Processor Evolution Schedule" width="622" height="247" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2014/10/image-168911-full.jpg 700w, https://www.teske.net.br/lucas/wp-content/uploads/2014/10/image-168911-full-300x119.jpg 300w, https://www.teske.net.br/lucas/wp-content/uploads/2014/10/image-168911-full-624x247.jpg 624w" sizes="(max-width: 622px) 100vw, 622px"></a>
+  
+  <p id="caption-attachment-88" class="wp-caption-text">
+    Epiphany Processor Evolution Schedule
+  </p>
+</div>
+
+<p>What does that mean? It means since we have 1/4 tile per core, we have 256 tiles done in the same time, so we will have:</p>
+
+<p>256 tiles in 50ms each. So 5120 tiles per sec. At 40 W we will have 256 tiles / sec / watt. The <strong>DOUBLE </strong> performance per watt that 64 core have! That means all algorithms that run on Epiphany processor would have an headroom to be more complex along the time passes. This is really nice, because we are in a Bootleneck in currect archs so adding cores to x86 processors wont make they run faster.</p>
+
+<p>So I got more impressed than I was when they launched. Its really nice to get one of these at hands, and I cant wait to get the 64 core version, the 1024 core, and all of that they launch!</p>
+
+<p>Good luck Adapteva guys, making our future! 😀</p>
+
+
+  <hr>
+<div class="fb-comments" data-href="https://lucasteske.dev/2014/10/the-parallella-board-and-hypersignal/" data-width="100%" data-numposts="5"></div>
+
+<hr>
+<div class="sharebuttons">
+  <ul>
+    <li>
+      <p class="sharetitle"> Share this: </p>
+    </li>
+    <li class="reddit">
+      <a href="http://www.reddit.com/submit?url=https://lucasteske.dev/2014/10/the-parallella-board-and-hypersignal/&amp;title=The%20Parallella%20Board%20and%20HyperSignal" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Reddit icon</title>
+<path d="M2.204 14.049c-.06.276-.091.56-.091.847 0 3.443 4.402 6.249 9.814 6.249 5.41 0 9.812-2.804 9.812-6.249 0-.274-.029-.546-.082-.809l-.015-.032c-.021-.055-.029-.11-.029-.165-.302-1.175-1.117-2.241-2.296-3.103-.045-.016-.088-.039-.126-.07-.026-.02-.045-.042-.067-.064-1.792-1.234-4.356-2.008-7.196-2.008-2.815 0-5.354.759-7.146 1.971-.014.018-.029.033-.049.049-.039.033-.084.06-.13.075-1.206.862-2.042 1.937-2.354 3.123 0 .058-.014.114-.037.171l-.008.015zm9.773 5.441c-1.794 0-3.057-.389-3.863-1.197-.173-.174-.173-.457 0-.632.176-.165.46-.165.635 0 .63.629 1.685.943 3.228.943 1.542 0 2.591-.3 3.219-.929.165-.164.45-.164.629 0 .165.18.165.465 0 .645-.809.808-2.065 1.198-3.862 1.198l.014-.028zm-3.606-7.573c-.914 0-1.677.765-1.677 1.677 0 .91.763 1.65 1.677 1.65s1.651-.74 1.651-1.65c0-.912-.739-1.677-1.651-1.677zm7.233 0c-.914 0-1.678.765-1.678 1.677 0 .91.764 1.65 1.678 1.65s1.651-.74 1.651-1.65c0-.912-.739-1.677-1.651-1.677zm4.548-1.595c1.037.833 1.8 1.821 2.189 2.904.45-.336.719-.864.719-1.449 0-1.002-.815-1.816-1.818-1.816-.399 0-.778.129-1.09.363v-.002zM2.711 9.963c-1.003 0-1.817.816-1.817 1.818 0 .543.239 1.048.644 1.389.401-1.079 1.172-2.053 2.213-2.876-.302-.21-.663-.329-1.039-.329v-.002zm9.217 12.079c-5.906 0-10.709-3.205-10.709-7.142 0-.275.023-.544.068-.809C.494 13.598 0 12.729 0 11.777c0-1.496 1.227-2.713 2.725-2.713.674 0 1.303.246 1.797.682 1.856-1.191 4.357-1.941 7.112-1.992l1.812-5.524.404.095s.016 0 .016.002l4.223.993c.344-.798 1.138-1.36 2.065-1.36 1.229 0 2.231 1.004 2.231 2.234 0 1.232-1.003 2.234-2.231 2.234s-2.23-1.004-2.23-2.23l-3.851-.912-1.467 4.477c2.65.105 5.047.854 6.844 2.021.494-.464 1.144-.719 1.833-.719 1.498 0 2.718 1.213 2.718 2.711 0 .987-.54 1.886-1.378 2.365.029.255.059.494.059.749-.015 3.938-4.806 7.143-10.72 7.143l-.034.009zm8.179-19.187c-.74 0-1.34.599-1.34 1.338 0 .738.6 1.34 1.34 1.34.732 0 1.33-.6 1.33-1.334 0-.733-.598-1.332-1.347-1.332l.017-.012z"></path></svg>
+      </a>
+    </li>
+    <li class="hn">
+      <a href="http://news.ycombinator.com/submitlink?u=https://lucasteske.dev/2014/10/the-parallella-board-and-hypersignal/&amp;t=The%20Parallella%20Board%20and%20HyperSignal" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Y Combinator icon</title>
+<path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"></path></svg>
+      </a>
+    </li>
+    <li class="twitter">
+      <a href="https://twitter.com/intent/tweet?via=lucasteske&url=https://lucasteske.dev/2014/10/the-parallella-board-and-hypersignal/&amp;text=The%20Parallella%20Board%20and%20HyperSignal" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Twitter icon</title>
+<path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"></path></svg>
+      </a>
+    </li>
+    <li class="linkedin">
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://lucasteske.dev/2014/10/the-parallella-board-and-hypersignal/&amp;title=The%20Parallella%20Board%20and%20HyperSignal" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn icon</title>
+<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+      </a>
+    </li>
+  </ul>
+</div>
+
+</div>
+
+<div class="pagination">
+  
+    <a href="/2015/02/um-presente-inesperado-na-campus-party/" class="left arrow">←</a>
+  
+  
+    <a href="/2014/02/motivos-pelos-quais-eu-nao-gostei-do-intel-galileo/" class="right arrow">→</a>
+  
+
+  <a href="#" class="top">Top</a>
+</div>
+
+      <br><br>
+    </main>
+
+    <footer>
+  <span>
+    © <time datetime="2022-12-18 21:07:18 -0300">2022</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+  </span><br>
+  <span class="site-build">
+    Last build: 2022-12-18 21:07:18 -0300
+  </span>
+</footer>
+
+<script src="/assets/simple-jekyll-search.min.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="https://lucasteske.dev{url}">{date} - {title}</a></li>'
+  })
+</script>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+  <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P2HPZJM" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- AnchorJS -->
+<script src="/assets/anchor.min.js"></script>
+<script>
+  anchors.options.placement = 'left';
+  anchors.add('h1');
+  anchors.add();
+</script>
+<!-- End AnchorJS -->
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "6fdff3f05d2847b58d553381bb1e8115"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+  </body>
+</html>

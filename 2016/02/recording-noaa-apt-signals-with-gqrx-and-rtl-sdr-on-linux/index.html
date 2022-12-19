@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" property="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  <title>Recording NOAA APT Signals with GQRX and RTL-SDR on Linux | Lets Hack It</title>
+
+  <!-- Global -->
+  <link rel="canonical" href="https://lucasteske.dev/2016/02/recording-noaa-apt-signals-with-gqrx-and-rtl-sdr-on-linux/">
+  <meta name="generator" property="generator" content="Jekyll v4.2.2">
+  <meta name="author" property="author" content="Lucas Teske">
+  <meta name="description" property="description" content="GQRX NOAA 18 Signal So you all saw my last posts [ Play with SDR and Intel Edison! QFH Antenna and my first reception of NOAA! ] but I actually didn’t explained how to capture and decode APT Signals using your computer (in this case, with Linux). So here it is! For this...">
+  
+  <meta name="keywords" content="137MHz, 2m Band, Amplifier, Antenna, APT, Decimation, GQRX, intel, Intel Edison, Le Maker Guitar, LeMaker, Linux, LNA, Low Noise Amplifier, NOAA, QFH, RTLSDR, SDR, Signal, Signals, Ubuntu">
+  
+  <!-- Open Graph -->
+  <meta name="og:locale" property="og:locale" content="en">
+  <meta name="og:type" property="og:type" content="article">
+  <meta name="og:title" property="og:title" content="Recording NOAA APT Signals with GQRX and RTL-SDR on Linux | Lets Hack It">
+  <meta name="og:url" property="og:url" content="https://lucasteske.dev/2016/02/recording-noaa-apt-signals-with-gqrx-and-rtl-sdr-on-linux/">
+  <meta name="og:image" property="og:image" content="https://lucasteske.dev/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-44-17-624x408.png">
+  <meta name="og:site_name" property="og:site_name" content="Lets Hack It">
+  <meta name="og:description" property="og:description" content="GQRX NOAA 18 Signal So you all saw my last posts [ Play with SDR and Intel Edison! QFH Antenna and my first reception of NOAA! ] but I actually didn’t explained how to capture and decode APT Signals using your computer (in this case, with Linux). So here it is! For this...">
+
+  <!-- Article -->
+  <meta name="article:author" property="article:author" content="https://www.facebook.com/teskeslab">
+  <meta name="article:publisher" property="article:publisher" content="https://www.facebook.com/teskeslab">
+  <meta name="article:published_time" property="article:published_time" content="2016-02-04T23:26:57-02:00">
+
+  <!-- Facebook -->
+  <meta name="fb:admins" property="fb:admins" content="1234">
+  <meta name="fb:app_id" property="fb:app_id" content="1209208119176770">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" property="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" property="twitter:title" content="Recording NOAA APT Signals with GQRX and RTL-SDR on Linux | Lets Hack It">
+  <meta name="twitter:site" property="twitter:site" content="@lucasteske">
+  <meta name="twitter:creator" property="twitter:creator" content="@lucasteske">
+  <meta name="twitter:description" property="twitter:description" content="GQRX NOAA 18 Signal So you all saw my last posts [ Play with SDR and Intel Edison! QFH Antenna and my first reception of NOAA! ] but I actually didn’t explained how to capture and decode APT Signals using your computer (in this case, with Linux). So here it is! For this...">
+  <meta name="twitter:image" property="twitter:image" content="https://lucasteske.dev/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-44-17-624x408.png">
+  <meta name="twitter:image:alt" property="twitter:image:alt" content="GQRX NOAA 18 Signal So you all saw my last posts [ Play with SDR and Intel Edison! QFH Antenna and my first reception of NOAA! ] but I actually didn’t explained how to capture and decode APT Signals using your computer (in this case, with Linux). So here it is! For this...">
+
+  <!-- JSON LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "url": "https://lucasteske.dev/2016/02/recording-noaa-apt-signals-with-gqrx-and-rtl-sdr-on-linux/",
+    "name": "Recording NOAA APT Signals with GQRX and RTL-SDR on Linux | Lets Hack It",
+    "headline": "Recording NOAA APT Signals with GQRX and RTL-SDR on Linux | Lets Hack It",
+    "keywords": "137MHz,2m Band,Amplifier,Antenna,APT,Decimation,GQRX,intel,Intel Edison,Le Maker Guitar,LeMaker,Linux,LNA,Low Noise Amplifier,NOAA,QFH,RTLSDR,SDR,Signal,Signals,Ubuntu",
+    "description": "GQRX NOAA 18 Signal So you all saw my last posts [ Play with SDR and Intel Edison! QFH Antenna and my first reception of NOAA! ] but I actually didn’t explained how to capture and decode APT Signals using your computer (in this case, with Linux). So here it is! For this...",
+    "articleBody": "GQRX NOAA 18 Signal So you all saw my last posts [ Play with SDR and Intel Edison! QFH Antenna and my first reception of NOAA! ] but I actually didn’t explained how to capture and decode APT Signals using your computer (in this case, with Linux). So here it is! For this article I’m using Ubuntu 15.04, but actually any distro will work well (I think most of them have the needed packages) So the first thing you need to do is to get all needed hardware to start playing. I’ve already tested my i7 Skylake Laptop, a Intel Edison and LeMaker Guitar for these uses. For my Laptop and LeMaker guitar you can use only them to do the stuff, because they both have graphical interface for the GQRX. For the Intel Edison all you can do is open a rtl_tcp spectrum server as my sdr edison article explains, and receive the spectrum in any other machine (including LeMaker Guitar). Hardware Needed So for the hardware you will need: RTL-SDR Dongle ( Amazon (USA) , Mercado Livre (Brazil), Dealextreme (International) ) Quadrifiliar Helix Antenna or Double Crossed Dipole for 2m band (preferably in 137MHz center frequency and 75 Ohms ) [ Here what I did ]...",
+    "datePublished": "2016-02-04 23:26:57 -0200",
+    "dateModified": "2016-02-04 23:26:57 -0200",
+    "author": {
+      "@type": "Person",
+      "name": "Lucas Teske",
+      "email": "letshackit@nvx.li"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Lets Hack It",
+      "url": "https://lucasteske.dev",
+      "logo": {
+        "@type": "ImageObject",
+        "width": 32,
+        "height": 32,
+        "url": "https://lucasteske.dev/icon/favicon.ico"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://lucasteske.dev/2016/02/recording-noaa-apt-signals-with-gqrx-and-rtl-sdr-on-linux/"
+    },
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://lucasteske.dev/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-44-17-624x408.png"
+    }
+  }
+  </script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/assets/theme.css">
+  <link rel="stylesheet" href="/assets/flag-icon.min.css">
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="manifest" href="/assets/site.webmanifest">
+  <link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="/assets/favicon.ico">
+  <meta name="msapplication-TileColor" property="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-config" property="msapplication-config" content="/assets/browserconfig.xml">
+  <meta name="theme-color" property="theme-color" content="#ffffff">
+
+  <!-- Custom Scripts -->
+  <script async src="/assets/syntaxhighlighter.min.js"></script>
+  <script async src="/assets/simple-jekyll-search.min.js"></script>
+
+  <!-- RSS -->
+  <link type="application/atom+xml" rel="alternate" href="https://lucasteske.dev/feed.xml" title="Lets Hack It">
+
+  <!-- Google Analytics-->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-32251405-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-32251405-2');
+</script>
+  
+</head>
+
+  <body>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&amp;version=v4.0&amp;appId=1209208119176770&amp;autoLogAppEvents=1"></script>
+    <div class="like-box">
+      <div class="fb-like" data-href="https://lucasteske.dev/2016/02/recording-noaa-apt-signals-with-gqrx-and-rtl-sdr-on-linux/" data-width="" data-layout="box_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+    </div>
+    <a href="https://github.com/racerxdl/letshackit" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#70B7FD; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+    <main class="site">
+      
+<br>
+<img src="/assets/cropped-logo.png" style="margin-left: auto; margin-right: auto;">
+<ul class="language-bar">
+  
+  
+  <a class="link-pt flag-icon flag-icon-us" href="/2016/02/recording-noaa-apt-signals-with-gqrx-and-rtl-sdr-on-linux/"></a>
+  <a class="link-en flag-icon flag-icon-br" href="/pt/2016/02/recording-noaa-apt-signals-with-gqrx-and-rtl-sdr-on-linux/"></a>
+</ul>
+<nav class="nav">
+  <div class="nav-container" style="height: 50px">
+    <ul class="navul">
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/donate">Donate</a></li>
+      <li><a href="/calculators">Calculators</a></li>
+      <li><a href="/my-presentations">My Presentations</a></li>
+      <li><a href="/satcom-projects">Satcom Projects</a></li>
+      <li><a href="/my-tesla-coils">My Tesla Coils</a></li>
+      <li><a href="/biggateboy">Big Gate Boy</a></li>
+      <li><a href="/about">About</a></li>
+    
+    </ul>
+  </div>
+</nav>
+<div class="social-icon">
+  <ul>
+    <li class="btn-a btn-svg btn-twitch">
+      <a href="https://twitch.tv/racerxdl">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><title>Twitch icon</title>
+<path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"></path></svg>
+
+        RacerXDL
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-twitter">
+      <a href="https://twitter.com/lucasteske">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Twitter icon</title>
+<path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"></path></svg>
+        @lucasteske
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-instagram">
+      <a href="https://instagram.com/racerxdl/">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Instagram icon</title>
+<path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"></path></svg>
+        @racerxdl
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-facebook">
+      <a href="https://www.facebook.com/teskeslab">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Facebook icon</title>
+<path d="M23.9981 11.9991C23.9981 5.37216 18.626 0 11.9991 0C5.37216 0 0 5.37216 0 11.9991C0 17.9882 4.38789 22.9522 10.1242 23.8524V15.4676H7.07758V11.9991H10.1242V9.35553C10.1242 6.34826 11.9156 4.68714 14.6564 4.68714C15.9692 4.68714 17.3424 4.92149 17.3424 4.92149V7.87439H15.8294C14.3388 7.87439 13.8739 8.79933 13.8739 9.74824V11.9991H17.2018L16.6698 15.4676H13.8739V23.8524C19.6103 22.9522 23.9981 17.9882 23.9981 11.9991Z"></path></svg>
+        Teske's Lab
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-github">
+      <a href="https://github.com/racerxdl">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub icon</title>
+<path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg>
+        @racerxdl
+      </a>
+    </li>
+<br>
+    <li class="btn-a btn-svg btn-youtube">
+      <a href="https://www.youtube.com/c/TeskesLab">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><title>YouTube icon</title>
+<path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"></path></svg>
+        Teske's Lab
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-linkedin">
+      <a href="https://www.linkedin.com/in/lucas-teske-8206301b/">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn icon</title>
+<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+        Lucas Teske
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-code-stats">
+      <a href="https://codestats.net/users/racerxdl">
+        <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="360px" height="360px" viewbox="0 0 360 360" enable-background="new 0 0 360 360" xml:space="preserve">
+<path d="M174,81.741v27.509C161.913,104,133.5,93.5,109.789,94.6c-23.859,1.107-42.172,7.301-54.859,21.902
+	c-12.689,14.603-19.033,35.71-19.033,63.326c0,27.524,6.344,48.585,19.033,63.186c12.687,14.603,30.974,21.901,54.859,21.901
+	c12.127,0,41.461-5.665,64.211-19.115v29.528c-8.75,2.672-33.75,12.422-65.891,12.818c-31.625,0.39-56.538-9.678-74.731-29.039
+	c-18.193-19.358-27.29-45.784-27.29-79.28c0-33.587,9.097-60.059,27.29-79.42c18.193-19.358,43.113-28.252,74.731-29.039
+	C133,70.75,155.808,77.431,174,81.741z M341.423,82.005v27.569c-10.729-5.13-20.852-8.957-30.368-11.476s-18.707-3.778-27.569-3.778
+	c-15.395,0-27.268,2.987-35.616,8.957c-8.352,5.972-12.525,14.462-12.525,25.47c0,9.236,2.774,16.212,8.327,20.922
+	c5.55,4.712,16.069,8.515,31.558,11.406l17.073,3.499c21.084,4.013,36.643,11.08,46.673,21.202
+	c10.027,10.124,15.044,23.675,15.044,40.654c0,20.247-6.787,35.595-20.362,46.043c-13.575,10.45-33.472,15.674-59.688,15.674
+	c-9.89,0-20.41-1.119-31.558-3.358c-11.15-2.239-22.695-5.55-34.637-9.937v-29.109c11.476,6.438,22.717,11.29,33.727,14.555
+	c11.008,3.267,21.832,4.898,32.468,4.898c16.14,0,28.596-3.171,37.366-9.517c8.769-6.344,13.155-15.395,13.155-27.149
+	c0-10.262-3.149-18.285-9.447-24.071c-6.297-5.783-16.632-10.122-30.998-13.015l-17.213-3.358
+	c-21.086-4.199-36.341-10.776-45.763-19.733c-9.425-8.957-14.135-21.412-14.135-37.366c0-18.473,6.508-33.027,19.522-43.664
+	c13.015-10.636,30.95-15.954,53.81-15.954c9.796,0,19.778,0.888,29.948,2.659C320.383,75.801,330.787,78.46,341.423,82.005z"></path>
+<path d="M86.199,153.037c0-2.98,1.024-5.495,3.074-7.544c2.048-2.048,4.563-3.073,7.544-3.073c3.034,0,5.561,1.011,7.584,3.034
+	c2.022,2.023,3.034,4.55,3.034,7.584s-1.012,5.563-3.034,7.584c-2.023,2.023-4.551,3.034-7.584,3.034
+	c-2.981,0-5.496-1.024-7.544-3.074C87.223,158.533,86.199,156.018,86.199,153.037z M86.199,205.089c0-2.979,1.024-5.509,3.074-7.584
+	c2.048-2.076,4.563-3.113,7.544-3.113c2.98,0,5.495,1.037,7.544,3.113c2.048,2.075,3.074,4.604,3.074,7.584
+	c0,2.981-1.012,5.496-3.034,7.545c-2.023,2.048-4.551,3.073-7.584,3.073s-5.562-1.025-7.584-3.073
+	C87.209,210.585,86.199,208.07,86.199,205.089z M141.135,153.037c0-2.98,1.024-5.495,3.074-7.544
+	c2.048-2.048,4.563-3.073,7.544-3.073c3.034,0,5.561,1.011,7.584,3.034c2.022,2.023,3.034,4.55,3.034,7.584
+	s-1.012,5.563-3.034,7.584c-2.023,2.023-4.551,3.034-7.584,3.034c-2.981,0-5.496-1.024-7.544-3.074
+	C142.159,158.533,141.135,156.018,141.135,153.037z M141.135,205.089c0-2.979,1.024-5.509,3.074-7.584
+	c2.048-2.076,4.563-3.113,7.544-3.113c2.98,0,5.495,1.037,7.544,3.113c2.048,2.075,3.074,4.604,3.074,7.584
+	c0,2.981-1.012,5.496-3.034,7.545c-2.023,2.048-4.551,3.073-7.584,3.073s-5.563-1.025-7.584-3.073
+	C142.146,210.585,141.135,208.07,141.135,205.089z"></path>
+</svg>
+
+        racerxdl
+      </a>
+    </li>
+<br>
+    <li class="btn-a btn-svg btn-telegram">
+      <a href="https://t.me/hardwareHackingBrasil">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><title>Telegram icon</title>
+<path d="M23.91 3.79L20.3 20.84c-.25 1.21-.98 1.5-2 .94l-5.5-4.07-2.66 2.57c-.3.3-.55.56-1.1.56-.72 0-.6-.27-.84-.95L6.3 13.7l-5.45-1.7c-1.18-.35-1.19-1.16.26-1.75l21.26-8.2c.97-.43 1.9.24 1.53 1.73z"></path></svg>
+        Hardware Hacking Brasil
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-patreon">
+      <a href="https://www.patreon.com/teskeslab">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Patreon</title>
+<path d="M0 .48v23.04h4.22V.48zm15.385 0c-4.764 0-8.641 3.88-8.641 8.65 0 4.755 3.877 8.623 8.641 8.623 4.75 0 8.615-3.868 8.615-8.623C24 4.36 20.136.48 15.385.48z"></path></svg>
+        Patreon
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-mastodon">
+      <a rel="me" href="https://infosec.exchange/@lucasteske">
+        <svg width="24px" height="24px" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"><path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"></path></svg>
+        Mastodon
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="search-input">
+  <input type="text" id="search-input" style="margin: 0 auto;" placeholder="Search blog posts...">
+</div>
+<ul id="results-container" class="results-container"></ul>
+
+      
+
+
+
+
+
+<div class="post">
+  <h1 class="post-title">Recording NOAA APT Signals with GQRX and RTL-SDR on Linux</h1>
+  <div class="post-info">
+    
+      <img src="/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-44-17-624x408.png">
+    
+    <span>Written by</span>
+    
+        Lucas Teske
+    
+    
+
+    
+      <br>
+      <span>on </span><time datetime="2016-02-04 23:26:57 -0200">
+  4
+  
+  February
+  2016
+</time>
+    
+  </div>
+
+  <div class="post-line"></div>
+
+  <div id="attachment_150" style="width: 635px" class="wp-caption aligncenter">
+  <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-44-17.png" rel="attachment wp-att-150"><img aria-describedby="caption-attachment-150" class="size-large wp-image-150" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-44-17-1024x670.png" alt="GQRX NOAA 18 Signal" width="625" height="409" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-44-17-1024x670.png 1024w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-44-17-300x196.png 300w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-44-17-768x502.png 768w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-44-17-624x408.png 624w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-44-17.png 1271w" sizes="(max-width: 625px) 100vw, 625px"></a>
+  
+  <p id="caption-attachment-150" class="wp-caption-text">
+    GQRX NOAA 18 Signal
+  </p>
+</div>
+
+<p>So you all saw my last posts [ <a href="https://www.teske.net.br/lucas/2016/01/play-with-sdr-and-intel-edison/" target="_blank">Play with SDR and Intel Edison!</a> <a href="https://www.teske.net.br/lucas/2016/01/qfh-antenna-and-my-first-reception-of-noaa/" target="_blank">QFH Antenna and my first reception of NOAA! </a>] but I actually didn’t explained how to capture and decode APT Signals using your computer (in this case, with Linux). So here it is! For this article I’m using Ubuntu 15.04, but actually any distro will work well (I think most of them have the needed packages)</p>
+
+<!--more-->
+
+<p>So the first thing you need to do is to get all needed <strong>hardware</strong> to start playing. I’ve already tested my i7 Skylake Laptop, a Intel Edison and LeMaker Guitar for these uses. For my Laptop and LeMaker guitar you can use only them to do the stuff, because they both have graphical interface for the GQRX. For the Intel Edison all you can do is open a <strong>rtl_tcp</strong> spectrum server as my <a href="https://www.teske.net.br/lucas/2016/01/play-with-sdr-and-intel-edison/" target="_blank">sdr edison article</a> explains, and receive the spectrum in any other machine (including LeMaker Guitar).</p>
+
+<h2 id="hardware-needed">Hardware Needed</h2>
+
+<p>So for the hardware you will need:</p>
+
+<li style="padding-left: 30px;">
+  RTL-SDR Dongle ( <a href="http://www.amazon.com/RTL-SDR-Blog-RTL2832U-Software-Telescopic/dp/B011HVUEME/ref=sr_1_1?ie=UTF8&qid=1454625132&sr=8-1&keywords=RTL-SDR" target="_blank">Amazon (USA)</a> , <a href="http://produto.mercadolivre.com.br/MLB-716281274-receptor-sdr-usb-dvb-t-sdrdabfm-hdtv-rtl-2832u-r820t-_JM" target="_blank">Mercado Livre (Brazil)</a>, <a href="http://www.dx.com/p/rtl2832u-r820t-mini-dvb-t-dab-fm-sdr-usb-dvb-t-stick-235224#.VrPRxXUrLCI" target="_blank">Dealextreme (International)</a> )
+</li>
+<li style="padding-left: 30px;">
+  Quadrifiliar Helix Antenna or Double Crossed Dipole for 2m band (preferably in 137MHz center frequency and 75 Ohms ) [ <a href="https://www.teske.net.br/lucas/2016/01/qfh-antenna-and-my-first-reception-of-noaa/" target="_blank">Here what I did</a> ]
+</li>
+<li style="padding-left: 30px;">
+  A computer ( PC, LeMaker Guitar, Intel Edison )
+</li>
+<li style="padding-left: 30px;">
+  <em>Optional: LNA Amplifier, if your antenna is far from the computer ( 4m+ )</em>
+</li>
+
+<p>So after you get all your hardware, and assemble it ( my QFH Antenna Article have some details about it ). It is basically plug your RTL-SDR Dongle at USB Port and attach to your Antenna. The original antenna “works” [ You can <strong>hear</strong> the signal, but not receive images ], but I suggest to build a proper antenna.</p>
+
+<h2 id="installing-the-softwares">Installing the softwares</h2>
+
+<p>So I will use Ubuntu 15.04 as an example here for receiving signals. The instructions for any <strong>Debian</strong> based distribution should be exact the same. For <strong>RedHat</strong> based, use <em>yum</em> instead of <em>apt-get</em>. You can also use your favorite package manager inside your distribution.</p>
+
+<p>The packages that we will need are:</p>
+
+<ol>
+  <li><a href="http://sdr.osmocom.org/trac/wiki/rtl-sdr" target="_blank">librtlsdr0</a></li>
+  <li><a href="http://gqrx.dk/download" target="_blank">gqrx-sdr</a></li>
+  <li><a href="http://gpredict.oz9aec.net/" target="_blank">gpredict</a></li>
+  <li><a href="http://www.audacityteam.org/" target="_blank">Audacity</a></li>
+  <li>
+<a href="http://atpdec.sourceforge.net/" target="_blank">atp-dec</a> or <a href="http://jthatch.com/APT3000/APT3000.html" target="_blank">APT3000 (web)</a> or <a href="https://github.com/racerxdl/open-satellite-project" target="_blank">OpenSatelliteProject</a> or <a href="http://www.wxtoimg.com/" target="_blank">WXtoIMG (not opensource)</a>
+</li>
+</ol>
+
+<p>Most distributions include in their repositories the librtlsdr, some include gqrx (for ubuntu you can get the upstream from their website), and atp-dec none of them include (sadly, because it is a very nice application). You can also use for decoding APT Signals the APT3000 webpage and my project OpenSatelliteProject. GPredict should also be included in most major distributions.</p>
+
+<h2 id="tracking-a-satellite-with-gpredict">Tracking a Satellite with GPredict</h2>
+
+<p>So the first thing we need to do is track our Satellites. The only three APT active Satellites are NOAA 15, 18 and 19.</p>
+
+<p>So open GPredict and go to menu <strong>Edit =&gt; Update TLEs =&gt; From Network </strong>to update GPredict internal database of TLEs. You can also obtain the TLEs on <a href="https://www.space-track.org" target="_blank">https://www.space-track.org</a> . NASA keeps all TLEs up-to-date at space-track. You should Update your TLEs at least once per month.</p>
+
+<p>After that, lets configure the satellites we want to visualize by clicking on the arrow <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/gpredict-arrow.png" rel="attachment wp-att-153"><img class="alignnone size-full wp-image-153" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/gpredict-arrow.png" alt="gpredict-arrow" width="27" height="28"></a> and go to <strong>Configure</strong>.</p>
+
+<div id="attachment_154" style="width: 573px" class="wp-caption alignnone">
+  <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/gpredict-select-sats.png" rel="attachment wp-att-154"><img aria-describedby="caption-attachment-154" class="size-full wp-image-154" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/gpredict-select-sats.png" alt="Select Satellites to Track on GPredict" width="563" height="453" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/gpredict-select-sats.png 563w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/gpredict-select-sats-300x241.png 300w" sizes="(max-width: 563px) 100vw, 563px"></a>
+  
+  <p id="caption-attachment-154" class="wp-caption-text">
+    Select Satellites to Track on GPredict
+  </p>
+</div>
+
+<p>So you can search for <strong>NOAA</strong> and add the 15, 18 and 19 satellites to the tracking list. I also added ISS (International Space Station) and METEOR-M satellites (I wanted to try to capture LRPT Signals as well, but no success so far). Also click at the <strong>+</strong> button to add a new GroundStation. Create any name you want ( I will name <em>MyGroundStation</em> ) and pick up a location (or if you know your coordinates, fill with it). After that, hit <strong>OK</strong> button. You should return to the main screen with all satellites on it.</p>
+
+<p><a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/gpredict-main-1.png" rel="attachment wp-att-156"><img class="alignleft wp-image-156 size-medium" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/gpredict-main-1-293x300.png" alt="GPredict Main Screen" width="293" height="300" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/gpredict-main-1-293x300.png 293w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/gpredict-main-1-624x639.png 624w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/gpredict-main-1.png 689w" sizes="(max-width: 293px) 100vw, 293px"></a></p>
+
+<p> </p>
+
+<p>So now you can track all the satellites! So let me give you a few hints about this software:</p>
+
+<ol>
+  <li>At the <strong>radar view</strong> you can see on the top-right the indication of which satellite and how much time it will take to be visible. That doesn’t mean also if it will be capturable (usually if you don’t have a good antenna, you cannot receive the image in the edges of the horizon), but it will give you a prediction of the next satellite. Also you can check where the satellite is at the radar view.</li>
+  <li>In the <strong>map-view</strong> the yellow circle around the satellite is the horizon, or in another words: the range of the satellite. So if you are on edge of this circle, it means the satellite will look that is on the horizon for you.</li>
+  <li>You can <strong>right-click</strong> at the Satellite name on map to show a <strong>Ground Track</strong> (where the satellite will pass), show <strong>Next Pass</strong> to show the next time after the radar time the satellite will pass and show <strong>Future Passes</strong> that will predict where the satellite will pass in next days.</li>
+</ol>
+
+<p>So now, you just need to program yourself to be available when a satellite passes over your ground station. The satellites have a orbit arround 1h30, but that doesn’t mean their orbit position are the same everytime it passes. As I observed, these NOAA satellites usually passes on the _same location<strong> </strong>_once per week. So just have attention when it will pass over your station. Before moving to the next step, please have at least 10 minutes on the clock before the satellite passes.</p>
+
+<h2 id="capturing-the-satellite-signal">Capturing the Satellite Signal</h2>
+
+<p>So now open <strong>GQRX</strong> to start the look up / capture of the Signal. After you open, it will probably ask you to configure the GQRX. If not, click at the <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/gqrx_setup_icon.png" rel="attachment wp-att-104"><img class="alignnone size-full wp-image-104" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/gqrx_setup_icon.png" alt="gqrx_setup_icon" width="37" height="34"></a> to open the configuration.</p>
+
+<div id="attachment_159" style="width: 320px" class="wp-caption aligncenter">
+  <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-33-47.png" rel="attachment wp-att-159"><img aria-describedby="caption-attachment-159" class="size-full wp-image-159" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-33-47.png" alt="Configuration of GQRX" width="310" height="445" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-33-47.png 310w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-33-47-209x300.png 209w" sizes="(max-width: 310px) 100vw, 310px"></a>
+  
+  <p id="caption-attachment-159" class="wp-caption-text">
+    Configuration of GQRX
+  </p>
+</div>
+
+<p>Since the total bandwidth we need is about 40kHz, we can super-sample and decimate to increase the ADC resolution. So with a 32x decimation, we should increase 2.5 Bits ( log 32 in base 4 ) in the ADC Resolution. It also filters some of the noise because of the low pass filter to decimate. This gives us a better SNR at the output.</p>
+
+<p>If you noticed the RTL-SDR goes up to 3.2Msps of Sample Rate <strong>but</strong> above 2.56Msps the Realtek IC starts loosing bytes. So you can get 3.2Msps, but not continuous. Because of that I use 2.56Msps since it is the highest rate you can get without samples being drop.</p>
+
+<p>After that, click <strong>OK</strong> and the GQRX should open.</p>
+
+<div id="attachment_160" style="width: 960px" class="wp-caption aligncenter">
+  <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/gqrx_start.png" rel="attachment wp-att-160"><img aria-describedby="caption-attachment-160" class="size-full wp-image-160" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/gqrx_start.png" alt="Start screen of GQRX" width="950" height="652" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/gqrx_start.png 950w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/gqrx_start-300x206.png 300w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/gqrx_start-768x527.png 768w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/gqrx_start-624x428.png 624w" sizes="(max-width: 950px) 100vw, 950px"></a>
+  
+  <p id="caption-attachment-160" class="wp-caption-text">
+    Start screen of GQRX
+  </p>
+</div>
+
+<p>So now lets first setup the <strong>Audio Output Folder</strong> by clicking on the <strong>…</strong> button at the Audio Panel. Just make sure to select a folder, because once here I ran GQRX, clicked Rec and recorded everything. After recording I noticed that the folder field was empty, and my file went to limbo.</p>
+
+<p>Now we have the basic configuration of the GQRX done. So now lets setup the demodulator. In the <strong>Receiver</strong> <strong>Options</strong> configure:</p>
+
+<ol>
+  <li>
+<strong>Filter Width</strong> =&gt; Wide</li>
+  <li>
+<strong>Filter Shape </strong>=&gt; Sharp or Normal</li>
+  <li>
+<strong>Mode</strong> =&gt; WFM (mono)</li>
+  <li>
+<strong>Frequency Bar</strong> =&gt; 0.000 kHz</li>
+</ol>
+
+<p>In <strong>FFT Settings</strong> setup:</p>
+
+<ol>
+  <li>
+<strong>Ref Level</strong> =&gt; 0dB</li>
+  <li>
+<strong>dB Range</strong> =&gt; 104dB</li>
+  <li>
+<strong>Peak Detect</strong> =&gt; Clicked</li>
+</ol>
+
+<p>In <strong>Input Controls</strong> setup:</p>
+
+<ol>
+  <li>
+<strong>Hardware AGC</strong> =&gt; OFF</li>
+  <li>
+<strong>Swap I/Q </strong>=&gt; OFF</li>
+  <li>
+<strong>No Limits</strong> =&gt; OFF</li>
+  <li>
+<strong>DC Remove </strong>=&gt; ON</li>
+  <li>
+<strong>IQ Balance</strong> =&gt; ON</li>
+  <li>
+<strong>LNA Gain</strong> =&gt; 20dB</li>
+</ol>
+
+<p>In <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/gqrx_frequency_bar.png" rel="attachment wp-att-105"><img class="alignnone size-full wp-image-105" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/gqrx_frequency_bar.png" alt="gqrx_frequency_bar" width="369" height="40" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/gqrx_frequency_bar.png 369w, https://www.teske.net.br/lucas/wp-content/uploads/2016/01/gqrx_frequency_bar-300x33.png 300w" sizes="(max-width: 369px) 100vw, 369px"></a> set your satellite Frequency:</p>
+
+<ul>
+  <li>
+<strong>NOAA 15</strong> =&gt; 137.620 MHz</li>
+  <li>
+<strong>NOAA 18</strong> =&gt; 137.9125 MHz</li>
+  <li>
+<strong>NOAA 19</strong> =&gt; 137.1 MHz</li>
+</ul>
+
+<p>Now we can start the SDR Spectrum Capture by clicking at <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/gqrx_power_button.png" rel="attachment wp-att-106"><img class="alignnone size-full wp-image-106" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/gqrx_power_button.png" alt="gqrx_power_button" width="38" height="34"></a></p>
+
+<h2 id="adjusting-the-capture">Adjusting the capture</h2>
+
+<p>So there are few adjustments to be done. First of them is the <strong>Center Frequency</strong>. These cheap RTL-SDRs tend to drift a few 10’s of kHZ from the actual frequency, so you might have to change the frequency a bit find the signal. So if  your antenna is good, you should see the signal as soon as the satellite come in range. You should also play a bit with the <strong>LNA Gain</strong> setting to see where it gives you the bigger diference between the satellite signal and the floor noise (the bottom line in the spectrum). Here is a sample of how the signal looks:</p>
+
+<div id="attachment_161" style="width: 635px" class="wp-caption aligncenter">
+  <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-41-10.png" rel="attachment wp-att-161"><img aria-describedby="caption-attachment-161" class="size-large wp-image-161" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-41-10-1024x670.png" alt="Low signal when the satellite is in the edge of the horizon." width="625" height="409" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-41-10-1024x670.png 1024w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-41-10-300x196.png 300w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-41-10-768x502.png 768w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-41-10-624x408.png 624w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-41-10.png 1271w" sizes="(max-width: 625px) 100vw, 625px"></a>
+  
+  <p id="caption-attachment-161" class="wp-caption-text">
+    Low signal when the satellite is in the edge of the horizon.
+  </p>
+</div>
+
+<p>So as soon you find the signal, hit the <strong>Rec</strong> button to start recording the audio, and play with the values to get the less noise as possible. Also push the grey block over the signal to be around 40kHz (you can check in the <em>Receiver Options</em> screen at <em>Filter Width</em>). After getting everything setup, sit down and relax while the satellite passes. Notice that as the signal increases, the APT signal audio starts to be more recognizable from the noise. Here after a few seconds that the satellite come in range, I get a nice and clear audio from the APT Signal.</p>
+
+<div id="attachment_162" style="width: 635px" class="wp-caption aligncenter">
+  <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-45-28.png" rel="attachment wp-att-162"><img aria-describedby="caption-attachment-162" class="wp-image-162 size-large" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-45-28-1024x576.png" alt="GQRX NOAA Record in Progress" width="625" height="352" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-45-28-1024x576.png 1024w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-45-28-300x169.png 300w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-45-28-768x432.png 768w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-45-28-624x351.png 624w" sizes="(max-width: 625px) 100vw, 625px"></a>
+  
+  <p id="caption-attachment-162" class="wp-caption-text">
+    GQRX NOAA Record in Progress
+  </p>
+</div>
+
+<p>You might want to adjust the gray block to have the <em>red</em> line centered on the center <em>spike</em>. The signal will drift to the left because of <em>Doppler Effect</em>. This is usually not needed if you have a wide enough gray block (filter), because most APT Decoding softwares compensate for doppler effect using APT Sync Signal.</p>
+
+<div id="attachment_163" style="width: 635px" class="wp-caption aligncenter">
+  <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-50-19.png" rel="attachment wp-att-163"><img aria-describedby="caption-attachment-163" class="wp-image-163 size-large" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-50-19-1024x576.png" alt="I started Recording at 137.909MHz and it drift almost to 137.904MHz." width="625" height="352" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-50-19-1024x576.png 1024w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-50-19-300x169.png 300w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-50-19-768x432.png 768w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-50-19-624x351.png 624w" sizes="(max-width: 625px) 100vw, 625px"></a>
+  
+  <p id="caption-attachment-163" class="wp-caption-text">
+    I started Recording at 137.909MHz and it drift almost to 137.904MHz.
+  </p>
+</div>
+
+<p>After the satellite gets out of range (or the signal is to noisy), click the <strong>Rec</strong> button again to stop recording. The output audio file should be on your target folder.</p>
+
+<h2 id="processing-the-audio-file">Processing the Audio File</h2>
+
+<p>Now the first thing is to normalize and resample the wav file. All the current APT Decoding softwares expect a <strong>Mono 11025 Hz WAV File</strong>, but the recorded wav is stereo and in 48kHz. So we will use Audacity to do all of these. So open your wav file in audacity.</p>
+
+<div id="attachment_165" style="width: 924px" class="wp-caption aligncenter">
+  <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity0.png" rel="attachment wp-att-165"><img aria-describedby="caption-attachment-165" class="wp-image-165 size-full" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity0.png" alt="Audacity with the Wav File" width="914" height="560" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity0.png 914w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity0-300x184.png 300w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity0-768x471.png 768w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity0-624x382.png 624w" sizes="(max-width: 914px) 100vw, 914px"></a>
+  
+  <p id="caption-attachment-165" class="wp-caption-text">
+    Audacity with the Wav File
+  </p>
+</div>
+
+<p>With the file opened, first squash the two channels into one by going to the menu <strong>Tracks =&gt; Stereo Track to Mono</strong>. This should remove the second track and set the audio to mono.</p>
+
+<div id="attachment_166" style="width: 924px" class="wp-caption alignnone">
+  <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity1.png" rel="attachment wp-att-166"><img aria-describedby="caption-attachment-166" class="size-full wp-image-166" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity1.png" alt="Mono Track" width="914" height="560" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity1.png 914w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity1-300x184.png 300w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity1-768x471.png 768w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity1-624x382.png 624w" sizes="(max-width: 914px) 100vw, 914px"></a>
+  
+  <p id="caption-attachment-166" class="wp-caption-text">
+    Mono Track
+  </p>
+</div>
+
+<p>Now we need to normalize it because our signal is too low. To do so, go to <strong>Effects =&gt; Normalize</strong>. Keep the defaults settings and hit <strong>OK</strong>. You should have a much bigger signal.</p>
+
+<div id="attachment_167" style="width: 924px" class="wp-caption alignnone">
+  <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity2.png" rel="attachment wp-att-167"><img aria-describedby="caption-attachment-167" class="size-full wp-image-167" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity2.png" alt="Normalized Signal in Audacity" width="914" height="560" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity2.png 914w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity2-300x184.png 300w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity2-768x471.png 768w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity2-624x382.png 624w" sizes="(max-width: 914px) 100vw, 914px"></a>
+  
+  <p id="caption-attachment-167" class="wp-caption-text">
+    Normalized Signal in Audacity
+  </p>
+</div>
+
+<p>Now in the bottom of the screen, change the <strong>Project Rate</strong> to <strong>11025</strong> and then go to <strong>Tracks =&gt; Change Sampling Rate</strong>. The new sampling rate should be 11025 already, so just hit <strong>OK</strong>. You will see that the signal will change and attenuate a bit.</p>
+
+<div id="attachment_168" style="width: 924px" class="wp-caption alignnone">
+  <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity3.png" rel="attachment wp-att-168"><img aria-describedby="caption-attachment-168" class="size-full wp-image-168" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity3.png" alt="Resampled Signal. Some noise disappeared. " width="914" height="560" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity3.png 914w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity3-300x184.png 300w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity3-768x471.png 768w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity3-624x382.png 624w" sizes="(max-width: 914px) 100vw, 914px"></a>
+  
+  <p id="caption-attachment-168" class="wp-caption-text">
+    Resampled Signal. Some noise disappeared.
+  </p>
+</div>
+
+<p>Now you can hit normalize again just to make sure that the signal is normalized.</p>
+
+<div id="attachment_169" style="width: 924px" class="wp-caption alignnone">
+  <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity4.png" rel="attachment wp-att-169"><img aria-describedby="caption-attachment-169" class="size-full wp-image-169" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity4.png" alt="Normalized Signal Resampled" width="914" height="560" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity4.png 914w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity4-300x184.png 300w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity4-768x471.png 768w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/audacity4-624x382.png 624w" sizes="(max-width: 914px) 100vw, 914px"></a>
+  
+  <p id="caption-attachment-169" class="wp-caption-text">
+    Normalized Signal Resampled
+  </p>
+</div>
+
+<p>Now you can go <strong>File =&gt; Export Audio</strong> and make sure you export a 16 Bit PCM with Signal Microsoft WAV File. I usually keep my original file, and name this processed one as myoriginalfilename_11025.wav. Now we are ready to decode.</p>
+
+<p><strong>Decoding using APT 3000</strong></p>
+
+<p>The easiest way now is to decode using APT 3000 webpage. It doesn’t produce great results always, but it it very good if you have a good signal. So just go to <a href="http://jthatch.com/APT3000/APT3000.html" target="_blank">http://jthatch.com/APT3000/APT3000.html</a> and browse your recently edited file. It should take some time and then decode the image. Click <strong>View AB</strong> to see the full image.</p>
+
+<div id="attachment_170" style="width: 635px" class="wp-caption alignnone">
+  <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/apt3000.png" rel="attachment wp-att-170"><img aria-describedby="caption-attachment-170" class="size-large wp-image-170" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/apt3000-1024x821.png" alt="APT 3000 Decoded Image" width="625" height="501" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/02/apt3000-1024x821.png 1024w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/apt3000-300x241.png 300w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/apt3000-768x616.png 768w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/apt3000-624x500.png 624w, https://www.teske.net.br/lucas/wp-content/uploads/2016/02/apt3000.png 1180w" sizes="(max-width: 625px) 100vw, 625px"></a>
+  
+  <p id="caption-attachment-170" class="wp-caption-text">
+    APT 3000 Decoded Image
+  </p>
+</div>
+
+<p>Congratulations! You got your first weather satellite recording! YEY!</p>
+
+<p> </p>
+
+
+  <hr>
+<div class="fb-comments" data-href="https://lucasteske.dev/2016/02/recording-noaa-apt-signals-with-gqrx-and-rtl-sdr-on-linux/" data-width="100%" data-numposts="5"></div>
+
+<hr>
+<div class="sharebuttons">
+  <ul>
+    <li>
+      <p class="sharetitle"> Share this: </p>
+    </li>
+    <li class="reddit">
+      <a href="http://www.reddit.com/submit?url=https://lucasteske.dev/2016/02/recording-noaa-apt-signals-with-gqrx-and-rtl-sdr-on-linux/&amp;title=Recording%20NOAA%20APT%20Signals%20with%20GQRX%20and%20RTL-SDR%20on%20Linux" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Reddit icon</title>
+<path d="M2.204 14.049c-.06.276-.091.56-.091.847 0 3.443 4.402 6.249 9.814 6.249 5.41 0 9.812-2.804 9.812-6.249 0-.274-.029-.546-.082-.809l-.015-.032c-.021-.055-.029-.11-.029-.165-.302-1.175-1.117-2.241-2.296-3.103-.045-.016-.088-.039-.126-.07-.026-.02-.045-.042-.067-.064-1.792-1.234-4.356-2.008-7.196-2.008-2.815 0-5.354.759-7.146 1.971-.014.018-.029.033-.049.049-.039.033-.084.06-.13.075-1.206.862-2.042 1.937-2.354 3.123 0 .058-.014.114-.037.171l-.008.015zm9.773 5.441c-1.794 0-3.057-.389-3.863-1.197-.173-.174-.173-.457 0-.632.176-.165.46-.165.635 0 .63.629 1.685.943 3.228.943 1.542 0 2.591-.3 3.219-.929.165-.164.45-.164.629 0 .165.18.165.465 0 .645-.809.808-2.065 1.198-3.862 1.198l.014-.028zm-3.606-7.573c-.914 0-1.677.765-1.677 1.677 0 .91.763 1.65 1.677 1.65s1.651-.74 1.651-1.65c0-.912-.739-1.677-1.651-1.677zm7.233 0c-.914 0-1.678.765-1.678 1.677 0 .91.764 1.65 1.678 1.65s1.651-.74 1.651-1.65c0-.912-.739-1.677-1.651-1.677zm4.548-1.595c1.037.833 1.8 1.821 2.189 2.904.45-.336.719-.864.719-1.449 0-1.002-.815-1.816-1.818-1.816-.399 0-.778.129-1.09.363v-.002zM2.711 9.963c-1.003 0-1.817.816-1.817 1.818 0 .543.239 1.048.644 1.389.401-1.079 1.172-2.053 2.213-2.876-.302-.21-.663-.329-1.039-.329v-.002zm9.217 12.079c-5.906 0-10.709-3.205-10.709-7.142 0-.275.023-.544.068-.809C.494 13.598 0 12.729 0 11.777c0-1.496 1.227-2.713 2.725-2.713.674 0 1.303.246 1.797.682 1.856-1.191 4.357-1.941 7.112-1.992l1.812-5.524.404.095s.016 0 .016.002l4.223.993c.344-.798 1.138-1.36 2.065-1.36 1.229 0 2.231 1.004 2.231 2.234 0 1.232-1.003 2.234-2.231 2.234s-2.23-1.004-2.23-2.23l-3.851-.912-1.467 4.477c2.65.105 5.047.854 6.844 2.021.494-.464 1.144-.719 1.833-.719 1.498 0 2.718 1.213 2.718 2.711 0 .987-.54 1.886-1.378 2.365.029.255.059.494.059.749-.015 3.938-4.806 7.143-10.72 7.143l-.034.009zm8.179-19.187c-.74 0-1.34.599-1.34 1.338 0 .738.6 1.34 1.34 1.34.732 0 1.33-.6 1.33-1.334 0-.733-.598-1.332-1.347-1.332l.017-.012z"></path></svg>
+      </a>
+    </li>
+    <li class="hn">
+      <a href="http://news.ycombinator.com/submitlink?u=https://lucasteske.dev/2016/02/recording-noaa-apt-signals-with-gqrx-and-rtl-sdr-on-linux/&amp;t=Recording%20NOAA%20APT%20Signals%20with%20GQRX%20and%20RTL-SDR%20on%20Linux" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Y Combinator icon</title>
+<path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"></path></svg>
+      </a>
+    </li>
+    <li class="twitter">
+      <a href="https://twitter.com/intent/tweet?via=lucasteske&url=https://lucasteske.dev/2016/02/recording-noaa-apt-signals-with-gqrx-and-rtl-sdr-on-linux/&amp;text=Recording%20NOAA%20APT%20Signals%20with%20GQRX%20and%20RTL-SDR%20on%20Linux" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Twitter icon</title>
+<path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"></path></svg>
+      </a>
+    </li>
+    <li class="linkedin">
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://lucasteske.dev/2016/02/recording-noaa-apt-signals-with-gqrx-and-rtl-sdr-on-linux/&amp;title=Recording%20NOAA%20APT%20Signals%20with%20GQRX%20and%20RTL-SDR%20on%20Linux" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn icon</title>
+<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+      </a>
+    </li>
+  </ul>
+</div>
+
+</div>
+
+<div class="pagination">
+  
+    <a href="/2016/03/fmtv-diplexer-test/" class="left arrow">←</a>
+  
+  
+    <a href="/2016/02/lemaker-guitar-review/" class="right arrow">→</a>
+  
+
+  <a href="#" class="top">Top</a>
+</div>
+
+      <br><br>
+    </main>
+
+    <footer>
+  <span>
+    © <time datetime="2022-12-18 21:07:18 -0300">2022</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+  </span><br>
+  <span class="site-build">
+    Last build: 2022-12-18 21:07:18 -0300
+  </span>
+</footer>
+
+<script src="/assets/simple-jekyll-search.min.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="https://lucasteske.dev{url}">{date} - {title}</a></li>'
+  })
+</script>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+  <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P2HPZJM" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- AnchorJS -->
+<script src="/assets/anchor.min.js"></script>
+<script>
+  anchors.options.placement = 'left';
+  anchors.add('h1');
+  anchors.add();
+</script>
+<!-- End AnchorJS -->
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "6fdff3f05d2847b58d553381bb1e8115"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+  </body>
+</html>

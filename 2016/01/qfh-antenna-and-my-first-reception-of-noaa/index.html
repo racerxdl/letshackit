@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" property="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  <title>QFH Antenna and my first reception of NOAA! | Lets Hack It</title>
+
+  <!-- Global -->
+  <link rel="canonical" href="https://lucasteske.dev/2016/01/qfh-antenna-and-my-first-reception-of-noaa/">
+  <meta name="generator" property="generator" content="Jekyll v4.2.2">
+  <meta name="author" property="author" content="Lucas Teske">
+  <meta name="description" property="description" content="So in my last post I was playing with my RTL-SDR with an Intel Edison. So I decided to build a QFH Antenna to ble able to receive NOAA APT Signals. These NOAA Weather Satellites broadcast a APT signal with about 5 to 8 Watts at 2m band, and considering...">
+  
+  <meta name="keywords" content="APT, Images, Linux, NOAA, RTL SDR, Satellite, SDR, SDR Sharp, Windows">
+  
+  <!-- Open Graph -->
+  <meta name="og:locale" property="og:locale" content="en">
+  <meta name="og:type" property="og:type" content="article">
+  <meta name="og:title" property="og:title" content="QFH Antenna and my first reception of NOAA! | Lets Hack It">
+  <meta name="og:url" property="og:url" content="https://lucasteske.dev/2016/01/qfh-antenna-and-my-first-reception-of-noaa/">
+  <meta name="og:image" property="og:image" content="https://lucasteske.dev/assets/cropped-logo.png">
+  <meta name="og:site_name" property="og:site_name" content="Lets Hack It">
+  <meta name="og:description" property="og:description" content="So in my last post I was playing with my RTL-SDR with an Intel Edison. So I decided to build a QFH Antenna to ble able to receive NOAA APT Signals. These NOAA Weather Satellites broadcast a APT signal with about 5 to 8 Watts at 2m band, and considering...">
+
+  <!-- Article -->
+  <meta name="article:author" property="article:author" content="https://www.facebook.com/teskeslab">
+  <meta name="article:publisher" property="article:publisher" content="https://www.facebook.com/teskeslab">
+  <meta name="article:published_time" property="article:published_time" content="2016-01-25T01:55:41-02:00">
+
+  <!-- Facebook -->
+  <meta name="fb:admins" property="fb:admins" content="1234">
+  <meta name="fb:app_id" property="fb:app_id" content="1209208119176770">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" property="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" property="twitter:title" content="QFH Antenna and my first reception of NOAA! | Lets Hack It">
+  <meta name="twitter:site" property="twitter:site" content="@lucasteske">
+  <meta name="twitter:creator" property="twitter:creator" content="@lucasteske">
+  <meta name="twitter:description" property="twitter:description" content="So in my last post I was playing with my RTL-SDR with an Intel Edison. So I decided to build a QFH Antenna to ble able to receive NOAA APT Signals. These NOAA Weather Satellites broadcast a APT signal with about 5 to 8 Watts at 2m band, and considering...">
+  <meta name="twitter:image" property="twitter:image" content="https://lucasteske.dev/assets/cropped-logo.png">
+  <meta name="twitter:image:alt" property="twitter:image:alt" content="So in my last post I was playing with my RTL-SDR with an Intel Edison. So I decided to build a QFH Antenna to ble able to receive NOAA APT Signals. These NOAA Weather Satellites broadcast a APT signal with about 5 to 8 Watts at 2m band, and considering...">
+
+  <!-- JSON LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "url": "https://lucasteske.dev/2016/01/qfh-antenna-and-my-first-reception-of-noaa/",
+    "name": "QFH Antenna and my first reception of NOAA! | Lets Hack It",
+    "headline": "QFH Antenna and my first reception of NOAA! | Lets Hack It",
+    "keywords": "APT,Images,Linux,NOAA,RTL SDR,Satellite,SDR,SDR Sharp,Windows",
+    "description": "So in my last post I was playing with my RTL-SDR with an Intel Edison. So I decided to build a QFH Antenna to ble able to receive NOAA APT Signals. These NOAA Weather Satellites broadcast a APT signal with about 5 to 8 Watts at 2m band, and considering...",
+    "articleBody": "So in my last post I was playing with my RTL-SDR with an Intel Edison. So I decided to build a QFH Antenna to ble able to receive NOAA APT Signals. These NOAA Weather Satellites broadcast a APT signal with about 5 to 8 Watts at 2m band, and considering how low this power is, it might suprise you that these signals arrive pretty strong at earth surface. But the biggest challenge to receive this signals are not its power. Its all about movement. These satellites are sun-synchronous low orbit satellites, that means they aren’t locked to earth rotation. Instead, they actually do one turn on earth in about 1 hour and half. So whenever the satellite is in range of your receiver, it will appear on one side of the horizon, and disappear on another one. This creates a need for a good omni directional antenna that can receive signals from anywhere. But not only this: The signal is rotating (a.k.a. circular polarization) So we need a antenna that can receive circular polarized signals. We have a few choices like QFH (QuadriFiliar Helix) , Double Cross Antenna (Double Dipole) or Turnstyle Antenna. TurnStyle Antenna (Source: http://www.rtl-sdr.com/ ) Double Cross...",
+    "datePublished": "2016-01-25 01:55:41 -0200",
+    "dateModified": "2016-01-25 01:55:41 -0200",
+    "author": {
+      "@type": "Person",
+      "name": "Lucas Teske",
+      "email": "letshackit@nvx.li"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Lets Hack It",
+      "url": "https://lucasteske.dev",
+      "logo": {
+        "@type": "ImageObject",
+        "width": 32,
+        "height": 32,
+        "url": "https://lucasteske.dev/icon/favicon.ico"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://lucasteske.dev/2016/01/qfh-antenna-and-my-first-reception-of-noaa/"
+    },
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://lucasteske.dev/assets/cropped-logo.png"
+    }
+  }
+  </script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/assets/theme.css">
+  <link rel="stylesheet" href="/assets/flag-icon.min.css">
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="manifest" href="/assets/site.webmanifest">
+  <link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="/assets/favicon.ico">
+  <meta name="msapplication-TileColor" property="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-config" property="msapplication-config" content="/assets/browserconfig.xml">
+  <meta name="theme-color" property="theme-color" content="#ffffff">
+
+  <!-- Custom Scripts -->
+  <script async src="/assets/syntaxhighlighter.min.js"></script>
+  <script async src="/assets/simple-jekyll-search.min.js"></script>
+
+  <!-- RSS -->
+  <link type="application/atom+xml" rel="alternate" href="https://lucasteske.dev/feed.xml" title="Lets Hack It">
+
+  <!-- Google Analytics-->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-32251405-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-32251405-2');
+</script>
+  
+</head>
+
+  <body>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&amp;version=v4.0&amp;appId=1209208119176770&amp;autoLogAppEvents=1"></script>
+    <div class="like-box">
+      <div class="fb-like" data-href="https://lucasteske.dev/2016/01/qfh-antenna-and-my-first-reception-of-noaa/" data-width="" data-layout="box_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+    </div>
+    <a href="https://github.com/racerxdl/letshackit" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#70B7FD; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+    <main class="site">
+      
+<br>
+<img src="/assets/cropped-logo.png" style="margin-left: auto; margin-right: auto;">
+<ul class="language-bar">
+  
+  
+  <a class="link-pt flag-icon flag-icon-us" href="/2016/01/qfh-antenna-and-my-first-reception-of-noaa/"></a>
+  <a class="link-en flag-icon flag-icon-br" href="/pt/2016/01/qfh-antenna-and-my-first-reception-of-noaa/"></a>
+</ul>
+<nav class="nav">
+  <div class="nav-container" style="height: 50px">
+    <ul class="navul">
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/donate">Donate</a></li>
+      <li><a href="/calculators">Calculators</a></li>
+      <li><a href="/my-presentations">My Presentations</a></li>
+      <li><a href="/satcom-projects">Satcom Projects</a></li>
+      <li><a href="/my-tesla-coils">My Tesla Coils</a></li>
+      <li><a href="/biggateboy">Big Gate Boy</a></li>
+      <li><a href="/about">About</a></li>
+    
+    </ul>
+  </div>
+</nav>
+<div class="social-icon">
+  <ul>
+    <li class="btn-a btn-svg btn-twitch">
+      <a href="https://twitch.tv/racerxdl">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><title>Twitch icon</title>
+<path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"></path></svg>
+
+        RacerXDL
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-twitter">
+      <a href="https://twitter.com/lucasteske">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Twitter icon</title>
+<path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"></path></svg>
+        @lucasteske
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-instagram">
+      <a href="https://instagram.com/racerxdl/">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Instagram icon</title>
+<path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"></path></svg>
+        @racerxdl
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-facebook">
+      <a href="https://www.facebook.com/teskeslab">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Facebook icon</title>
+<path d="M23.9981 11.9991C23.9981 5.37216 18.626 0 11.9991 0C5.37216 0 0 5.37216 0 11.9991C0 17.9882 4.38789 22.9522 10.1242 23.8524V15.4676H7.07758V11.9991H10.1242V9.35553C10.1242 6.34826 11.9156 4.68714 14.6564 4.68714C15.9692 4.68714 17.3424 4.92149 17.3424 4.92149V7.87439H15.8294C14.3388 7.87439 13.8739 8.79933 13.8739 9.74824V11.9991H17.2018L16.6698 15.4676H13.8739V23.8524C19.6103 22.9522 23.9981 17.9882 23.9981 11.9991Z"></path></svg>
+        Teske's Lab
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-github">
+      <a href="https://github.com/racerxdl">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub icon</title>
+<path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg>
+        @racerxdl
+      </a>
+    </li>
+<br>
+    <li class="btn-a btn-svg btn-youtube">
+      <a href="https://www.youtube.com/c/TeskesLab">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><title>YouTube icon</title>
+<path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"></path></svg>
+        Teske's Lab
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-linkedin">
+      <a href="https://www.linkedin.com/in/lucas-teske-8206301b/">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn icon</title>
+<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+        Lucas Teske
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-code-stats">
+      <a href="https://codestats.net/users/racerxdl">
+        <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="360px" height="360px" viewbox="0 0 360 360" enable-background="new 0 0 360 360" xml:space="preserve">
+<path d="M174,81.741v27.509C161.913,104,133.5,93.5,109.789,94.6c-23.859,1.107-42.172,7.301-54.859,21.902
+	c-12.689,14.603-19.033,35.71-19.033,63.326c0,27.524,6.344,48.585,19.033,63.186c12.687,14.603,30.974,21.901,54.859,21.901
+	c12.127,0,41.461-5.665,64.211-19.115v29.528c-8.75,2.672-33.75,12.422-65.891,12.818c-31.625,0.39-56.538-9.678-74.731-29.039
+	c-18.193-19.358-27.29-45.784-27.29-79.28c0-33.587,9.097-60.059,27.29-79.42c18.193-19.358,43.113-28.252,74.731-29.039
+	C133,70.75,155.808,77.431,174,81.741z M341.423,82.005v27.569c-10.729-5.13-20.852-8.957-30.368-11.476s-18.707-3.778-27.569-3.778
+	c-15.395,0-27.268,2.987-35.616,8.957c-8.352,5.972-12.525,14.462-12.525,25.47c0,9.236,2.774,16.212,8.327,20.922
+	c5.55,4.712,16.069,8.515,31.558,11.406l17.073,3.499c21.084,4.013,36.643,11.08,46.673,21.202
+	c10.027,10.124,15.044,23.675,15.044,40.654c0,20.247-6.787,35.595-20.362,46.043c-13.575,10.45-33.472,15.674-59.688,15.674
+	c-9.89,0-20.41-1.119-31.558-3.358c-11.15-2.239-22.695-5.55-34.637-9.937v-29.109c11.476,6.438,22.717,11.29,33.727,14.555
+	c11.008,3.267,21.832,4.898,32.468,4.898c16.14,0,28.596-3.171,37.366-9.517c8.769-6.344,13.155-15.395,13.155-27.149
+	c0-10.262-3.149-18.285-9.447-24.071c-6.297-5.783-16.632-10.122-30.998-13.015l-17.213-3.358
+	c-21.086-4.199-36.341-10.776-45.763-19.733c-9.425-8.957-14.135-21.412-14.135-37.366c0-18.473,6.508-33.027,19.522-43.664
+	c13.015-10.636,30.95-15.954,53.81-15.954c9.796,0,19.778,0.888,29.948,2.659C320.383,75.801,330.787,78.46,341.423,82.005z"></path>
+<path d="M86.199,153.037c0-2.98,1.024-5.495,3.074-7.544c2.048-2.048,4.563-3.073,7.544-3.073c3.034,0,5.561,1.011,7.584,3.034
+	c2.022,2.023,3.034,4.55,3.034,7.584s-1.012,5.563-3.034,7.584c-2.023,2.023-4.551,3.034-7.584,3.034
+	c-2.981,0-5.496-1.024-7.544-3.074C87.223,158.533,86.199,156.018,86.199,153.037z M86.199,205.089c0-2.979,1.024-5.509,3.074-7.584
+	c2.048-2.076,4.563-3.113,7.544-3.113c2.98,0,5.495,1.037,7.544,3.113c2.048,2.075,3.074,4.604,3.074,7.584
+	c0,2.981-1.012,5.496-3.034,7.545c-2.023,2.048-4.551,3.073-7.584,3.073s-5.562-1.025-7.584-3.073
+	C87.209,210.585,86.199,208.07,86.199,205.089z M141.135,153.037c0-2.98,1.024-5.495,3.074-7.544
+	c2.048-2.048,4.563-3.073,7.544-3.073c3.034,0,5.561,1.011,7.584,3.034c2.022,2.023,3.034,4.55,3.034,7.584
+	s-1.012,5.563-3.034,7.584c-2.023,2.023-4.551,3.034-7.584,3.034c-2.981,0-5.496-1.024-7.544-3.074
+	C142.159,158.533,141.135,156.018,141.135,153.037z M141.135,205.089c0-2.979,1.024-5.509,3.074-7.584
+	c2.048-2.076,4.563-3.113,7.544-3.113c2.98,0,5.495,1.037,7.544,3.113c2.048,2.075,3.074,4.604,3.074,7.584
+	c0,2.981-1.012,5.496-3.034,7.545c-2.023,2.048-4.551,3.073-7.584,3.073s-5.563-1.025-7.584-3.073
+	C142.146,210.585,141.135,208.07,141.135,205.089z"></path>
+</svg>
+
+        racerxdl
+      </a>
+    </li>
+<br>
+    <li class="btn-a btn-svg btn-telegram">
+      <a href="https://t.me/hardwareHackingBrasil">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><title>Telegram icon</title>
+<path d="M23.91 3.79L20.3 20.84c-.25 1.21-.98 1.5-2 .94l-5.5-4.07-2.66 2.57c-.3.3-.55.56-1.1.56-.72 0-.6-.27-.84-.95L6.3 13.7l-5.45-1.7c-1.18-.35-1.19-1.16.26-1.75l21.26-8.2c.97-.43 1.9.24 1.53 1.73z"></path></svg>
+        Hardware Hacking Brasil
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-patreon">
+      <a href="https://www.patreon.com/teskeslab">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Patreon</title>
+<path d="M0 .48v23.04h4.22V.48zm15.385 0c-4.764 0-8.641 3.88-8.641 8.65 0 4.755 3.877 8.623 8.641 8.623 4.75 0 8.615-3.868 8.615-8.623C24 4.36 20.136.48 15.385.48z"></path></svg>
+        Patreon
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-mastodon">
+      <a rel="me" href="https://infosec.exchange/@lucasteske">
+        <svg width="24px" height="24px" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"><path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"></path></svg>
+        Mastodon
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="search-input">
+  <input type="text" id="search-input" style="margin: 0 auto;" placeholder="Search blog posts...">
+</div>
+<ul id="results-container" class="results-container"></ul>
+
+      
+
+
+
+
+
+<div class="post">
+  <h1 class="post-title">QFH Antenna and my first reception of NOAA!</h1>
+  <div class="post-info">
+    
+    <span>Written by</span>
+    
+        Lucas Teske
+    
+    
+
+    
+      <br>
+      <span>on </span><time datetime="2016-01-25 01:55:41 -0200">
+  25
+  
+  January
+  2016
+</time>
+    
+  </div>
+
+  <div class="post-line"></div>
+
+  <p><a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/20160119_203854.jpg" rel="attachment wp-att-121"><img class="size-medium wp-image-121 aligncenter" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/20160119_203854-169x300.jpg" alt="20160119_203854" width="169" height="300" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/20160119_203854-169x300.jpg 169w, https://www.teske.net.br/lucas/wp-content/uploads/2016/01/20160119_203854.jpg 551w" sizes="(max-width: 169px) 100vw, 169px"></a></p>
+
+<p>So in my last post I was playing with my RTL-SDR with an Intel Edison. So I decided to build a QFH Antenna to ble able to receive NOAA <a href="https://en.wikipedia.org/wiki/Automatic_picture_transmission" target="_blank">APT</a> Signals. These NOAA Weather Satellites broadcast a APT signal with about 5 to 8 Watts at 2m band, and considering how low this power is, it might suprise you that these signals arrive pretty strong at earth surface. But the biggest challenge to receive this signals are not its power. Its all about movement.</p>
+
+<!--more-->
+
+<p>These satellites are sun-synchronous low orbit satellites, that means they aren’t locked to earth rotation. Instead, they actually do one turn on earth in about 1 hour and half. So whenever the satellite is in range of your receiver, it will appear on one side of the horizon, and disappear on another one. This creates a need for a good omni directional antenna that can receive signals from anywhere. But not only this: The signal is rotating (a.k.a. circular polarization)</p>
+
+<p><a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/Circular.Polarization.Circularly.Polarized.Light_Right.Handed.Animation.305x190.255Colors.gif" rel="attachment wp-att-122"><img class="size-full wp-image-122 aligncenter" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/Circular.Polarization.Circularly.Polarized.Light_Right.Handed.Animation.305x190.255Colors.gif" alt="Circular.Polarization.Circularly.Polarized.Light_Right.Handed.Animation.305x190.255Colors" width="305" height="190"></a></p>
+
+<p>So we need a antenna that can receive circular polarized signals. We have a few choices like QFH (<strong>Q</strong>uadri<strong>F</strong>iliar <strong>H</strong>elix) , Double Cross Antenna (Double Dipole) or Turnstyle Antenna.</p>
+
+<div id="attachment_124" style="width: 460px" class="wp-caption aligncenter">
+  <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/homebrew_137MHz_turnstile.jpg" rel="attachment wp-att-124"><img aria-describedby="caption-attachment-124" class="wp-image-124 size-full" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/homebrew_137MHz_turnstile.jpg" alt="TurnStyle Antenna" width="450" height="367" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/homebrew_137MHz_turnstile.jpg 450w, https://www.teske.net.br/lucas/wp-content/uploads/2016/01/homebrew_137MHz_turnstile-300x245.jpg 300w" sizes="(max-width: 450px) 100vw, 450px"></a>
+  
+  <p id="caption-attachment-124" class="wp-caption-text">
+    TurnStyle Antenna (Source: http://www.rtl-sdr.com/ )
+  </p>
+</div>
+
+<div id="attachment_125" style="width: 331px" class="wp-caption aligncenter">
+  <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/DoubleCrossAntenna.jpg" rel="attachment wp-att-125"><img aria-describedby="caption-attachment-125" class="size-full wp-image-125" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/DoubleCrossAntenna.jpg" alt="Double Cross Antenna (Source: http://www.rtl-sdr.com/ )" width="321" height="443" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/DoubleCrossAntenna.jpg 321w, https://www.teske.net.br/lucas/wp-content/uploads/2016/01/DoubleCrossAntenna-217x300.jpg 217w" sizes="(max-width: 321px) 100vw, 321px"></a>
+  
+  <p id="caption-attachment-125" class="wp-caption-text">
+    Double Cross Antenna (Source: http://www.rtl-sdr.com/ )
+  </p>
+</div>
+
+<p>I decided to go for QFH because it was the easiest to be done with what I had.</p>
+
+<h2 id="building-the-antenna">Building the Antenna</h2>
+
+<p>So for building a antenna, I first start searching some previous experiences with QFH in the internet. I found this website <a href="http://www.jcoppens.com/ant/qfh/calc.en.php" target="_blank">http://www.jcoppens.com/ant/qfh/calc.en.php</a> that have a pretty good calculator. To be honest I didnt liked much how the layout of the calculator is (I think it is very confusing) but it gets the right values and can even generate drilling templates. But later I will make my own calculator and drilling generator for that.</p>
+
+<p>So the default parameters were very good for me, and I printed the drilling guides for my tubes. For the mast (vertical tube) I had use a 2m x 5cm PVC Pipe (sewer pipe) and for the Horizontal tubes I had use a 2cm diameter PVC tube (sewer pipe as well). I bought 2m of it as well and it were enough.<br>
+<a title="QFH Main Support" href="https://www.flickr.com/photos/energylabs/24322927011/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1620/24322927011_284622755a.jpg" alt="QFH Main Support" width="281" height="500"></a><a title="QFH Drilling Guide" href="https://www.flickr.com/photos/energylabs/24297145512/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1539/24297145512_5a8734a6aa.jpg" alt="QFH Drilling Guide" width="500" height="281"></a></p>
+
+<p><a title="QFH Drilling Guide" href="https://www.flickr.com/photos/energylabs/24405407065/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1544/24405407065_485f521d8f.jpg" alt="QFH Drilling Guide" width="281" height="500"></a></p>
+
+<p><a title="QFH Drilling Guide" href="https://www.flickr.com/photos/energylabs/24405406975/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1568/24405406975_561f1b6fb7.jpg" alt="QFH Drilling Guide" width="500" height="281"></a><a title="Quadrifiliar Helix Antenna for 137MHz" href="https://www.flickr.com/photos/energylabs/23809947114/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1548/23809947114_e9c4b0db78.jpg" alt="Quadrifiliar Helix Antenna for 137MHz" width="281" height="500"></a></p>
+
+<p>So as you can see, the drilling templates were only used for positioning. First I was thinking about using copper pipe to to the horizontal guides, but I decided to use the 2cm PVC Pipe instead. So I just drilled a bigger hole. In the picture above, my RGE-06 Coax Cable for the conductor (I wish I had a copper braid coax 🙁  )</p>
+
+<p><a title="Quadrifiliar Helix Antenna for 137MHz" href="https://www.flickr.com/photos/energylabs/23809942874/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1560/23809942874_a1e5cceace.jpg" alt="Quadrifiliar Helix Antenna for 137MHz" width="281" height="500"></a></p>
+
+<p><a title="Quadrifiliar Helix Antenna for 137MHz" href="https://www.flickr.com/photos/energylabs/24142526480/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1677/24142526480_28f90740ee.jpg" alt="Quadrifiliar Helix Antenna for 137MHz" width="404" height="500"></a></p>
+
+<p>So the two top-most horizontal guides are on the same level, also is where the cables go out to I plug with the output. So I cutted 80% of the pipe in the middle with the width of a pipe (so, 2cm). The two guides from the middle had to have holes in the ends so the Coax Cable passes through it.</p>
+
+<p><a title="Quadrifiliar Helix Antenna for 137MHz" href="https://www.flickr.com/photos/energylabs/24142520850/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1637/24142520850_1823b08b97.jpg" alt="Quadrifiliar Helix Antenna for 137MHz" width="446" height="500"></a></p>
+
+<p>So first things first. I glued with hot glue and insulation tape the output cable on the side of the mast and drilled one additional hole at the top. This is needed because we need a 4 turn “balun” to match the unbalanced coax cable with a balanced antenna signal. So the hole was to pass the coax cable inside to exit on the top of the mast (so I can do the wirings there).<a title="Quadrifiliar Helix Antenna for 137MHz" href="https://www.flickr.com/photos/energylabs/24355686161/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1658/24355686161_54df968f9d.jpg" alt="Quadrifiliar Helix Antenna for 137MHz" width="500" height="281"></a></p>
+
+<p><a title="Quadrifiliar Helix Antenna for 137MHz" href="https://www.flickr.com/photos/energylabs/24329847562/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1467/24329847562_f07f625efa.jpg" alt="Quadrifiliar Helix Antenna for 137MHz" width="500" height="281"></a></p>
+
+<p><a title="Quadrifiliar Helix Antenna for 137MHz" href="https://www.flickr.com/photos/energylabs/24438127645/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1490/24438127645_3572527b11.jpg" alt="Quadrifiliar Helix Antenna for 137MHz" width="281" height="500"></a></p>
+
+<p>After that I started winding the antenna. So I had to cut two pieces of 2m coax cable to do the two loops of the antenna. Firstly I made a mistake doing Left Handed Polarization instead of Right Hand Polarization. So just to help you guys: Make your right hand a L shape with your fingers with your Thumb parallel with the antenna. If you rotate your hand in the direction of your fingers, and the cable follows the direction of your fingers, you have Right Hand Polarization. If it doesnt, it will probably do with your Left hand. Make sure your antenna is <strong>Right Hand Polarized</strong> not left. The cables should go top to down when you rotate your hand. If you have any doubts, take a look on the next picture. So if you are thinking about how the cables goes inside these tubings, basically just imagine as a O shape loop, with the O cutted in the top of the mast (so actually a U shape lol)</p>
+
+<p><a title="Quadrifiliar Helix Antenna for 137MHz" href="https://www.flickr.com/photos/energylabs/24142501410/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1538/24142501410_edcb389134.jpg" alt="Quadrifiliar Helix Antenna for 137MHz" width="281" height="500"></a></p>
+
+<p> </p>
+
+<p>So here we have all 4 points + the output at the top.</p>
+
+<p> </p>
+
+<p><a title="Quadrifiliar Helix Antenna for 137MHz" href="https://www.flickr.com/photos/energylabs/24070322889/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1673/24070322889_2697f6bc84.jpg" alt="Quadrifiliar Helix Antenna for 137MHz" width="281" height="500"></a></p>
+
+<p>So it looks complicated to wire, but is not that hard. Take a look here:</p>
+
+<p><a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/250px-QFH_Feedpoint.png" rel="attachment wp-att-130"><img class="size-full wp-image-130 aligncenter" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/250px-QFH_Feedpoint.png" alt="250px-QFH_Feedpoint" width="250" height="242"></a></p>
+
+<p>So basically if you rotate the antenna that the conductors make an X, you wire the left side cables with the conductor of the output, and right side cables with braid of the output. Please notice that for the 4 cables that arrive at the top, you need to short circuit the conductor and the braid, so the entire cable will act like one conductor.<br>
+<a title="Quadrifiliar Helix Antenna for 137MHz" href="https://www.flickr.com/photos/energylabs/24411896876/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1651/24411896876_35a4037ddf.jpg" alt="Quadrifiliar Helix Antenna for 137MHz" width="500" height="310"></a></p>
+
+<p>So this is what it looks after everything connected. I know it looks ugly, and thats why I wanted a copper braid coax cable :/<br>
+<a title="Quadrifiliar Helix Antenna for 137MHz" href="https://www.flickr.com/photos/energylabs/24438115035/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1509/24438115035_1d80b3fb25.jpg" alt="Quadrifiliar Helix Antenna for 137MHz" width="281" height="500"></a></p>
+
+<p>So after everything wired, the antenna looks like this:<a title="Quadrifiliar Helix Antenna for 137MHz" href="https://www.flickr.com/photos/energylabs/24438109765/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1560/24438109765_264057d4d8.jpg" alt="Quadrifiliar Helix Antenna for 137MHz" width="281" height="500"></a></p>
+
+<h2 id="first-test">First Test</h2>
+
+<p>So just after I finished wiring everything up, I got my laptop, my SDR and my antenna and went out to test it on the first satellite that would pass. So besides the antenna is on the ground on the picture, I actually holded the antenna still on the wall, pointing upwards. I got a good signal, but not for a long time because the antenna was too low and since there is a lot of houses (and even my roof was higher than the antenna) I didnt got much of the horizon for it. So I went to fix it.</p>
+
+<p><a title="Quadrifiliar Helix Antenna for 137MHz" href="https://www.flickr.com/photos/energylabs/23811303963/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1607/23811303963_897fc17025.jpg" alt="Quadrifiliar Helix Antenna for 137MHz" width="281" height="500"></a></p>
+
+<h2 id="fixing-the-antenna">Fixing the antenna</h2>
+
+<p>So I had to search a place on the roof to get the antenna fixed. So I found a corner that was perfect for that. Also I got a longer PVC Pipe and fixed on my antenna, so I could fix better.</p>
+
+<p><a title="QFH In place!" href="https://www.flickr.com/photos/energylabs/24227344919/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1648/24227344919_96f477f007.jpg" alt="QFH In place!" width="281" height="500"></a></p>
+
+<p>So this is how it looks from the street.<a title="QFH In place seen from the street" href="https://www.flickr.com/photos/energylabs/23966968584/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1625/23966968584_e2cd388b73.jpg" alt="QFH In place seen from the street" width="500" height="281"></a></p>
+
+<p>I also got a LNA (Low noise amplifier) in the antenna (you can see on the first picture) because I wanted the cable to go straight to my room, and this is about 10m of coax cable. I used a coax cable that have a power conductor on the side (it is used for Security Cameras, so you can pass power together with the signal). But I just noticed that the LNA had a too wide band (5 MHz to 1GHz) and this was amplifing as well the Floor Noise and Cross Band interference.</p>
+
+<h2 id="new-filters">New Filters</h2>
+
+<p>So I decided to start with a basic filter and then go to a better filter (which I didnt yet). The simplest way I thought was to try to remove the FM Radio Band (88 to 108MHz) and the 200MHz+ Band. The perfect filter for removing specific frequencies are the Notch Filters. I found a very simple notch filter that is done by using a piece of coax cable cut in 1/4 of the wavelength you want to strip out from your signal. So I made two coax notch filters: One for 106MHz and other for 270MHz. The 270MHz filter have a 135MHz pass band, and the 106MHz should atennuate the 88-108MHZ band a little. This should reduce my noise floor.</p>
+
+<p><a title="Notch Filters for removing 106MHz band and 270MHz band." href="https://www.flickr.com/photos/energylabs/24595103135/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1514/24595103135_58aa51cd5d.jpg" alt="Notch Filters for removing 106MHz band and 270MHz band." width="500" height="281"></a></p>
+
+<p>So before putting the filter at the antenna, I went some tests here in my desk. The test were simple: I had the best Spectrum Analyzer I could have – The SDR. So I just got another LNA I had here and wired like this:</p>
+
+<blockquote>
+  <p>Random FM Radio Antenna <strong>=&gt;</strong> Filters <strong>=&gt; </strong>LNA <strong>=&gt;</strong> SDR</p>
+</blockquote>
+
+<p>So in this way I could test how effective the Filter would be.Here is the result:</p>
+
+<div id="attachment_132" style="width: 729px" class="wp-caption aligncenter">
+  <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/a.png" rel="attachment wp-att-132"><img aria-describedby="caption-attachment-132" class="size-full wp-image-132" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/a.png" alt="102MHz Band without the filter" width="719" height="346" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/a.png 719w, https://www.teske.net.br/lucas/wp-content/uploads/2016/01/a-300x144.png 300w, https://www.teske.net.br/lucas/wp-content/uploads/2016/01/a-624x300.png 624w" sizes="(max-width: 719px) 100vw, 719px"></a>
+  
+  <p id="caption-attachment-132" class="wp-caption-text">
+    102MHz Band without the filter
+  </p>
+</div>
+
+<div id="attachment_133" style="width: 777px" class="wp-caption aligncenter">
+  <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/b.png" rel="attachment wp-att-133"><img aria-describedby="caption-attachment-133" class="size-full wp-image-133" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/b.png" alt="102MHz Band with the filter" width="767" height="388" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/b.png 767w, https://www.teske.net.br/lucas/wp-content/uploads/2016/01/b-300x152.png 300w, https://www.teske.net.br/lucas/wp-content/uploads/2016/01/b-624x316.png 624w" sizes="(max-width: 767px) 100vw, 767px"></a>
+  
+  <p id="caption-attachment-133" class="wp-caption-text">
+    102MHz Band with the filter
+  </p>
+</div>
+
+<p>Also, I had no attenuation at 135-138MHz band. So I decide to put the filter on the antenna.</p>
+
+<p><a title="QFH + LNA + Notch Filters" href="https://www.flickr.com/photos/energylabs/23966969304/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1521/23966969304_f8fe2be32f.jpg" alt="QFH + LNA + Notch Filters" width="281" height="500"></a></p>
+
+<h2 id="tests-and-results">Tests and Results</h2>
+
+<p>So yesterday (24/01/2016, saturday) I saw that the NOAA Satellites would pass directly over my home, so I decided to power up the antenna and give a try. Here are the results ! 😀</p>
+
+<p><a title="NOAA 15 at 23 Jan 2016 20:54:53 GMT" href="https://www.flickr.com/photos/energylabs/24486808972/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1473/24486808972_70b77f85a5.jpg" alt="NOAA 15 at 23 Jan 2016 20:54:53 GMT" width="310" height="500"></a></p>
+
+<p><a title="NOAA 18 at 23 Jan 2016 21:19:02 GMT" href="https://www.flickr.com/photos/energylabs/23966990724/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1541/23966990724_7d00b0d6ed.jpg" alt="NOAA 18 at 23 Jan 2016 21:19:02 GMT" width="283" height="500"></a></p>
+
+<p><a title="NOAA 15 SDRSharp" href="https://www.flickr.com/photos/energylabs/24299644810/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1666/24299644810_9609d9ca4f.jpg" alt="NOAA 15 SDRSharp" width="500" height="249"></a></p>
+
+
+  <hr>
+<div class="fb-comments" data-href="https://lucasteske.dev/2016/01/qfh-antenna-and-my-first-reception-of-noaa/" data-width="100%" data-numposts="5"></div>
+
+<hr>
+<div class="sharebuttons">
+  <ul>
+    <li>
+      <p class="sharetitle"> Share this: </p>
+    </li>
+    <li class="reddit">
+      <a href="http://www.reddit.com/submit?url=https://lucasteske.dev/2016/01/qfh-antenna-and-my-first-reception-of-noaa/&amp;title=QFH%20Antenna%20and%20my%20first%20reception%20of%20NOAA!" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Reddit icon</title>
+<path d="M2.204 14.049c-.06.276-.091.56-.091.847 0 3.443 4.402 6.249 9.814 6.249 5.41 0 9.812-2.804 9.812-6.249 0-.274-.029-.546-.082-.809l-.015-.032c-.021-.055-.029-.11-.029-.165-.302-1.175-1.117-2.241-2.296-3.103-.045-.016-.088-.039-.126-.07-.026-.02-.045-.042-.067-.064-1.792-1.234-4.356-2.008-7.196-2.008-2.815 0-5.354.759-7.146 1.971-.014.018-.029.033-.049.049-.039.033-.084.06-.13.075-1.206.862-2.042 1.937-2.354 3.123 0 .058-.014.114-.037.171l-.008.015zm9.773 5.441c-1.794 0-3.057-.389-3.863-1.197-.173-.174-.173-.457 0-.632.176-.165.46-.165.635 0 .63.629 1.685.943 3.228.943 1.542 0 2.591-.3 3.219-.929.165-.164.45-.164.629 0 .165.18.165.465 0 .645-.809.808-2.065 1.198-3.862 1.198l.014-.028zm-3.606-7.573c-.914 0-1.677.765-1.677 1.677 0 .91.763 1.65 1.677 1.65s1.651-.74 1.651-1.65c0-.912-.739-1.677-1.651-1.677zm7.233 0c-.914 0-1.678.765-1.678 1.677 0 .91.764 1.65 1.678 1.65s1.651-.74 1.651-1.65c0-.912-.739-1.677-1.651-1.677zm4.548-1.595c1.037.833 1.8 1.821 2.189 2.904.45-.336.719-.864.719-1.449 0-1.002-.815-1.816-1.818-1.816-.399 0-.778.129-1.09.363v-.002zM2.711 9.963c-1.003 0-1.817.816-1.817 1.818 0 .543.239 1.048.644 1.389.401-1.079 1.172-2.053 2.213-2.876-.302-.21-.663-.329-1.039-.329v-.002zm9.217 12.079c-5.906 0-10.709-3.205-10.709-7.142 0-.275.023-.544.068-.809C.494 13.598 0 12.729 0 11.777c0-1.496 1.227-2.713 2.725-2.713.674 0 1.303.246 1.797.682 1.856-1.191 4.357-1.941 7.112-1.992l1.812-5.524.404.095s.016 0 .016.002l4.223.993c.344-.798 1.138-1.36 2.065-1.36 1.229 0 2.231 1.004 2.231 2.234 0 1.232-1.003 2.234-2.231 2.234s-2.23-1.004-2.23-2.23l-3.851-.912-1.467 4.477c2.65.105 5.047.854 6.844 2.021.494-.464 1.144-.719 1.833-.719 1.498 0 2.718 1.213 2.718 2.711 0 .987-.54 1.886-1.378 2.365.029.255.059.494.059.749-.015 3.938-4.806 7.143-10.72 7.143l-.034.009zm8.179-19.187c-.74 0-1.34.599-1.34 1.338 0 .738.6 1.34 1.34 1.34.732 0 1.33-.6 1.33-1.334 0-.733-.598-1.332-1.347-1.332l.017-.012z"></path></svg>
+      </a>
+    </li>
+    <li class="hn">
+      <a href="http://news.ycombinator.com/submitlink?u=https://lucasteske.dev/2016/01/qfh-antenna-and-my-first-reception-of-noaa/&amp;t=QFH%20Antenna%20and%20my%20first%20reception%20of%20NOAA!" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Y Combinator icon</title>
+<path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"></path></svg>
+      </a>
+    </li>
+    <li class="twitter">
+      <a href="https://twitter.com/intent/tweet?via=lucasteske&url=https://lucasteske.dev/2016/01/qfh-antenna-and-my-first-reception-of-noaa/&amp;text=QFH%20Antenna%20and%20my%20first%20reception%20of%20NOAA!" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Twitter icon</title>
+<path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"></path></svg>
+      </a>
+    </li>
+    <li class="linkedin">
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://lucasteske.dev/2016/01/qfh-antenna-and-my-first-reception-of-noaa/&amp;title=QFH%20Antenna%20and%20my%20first%20reception%20of%20NOAA!" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn icon</title>
+<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+      </a>
+    </li>
+  </ul>
+</div>
+
+</div>
+
+<div class="pagination">
+  
+    <a href="/2016/02/lemaker-guitar-review/" class="left arrow">←</a>
+  
+  
+    <a href="/2016/01/play-with-sdr-and-intel-edison/" class="right arrow">→</a>
+  
+
+  <a href="#" class="top">Top</a>
+</div>
+
+      <br><br>
+    </main>
+
+    <footer>
+  <span>
+    © <time datetime="2022-12-18 21:07:18 -0300">2022</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+  </span><br>
+  <span class="site-build">
+    Last build: 2022-12-18 21:07:18 -0300
+  </span>
+</footer>
+
+<script src="/assets/simple-jekyll-search.min.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="https://lucasteske.dev{url}">{date} - {title}</a></li>'
+  })
+</script>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+  <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P2HPZJM" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- AnchorJS -->
+<script src="/assets/anchor.min.js"></script>
+<script>
+  anchors.options.placement = 'left';
+  anchors.add('h1');
+  anchors.add();
+</script>
+<!-- End AnchorJS -->
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "6fdff3f05d2847b58d553381bb1e8115"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+  </body>
+</html>

@@ -1,0 +1,966 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="pt"><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://lucasteske.dev/feed.xml" rel="self" type="application/atom+xml" /><link href="https://lucasteske.dev/" rel="alternate" type="text/html" hreflang="pt" /><updated>2022-12-18T21:07:23-03:00</updated><id>https://lucasteske.dev/feed.xml</id><title type="html">Lets Hack It</title><subtitle>Sou Lucas Teske, gosto de Eletrônica, Computação, Física.  Todos os hacks que eu fizer, serão colocados aqui. Aceito sugestões :D</subtitle><author><name>Lucas Teske</name><email>letshackit@nvx.li</email></author><entry><title type="html">Rotor de Antena - Parte 2</title><link href="https://lucasteske.dev/2021/04/rotor-antenna-parte-2" rel="alternate" type="text/html" title="Rotor de Antena - Parte 2" /><published>2021-04-01T02:23:00-03:00</published><updated>2021-04-01T02:23:00-03:00</updated><id>https://lucasteske.dev/2021/04/rotor-antenna-parte-2</id><content type="html" xml:base="https://lucasteske.dev/2021/04/rotor-antenna-parte-2"><![CDATA[<p>Continuando o projeto do tracker, consegui alguns progressos significativos. Assim como o Demilson (PY2UEP) tinha cortado os motores originais, fiz o mesmo. O motor do azimute estava bem enferrujado e acabei estragando uma de suas bobinas (queria reaproveitar o fio), mas no fim o eixo saiu.</p>
+
+<hr />
+
+<p>Após o eixo removido, quebrei o imã com um martelo até que não sobrasse mais pedaços de imã no eixo, desta maneira restando apenas o suporte sextavado de onde era preso o imã.</p>
+
+<p><img src="/assets/posts/tracker-mount-2/azimuth-motor-shaft.jpg" alt="Suporte Sextavado do Imã 1" />
+<img src="/assets/posts/tracker-mount-2/azimuth-motor-shaft2.jpg" alt="Suporte Sextavado do Imã 2" />
+<img src="/assets/posts/tracker-mount-2/azimuth-motor-shaft3.jpg" alt="Suporte Sextavado do Imã 3" /><em>Eixo do motor do azimute mostrando o suporte sextavado do imã</em></p>
+
+<p>Já para o motor da elevação, fiz um corte lateral no motor bem em uma marca circular que tem próximo a saída do motor. Desse jeito poderia usar o mesmo suporte e eixos do motor original para melhor acoplamento com o redutor.</p>
+
+<p><img src="/assets/posts/tracker-mount-2/elevation-shaft-support.jpg" alt="&quot;tampa&quot; do motor de elevação cortado" /><em>“tampa” do motor de elevação cortado</em>
+<img src="/assets/posts/tracker-mount-2/elevation-shaft-support-with-reduction.jpg" alt="Tampa + Redutor" /><em>Tampa + Redutor</em>
+<img src="/assets/posts/tracker-mount-2/elevation-motor-parts2.jpg" alt="Peças do motor" /><em>Peças do Motor</em></p>
+
+<p>Para a elevação, foi nescessário cortar o do motor original e fazer um “vinco” na lateral dele para encaixar melhor na peça que seria impressa em 3D. Para fazer isso, coloquei o eixo original entre duas madeiras (por sugestão do meu pai) e efetuamos o corte do eixo. Para os vincos, usamos a esmerilhadeira.</p>
+
+<p><img src="/assets/posts/tracker-mount-2/elevation-shaft-cut.jpg" alt="Eixo cortado no meio de duas madeiras" /><em>Eixo cortado no meio de duas madeiras</em>
+<img src="/assets/posts/tracker-mount-2/elevation-shaft-support-with-shaft.jpg" alt="Eixo cortado na tampa do motor" /><em>Eixo cortado na tampa do motor</em></p>
+
+<p>Com isso eu poderia, então, começar os desenhos em 3D para as adaptações.</p>
+
+<h2 id="impressões-3d">Impressões 3D</h2>
+
+<p>Depois de muita tentativa e erro, consegui acertar os encaixes entre os eixos. Porém percebi um problema: O espaço para o motor do azimute estava <strong>extremamente</strong> limitado, a ponto de meus motores NEMA 17 de 40mm serem grandes demais para o espaço.</p>
+
+<p><img src="/assets/posts/tracker-mount-2/try-azimuth-44adapter.jpg" alt="Adaptação para Azimute" />
+<img src="/assets/posts/tracker-mount-2/try-azimuth-44adapter-place.jpg" alt="Adaptação para Azimute" /><em>Adaptação para Azimute</em></p>
+
+<p>Para isso tive que comprar motores “slim” para o local. Fiquei um pouco preocupado com torque, mas minhas tentativas de fazer com engrenagens e tudo mais foram por água abaixo. Os motores em questão foram comprados a Aliexpress (confira no fim do post pelos links)</p>
+
+<p>Enquanto o motor não chegava, fiquei otimizando os adaptadores para serem os mais curtos possíveis, economizando todo espaço possível. Eu uso o <a href="https://www.freecadweb.org/">FreeCAD</a> por ser gratuito e também onde eu sei mexer melhor. Porém não assuma que eu realmente sou um designer 3D, pois eu não sou. As peças são apenas “funcionais”.</p>
+
+<p><img src="/assets/posts/tracker-mount-2/azimuth-shaft-adapter.jpg" alt="Adaptador de eixo do azimute" /><em>Adaptador de eixo do azimute</em>
+<img src="/assets/posts/tracker-mount-2/azimuth-support.jpg" alt="Suporte do azimute" /><em>Suporte do azimute</em>
+<img src="/assets/posts/tracker-mount-2/elevation-shaft-adapter.jpg" alt="Adaptador de eixo da elevação" /><em>Adaptador de eixo da elevação</em>
+<img src="/assets/posts/tracker-mount-2/elevation-motor-adapter.jpg" alt="Suporte da elevação" /><em>Suporte da elevação</em>
+<img src="/assets/posts/tracker-mount-2/exploded-elevation-shaft.jpg" alt="" /></p>
+
+<p>E o primeiro eixo a funcionar foi o da elevação. Para isso usei motores de 40 mm NEMA17 (link no fim do post), que de fabrica eram closed-loop (com encoder magnético) porém acabei usando drivers TMC2209 por serem mais práticos e silenciosos.</p>
+
+<p><img src="https://www.youtube.com/watch?v=cfUtCqb3oxA" alt="" />
+<img src="https://www.youtube.com/watch?v=ENTpTZaiXl4" alt="" /></p>
+
+<p>Após a chegada dos novos motores para o azimute, tratei de logo montar tudo e ver se ia caber. E coube!</p>
+
+<p><img src="/assets/posts/tracker-mount-2/assembled-azimuth-support.jpg" alt="Azimute" />
+<img src="/assets/posts/tracker-mount-2/azimuth-motor-inplace.jpg" alt="Motor de Azimute no lugar" /></p>
+
+<p>E também funcionando!</p>
+
+<p><img src="https://www.youtube.com/watch?v=-4U-ofHaF0E" alt="" /></p>
+
+<p>Após tudo funcionando, fiz os testes para saber a resolução final e redução de ambos eixos. Para isso usei este codigo para o ESP32 controlar o TMC2209 e o meu celular preso ao eixo da elevação para medições de angulo.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;TMCStepper.h&gt;</span><span class="cp">
+</span>
+<span class="cp">#define STEP_PIN         12 // Step
+#define EN_PIN           23 // Enable
+</span>
+<span class="cp">#define SERIAL_PORT Serial2 // TMC2208/TMC2224 HardwareSerial port
+#define DRIVER_ADDRESS 0b00 // TMC2209 Driver address according to MS1 and MS2
+</span>
+<span class="cp">#define R_SENSE 0.11f 
+</span>
+<span class="n">TMC2209Stepper</span> <span class="nf">driver</span><span class="p">(</span><span class="o">&amp;</span><span class="n">SERIAL_PORT</span><span class="p">,</span> <span class="n">R_SENSE</span><span class="p">,</span> <span class="n">DRIVER_ADDRESS</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">STEP_PIN</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">EN_PIN</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">EN_PIN</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+  
+  <span class="n">SERIAL_PORT</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">115200</span><span class="p">);</span>      <span class="c1">// HW UART drivers</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">115200</span><span class="p">);</span>
+
+  <span class="n">driver</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>                 <span class="c1">// UART: Init SW UART (if selected) with default 115200 baudrate</span>
+  <span class="n">driver</span><span class="p">.</span><span class="n">toff</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>                <span class="c1">// Enables driver in software</span>
+  <span class="n">driver</span><span class="p">.</span><span class="n">rms_current</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>       <span class="c1">// Set motor RMS current</span>
+  <span class="n">driver</span><span class="p">.</span><span class="n">microsteps</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>           <span class="c1">// Set microsteps to 1/16th</span>
+
+  <span class="n">driver</span><span class="p">.</span><span class="n">en_spreadCycle</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>    <span class="c1">// Toggle spreadCycle on TMC2208/2209/2224</span>
+  <span class="n">driver</span><span class="p">.</span><span class="n">pwm_autoscale</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>      <span class="c1">// Needed for stealthChop</span>
+
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"OK"</span><span class="p">);</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">EN_PIN</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">shaft</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+<span class="c1">//  Serial.println("TURN");</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">Serial</span><span class="p">.</span><span class="n">available</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">z</span> <span class="o">=</span> <span class="n">Serial</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">z</span> <span class="o">==</span> <span class="sc">'a'</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Stepping 10000"</span><span class="p">);</span>
+      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">EN_PIN</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kt">uint32_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">;</span> <span class="n">i</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">digitalWrite</span><span class="p">(</span><span class="n">STEP_PIN</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+        <span class="n">delayMicroseconds</span><span class="p">(</span><span class="mi">350</span><span class="p">);</span>
+        <span class="n">digitalWrite</span><span class="p">(</span><span class="n">STEP_PIN</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+        <span class="n">delayMicroseconds</span><span class="p">(</span><span class="mi">350</span><span class="p">);</span>
+      <span class="p">}</span>
+      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">EN_PIN</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">z</span> <span class="o">==</span> <span class="sc">'b'</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">shaft</span> <span class="o">=</span> <span class="o">!</span><span class="n">shaft</span><span class="p">;</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Shaft direction: "</span><span class="p">);</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">shaft</span><span class="p">);</span>
+      <span class="n">driver</span><span class="p">.</span><span class="n">shaft</span><span class="p">(</span><span class="n">shaft</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Os resultados foram:</p>
+
+<ul>
+  <li>Eixo Elevação
+    <ul>
+      <li>Redução aproximada: 1:3500</li>
+      <li>Resolução Angular: 0,000117 graus / passo</li>
+      <li>Velocidade Máxima: 0,62 graus / segundo</li>
+    </ul>
+  </li>
+  <li>Eixo Azimute
+    <ul>
+      <li>Redução aproximada: 1:392</li>
+      <li>Resolução Angular: 0,0046 graus / passo</li>
+      <li>Velocidade Máxima: 6,3 graus / segundo</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Os resultados parecem bem promissores, e caso tudo dê certo, será suficiente para rastreamento de satélites!</p>
+
+<p>O próximo passo será montar o software e o hardware para controlar via rede!</p>
+
+<p>Os modelos 3D (tanto Freecad quanto STL) estão disponíveis no Thingverse (ver seção de links)</p>
+
+<h2 id="links">Links</h2>
+
+<ul>
+  <li><a href="https://s.click.aliexpress.com/e/_AOhCSe">Motor para Azimute</a></li>
+  <li><a href="https://s.click.aliexpress.com/e/_ADtVZs">Motor para Elevação (Closed-Loop)</a></li>
+  <li><a href="https://s.click.aliexpress.com/e/_9zgziK">Motor para Elevação (Normal)</a></li>
+  <li><a href="https://s.click.aliexpress.com/e/_AoG3ZC">Drivers TMC2209</a></li>
+  <li><a href="https://www.thingiverse.com/thing:4813288">Arquivos STL / Freecad</a></li>
+</ul>]]></content><author><name>Lucas Teske</name></author><category term="Reverse Engineering" /><category term="Satellite" /><category term="SDR" /><category term="Airspy" /><category term="EMWIN" /><category term="GOES" /><category term="Hearsat" /><category term="LRIT" /><category term="RE" /><category term="Reverse Engineering" /><category term="Sat" /><category term="Satellite" /><category term="SDR" /><summary type="html"><![CDATA[Continuando o projeto do tracker, consegui alguns progressos significativos. Assim como o Demilson (PY2UEP) tinha cortado os motores originais, fiz o mesmo. O motor do azimute estava bem enferrujado e acabei estragando uma de suas bobinas (queria reaproveitar o fio), mas no fim o eixo saiu.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/tracker-mount-2/assembled-elevation-shaft.jpg" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/tracker-mount-2/assembled-elevation-shaft.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Rotor de Antena - Parte 1</title><link href="https://lucasteske.dev/2021/03/rotor-antenna-parte-1" rel="alternate" type="text/html" title="Rotor de Antena - Parte 1" /><published>2021-03-03T20:57:00-03:00</published><updated>2021-03-03T20:57:00-03:00</updated><id>https://lucasteske.dev/2021/03/rotor-antenna-parte-1</id><content type="html" xml:base="https://lucasteske.dev/2021/03/rotor-antenna-parte-1"><![CDATA[<p>A uns anos atrás eu comprei um rotor para câmera da Pelco, modelo PT175-24P. Esse rotor é feito para carregar uma câmera com lente de até 8kg, e contém dois motores bifásicos reversiveis internamente. Minha ideia era (e é) colocar uma parabólica acoplada, e controlar seu movimento para rastrear satélites. Assim eu poderia executar a recepção de satélites de baixa órbita.</p>
+
+<p><img src="/assets/posts/tracker-mount/motor-schematic.jpg" alt="Esquema Interno" /><em>Esquema Interno</em></p>
+
+<hr />
+
+<p>O problema do sistema original da pelco, é que são dois motores de 24V AC, o que torna um VFD (Variable Frequency Driver) nescessário para controlar a velocidade e um sistema de loop fechado com algum sensor de angulo. Isso torna um pouco complexo o controle preciso da antena, então um colega (PY2UEP) sugeriu fazer uma modificação para trocar os motores por motor de passo. A grande vantagem dos motores de passo é que seus passos são sempre de mesmo comprimento. Logo se o motor der N passos em um sentido, e N passos no sentido contrário, ele irá retornar <strong>exatamente</strong> a mesma posição. Isso permite o uso de circuitos abertos (onde apenas no começo você move tudo para a posicao de referencia, e depois você não usa o feedback para corrigir nada).</p>
+
+<p><img src="/assets/posts/tracker-mount/photo_2021-03-03_20-56-30.jpg" alt="Motor de Passo" /><em>Motor de Passo</em></p>
+
+<h1 id="fazendo-a-limpeza">Fazendo a limpeza</h1>
+
+<p>Comecei então por abrir o rotor e fazer uma super limpeza. Limpar toda graxa antiga e tudo mais.</p>
+
+<p><img src="/assets/posts/tracker-mount/photo_2021-03-02_20-19-46.jpg" alt="Interior da Pelco" /><em>Interior da Pelco</em>
+<img src="/assets/posts/tracker-mount/photo_2021-03-02_20-19-46-2.jpg" alt="Interior da Pelco" /><em>Interior da Pelco</em></p>
+
+<p>Desmontei tudo, e dei um belo banho de querosene para remover a graxa. Os dois rolamentos do azimute estavam bem travados (a graxa secou tanto que parecia cola) então deixei de um dia pro outro na querosene e depois limpei com um pincel. Após toda limpeza, os rolamentos parecem novos!</p>
+
+<p><img src="https://www.youtube.com/watch?v=9Y2FpSlNss8" alt="" /></p>
+
+<p>O resto das peças eu joguei praticamente tudo dentro de um balde e enchi de querosene com um pouco de água. Depois fiquei mexendo as peças dentro (como são todas de metal bem resistente) “girando” o balde, como se eu estivesse misturando com uma colher. Após um tempo assim, deixei um tempo decantar e depois fiz varias lavagens com água e detergente pra remover toda querosene.</p>
+
+<p><img src="/assets/posts/tracker-mount/photo_2021-03-03_19-23-52.jpg" alt="Balde com peças" /><em>Balde com peças lavadas</em></p>
+
+<p>As correias eu também deixei de molho na querosene e depois usei um pincel para tirar os pedaços encrustrados de graxa.</p>
+
+<p><img src="/assets/posts/tracker-mount/photo_2021-03-03_19-23-53.jpg" alt="Correias" /><em>Correias na querosene</em></p>
+
+<p>Após tudo limpo, comecei a montagem colocando os dois rolamentos do azimute no lugar. O da parte inferior é preso no interior da pessa sob pressão, por isso foi nescessário o uso de um martelo. Com cuidado e um guia fui empurrando a peça até ficar praticamente rente com a parte de baixo. Após isso fiz a montagem do suporte do azimute.</p>
+
+<p><img src="https://www.youtube.com/watch?v=5wpSKRn5RnM" alt="" /></p>
+
+<p>E logo após coloquei o redutor e a correia do azimute no lugar.</p>
+
+<p><img src="https://www.youtube.com/watch?v=bE6B3GejGmA" alt="" /></p>
+
+<p>Depois foram coisas mais faceis: parafusar tudo novamente. No fim, eu deixei aberto para que pudesse planejar os motores de passo:</p>
+
+<p><img src="/assets/posts/tracker-mount/photo_2021-03-03_22-51-36.jpg" alt="Montagem da Pelco Aberta" /><em>Montagem da Pelco aberta</em></p>
+
+<p>Próximo passo é desmontar os motores originais para adaptar o eixo aos motores de passo!</p>
+
+<p><img src="/assets/posts/tracker-mount/photo_2021-03-03_22-56-26-2.jpg" alt="Motor do Azimute" /><em>Motor do Azimute</em></p>
+
+<p><img src="/assets/posts/tracker-mount/photo_2021-03-03_22-56-26.jpg" alt="Motor da Elevação" /><em>Motor da Elevação</em></p>]]></content><author><name>Lucas Teske</name></author><category term="Reverse Engineering" /><category term="Satellite" /><category term="SDR" /><category term="Airspy" /><category term="EMWIN" /><category term="GOES" /><category term="Hearsat" /><category term="LRIT" /><category term="RE" /><category term="Reverse Engineering" /><category term="Sat" /><category term="Satellite" /><category term="SDR" /><summary type="html"><![CDATA[A uns anos atrás eu comprei um rotor para câmera da Pelco, modelo PT175-24P. Esse rotor é feito para carregar uma câmera com lente de até 8kg, e contém dois motores bifásicos reversiveis internamente. Minha ideia era (e é) colocar uma parabólica acoplada, e controlar seu movimento para rastrear satélites. Assim eu poderia executar a recepção de satélites de baixa órbita.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/tracker-mount/head.jpg" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/tracker-mount/head.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Introdução a FPGA</title><link href="https://lucasteske.dev/2020/10/introducao-a-fpga" rel="alternate" type="text/html" title="Introdução a FPGA" /><published>2020-10-11T23:59:00-03:00</published><updated>2020-10-11T23:59:00-03:00</updated><id>https://lucasteske.dev/2020/10/introducao-a-fpga</id><content type="html" xml:base="https://lucasteske.dev/2020/10/introducao-a-fpga"><![CDATA[<p>Esta é a primeira parte do guia de programação para FPGAs! Este guia irá virar eventualmente um <code class="language-plaintext highlighter-rouge">verilog4noobs</code> para qualquer pessoa que quiser iniciar na área de programação de hardware possa ter um jeito fácil de conseguir! Iremos começar a explicar o que é um FPGA e como ele funciona.</p>
+
+<p>Para quem preferir, este artigo foi feito em base na Livestream sobre Verilog que fiz a um tempo atrás e está disponível no YouTube: <a href="https://www.youtube.com/watch?v=BcKwqju5gxA">https://www.youtube.com/watch?v=BcKwqju5gxA</a></p>
+
+<h1 id="o-que-é-um-fpga">O que é um FPGA</h1>
+
+<p>FPGA é uma abreviatura para Field Programmable Gate Array, ou Matriz de Portas Programáveis em Campo. O termo <code class="language-plaintext highlighter-rouge">campo</code> usado aqui se refere ao fato de que o chip pode ser programado após sair da fábrica. O termo <code class="language-plaintext highlighter-rouge">portas</code> se referem a portas lógicas.</p>
+
+<p>Alguns exemplos de portas lógicas:</p>
+
+<p><img src="/assets/posts/introducao_a_fpga/logic-gates.svg" alt="Portas Lógicas" /><em>Portas Lógicas - Remix de <a href="https://commons.wikimedia.org/wiki/File:Circuit_elements.svg">https://commons.wikimedia.org/wiki/File:Circuit_elements.svg</a></em></p>
+
+<h2 id="portas-lógicas">Portas Lógicas</h2>
+
+<p>As portas lógicas efetuam operações lógicas entre bits, e podem ter <strong>N</strong> entradas e uma saída. O FPGA é uma matriz de portas lógicas as quais podem ser interligadas para gerar circuitos lógicos equivalentes a qualquer chip desejado. Portas lógicas são blocos bem simples, e geralmente podem ser representados com poucos transístores. Por exemplo, dado <code class="language-plaintext highlighter-rouge">A</code>, <code class="language-plaintext highlighter-rouge">B</code> entradas e <code class="language-plaintext highlighter-rouge">Q</code> saída. Podemos implementar portas NOT, NAND e NOR destas maneiras:</p>
+
+<p><img src="/assets/posts/introducao_a_fpga/logic-not-transistor.svg" alt="Porta Inversora (NOT) em transístores" /><em>Representação em transístores bipolares de uma <strong>Porta Inversora</strong> (NOT)</em></p>
+
+<p><img src="/assets/posts/introducao_a_fpga/logic-nand-transistor.svg" alt="Porta Não-E (NAND) em transístores" /><em>Representação em transístores bipolares de uma <strong>Porta Não-E</strong> (NAND)</em></p>
+
+<p><img src="/assets/posts/introducao_a_fpga/logic-nor-transistor.svg" alt="Porta Não-OU (NOR) em transístores" /><em>Representação em transístores bipolares de uma <strong>Porta Não-OU</strong> (NOR)</em></p>
+
+<p>As operações lógicas realizadas pelas portas lógicas descritas seguem a seguinte tabela da verdade:</p>
+
+<div class="truth-table-holder">
+  <div class="truth-table-container">
+    <table id="andtable" class="truth">
+      <tbody>
+        <tr>
+          <td colspan="4"><b>Porta E</b></td>
+        </tr>
+        <tr>
+          <th>A</th>
+          <th>B</th>
+          <th class="dv"></th>
+          <th>A &amp; B</th>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>0</td>
+          <td class="dv"></td>
+          <td class="mc">0</td>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>1</td>
+          <td class="dv"></td>
+          <td class="mc">0</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>0</td>
+          <td class="dv"></td>
+          <td class="mc">0</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>1</td>
+          <td class="dv"></td>
+          <td class="mc">1</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="truth-table-container">
+    <table id="ortable" class="truth">
+      <tbody>
+        <tr>
+          <td colspan="4"><b>Porta OU</b></td>
+        </tr>
+        <tr>
+          <th>A</th>
+          <th>B</th>
+          <th class="dv"></th>
+          <th>A | B</th>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>0</td>
+          <td class="dv"></td>
+          <td class="mc">0</td>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>1</td>
+          <td class="dv"></td>
+          <td class="mc">1</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>0</td>
+          <td class="dv"></td>
+          <td class="mc">1</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>1</td>
+          <td class="dv"></td>
+          <td class="mc">1</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="truth-table-container">
+    <table id="nottable" class="truth">
+      <tbody>
+        <tr>
+          <td colspan="3"><b>Porta Inversora</b></td>
+        </tr>
+        <tr>
+          <th>A</th>
+          <th class="dv"></th>
+          <th>~A</th>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td class="dv"></td>
+          <td class="mc">1</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td class="dv"></td>
+          <td class="mc">0</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<p><br /></p>
+
+<p>Porém você nunca sabe especificamente qual porta irá usar em qual posição do FPGA. Por essa dúvida, seria nescessário cada <code class="language-plaintext highlighter-rouge">bloco</code> do FPGA conter todos os tipos básicos de portas lógicas para que na hora de ligar, pudesse escolher a porta correta. Isso tornaria o chip ineficiente pois de N portas que um bloco teria, você apenas usaria uma.</p>
+
+<p>Felizmente o FPGA não usa portas lógicas na sua maneira primitiva. Ao invés disso ele usa uma “porta programável” feita com um circuito lógico chamado <strong>multiplexador</strong>.</p>
+
+<h2 id="o-que-é-um-multiplexador">O que é um Multiplexador</h2>
+
+<p>Um multiplexador é uma unidade lógica de N entradas com apenas uma saída, e log2(N) entradas de controle. Abaixo segue um exemplo de um multiplexador de 8 entradas.</p>
+
+<p><img src="/assets/posts/introducao_a_fpga/mux.svg" alt="Multiplexador 8 entradas" />*</p>
+
+<p>Neste multiplexador temos:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">X0-X7</code>   =&gt; Entrada de dados</li>
+  <li><code class="language-plaintext highlighter-rouge">A, B, C</code> =&gt; Entrada de controle</li>
+  <li><code class="language-plaintext highlighter-rouge">O</code>       =&gt; Saída</li>
+</ul>
+
+<p>As entradas A, B e C formam um número de 3 bits que representam qual entrada X estará ligada a saída O.
+<br /></p>
+
+<div class="truth-table-container">
+  <table id="muxtable" class="truth">
+    <tbody>
+      <tr>
+        <td colspan="5"><b>MUX8</b></td>
+      </tr>
+      <tr>
+        <th>A</th>
+        <th>B</th>
+        <th>C</th>
+        <th class="dv"></th>
+        <th>O</th>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td class="dv"></td>
+        <td class="mc">X0</td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td class="dv"></td>
+        <td class="mc">X1</td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>1</td>
+        <td>0</td>
+        <td class="dv"></td>
+        <td class="mc">X2</td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td class="dv"></td>
+        <td class="mc">X3</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td class="dv"></td>
+        <td class="mc">X4</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td class="dv"></td>
+        <td class="mc">X5</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td class="dv"></td>
+        <td class="mc">X6</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td class="dv"></td>
+        <td class="mc">X7</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>Com a sua contra-parte (demultiplexador ou demux), é possível transferir vários canais de dados em apenas um canal, desde que ambos Mux e Demux estejam com os valores A,B,C corretamente configurados. Porém para FPGA’s MUX geralmente são usados de maneiras diferentes. Em lógica digital, você pode usar um MUX para implementar <em>qualquer</em> porta lógica associando as entradas do mux a valores pré-definidos.</p>
+
+<h2 id="implementando-portas-lógicas-com-multiplexador">Implementando portas lógicas com Multiplexador</h2>
+
+<p>A implementação de portas lógicas pode parecer complexa, mas para portas simples (NOT, OR, AND) é bem simples de entender o funcionamento. Vamos usar um MUX de 2 entradas (1 bit).</p>
+
+<p><img src="/assets/posts/introducao_a_fpga/mux2.svg" alt="Multiplexador 2 entradas" />*</p>
+
+<p>Neste caso a tabela da verdade é bem mais simples:</p>
+
+<div class="truth-table-container">
+  <table id="mux2table" class="truth">
+    <tbody>
+      <tr>
+        <td colspan="4"><b>MUX2</b></td>
+      </tr>
+      <tr>
+        <th>A</th>
+        <th class="dv"></th>
+        <th>O</th>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td class="dv"></td>
+        <td class="mc">X0</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td class="dv"></td>
+        <td class="mc">X1</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p><br /></p>
+
+<p>De modo que se quisermos que o MUX2 vire uma porta inversora, podemos apenas pré-configurar as entradas X0 e X1 com os valores 1 e 0.</p>
+
+<div class="truth-table-container">
+  <table id="mux2table" class="truth">
+    <tbody>
+      <tr>
+        <td colspan="6"><b>MUX2-NOT</b></td>
+      </tr>
+      <tr>
+        <th>X0</th>
+        <th>X1</th>
+        <th>A</th>
+        <th class="dv"></th>
+        <th>O porta</th>
+        <th>O valor</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>0</td>
+        <td class="tv">0</td>
+        <td class="dv"></td>
+        <td class="mc">X0</td>
+        <td class="mc">1</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>0</td>
+        <td class="tv">1</td>
+        <td class="dv"></td>
+        <td class="mc">X1</td>
+        <td class="mc">0</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p><br /></p>
+
+<p>Caso queiramos fazer uma porta AND, podemos configurar a entrada X0 como 0, e usar a entrada X1 e A como entradas da porta AND</p>
+
+<div class="truth-table-container">
+  <table id="mux2table" class="truth">
+    <tbody>
+      <tr>
+        <td colspan="6"><b>MUX2-AND</b></td>
+      </tr>
+      <tr>
+        <th>X0 (FIXO)</th>
+        <th>X1 (AND0)</th>
+        <th>A (AND1)</th>
+        <th class="dv"></th>
+        <th>O porta</th>
+        <th>O valor</th>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td class="tv">0</td>
+        <td class="tv">0</td>
+        <td class="dv"></td>
+        <td class="mc">X0</td>
+        <td class="mc">0</td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td class="tv">0</td>
+        <td class="tv">1</td>
+        <td class="dv"></td>
+        <td class="mc">X1</td>
+        <td class="mc">0</td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td class="tv">1</td>
+        <td class="tv">0</td>
+        <td class="dv"></td>
+        <td class="mc">X0</td>
+        <td class="mc">0</td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td class="tv">1</td>
+        <td class="tv">1</td>
+        <td class="dv"></td>
+        <td class="mc">X1</td>
+        <td class="mc">1</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p><br /></p>
+
+<p>Ou no caso de uma porta OR, fixamos o valor de X1 em 1 e usamos X0 e A como operadores OR.</p>
+
+<div class="truth-table-container">
+  <table id="mux2table" class="truth">
+    <tbody>
+      <tr>
+        <td colspan="6"><b>MUX2-OR</b></td>
+      </tr>
+      <tr>
+        <th>X0 (OR0)</th>
+        <th>X1 (FIXO)</th>
+        <th>A (OR1)</th>
+        <th class="dv"></th>
+        <th>O porta</th>
+        <th>O valor</th>
+      </tr>
+      <tr>
+        <td class="tv">0</td>
+        <td>1</td>
+        <td class="tv">0</td>
+        <td class="dv"></td>
+        <td class="mc">X0</td>
+        <td class="mc">0</td>
+      </tr>
+      <tr>
+        <td class="tv">0</td>
+        <td>1</td>
+        <td class="tv">1</td>
+        <td class="dv"></td>
+        <td class="mc">X1</td>
+        <td class="mc">1</td>
+      </tr>
+      <tr>
+        <td class="tv">1</td>
+        <td>1</td>
+        <td class="tv">0</td>
+        <td class="dv"></td>
+        <td class="mc">X0</td>
+        <td class="mc">1</td>
+      </tr>
+      <tr>
+        <td class="tv">1</td>
+        <td>1</td>
+        <td class="tv">1</td>
+        <td class="dv"></td>
+        <td class="mc">X1</td>
+        <td class="mc">1</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p><br /></p>
+
+<p>Existem outras operações que podem ser implementadas usando multiplexadores, inclusive operações mais complexas caso o multiplexador tenha mais entradas. Este uso é frequentemente chamado de Lookup-Table (ou Tabela de Consulta em português). Os detalhes de como criar operações não serão discutidos aqui (porém se quiserem, posso fazer um artigo no futuro sobre :) ), mas com essas informações já conseguimos explicar como funciona as células do FPGA!</p>
+
+<h2 id="lut-lookup-table-dos-fpgas">“LUT” Lookup-Table dos FPGAs</h2>
+
+<p>Cada célula do FPGA contém (em geral) uma LUT (Lookup-Table), um Flip-Flop tipo D e um mux 2:1.</p>
+
+<p><img src="/assets/posts/introducao_a_fpga/fpga-logic-cell.svg" alt="Célula Lógica do FPGA" /><em>Célula Lógica do FPGA</em></p>
+
+<p>O flip-flop serve para sincronização dos dados quando a operação é feita sob um domínio de um clock (um sinal de sincronia). Já o MUX 2:1 serve para selecionar se aquela célula será sincronizada com algo ou não (ela alterna entre a saída do flip-flop e a saída direto da LUT).</p>
+
+<p>As LUT’s seguem o princípio da reprogramabilidade do multiplexador como foi comentado na seção anterior, onde cada uma das entradas pode estar ligada a um nível lógico fixo ( 0 ou 1 ) ou a outras células / Pinos de entrada. Cada célula independente pode não fazer muita coisa por sí, porém interligadas a outras células podem fazer praticamente qualquer coisa!</p>
+
+<h1 id="o-que-é-uma-hdl">O que é uma HDL</h1>
+
+<p>HDL significa Hardware Description Language (ou Linguagem de Descrição de Hardware). Uma HDL serve para abstrair os conceitos de portas lógicas e células do FPGA para um nível onde fique mais fácil de pensar na lógica do programa. Uma HDL é efetivamente traduzida a netlist (lista de nós) de pseudo-LUTs que será usada para preparar o conjunto de dados que irá efetivamente ligar as células dentro do FPGA.</p>
+
+<p>As duas linguagens mais tradicionais são VHDL e Verilog. Ambas são suportadas pela grande maioria de ferramentas de FPGA especificas dos fabricantes e também das de código fonte aberto.</p>
+
+<div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Exemplo em Verilog</span>
+<span class="k">module</span> <span class="n">contador</span> <span class="p">(</span> <span class="c1">// Definição de entradas e saídas do módulo</span>
+  <span class="n">out</span>     <span class="p">,</span>  <span class="c1">// Saída do contador</span>
+  <span class="n">enable</span>  <span class="p">,</span>  <span class="c1">// Sinal de ativação do contador</span>
+  <span class="n">clk</span>     <span class="p">,</span>  <span class="c1">// Sinal de clock</span>
+  <span class="n">reset</span>      <span class="c1">// Sinal de reset</span>
+<span class="p">);</span>
+<span class="c1">// ------------- Portas de saída ----------</span>
+    <span class="kt">output</span> <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">out</span><span class="p">;</span> <span class="c1">// Saída de 8 bits</span>
+<span class="c1">// ------------ Portas de Entrada ---------</span>
+    <span class="kt">input</span> <span class="n">enable</span><span class="p">,</span> <span class="n">clk</span><span class="p">,</span> <span class="n">reset</span><span class="p">;</span>
+<span class="c1">// ------------ Variáveis Internas --------</span>
+    <span class="kt">reg</span> <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">out</span><span class="p">;</span> <span class="c1">// Contador de 8 bits, associado a saída out</span>
+
+<span class="c1">// ------------- Código começa aqui -------</span>
+
+<span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">clk</span><span class="p">)</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">reset</span><span class="p">)</span> <span class="k">begin</span>
+  <span class="n">out</span> <span class="o">&lt;=</span> <span class="mb">8'b0</span> <span class="p">;</span>
+<span class="k">end</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">enable</span><span class="p">)</span> <span class="k">begin</span>
+  <span class="n">out</span> <span class="o">&lt;=</span> <span class="n">out</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">end</span>
+
+<span class="k">endmodule</span>
+</code></pre></div></div>
+
+<div class="language-vhdl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Exemplo em VHDL</span>
+<span class="k">library</span> <span class="n">ieee</span><span class="p">;</span>
+  <span class="k">use</span> <span class="n">ieee</span><span class="o">.</span><span class="n">std_logic_1164</span><span class="o">.</span><span class="k">all</span><span class="p">;</span>
+  <span class="k">use</span> <span class="n">ieee</span><span class="o">.</span><span class="n">std_logic_unsigned</span><span class="o">.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="c1">-- Definição de entradas e saídas do módulo</span>
+<span class="k">entity</span> <span class="n">contador</span> <span class="k">is</span>
+  <span class="k">port</span> <span class="p">(</span>
+    <span class="n">cout</span>   <span class="p">:</span><span class="k">out</span> <span class="kt">std_logic_vector</span> <span class="p">(</span><span class="mi">7</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">-- Saída de 8 bits do contador</span>
+    <span class="n">enable</span> <span class="p">:</span><span class="k">in</span>  <span class="kt">std_logic</span><span class="p">;</span>                     <span class="c1">-- Sinal de ativação do contador</span>
+    <span class="n">clk</span>    <span class="p">:</span><span class="k">in</span>  <span class="kt">std_logic</span><span class="p">;</span>                     <span class="c1">-- Sinal de clock</span>
+    <span class="n">reset</span>  <span class="p">:</span><span class="k">in</span>  <span class="kt">std_logic</span>                      <span class="c1">-- Sinal de reset</span>
+  <span class="p">);</span>
+<span class="k">end</span> <span class="k">entity</span><span class="p">;</span>
+
+<span class="c1">-- Definição do funcionamento do módulo</span>
+<span class="k">architecture</span> <span class="n">rtl</span> <span class="k">of</span> <span class="n">contador</span> <span class="k">is</span>
+  <span class="k">signal</span> <span class="n">count</span> <span class="p">:</span><span class="kt">std_logic_vector</span> <span class="p">(</span><span class="mi">7</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">begin</span>
+  <span class="k">process</span> <span class="p">(</span><span class="n">clk</span><span class="p">,</span> <span class="n">reset</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">reset</span> <span class="o">=</span> <span class="sc">'1'</span><span class="p">)</span> <span class="k">then</span>
+      <span class="n">count</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="k">others</span><span class="o">=&gt;</span><span class="sc">'0'</span><span class="p">);</span>
+    <span class="k">elsif</span> <span class="p">(</span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">))</span> <span class="k">then</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">enable</span> <span class="o">=</span> <span class="sc">'1'</span><span class="p">)</span> <span class="k">then</span>
+        <span class="n">count</span> <span class="o">&lt;=</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+      <span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+    <span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+  <span class="k">end</span> <span class="k">process</span><span class="p">;</span>
+  <span class="n">cout</span> <span class="o">&lt;=</span> <span class="n">count</span><span class="p">;</span>
+<span class="k">end</span> <span class="k">architecture</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Existe outro processo de geração que usam linguagens de mais alto nível (por exemplo C++ ou Python), este processo se chama High Level Synthesis (Síntese de Alto Nível), onde o código do FPGA é construido programaticamente em uma linguagem de mais alto nível e no fim é gerado um código Verilog / VHDL para sintetização habitual. Alguns dos processos geram diretamente a netlist, porém muitos softwares de empresas de FPGA usam padrões próprios de netlist o que pode tornar um problema o suporte.</p>
+
+<h1 id="processo-de-compilação-sintentização">Processo de “compilação” (sintentização)</h1>
+
+<p>No processo de compilação, ou melhor dizendo, sintetização (que é o termo adequado pra esse processo) um código escrito em HDL se torna uma netlist que será usada para construção do que será o código que ficará na memória do FPGA. Neste processo as entradas e saídas da netlist tem nomes simbólicos que apontam para alguma entrada/saída do chip. A netlist é agnóstica a esses nomes e eles só representaram algo significativo para os processos finais da síntese.</p>
+
+<p>Neste passo são feitas várias otimizações do circuito lógico para que haja o mínimo possível de nós na netlist. Algumas dessas otimizações podem ser feitas assumindo algum FPGA especifico (pelo tamanho de sua LUT). Após a netlist pronta, as ferramentas deverão “achar um jeito de encaixar” o netlist no FPGA alvo. Este passo é chamado Place &amp; Route (Colocar e Rotear)</p>
+
+<h1 id="place--route">Place &amp; Route</h1>
+
+<p>O processo de place &amp; route é muito similar a quando um engenheiro desenha uma placa de circuito impresso. Você coloca os componentes na placa e liga os fios entre eles. Dependendo do circuito isto pode ser fácil ou difícil. Imagine que quanto mais espaço da placa seus componentes ocupar, mais difícil é de achar um caminho para todas suas trilhas. O mesmo ocorre com o FPGA.</p>
+
+<p>Este passo é <strong>sempre</strong> especifico do FPGA de destino, onde parâmetro como linhas globais de clock, tamanho de LUT e posição de LUT são levadas em conta. Além disso, algumas ferramentas permitem colocar restrições nos parâmetro de delay, clock mínimo e tensão elétrica para as rotas. Com todas essas informações, o programa de Place &amp; Route irá tentar achar uma configuração válida para aquele FPGA.</p>
+
+<p>Dependendo da complexidade do projeto, o tempo pode ser desde alguns segundos até alguns dias. Além disso pode também não ser possível rotear o seu código no FPGA destino, mesmo que este não ocupe o FPGA inteiro!</p>
+
+<p>Após o processo estar completo, a netlist será incrementada com a posição <strong>física</strong> dos nós dentro do FPGA, por exemplo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Antes do Place &amp; Route
+LUT4(0,1,0,1) -&gt; LUT4(1,1,0,0)
+// Depois do Place &amp; Route
+LUT4_0.0(0,1,0,1) -&gt; LUT4_1.1(1,1,0,0) // one 0.0 e 1.1 são as coordenadas dentro do chip
+</code></pre></div></div>
+
+<p>Após isso seu programa está completo, e o único passo restante é gerar a sequência de bits que irão programar o FPGA para esta configuração!</p>
+
+<h1 id="geração-de-bitstream">Geração de Bitstream</h1>
+
+<p>A ultima etapa do processo é a geração do bitstream. Este gerador recebe como entrada a netlist complementada com as posições físicas das células do FPGA e como elas se interligam e converte para uma sequência de bits proprietária do FPGA. Cada marca e modelo de FPGA tem uma sequência especifica para programação e sua programação também pode variar do meio de origem.</p>
+
+<p>Por exemplo, um FPGA pode ser programado via:</p>
+
+<ul>
+  <li>“Porta Serial” (Na verdade pino de programação serial)</li>
+  <li>JTAG</li>
+  <li>Memória Flash SPI</li>
+</ul>
+
+<h1 id="next-steps">Next steps…</h1>
+
+<p>Todos estes processos vão ficar mais claros nos próximos artigos! Esta é a primeira parte de uma série de posts sobre Verilog e programação para FPGA. Farei assim que possível o próximo post :D</p>
+
+<p>Espero que tenham gostado!</p>]]></content><author><name>Lucas Teske</name></author><category term="Portugues" /><category term="Hacking" /><category term="FPGA" /><category term="Hardware" /><category term="Eletrônica" /><category term="Verilog" /><category term="Hacking" /><category term="FPGA" /><category term="ICEWolf" /><category term="IceStick" /><category term="ECP5" /><category term="Lattice" /><category term="Hardware" /><category term="Eletrônica" /><category term="Verilog" /><summary type="html"><![CDATA[Esta é a primeira parte do guia de programação para FPGAs! Este guia irá virar eventualmente um verilog4noobs para qualquer pessoa que quiser iniciar na área de programação de hardware possa ter um jeito fácil de conseguir! Iremos começar a explicar o que é um FPGA e como ele funciona.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/FPGA.jpg" /><media:content medium="image" url="https://lucasteske.dev/assets/FPGA.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Hackeando um ESP32 num FPGA</title><link href="https://lucasteske.dev/2020/06/hacking-a-esp32-into-fpga-board" rel="alternate" type="text/html" title="Hackeando um ESP32 num FPGA" /><published>2020-06-14T16:17:00-03:00</published><updated>2020-06-14T16:17:00-03:00</updated><id>https://lucasteske.dev/2020/06/hacking-a-esp32-into-fpga-board</id><content type="html" xml:base="https://lucasteske.dev/2020/06/hacking-a-esp32-into-fpga-board"><![CDATA[<h1 id="hackeando-um-esp32-num-fpga">Hackeando um ESP32 num FPGA</h1>
+
+<p>No ano passado eu vi um cara russo que viu que essa placa barata (US$15) tinha um FPGA da Lattice ECP5, o qual é compatível com as toolchains opensource para síntese. Ele estava rodando um RISC-V dentro e enviando a saída serial pela rede usando uma das portas de rede. Eu queria conseguir uma e começar a brincar. Essas placas são relativamente baratas (mais ou menos US$15) e tem um FPGA da Lattice ( LFE5U-25F-6BG381C ), 4MB DRAM, duas portas gigabit e vários level shifters. Isso é bom por que:</p>
+
+<ol>
+  <li>É uma placa barata pelas especificações</li>
+  <li>Você pode usar uma toolchain opensource</li>
+  <li>Tem MUITOS level-shifter para 5V e eles são bi-direcionais.</li>
+</ol>
+
+<p>Eu decidi tentar comprar uma do Aliexpress, mas por causa da pandemia do COVID-19, o pacote está super atrasado (ele ainda não chegou, mesmo 3 meses depois de ter pedido). Por sorte eu achei no Mercado Livre para vender por um preço razoável (R$220).</p>
+
+<p>Quando chegou, eu tentei rodar o clássico Hello World para Hardware: O Led Blink. Para isso eu usei este projeto para testar: <a href="https://github.com/antonblanchard/ghdl-yosys-blink">https://github.com/antonblanchard/ghdl-yosys-blink</a></p>
+
+<p>Eu fiz um fork e adicionei as configurações da placa e também a configuração para usar um adaptador FR232R no modo bitbang com o OpenOCD (por que era o único método possível de JTAG disponível no momento). <a href="https://github.com/racerxdl/ghdl-yosys-blink">https://github.com/racerxdl/ghdl-yosys-blink</a></p>
+
+<p>Eu não precisei fazer engenharia reversa na placa pois já tinham feito: <a href="https://github.com/q3k/chubby75/blob/master/5a-75b/hardware_V6.1.md">https://github.com/q3k/chubby75/blob/master/5a-75b/hardware_V6.1.md</a></p>
+
+<p>Como dá pra ver, os headers JTAG são de fácil acesso e todos os pinos estão mapeados. Excelente!</p>
+
+<p>Depois de alguns minutos brincando com o ghdl-yosis-blink eu consegui fazer funcionar na minha placa. Porém ele ainda estava rodando na RAM do FPGA e eu queria gravar na memória flash. Então eu comecei a procurar pela internet alguma ferramente que conseguisse converter o bitstream para programar a memória flash. Depois de testar muitas ferramentas, eu achei uma simples que faz o trabalho: <a href="https://github.com/f32c/tools/tree/master/ujprog">https://github.com/f32c/tools/tree/master/ujprog</a></p>
+
+<p>Só era nescessário rodar:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ujprog <span class="nt">-d</span> <span class="nt">-j</span> flash <span class="nt">-s</span> vhdl_blink-flash.svf vhdl_blink.bit
+</code></pre></div></div>
+
+<p>E o arquivo gerado vhdl_blink-flash.svf estava persistindo o bitstream na memoria flash.</p>
+
+<center>
+  <blockquote class="twitter-tweet"><p lang="en" dir="ltr">After few days I managed to write thr SPI Flash using FT232H. Full <a href="https://twitter.com/hashtag/opensource?src=hash&amp;ref_src=twsrc%5Etfw">#opensource</a> stuff to program that board. Also only US$15. <a href="https://t.co/RujsOGwH1D">pic.twitter.com/RujsOGwH1D</a></p>&mdash; Cybernetic Lover (@lucasteske) <a href="https://twitter.com/lucasteske/status/1268616857583419393?ref_src=twsrc%5Etfw">June 4, 2020</a></blockquote> <script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</center>
+
+<p>Agora que tudo estava funcionando, eu decidi ir para o hack maior: Eu queria um ESP32 ligado na placa e gravar o FPGA via rede. E também seria legal se eu conseguisse redirecionar uma porta serial para rede (bom para depurar).</p>
+
+<p>A primeira coisa que fiz foi escolher um par de GPIO para ser o TX/RX da porta serial. O ESP32 tem três portas seriais, porém na minha placa apenas dois são expostos (Serial 0 e 2). A porta serial 0 está ligada ao conversor USB-Serial, então eu decidi usar a porta Serial 2 para comunicar com FPGA. Após olhar a pinagem da placa FPGA, eu vi que a maioria dos pinos dos level-shifters são comuns (as linhas de endereço são responsáveis pela metade dos pinos) e os level-shifters próximos da borda inferior da placa eram da linha de endereço. Depois de procurar um pouco, eu decidi remover o conector J4 da placa e o level-shifter U23 (o ESP32 é 3.3V, lembre-se disso!).</p>
+
+<p><img src="/assets/posts/medium/0_wK9QPXyVChE4n8py.jpeg" alt="U23 e J4 removidos" /><em>U23 e J4 removidos</em></p>
+
+<p>Eu também decidi remover o J3 para facilitar a solda dos fios de bypass no conector. Então eu soldei todos fios para fazer o conector ser 3.3V ao invés de 5V.</p>
+
+<p><img src="/assets/posts/medium/1_tT_gWmR6KPWXKKoewW-KDQ.png" alt="Fios soldados no U23" /><em>Fios soldados no U23</em></p>
+
+<p>Os resistores de 33 Ohm são bons, pois eles evitam curto-circuitos caso os pinos associados a porta serial estejam errados. Então decidi deixar eles como estão. Após checar que todos os pinos estavam ok e não estavam em curto, eu decidi usar cola quente para prender eles:</p>
+
+<p><img src="/assets/posts/medium/1_53DN-rC8MrNRfFdVmzN-Uw.png" alt="Pedaços de cola quente" /><em>Pedaços de cola quente</em></p>
+
+<p>Eu sempre preferi usar um soprador térmico a 200ºC ao invés da pistola de cola quente. Isso também evita que eu super-aqueça a placa e os fios saiam.</p>
+
+<p><img src="/assets/posts/medium/1_7O77I22KdFxtNz4-G2cSeA.png" alt="Soprador térmico e cola quente" /><em>Soprador térmico e cola quente</em></p>
+
+<p>Depois de esfriar os resultados ficaram bons!</p>
+
+<p><img src="/assets/posts/medium/1_sCDf7DO_2mY2FoOTLN357Q.png" alt="Cola quente e os fios de bypass" /><em>Cola quente e os fios de bypass</em></p>
+
+<p>Então comecei a trabalhar na parte de trás da placa soldando o pair VCC/GND e o par TX/RX. Por sorte o conector de energia nessa placa aceita de 3.6V até 6V então eu posso usar o pino VIN do ESP32 (que está conectado aos +5V da porta USB) para alimentar a placa. O conector de energia também está perto do J4 que removemos.</p>
+
+<p><img src="/assets/posts/medium/1_sADN_JL_MLf9TP5r7FVymQ.png" alt="Conector de energia e porta serial" /><em>Conector de energia e porta serial</em></p>
+
+<p>Então com uma fita dupla-face, prendi o ESP32 na placa e soldei os fios nos pinos certos.</p>
+
+<p><img src="/assets/posts/medium/1_86Ir5XIqvHCLbMsbWxs5MA.png" alt="ESP32 preso com fita dupla-face e os fios soldados" /><em>ESP32 preso com fita dupla-face e os fios soldados</em></p>
+
+<p>Agora eu só precisava escolher os pinos para o JTAG e estaria pronto para o código! Depois de procurar quais pinos “seguros” eu poderia usar no ESP32, eu escolhi estes pinos:</p>
+
+<ul>
+  <li>TDI =&gt; D33</li>
+  <li>TDO =&gt; D32</li>
+  <li>TCK =&gt; D27</li>
+  <li>TMS =&gt; D26</li>
+</ul>
+
+<p>E soldei do melhor jeito que pude.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/2544/0_ERp9fzhTj8EL0i1G" alt="Pinos JTAG soldados" /></p>
+
+<p>Eu também tive que soldar o pino GND do ESP32 no pino GND do JTAG (Eu tive um problema com FT232R que foi solucionado soldando o GND)</p>
+
+<p><img src="/assets/posts/medium/1_Ltxy34-3hHoAalgDOHqG7A.png" alt="Alimentação do JTAG" /><em>Alimentação do JTAG</em></p>
+
+<p><img src="/assets/posts/medium/1_Sae7vuGGrvCUuYZdOiGPVA.png" alt="Fio GND soldado" /><em>Fio GND soldado</em></p>
+
+<p>Com todos os fios soldados, eu podia começar a brincar com software!</p>
+
+<p>Primeiro eu tentei usar a função Remote Bitbang do OpenOCD, o qual conecta em um socket TCP e começa a emitir comandos de bitbang usando um caracter ASCII. Por alguma razão, eu não consegui fazer funcionar. Se você quiser tentar, esse foi o código rodando no ESP32:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;WiFi.h&gt;</span><span class="cp">
+</span>
+<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">ssid</span>     <span class="o">=</span> <span class="s">"XX"</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">password</span> <span class="o">=</span> <span class="s">"XX"</span><span class="p">;</span>
+
+<span class="n">WiFiServer</span> <span class="nf">server</span><span class="p">(</span><span class="mi">3335</span><span class="p">);</span>
+
+<span class="cp">#define PIN_SRST 21
+#define PIN_TDI 33
+#define PIN_TDO 32
+#define PIN_TCK 27
+#define PIN_TMS 26
+#define PIN_LED 2
+</span>
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">115200</span><span class="p">);</span>
+    <span class="n">delay</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+
+    <span class="n">pinMode</span><span class="p">(</span><span class="n">PIN_SRST</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+    <span class="n">pinMode</span><span class="p">(</span><span class="n">PIN_TDI</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+    <span class="n">pinMode</span><span class="p">(</span><span class="n">PIN_TDO</span><span class="p">,</span> <span class="n">INPUT_PULLUP</span><span class="p">);</span>
+    <span class="n">pinMode</span><span class="p">(</span><span class="n">PIN_TCK</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+    <span class="n">pinMode</span><span class="p">(</span><span class="n">PIN_TMS</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+    <span class="n">pinMode</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_SRST</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TDI</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TCK</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TMS</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+    <span class="c1">// We start by connecting to a WiFi network</span>
+
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Connecting to "</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">ssid</span><span class="p">);</span>
+
+    <span class="n">WiFi</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="n">ssid</span><span class="p">,</span> <span class="n">password</span><span class="p">);</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">WiFi</span><span class="p">.</span><span class="n">status</span><span class="p">()</span> <span class="o">!=</span> <span class="n">WL_CONNECTED</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+        <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"."</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">""</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"WiFi connected."</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"IP address: "</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">WiFi</span><span class="p">.</span><span class="n">localIP</span><span class="p">());</span>
+    <span class="n">server</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">WiFiClient</span> <span class="n">client</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">available</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">client</span><span class="p">)</span> <span class="p">{</span>                     <span class="c1">// if you get a client,</span>
+        <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"New Client."</span><span class="p">);</span>  <span class="c1">// print a message out the serial port</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">client</span><span class="p">.</span><span class="n">connected</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">client</span><span class="p">.</span><span class="n">available</span><span class="p">())</span> <span class="p">{</span>
+                <span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+                <span class="k">switch</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">case</span> <span class="sc">'B'</span><span class="p">:</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+                      <span class="k">break</span><span class="p">;</span>
+                    <span class="k">case</span> <span class="sc">'b'</span><span class="p">:</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+                      <span class="k">break</span><span class="p">;</span>
+                    <span class="k">case</span> <span class="sc">'R'</span><span class="p">:</span>
+                      <span class="n">client</span><span class="p">.</span><span class="n">print</span><span class="p">((</span><span class="n">digitalRead</span><span class="p">(</span><span class="n">PIN_TDO</span><span class="p">)</span> <span class="o">==</span> <span class="n">HIGH</span><span class="p">)</span> <span class="o">?</span> <span class="sc">'1'</span> <span class="o">:</span> <span class="sc">'0'</span><span class="p">);</span>
+                      <span class="k">break</span><span class="p">;</span>
+                    <span class="k">case</span> <span class="sc">'Q'</span><span class="p">:</span>
+                      <span class="k">break</span><span class="p">;</span>
+                    <span class="k">case</span> <span class="sc">'0'</span><span class="p">:</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TMS</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TDI</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TCK</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+                      <span class="k">break</span><span class="p">;</span>
+                    <span class="k">case</span> <span class="sc">'1'</span><span class="p">:</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TMS</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TDI</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TCK</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+                      <span class="k">break</span><span class="p">;</span>
+                    <span class="k">case</span> <span class="sc">'2'</span><span class="p">:</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TMS</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TDI</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TCK</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+                      <span class="k">break</span><span class="p">;</span>
+                    <span class="k">case</span> <span class="sc">'3'</span><span class="p">:</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TMS</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TDI</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TCK</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+                      <span class="k">break</span><span class="p">;</span>
+                    <span class="k">case</span> <span class="sc">'4'</span><span class="p">:</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TMS</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TDI</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TCK</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+                      <span class="k">break</span><span class="p">;</span>
+                    <span class="k">case</span> <span class="sc">'5'</span><span class="p">:</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TMS</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TDI</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TCK</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+                      <span class="k">break</span><span class="p">;</span>
+                    <span class="k">case</span> <span class="sc">'6'</span><span class="p">:</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TMS</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TDI</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TCK</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+                      <span class="k">break</span><span class="p">;</span>
+                    <span class="k">case</span> <span class="sc">'7'</span><span class="p">:</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TMS</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TDI</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TCK</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+                      <span class="k">break</span><span class="p">;</span>
+                    <span class="k">case</span> <span class="sc">'r'</span><span class="p">:</span>
+                    <span class="k">case</span> <span class="sc">'t'</span><span class="p">:</span>
+                      <span class="c1">// SRST=0, which confusingly means to *exit* reset (as /RESET and /TRST are active-low)</span>
+                      <span class="c1">// We don't have a TRST connection, so 'r' and 't' do the same thing.</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_SRST</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+                      <span class="c1">//digitalWrite(PIN_CHIP_EN, HIGH);</span>
+                      <span class="k">break</span><span class="p">;</span>
+                    <span class="k">case</span> <span class="sc">'s'</span><span class="p">:</span>
+                    <span class="k">case</span> <span class="sc">'u'</span><span class="p">:</span>
+                      <span class="c1">// SRST=1 -- enter RESET state</span>
+                      <span class="c1">// Likewise for 's' and 'u'.</span>
+                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_SRST</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+                      <span class="c1">//digitalWrite(PIN_CHIP_EN, LOW);</span>
+                      <span class="k">break</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Client disconnected"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Ontem alguém me mandou um link que não era relacionado ao tópico, mas me fez encontrar essa biblioteca:
+<a href="http://www.clifford.at/libxsvf/"><strong>Lib(X)SVF - A library for implementing SVF and XSVF JTAG players</strong>
+<em>JTAG (IEEE 1149.1, aka “Boundary Scan”) is a standard IC testing, debugging and programming port. SVF (Serial Vector…</em>www.clifford.at</a></p>
+
+<p>Basicamente ela foi escrita pela mesma pessoa que fez a engenharia reversa do bistream dos FPGA ICE40 (e muitos outros) e era uma biblioteca para reproduzir arquivos SVF e XSVF. Foi bem simples implementar um programador usando o ESP32. Você apenas precisava implementar algumas funções e tudo funcionava.</p>
+
+<p>Teve muito trabalho para deixar legal de usar, então eu não vou explicar em detalhes aqui. Porém o código fonte está disponível aqui: <a href="https://github.com/racerxdl/esp32-rjtag">https://github.com/racerxdl/esp32-rjtag</a></p>
+
+<p>Você roda:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>upload.py /dev/ttyUSB0 file.svf
+</code></pre></div></div>
+
+<p>E ele irá gravar o FPGA para você. Aqui está um video disso funcionando:</p>
+
+<center>
+  <blockquote class="twitter-tweet"><p lang="en" dir="ltr">FINALLY. Now I can use the ESP32 as JTAG programmer for Lattice FPGA. Soon I will able to program through wifi and pipe a serial debug port as well. <a href="https://t.co/zs41v47BvU">pic.twitter.com/zs41v47BvU</a></p>&mdash; Cybernetic Lover (@lucasteske) <a href="https://twitter.com/lucasteske/status/1272019368617095173?ref_src=twsrc%5Etfw">June 14, 2020</a></blockquote> <script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</center>
+
+<p>Eu também adicionei um comando para fazer o ESP32 mudar do modo de programação para o passthorugh serial. Desta maneira, após a gravação do FPGA, todas as chamadas serial seriam redirecionadas para o FPGA. Para testar eu fiz esse pequeno Hello World Serial:
+<a href="https://github.com/racerxdl/fpga-serial-hello"><strong>racerxdl/fpga-serial-hello</strong></a></p>
+
+<p>O qual fica enviando a mensagem “Hello World” pela porta serial para sempre. E funciona!
+Which basically keeps sending Hello World through the serial port forever.</p>
+
+<p><img src="/assets/posts/medium/1_Z8RdW5i7NQh7KUEC5v5NFg.png" alt="Saída do Hello World do FPGA" /><em>Saída do Hello World do FPGA</em></p>
+
+<p>Meu próximo passo é fazer funcionar via rede. Vai ser muito bom poder gravar o FPGA via rede e usar a porta serial.</p>]]></content><author><name>Lucas Teske</name></author><category term="English" /><category term="Hacking" /><category term="Linux" /><category term="FPGA" /><category term="ESP32" /><category term="Hacking" /><category term="FPGA" /><category term="ICEWolf" /><category term="IceStick" /><category term="ECP5" /><category term="Lattice" /><category term="ESP32" /><category term="Colorlight" /><summary type="html"><![CDATA[Hackeando um ESP32 num FPGA]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_ALnLx9L06FSciqeEV5OCuQ.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_ALnLx9L06FSciqeEV5OCuQ.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Hack a Sat - Talk to me, Goose</title><link href="https://lucasteske.dev/2020/05/hack-a-sat-talk-to-me-goose/" rel="alternate" type="text/html" title="Hack a Sat - Talk to me, Goose" /><published>2020-05-31T19:02:00-03:00</published><updated>2020-05-31T19:02:00-03:00</updated><id>https://lucasteske.dev/2020/05/hack-a-sat-talk-to-me-goos</id><content type="html" xml:base="https://lucasteske.dev/2020/05/hack-a-sat-talk-to-me-goose/"><![CDATA[<p>Somente disponível em <a href="/2020/05/hack-a-sat-talk-to-me-goose/">Inglês</a></p>]]></content><author><name>Lucas Teske</name></author><category term="English" /><category term="Hacking" /><category term="Linux" /><category term="CTF" /><category term="SDR" /><category term="Camera" /><category term="Hacking" /><category term="CTF" /><category term="Hackasat" /><category term="CTF Writeup" /><category term="Satellite" /><category term="XTCE" /><summary type="html"><![CDATA[Somente disponível em Inglês]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_b23VUAe-7ZvnQF4MIZO73A.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_b23VUAe-7ZvnQF4MIZO73A.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Hack a Sat - Phasors to Stun</title><link href="https://lucasteske.dev/2020/05/hack-a-sat-phasors-to-stun/" rel="alternate" type="text/html" title="Hack a Sat - Phasors to Stun" /><published>2020-05-30T13:15:00-03:00</published><updated>2020-05-30T13:15:00-03:00</updated><id>https://lucasteske.dev/2020/05/hack-a-sat-phasors-to-stun</id><content type="html" xml:base="https://lucasteske.dev/2020/05/hack-a-sat-phasors-to-stun/"><![CDATA[<p>Somente disponível em <a href="/2020/05/hack-a-sat-phasors-to-stun/">Inglês</a></p>]]></content><author><name>Lucas Teske</name></author><category term="English" /><category term="Hacking" /><category term="Linux" /><category term="CTF" /><category term="SDR" /><category term="Camera" /><category term="Hacking" /><category term="CTF" /><category term="Hackasat" /><category term="CTF Writeup" /><category term="Satellite" /><category term="SDR" /><category term="GNU Radio" /><category term="Radio" /><summary type="html"><![CDATA[Somente disponível em Inglês]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_R1n7vaNfInOP6BCFXkjv1Q.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_R1n7vaNfInOP6BCFXkjv1Q.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Hack a Sat - Can you hear me now?</title><link href="https://lucasteske.dev/2020/05/hack-a-sat-can-you-hear-me-now/" rel="alternate" type="text/html" title="Hack a Sat - Can you hear me now?" /><published>2020-05-29T22:47:00-03:00</published><updated>2020-05-29T22:47:00-03:00</updated><id>https://lucasteske.dev/2020/05/hack-a-sat-can-you-hear-me-now</id><content type="html" xml:base="https://lucasteske.dev/2020/05/hack-a-sat-can-you-hear-me-now/"><![CDATA[<p>Somente disponível em <a href="/2020/05/hack-a-sat-can-you-hear-me-now/">Inglês</a></p>]]></content><author><name>Lucas Teske</name></author><category term="English" /><category term="Hacking" /><category term="Linux" /><category term="CTF" /><category term="Camera" /><category term="Hacking" /><category term="CTF" /><category term="Hackasat" /><category term="CTF Writeup" /><category term="Satellite" /><category term="XTCE" /><summary type="html"><![CDATA[Somente disponível em Inglês]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_87tDTK5_FodI9TghHRpznQ.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_87tDTK5_FodI9TghHRpznQ.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Integrating Hacked Touch Panel into Home Assistant</title><link href="https://lucasteske.dev/2019/12/integrating-hacked-touch-panel-into-home-assistant/" rel="alternate" type="text/html" title="Integrating Hacked Touch Panel into Home Assistant" /><published>2019-12-29T23:15:00-03:00</published><updated>2019-12-29T23:15:00-03:00</updated><id>https://lucasteske.dev/2019/12/integrating-hacked-touch-panel-into-home-assistant</id><content type="html" xml:base="https://lucasteske.dev/2019/12/integrating-hacked-touch-panel-into-home-assistant/"><![CDATA[<p>Somente disponível em <a href="/2019/12/integrating-hacked-touch-panel-into-home-assistant/">Inglês</a></p>]]></content><author><name>Lucas Teske</name></author><category term="English" /><category term="LimeSDR" /><category term="Hacking" /><category term="Home Assistant" /><category term="Linux" /><category term="ESPHome" /><category term="Camera" /><category term="Hacking" /><category term="Home Assistant" /><category term="Arduino" /><category term="ESP8266" /><category term="ESP32" /><category term="ESPHome" /><summary type="html"><![CDATA[Somente disponível em Inglês]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_hBwbHXERpWD5N8ZGqqlXMw.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_hBwbHXERpWD5N8ZGqqlXMw.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Hacking Dimmer Touch Panel with ESP8266</title><link href="https://lucasteske.dev/2019/12/hacking-dimmer-touch-panel-with-esp8266/" rel="alternate" type="text/html" title="Hacking Dimmer Touch Panel with ESP8266" /><published>2019-12-29T17:42:00-03:00</published><updated>2019-12-29T17:42:00-03:00</updated><id>https://lucasteske.dev/2019/12/hacking-dimmer-touch-panel-with-esp8266</id><content type="html" xml:base="https://lucasteske.dev/2019/12/hacking-dimmer-touch-panel-with-esp8266/"><![CDATA[<p>Somente disponível em <a href="/2019/12/hacking-dimmer-touch-panel-with-esp8266/">Inglês</a></p>]]></content><author><name>Lucas Teske</name></author><category term="English" /><category term="LimeSDR" /><category term="Hacking" /><category term="Home Assistant" /><category term="Linux" /><category term="ESPHome" /><category term="Camera" /><category term="Hacking" /><category term="Home Assistant" /><category term="Arduino" /><category term="ESP8266" /><category term="ESP32" /><category term="ESPHome" /><summary type="html"><![CDATA[Somente disponível em Inglês]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/0_NB2IwKOMRoAK5Yr5.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/0_NB2IwKOMRoAK5Yr5.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Creating your own GSM Network with LimeSDR</title><link href="https://lucasteske.dev/2019/12/creating-your-own-gsm-network-with-limesdr/" rel="alternate" type="text/html" title="Creating your own GSM Network with LimeSDR" /><published>2019-12-21T14:48:00-03:00</published><updated>2019-12-21T14:48:00-03:00</updated><id>https://lucasteske.dev/2019/12/creating-your-own-gsm-network-with-limesdr-1935bac257f4</id><content type="html" xml:base="https://lucasteske.dev/2019/12/creating-your-own-gsm-network-with-limesdr/"><![CDATA[<p>Somente disponível em <a href="/2019/12/creating-your-own-gsm-network-with-limesdr/">Inglês</a></p>]]></content><author><name>Lucas Teske</name></author><category term="English" /><category term="LimeSDR" /><category term="Hacking" /><category term="SDR" /><category term="Linux" /><category term="Camera" /><category term="Hacking" /><category term="SDR" /><category term="Ubuntu" /><category term="GSM" /><category term="BTS" /><category term="Osmocom" /><category term="Sysmocom" /><summary type="html"><![CDATA[Somente disponível em Inglês]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_KbNtmYsmaCMVJinWnJdhFg.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_KbNtmYsmaCMVJinWnJdhFg.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
