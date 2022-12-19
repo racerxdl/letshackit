@@ -39,7 +39,7 @@
   <!-- Article -->
   <meta name="article:author" property="article:author" content="https://www.facebook.com/teskeslab">
   <meta name="article:publisher" property="article:publisher" content="https://www.facebook.com/teskeslab">
-  <meta name="article:published_time" property="article:published_time" content="2019-12-29T23:15:00-03:00">
+  <meta name="article:published_time" property="article:published_time" content="2019-12-30T02:15:00+00:00">
 
   <!-- Facebook -->
   <meta name="fb:admins" property="fb:admins" content="1234">
@@ -65,8 +65,8 @@
     "keywords": "Camera,Hacking,Home Assistant,Arduino,ESP8266,ESP32,ESPHome",
     "description": "Integrating Hacked Touch Panel into Home Assistant In the previous article I showed a simple hack of a chinese Touch Panel. Now I have successfully integrated it Home Assistant and I’m able to turn my room light on / off. Here is how. From now on I will assume you...",
     "articleBody": "Integrating Hacked Touch Panel into Home Assistant In the previous article I showed a simple hack of a chinese Touch Panel. Now I have successfully integrated it Home Assistant and I’m able to turn my room light on / off. Here is how. From now on I will assume you have ESPHome working on your machine and Home Assistant configured. ESPHome is very easy to install if you have python pip: pip install esphome Should install everything you need. First let’s create our project. I will call it touchpanel.yml: esphome: # Change it for any name you want. This is what Home Assistant will show name: lucasslider platform: ESP8266 board: nodemcuv2 includes: - touchpanel.h - wtc801.h - wtc801.cpp wifi: # Change to your wifi configuration ssid: \"MyWifiSSID\" password: \"MyWifiPassword\" # Enable fallback hotspot (captive portal) in case wifi connection fails ap: ssid: \"Lucas Slider Fallback Hotspot\" password: \"1234567890\" captive_portal: # Enable logging logger: # Enable Home Assistant API api: # Home Assistant will ask this password when configuring the device password: \"MySecretAPIPass\" ota: # ESPHome will ask this password for reprogramming the ESP8266 Over-The-Air password: \"MySecretAPIPass\" # Empty just to include Binary Sensor Library binary_sensor: # Empty just to include...",
-    "datePublished": "2019-12-29 23:15:00 -0300",
-    "dateModified": "2019-12-29 23:15:00 -0300",
+    "datePublished": "2019-12-30 02:15:00 +0000",
+    "dateModified": "2019-12-30 02:15:00 +0000",
     "author": {
       "@type": "Person",
       "name": "Lucas Teske",
@@ -302,8 +302,8 @@
 
     
       <br>
-      <span>on </span><time datetime="2019-12-29 23:15:00 -0300">
-  29
+      <span>on </span><time datetime="2019-12-30 02:15:00 +0000">
+  30
   
   December
   2019
@@ -571,10 +571,10 @@
 
     <footer>
   <span>
-    © <time datetime="2022-12-18 21:07:18 -0300">2022</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2022-12-19 03:52:36 +0000">2022</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2022-12-18 21:07:18 -0300
+    Last build: 2022-12-19 03:52:36 +0000
   </span>
 </footer>
 

@@ -39,7 +39,7 @@
   <!-- Article -->
   <meta name="article:author" property="article:author" content="https://www.facebook.com/teskeslab">
   <meta name="article:publisher" property="article:publisher" content="https://www.facebook.com/teskeslab">
-  <meta name="article:published_time" property="article:published_time" content="2016-11-06T01:56:44-02:00">
+  <meta name="article:published_time" property="article:published_time" content="2016-11-06T03:56:44+00:00">
 
   <!-- Facebook -->
   <meta name="fb:admins" property="fb:admins" content="1234">
@@ -65,8 +65,8 @@
     "keywords": "AGC,Airspy,Automatic Gain Control,Bug,Compile,Convolutional Code,Convolutional Encoding,EMWIN,English,GNU Radio,Gnuradio,GOES,GRC,Hearsat,LRIT,Osmocom,RE,Reed Solomon,Reverse Engineering,Root Raised Cosine Filter,RRC Filter,RS,Sat,Satellite,SDR,Statistics,Viterbi",
     "description": "In the last chapter I showed how to get the frames from the demodulated bit stream. In this chapter I will show you how to parse these frames and get the packets that will on next chapter generate the files that GOES send. I will first add C code to...",
     "articleBody": "In the last chapter I showed how to get the frames from the demodulated bit stream. In this chapter I will show you how to parse these frames and get the packets that will on next chapter generate the files that GOES send. I will first add C code to the code I did in the last chapter to separated all the virtual channels by ID. But mainly this chapter will be done in python (just because its easier, I will eventually make a C code as well to do the stuff). De-randomization of the data One of the missing things on the last chapter was the frame data de-randomization. The data inside the frame (excluding the sync word) is randomized by a generator polynomial. This is done because of few things: Pseudo-random Symbols distribute better the energy in the spectrum Avoids “line-polarization” effect when sending a continuous stream of 1’s Better Clock Recovery due more changes in symbol polarity CCSDS has a standard Polynomial as well, and the image below shows how to generate the pseudo-random bistream: CCSDS Pseudo-random Bitstream Generator The PN Generator polynomial (as shown in the LRIT spec) is x^8 + x^7 + x^5 + x^3...",
-    "datePublished": "2016-11-06 01:56:44 -0200",
-    "dateModified": "2016-11-06 01:56:44 -0200",
+    "datePublished": "2016-11-06 03:56:44 +0000",
+    "dateModified": "2016-11-06 03:56:44 +0000",
     "author": {
       "@type": "Person",
       "name": "Lucas Teske",
@@ -302,7 +302,7 @@
 
     
       <br>
-      <span>on </span><time datetime="2016-11-06 01:56:44 -0200">
+      <span>on </span><time datetime="2016-11-06 03:56:44 +0000">
   6
   
   November
@@ -835,10 +835,10 @@ def SavePacket(channelid, packet):
 
     <footer>
   <span>
-    © <time datetime="2022-12-18 21:07:18 -0300">2022</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2022-12-19 03:52:36 +0000">2022</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2022-12-18 21:07:18 -0300
+    Last build: 2022-12-19 03:52:36 +0000
   </span>
 </footer>
 

@@ -39,7 +39,7 @@
   <!-- Article -->
   <meta name="article:author" property="article:author" content="https://www.facebook.com/teskeslab">
   <meta name="article:publisher" property="article:publisher" content="https://www.facebook.com/teskeslab">
-  <meta name="article:published_time" property="article:published_time" content="2016-11-02T18:50:34-02:00">
+  <meta name="article:published_time" property="article:published_time" content="2016-11-02T20:50:34+00:00">
 
   <!-- Facebook -->
   <meta name="fb:admins" property="fb:admins" content="1234">
@@ -65,8 +65,8 @@
     "keywords": "AGC,Airspy,Automatic Gain Control,Bug,Compile,Convolutional Code,Convolutional Encoding,EMWIN,English,GNU Radio,Gnuradio,GOES,GRC,Hearsat,LRIT,Osmocom,RE,Reed Solomon,Reverse Engineering,Root Raised Cosine Filter,RRC Filter,RS,Sat,Satellite,SDR,Statistics,Viterbi",
     "description": "In the last chapter of GOES Satellite Hunt, I explained how I did the BPSK Demodulator for the LRIT Signal. Now I will explain how to decode the output of the data we got in the last chapter. One thing that is worth mentioning is that most (if not all)...",
     "articleBody": "In the last chapter of GOES Satellite Hunt, I explained how I did the BPSK Demodulator for the LRIT Signal. Now I will explain how to decode the output of the data we got in the last chapter. One thing that is worth mentioning is that most (if not all) weather satellites that transmit digital signals use the CCSDS standard packet format, or at least something based on it. For example this frame decoder can be used (with some modifications due QPSK instead BPSK) for LRPT Signals from Meteor Satellites (I plan to do a LRPT decoder as well in the future, and I will post about it). I will not describe my entire code here, just the pieces for decoding the data. I will also not write the entire code here, since it can be checked in github. So before start see the picture below (again). We will some info from it as well. LRIT Signal Specifications Convolution Encoding, Frame Synchronization and Viterbi The first thing we need to do is sync our frame starts. For making easier to find the packet start, these bit streams has something called preamble. The preamble is basically a period when the bits sent...",
-    "datePublished": "2016-11-02 18:50:34 -0200",
-    "dateModified": "2016-11-02 18:50:34 -0200",
+    "datePublished": "2016-11-02 20:50:34 +0000",
+    "dateModified": "2016-11-02 20:50:34 +0000",
     "author": {
       "@type": "Person",
       "name": "Lucas Teske",
@@ -302,7 +302,7 @@
 
     
       <br>
-      <span>on </span><time datetime="2016-11-02 18:50:34 -0200">
+      <span>on </span><time datetime="2016-11-02 20:50:34 +0000">
   2
   
   November
@@ -655,10 +655,10 @@ float signalErrors = (100.f * errors) / 8192;
 
     <footer>
   <span>
-    © <time datetime="2022-12-18 21:07:18 -0300">2022</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2022-12-19 03:52:36 +0000">2022</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2022-12-18 21:07:18 -0300
+    Last build: 2022-12-19 03:52:36 +0000
   </span>
 </footer>
 
