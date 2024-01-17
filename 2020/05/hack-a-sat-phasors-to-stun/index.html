@@ -39,7 +39,7 @@
   <!-- Article -->
   <meta name="article:author" property="article:author" content="https://www.facebook.com/teskeslab">
   <meta name="article:publisher" property="article:publisher" content="https://www.facebook.com/teskeslab">
-  <meta name="article:published_time" property="article:published_time" content="2020-05-30T16:15:00+00:00">
+  <meta name="article:published_time" property="article:published_time" content="2020-05-30T13:15:00-03:00">
 
   <!-- Facebook -->
   <meta name="fb:admins" property="fb:admins" content="1234">
@@ -65,8 +65,8 @@
     "keywords": "Camera,Hacking,CTF,Hackasat,CTF Writeup,Satellite,SDR,GNU Radio,Radio",
     "description": "Hack a sat  —  Phasors to Stun The challenge I got really excited about it because its a SDR one. And everyone that knows me know that I love SDR stuff. The zip file itself contains a wav file which they told us is not an audio but an radio...",
     "articleBody": "Hack a sat  —  Phasors to Stun The challenge I got really excited about it because its a SDR one. And everyone that knows me know that I love SDR stuff. The zip file itself contains a wav file which they told us is not an audio but an radio signal File command to show what the wave file is If we open in audacity we will se a very interesting pattern: Audacity view of the wave file That looks like a 2-FSK demodulated file (see https://en.wikipedia.org/wiki/Frequency-shift_keying). When you demodulate a 2-FSK I/Q from correctly from a Radio, it will convert the frequency to voltage leading to a pattern like the one saw. I said 2-FSK besides other ones, because there is clearly almost only three values there: 1, 0 and -1. The 0 is usually the transistion, and in a 2-FSK 1 and -1 represents the bits itself. We can use GNU Radio to transform that in a bitstream, but before we need to know the baud rate (or bit rate). That can be done manually in the audacity itself. Just find two peaks that are closer to each other than other any other. That’s probably the minimum period...",
-    "datePublished": "2020-05-30 16:15:00 +0000",
-    "dateModified": "2020-05-30 16:15:00 +0000",
+    "datePublished": "2020-05-30 13:15:00 -0300",
+    "dateModified": "2020-05-30 13:15:00 -0300",
     "author": {
       "@type": "Person",
       "name": "Lucas Teske",
@@ -302,7 +302,7 @@
 
     
       <br>
-      <span>on </span><time datetime="2020-05-30 16:15:00 +0000">
+      <span>on </span><time datetime="2020-05-30 13:15:00 -0300">
   30
   
   May
@@ -492,10 +492,10 @@
 
     <footer>
   <span>
-    © <time datetime="2024-01-17 00:54:05 +0000">2024</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2024-01-16 22:31:21 -0300">2024</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2024-01-17 00:54:05 +0000
+    Last build: 2024-01-16 22:31:21 -0300
   </span>
 </footer>
 

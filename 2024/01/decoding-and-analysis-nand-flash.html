@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" property="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  <title>NAND Flash Memory Analysis and Decoding - Unveiling ECC Scattering in Unknown Devices | Lets Hack It</title>
+
+  <!-- Global -->
+  <link rel="canonical" href="https://lucasteske.dev/2024/01/decoding-and-analysis-nand-flash">
+  <meta name="generator" property="generator" content="Jekyll v4.2.2">
+  <meta name="author" property="author" content="Lucas Teske">
+  <meta name="description" property="description" content="Exploring NAND Memories When in possession of a device whose internals one wishes to understand, accessing the content of the flash memory is not always straightforward. Due to the nature of NAND memories, an error correction algorithm is applied to all content, which can cause unintentional obfuscation of the content....">
+  
+  <meta name="keywords" content="Flash, PAX, Hardware Hacking, RE, Reverse Engineering, NAND, PAX, RT809H">
+  
+  <!-- Open Graph -->
+  <meta name="og:locale" property="og:locale" content="en">
+  <meta name="og:type" property="og:type" content="article">
+  <meta name="og:title" property="og:title" content="NAND Flash Memory Analysis and Decoding - Unveiling ECC Scattering in Unknown Devices | Lets Hack It">
+  <meta name="og:url" property="og:url" content="https://lucasteske.dev/2024/01/decoding-and-analysis-nand-flash">
+  <meta name="og:image" property="og:image" content="https://lucasteske.dev/assets/posts/analise-e-decodificacao-flash/flash-cell-programmed.svg">
+  <meta name="og:site_name" property="og:site_name" content="Lets Hack It">
+  <meta name="og:description" property="og:description" content="Exploring NAND Memories When in possession of a device whose internals one wishes to understand, accessing the content of the flash memory is not always straightforward. Due to the nature of NAND memories, an error correction algorithm is applied to all content, which can cause unintentional obfuscation of the content....">
+
+  <!-- Article -->
+  <meta name="article:author" property="article:author" content="https://www.facebook.com/teskeslab">
+  <meta name="article:publisher" property="article:publisher" content="https://www.facebook.com/teskeslab">
+  <meta name="article:published_time" property="article:published_time" content="2024-01-16T20:48:00-03:00">
+
+  <!-- Facebook -->
+  <meta name="fb:admins" property="fb:admins" content="1234">
+  <meta name="fb:app_id" property="fb:app_id" content="1209208119176770">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" property="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" property="twitter:title" content="NAND Flash Memory Analysis and Decoding - Unveiling ECC Scattering in Unknown Devices | Lets Hack It">
+  <meta name="twitter:site" property="twitter:site" content="@lucasteske">
+  <meta name="twitter:creator" property="twitter:creator" content="@lucasteske">
+  <meta name="twitter:description" property="twitter:description" content="Exploring NAND Memories When in possession of a device whose internals one wishes to understand, accessing the content of the flash memory is not always straightforward. Due to the nature of NAND memories, an error correction algorithm is applied to all content, which can cause unintentional obfuscation of the content....">
+  <meta name="twitter:image" property="twitter:image" content="https://lucasteske.dev/assets/posts/analise-e-decodificacao-flash/flash-cell-programmed.svg">
+  <meta name="twitter:image:alt" property="twitter:image:alt" content="Exploring NAND Memories When in possession of a device whose internals one wishes to understand, accessing the content of the flash memory is not always straightforward. Due to the nature of NAND memories, an error correction algorithm is applied to all content, which can cause unintentional obfuscation of the content....">
+
+  <!-- JSON LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "url": "https://lucasteske.dev/2024/01/decoding-and-analysis-nand-flash",
+    "name": "NAND Flash Memory Analysis and Decoding - Unveiling ECC Scattering in Unknown Devices | Lets Hack It",
+    "headline": "NAND Flash Memory Analysis and Decoding - Unveiling ECC Scattering in Unknown Devices | Lets Hack It",
+    "keywords": "Flash,PAX,Hardware Hacking,RE,Reverse Engineering,NAND,PAX,RT809H",
+    "description": "Exploring NAND Memories When in possession of a device whose internals one wishes to understand, accessing the content of the flash memory is not always straightforward. Due to the nature of NAND memories, an error correction algorithm is applied to all content, which can cause unintentional obfuscation of the content....",
+    "articleBody": "Exploring NAND Memories When in possession of a device whose internals one wishes to understand, accessing the content of the flash memory is not always straightforward. Due to the nature of NAND memories, an error correction algorithm is applied to all content, which can cause unintentional obfuscation of the content. Some manufacturers of processors that directly control NAND-type memories or developers of “protected” software choose to customize the way these algorithms function. In this article, we will explore the basic structure of flash memory, why error correction exists, and how to identify the scattering of the error correction algorithm used. Flash Memories Flash memories have emerged as the backbone of digital storage in the contemporary era. Found in devices as varied as SSDs, USB drives, and SD cards, these memories bring an irresistible combination of speed, durability, and the ability to retain data even in the absence of power. Historically, before the rise of flash memories, the main storage devices were based on magnetic media, such as hard disks and floppy disks, or on EPROMs (Erasable Programmable Read-Only Memory). While magnetic media had moving parts and were more prone to physical failures, EPROMs required a specific erasure process, making the...",
+    "datePublished": "2024-01-16 20:48:00 -0300",
+    "dateModified": "2024-01-16 20:48:00 -0300",
+    "author": {
+      "@type": "Person",
+      "name": "Lucas Teske",
+      "email": "letshackit@nvx.li"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Lets Hack It",
+      "url": "https://lucasteske.dev",
+      "logo": {
+        "@type": "ImageObject",
+        "width": 32,
+        "height": 32,
+        "url": "https://lucasteske.dev/icon/favicon.ico"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://lucasteske.dev/2024/01/decoding-and-analysis-nand-flash"
+    },
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://lucasteske.dev/assets/posts/analise-e-decodificacao-flash/flash-cell-programmed.svg"
+    }
+  }
+  </script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/assets/theme.css">
+  <link rel="stylesheet" href="/assets/flag-icon.min.css">
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="manifest" href="/assets/site.webmanifest">
+  <link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="/assets/favicon.ico">
+  <meta name="msapplication-TileColor" property="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-config" property="msapplication-config" content="/assets/browserconfig.xml">
+  <meta name="theme-color" property="theme-color" content="#ffffff">
+
+  <!-- Custom Scripts -->
+  <script async src="/assets/syntaxhighlighter.min.js"></script>
+  <script async src="/assets/simple-jekyll-search.min.js"></script>
+
+  <!-- RSS -->
+  <link type="application/atom+xml" rel="alternate" href="https://lucasteske.dev/feed.xml" title="Lets Hack It">
+
+  <!-- Google Analytics-->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-32251405-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-32251405-2');
+</script>
+  
+</head>
+
+  <body>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&amp;version=v4.0&amp;appId=1209208119176770&amp;autoLogAppEvents=1"></script>
+    <div class="like-box">
+      <div class="fb-like" data-href="https://lucasteske.dev/2024/01/decoding-and-analysis-nand-flash" data-width="" data-layout="box_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+    </div>
+    <a href="https://github.com/racerxdl/letshackit" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#70B7FD; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+    <main class="site">
+      
+<br>
+<img src="/assets/cropped-logo.png" style="margin-left: auto; margin-right: auto;">
+<ul class="language-bar">
+  
+  
+  <a class="link-pt flag-icon flag-icon-us" href="/2024/01/decoding-and-analysis-nand-flash"></a>
+  <a class="link-en flag-icon flag-icon-br" href="/pt/2024/01/decoding-and-analysis-nand-flash"></a>
+</ul>
+<nav class="nav">
+  <div class="nav-container" style="height: 50px">
+    <ul class="navul">
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/donate">Donate</a></li>
+      <li><a href="/calculators">Calculators</a></li>
+      <li><a href="/my-presentations">My Presentations</a></li>
+      <li><a href="/satcom-projects">Satcom Projects</a></li>
+      <li><a href="/my-tesla-coils">My Tesla Coils</a></li>
+      <li><a href="/biggateboy">Big Gate Boy</a></li>
+      <li><a href="/about">About</a></li>
+    
+    </ul>
+  </div>
+</nav>
+<div class="social-icon">
+  <ul>
+    <li class="btn-a btn-svg btn-twitch">
+      <a href="https://twitch.tv/racerxdl">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><title>Twitch icon</title>
+<path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"></path></svg>
+
+        RacerXDL
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-twitter">
+      <a href="https://twitter.com/lucasteske">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Twitter icon</title>
+<path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"></path></svg>
+        @lucasteske
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-instagram">
+      <a href="https://instagram.com/racerxdl/">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Instagram icon</title>
+<path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"></path></svg>
+        @racerxdl
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-facebook">
+      <a href="https://www.facebook.com/teskeslab">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Facebook icon</title>
+<path d="M23.9981 11.9991C23.9981 5.37216 18.626 0 11.9991 0C5.37216 0 0 5.37216 0 11.9991C0 17.9882 4.38789 22.9522 10.1242 23.8524V15.4676H7.07758V11.9991H10.1242V9.35553C10.1242 6.34826 11.9156 4.68714 14.6564 4.68714C15.9692 4.68714 17.3424 4.92149 17.3424 4.92149V7.87439H15.8294C14.3388 7.87439 13.8739 8.79933 13.8739 9.74824V11.9991H17.2018L16.6698 15.4676H13.8739V23.8524C19.6103 22.9522 23.9981 17.9882 23.9981 11.9991Z"></path></svg>
+        Teske's Lab
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-github">
+      <a href="https://github.com/racerxdl">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub icon</title>
+<path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg>
+        @racerxdl
+      </a>
+    </li>
+<br>
+    <li class="btn-a btn-svg btn-youtube">
+      <a href="https://www.youtube.com/c/TeskesLab">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><title>YouTube icon</title>
+<path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"></path></svg>
+        Teske's Lab
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-linkedin">
+      <a href="https://www.linkedin.com/in/lucas-teske-8206301b/">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn icon</title>
+<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+        Lucas Teske
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-code-stats">
+      <a href="https://codestats.net/users/racerxdl">
+        <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="360px" height="360px" viewbox="0 0 360 360" enable-background="new 0 0 360 360" xml:space="preserve">
+<path d="M174,81.741v27.509C161.913,104,133.5,93.5,109.789,94.6c-23.859,1.107-42.172,7.301-54.859,21.902
+	c-12.689,14.603-19.033,35.71-19.033,63.326c0,27.524,6.344,48.585,19.033,63.186c12.687,14.603,30.974,21.901,54.859,21.901
+	c12.127,0,41.461-5.665,64.211-19.115v29.528c-8.75,2.672-33.75,12.422-65.891,12.818c-31.625,0.39-56.538-9.678-74.731-29.039
+	c-18.193-19.358-27.29-45.784-27.29-79.28c0-33.587,9.097-60.059,27.29-79.42c18.193-19.358,43.113-28.252,74.731-29.039
+	C133,70.75,155.808,77.431,174,81.741z M341.423,82.005v27.569c-10.729-5.13-20.852-8.957-30.368-11.476s-18.707-3.778-27.569-3.778
+	c-15.395,0-27.268,2.987-35.616,8.957c-8.352,5.972-12.525,14.462-12.525,25.47c0,9.236,2.774,16.212,8.327,20.922
+	c5.55,4.712,16.069,8.515,31.558,11.406l17.073,3.499c21.084,4.013,36.643,11.08,46.673,21.202
+	c10.027,10.124,15.044,23.675,15.044,40.654c0,20.247-6.787,35.595-20.362,46.043c-13.575,10.45-33.472,15.674-59.688,15.674
+	c-9.89,0-20.41-1.119-31.558-3.358c-11.15-2.239-22.695-5.55-34.637-9.937v-29.109c11.476,6.438,22.717,11.29,33.727,14.555
+	c11.008,3.267,21.832,4.898,32.468,4.898c16.14,0,28.596-3.171,37.366-9.517c8.769-6.344,13.155-15.395,13.155-27.149
+	c0-10.262-3.149-18.285-9.447-24.071c-6.297-5.783-16.632-10.122-30.998-13.015l-17.213-3.358
+	c-21.086-4.199-36.341-10.776-45.763-19.733c-9.425-8.957-14.135-21.412-14.135-37.366c0-18.473,6.508-33.027,19.522-43.664
+	c13.015-10.636,30.95-15.954,53.81-15.954c9.796,0,19.778,0.888,29.948,2.659C320.383,75.801,330.787,78.46,341.423,82.005z"></path>
+<path d="M86.199,153.037c0-2.98,1.024-5.495,3.074-7.544c2.048-2.048,4.563-3.073,7.544-3.073c3.034,0,5.561,1.011,7.584,3.034
+	c2.022,2.023,3.034,4.55,3.034,7.584s-1.012,5.563-3.034,7.584c-2.023,2.023-4.551,3.034-7.584,3.034
+	c-2.981,0-5.496-1.024-7.544-3.074C87.223,158.533,86.199,156.018,86.199,153.037z M86.199,205.089c0-2.979,1.024-5.509,3.074-7.584
+	c2.048-2.076,4.563-3.113,7.544-3.113c2.98,0,5.495,1.037,7.544,3.113c2.048,2.075,3.074,4.604,3.074,7.584
+	c0,2.981-1.012,5.496-3.034,7.545c-2.023,2.048-4.551,3.073-7.584,3.073s-5.562-1.025-7.584-3.073
+	C87.209,210.585,86.199,208.07,86.199,205.089z M141.135,153.037c0-2.98,1.024-5.495,3.074-7.544
+	c2.048-2.048,4.563-3.073,7.544-3.073c3.034,0,5.561,1.011,7.584,3.034c2.022,2.023,3.034,4.55,3.034,7.584
+	s-1.012,5.563-3.034,7.584c-2.023,2.023-4.551,3.034-7.584,3.034c-2.981,0-5.496-1.024-7.544-3.074
+	C142.159,158.533,141.135,156.018,141.135,153.037z M141.135,205.089c0-2.979,1.024-5.509,3.074-7.584
+	c2.048-2.076,4.563-3.113,7.544-3.113c2.98,0,5.495,1.037,7.544,3.113c2.048,2.075,3.074,4.604,3.074,7.584
+	c0,2.981-1.012,5.496-3.034,7.545c-2.023,2.048-4.551,3.073-7.584,3.073s-5.563-1.025-7.584-3.073
+	C142.146,210.585,141.135,208.07,141.135,205.089z"></path>
+</svg>
+
+        racerxdl
+      </a>
+    </li>
+<br>
+    <li class="btn-a btn-svg btn-telegram">
+      <a href="https://t.me/hardwareHackingBrasil">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><title>Telegram icon</title>
+<path d="M23.91 3.79L20.3 20.84c-.25 1.21-.98 1.5-2 .94l-5.5-4.07-2.66 2.57c-.3.3-.55.56-1.1.56-.72 0-.6-.27-.84-.95L6.3 13.7l-5.45-1.7c-1.18-.35-1.19-1.16.26-1.75l21.26-8.2c.97-.43 1.9.24 1.53 1.73z"></path></svg>
+        Hardware Hacking Brasil
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-patreon">
+      <a href="https://www.patreon.com/teskeslab">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Patreon</title>
+<path d="M0 .48v23.04h4.22V.48zm15.385 0c-4.764 0-8.641 3.88-8.641 8.65 0 4.755 3.877 8.623 8.641 8.623 4.75 0 8.615-3.868 8.615-8.623C24 4.36 20.136.48 15.385.48z"></path></svg>
+        Patreon
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-mastodon">
+      <a rel="me" href="https://infosec.exchange/@lucasteske">
+        <svg width="24px" height="24px" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"><path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"></path></svg>
+        Mastodon
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="search-input">
+  <input type="text" id="search-input" style="margin: 0 auto;" placeholder="Search blog posts...">
+</div>
+<ul id="results-container" class="results-container"></ul>
+
+      
+
+
+
+
+
+<div class="post">
+  <h1 class="post-title">NAND Flash Memory Analysis and Decoding - Unveiling ECC Scattering in Unknown Devices</h1>
+  <div class="post-info">
+    
+      <img src="/assets/posts/analise-e-decodificacao-flash/flash-cell-programmed.svg">
+    
+    <span>Written by</span>
+    
+        Lucas Teske
+    
+    
+
+    
+      <br>
+      <span>on </span><time datetime="2024-01-16 20:48:00 -0300">
+  16
+  
+  January
+  2024
+</time>
+    
+  </div>
+
+  <div class="post-line"></div>
+
+  <h2 id="exploring-nand-memories">Exploring NAND Memories</h2>
+
+<p>When in possession of a device whose internals one wishes to understand, accessing the content of the flash memory is not always straightforward. Due to the nature of NAND memories, an error correction algorithm is applied to all content, which can cause unintentional obfuscation of the content. Some manufacturers of processors that directly control NAND-type memories or developers of “protected” software choose to customize the way these algorithms function.</p>
+
+<p>In this article, we will explore the basic structure of flash memory, why error correction exists, and how to identify the scattering of the error correction algorithm used.</p>
+
+<h1 id="flash-memories">Flash Memories</h1>
+
+<p>Flash memories have emerged as the backbone of digital storage in the contemporary era. Found in devices as varied as SSDs, USB drives, and SD cards, these memories bring an irresistible combination of speed, durability, and the ability to retain data even in the absence of power.</p>
+
+<p>Historically, before the rise of flash memories, the main storage devices were based on magnetic media, such as hard disks and floppy disks, or on EPROMs (Erasable Programmable Read-Only Memory). While magnetic media had moving parts and were more prone to physical failures, EPROMs required a specific erasure process, making the rewriting of data a slower and less efficient process.</p>
+
+<p>Within the category of flash memories, we find different variations, with NOR and NAND versions being the most predominant. In this article, we will focus on NAND flash memories, recognized for their high storage density and widely used in everyday storage devices, ensuring speed and reliability in reading and writing data.</p>
+
+<h2 id="anatomy-of-a-nand-cell">Anatomy of a NAND Cell</h2>
+
+<p><img src="/assets/posts/analise-e-decodificacao-flash/flash-cell.svg" alt="Flash Memory Cell">
+<em>Detailed diagram of a NAND cell</em></p>
+
+<p>At the heart of flash memory technology lies the intricate architecture of a NAND cell. The illustration above outlines the fundamental components of the cell: the Control Gate, the Floating Gate, insulating oxide layers, along with N-Type Source and N-Type Drain terminals, all built on a P-type substrate.
+Bits are stored in the flash memory by retaining electrons in the Floating Gate.</p>
+
+<p>During the write operation, a voltage is imposed on the Control Gate, inducing electrons to cross the oxide barrier and lodge in the Floating Gate. Once the electrons reach the Floating Gate, they remain there, denoting a “written” state.
+<img src="/assets/posts/analise-e-decodificacao-flash/flash-write.svg" alt="Flash memory write process"></p>
+
+<p>To read the stored information, a voltage is applied to the Control Gate. If there are electrons in the Floating Gate, they will create a repulsive force, blocking the flow of electrons from the Source to the Drain. This state is recognized as a “0” bit. However, if the Floating Gate is unoccupied, the electric current will flow unimpeded, corresponding to a “1” bit.</p>
+
+<p><img src="/assets/posts/analise-e-decodificacao-flash/flash-cell-programmed.svg" alt="Programmed state of a NAND cell">
+<em>NAND cell in the “written” state</em></p>
+
+<p>Finally, the electronic configuration — whether its absence or presence — determines whether the cell is representing a “0” or “1” bit. The subsequent image shows a cell in the “erased” state, characterized by the free flow of electrons between the terminals.</p>
+
+<p><img src="/assets/posts/analise-e-decodificacao-flash/flash-cell-erased.svg" alt="Erased state of a NAND cell">
+<em>NAND cell in the “erased” state</em></p>
+
+<h2 id="nand-memory-architecture">NAND Memory Architecture</h2>
+
+<p><img src="/assets/posts/analise-e-decodificacao-flash/nand-block.svg" alt="NAND Block Structure">
+<em>Diagram representing the organization of a NAND block</em></p>
+
+<p>NAND memory is meticulously organized in a hierarchical structure. Starting with the smallest unit, we have the cell. These cells are grouped to form pages. Moving up the hierarchy, multiple pages are then consolidated to constitute a block, as illustrated in the diagram above.</p>
+
+<p>This structural arrangement is not just for organization. It plays a vital role in the efficiency of flash memory operations. An important detail to consider is that, in various devices based on flash technology, the erase operation is performed at the block level, and not on individual cells or pages.</p>
+
+<p>The image exemplifies a NAND memory containing pages of 2048 bytes of data added with 64 bytes designated for error correction, totaling 2112 bytes per page. These pages are grouped into blocks that house 64 pages each, resulting in 128K bytes of data and 4K bytes for correction.</p>
+
+<p>The additional bytes in each page are not mere supplements. They are intrinsic to the memory’s integrity. Although stored in the same way as any other byte, they are often allocated for specific functions, such as parity in Error Correction (ECC) algorithms. This correction is indispensable, as during manufacturing or even over use, some cells of the NAND memory may present defects or wear out, compromising the accuracy of stored data. Therefore, ECC acts as a protective layer, ensuring the reliability of data even in the presence of imperfections in the memory.</p>
+
+<h2 id="reading-flash-memories">Reading Flash Memories</h2>
+
+<p>When dealing with reading and writing in Flash memories, a variety of devices are available. For flash memories with less conventional encapsulations, like BGA (Ball Grid Array), I often turn to the RT809H programmer, using a specific adapter for such encapsulation. The flash memory in question was originally extracted from a device by PAX, a model available on Mercado Livre under the description “card machine”. It is worth mentioning that the encapsulation type of this flash memory is BGA63, indicating an arrangement of 63 pins in the ball-grid-array format.</p>
+
+<p><img src="/assets/posts/analise-e-decodificacao-flash/flash_memory.jpg" alt="Flash Memory in the universal programmer RT809H ready for reading"><em>Flash Memory in the universal programmer RT809H ready for reading</em></p>
+
+<p>After extracting the data from the flash memory, a crucial step is using the <code class="language-plaintext highlighter-rouge">binwalk</code> tool. This command functions to scan and list possible signatures of known files contained in the memory dump, allowing a preliminary analysis of its content. This stage is essential to discern if we will face challenges when trying to decipher the stored data, such as if they are encrypted.</p>
+
+<p>It is important to note that the image produced by the RT809H programmer depicts the content of the flash memory in its purest state, without any filtering. This means that the ECC (Error-Correcting Code) parity bits are included. This feature can introduce nuances during the analysis, as not all signatures will be accurately recognized, especially considering files that may start at the end of a memory page.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>binwalk F59L1G81MA@BGA63_1111.BIN
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+<span class="nt">--------------------------------------------------------------------------------</span>
+438548        0x6B114         Base64 standard index table
+<span class="o">(</span>...<span class="o">)</span>
+3514378       0x35A00A        PC bitmap, Windows 3.x format,, 320 x 240 x 24
+7839754       0x77A00A        uImage header, header size: 64 bytes, header CRC: 0x538F3DE9, created: 2021-05-27 08:14:51, image size: 3696472 bytes, Data Address: 0x80800000, Entry Point: 0x80800000, data CRC: 0xA22F74A5, OS: Linux, CPU: ARM, image <span class="nb">type</span>: OS Kernel Image, compression <span class="nb">type</span>: none, image name: <span class="s2">"Linux-2.7.93.9707R"</span>
+7839818       0x77A04A        Linux kernel ARM boot executable zImage <span class="o">(</span>little-endian<span class="o">)</span>
+7857081       0x77E3B9        <span class="nb">gzip </span>compressed data, maximum compression, from Unix, last modified: 1970-01-01 00:00:00 <span class="o">(</span>null <span class="nb">date</span><span class="o">)</span>
+<span class="o">(</span>...<span class="o">)</span>
+20815882      0x13DA00A       uImage header, header size: 64 bytes, header CRC: 0xF95F6882, created: 2021-05-27 08:20:25, image size: 8185419 bytes, Data Address: 0x83800000, Entry Point: 0x83800000, data CRC: 0xE5674944, OS: Linux, CPU: ARM, image <span class="nb">type</span>: RAMDisk Image, compression <span class="nb">type</span>: none, image name: <span class="s2">"RAMDISK-2.7.93.9707R"</span>
+<span class="o">(</span>...<span class="o">)</span>
+20815946      0x13DA04A       <span class="nb">gzip </span>compressed data, maximum compression, from Unix, last modified: 2021-05-27 08:20:23
+33792010      0x203A00A       uImage header, header size: 64 bytes, header CRC: 0x588DFFBC, created: 2021-05-27 08:19:13, image size: 6412038 bytes, Data Address: 0x0, Entry Point: 0x0, data CRC: 0x32979F1E, OS: Linux, CPU: ARM, image <span class="nb">type</span>: Firmware Image, compression <span class="nb">type</span>: none, image name: <span class="s2">"BASE-2.7.93.9707R"</span>
+33792074      0x203A04A       <span class="nb">gzip </span>compressed data, maximum compression, from Unix, last modified: 2021-05-27 08:19:11
+46768138      0x2C9A00A       UBI erase count header, version: 1, EC: 0x3, VID header offset: 0x800, data offset: 0x1000
+</code></pre></div></div>
+
+<p>Entropy assessment is an effective technique to detect encrypted or compressed content in a memory. When we talk about entropy in data, we are referring to the amount of information or unpredictability contained in these data. The <code class="language-plaintext highlighter-rouge">binwalk</code> tool offers a specific mode for measuring this entropy.</p>
+
+<p>Files that are compressed or encrypted tend to display an apparently random data pattern, resulting in an entropy measure that approaches 1. In contrast, “plain-text” files or unencoded data generally have significantly lower entropy, tending towards values closer to 0, as their content is more predictable.</p>
+
+<p>To explore this functionality in <code class="language-plaintext highlighter-rouge">binwalk</code>, use the <code class="language-plaintext highlighter-rouge">-E</code> option, which activates the entropy measurement mode. When executed, you will receive a graph that visually represents the entropy variations throughout the file, facilitating the identification of encrypted or compressed segments.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>binwalk <span class="nt">-E</span> F59L1G81MA@BGA63_1111.BIN
+DECIMAL       HEXADECIMAL     ENTROPY
+<span class="nt">--------------------------------------------------------------------------------</span>
+0             0x0             Falling entropy edge <span class="o">(</span>0.027839<span class="o">)</span>
+7880704       0x784000        Rising entropy edge <span class="o">(</span>0.995063<span class="o">)</span>
+12345344      0xBC6000        Falling entropy edge <span class="o">(</span>0.000000<span class="o">)</span>
+20869120      0x13E7000       Rising entropy edge <span class="o">(</span>0.997811<span class="o">)</span>
+29257728      0x1BE7000       Falling entropy edge <span class="o">(</span>0.000000<span class="o">)</span>
+33824768      0x2042000       Rising entropy edge <span class="o">(</span>0.999076<span class="o">)</span>
+40386560      0x2684000       Falling entropy edge <span class="o">(</span>0.372003<span class="o">)</span>
+47253504      0x2D10800       Falling entropy edge <span class="o">(</span>0.725862<span class="o">)</span>
+62879744      0x3BF7800       Falling entropy edge <span class="o">(</span>0.737729<span class="o">)</span>
+67244032      0x4021000       Rising entropy edge <span class="o">(</span>0.966013<span class="o">)</span>
+67311616      0x4031800       Falling entropy edge <span class="o">(</span>0.776734<span class="o">)</span>
+69611520      0x4263000       Falling entropy edge <span class="o">(</span>0.790624<span class="o">)</span>
+69679104      0x4273800       Rising entropy edge <span class="o">(</span>0.972091<span class="o">)</span>
+69814272      0x4294800       Falling entropy edge <span class="o">(</span>0.836573<span class="o">)</span>
+70322176      0x4310800       Falling entropy edge <span class="o">(</span>0.844177<span class="o">)</span>
+72689664      0x4552800       Falling entropy edge <span class="o">(</span>0.643195<span class="o">)</span>
+74008576      0x4694800       Falling entropy edge <span class="o">(</span>0.783870<span class="o">)</span>
+74584064      0x4721000       Falling entropy edge <span class="o">(</span>0.471472<span class="o">)</span>
+75259904      0x47C6000       Falling entropy edge <span class="o">(</span>0.787818<span class="o">)</span>
+76613632      0x4910800       Falling entropy edge <span class="o">(</span>0.823394<span class="o">)</span>
+76748800      0x4931800       Falling entropy edge <span class="o">(</span>0.687502<span class="o">)</span>
+82837504      0x4F00000       Falling entropy edge <span class="o">(</span>0.360502<span class="o">)</span>
+84291584      0x5063000       Falling entropy edge <span class="o">(</span>0.775172<span class="o">)</span>
+84934656      0x5100000       Falling entropy edge <span class="o">(</span>0.714603<span class="o">)</span>
+95385600      0x5AF7800       Falling entropy edge <span class="o">(</span>0.788762<span class="o">)</span>
+103233536     0x6273800       Falling entropy edge <span class="o">(</span>0.775540<span class="o">)</span>
+104992768     0x6421000       Falling entropy edge <span class="o">(</span>0.750242<span class="o">)</span>
+124475392     0x76B5800       Falling entropy edge <span class="o">(</span>0.281623<span class="o">)</span>
+125253632     0x7773800       Falling entropy edge <span class="o">(</span>0.750710<span class="o">)</span>
+133507072     0x7F52800       Falling entropy edge <span class="o">(</span>0.798972<span class="o">)</span>
+137566208     0x8331800       Falling entropy edge <span class="o">(</span>0.768062<span class="o">)</span>
+137701376     0x8352800       Falling entropy edge <span class="o">(</span>0.743758<span class="o">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/posts/analise-e-decodificacao-flash/flash-entropy.svg" alt="Entropy of the Read Image"><em>Entropy of the Read Image</em></p>
+
+<p>In the presented entropy graph, the areas of high entropy stand out as peaks that approach the value of 1 on the vertical axis. These regions point to sections of data that have a distribution of bits that appears random, which is typical of compressed or encrypted data.</p>
+
+<p>By correlating the position of these peaks with the information provided by the <code class="language-plaintext highlighter-rouge">binwalk</code> command, we can understand the nature of these high entropy segments. In our case, the points of high entropy correspond to compressed parts, and not encrypted data. This deduction becomes clear when we see that <code class="language-plaintext highlighter-rouge">binwalk</code> identified signatures related to data compressed with <em>gzip</em> at the indicated positions.</p>
+
+<p>The fact of recognizing these signatures clearly shows that the content, although compressed, is not encrypted. If it were, <code class="language-plaintext highlighter-rouge">binwalk</code> would not have identified these signatures, as encrypted data looks like a bunch of random information, without specific patterns. Thus, looking at both the entropy graph and the information from <code class="language-plaintext highlighter-rouge">binwalk</code>, we get a good idea of the structure and type of data in the analyzed flash memory.</p>
+
+<h2 id="when-ecc-scattering-is-not-standard">When ECC Scattering is Not Standard</h2>
+
+<p>To ensure that data is accessed accurately, it is crucial to exclude the parity bits inserted into each memory page. Assuming that the last 64 bytes of each page are allocated for ECC, we can create a Python script that reads the 2112 bytes (representing the full memory page) and writes only the 2048 bytes corresponding to the pure data, disregarding the ECC, into a new file.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
+</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"F59L1G81MA@BGA63_1111.BIN"</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span>
+<span class="n">o</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"FIXEDDATA.bin"</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span>
+<span class="n">pagesToRead</span> <span class="o">=</span> <span class="mi">65536</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pagesToRead</span><span class="p">):</span>
+  <span class="n">page</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="mi">2112</span><span class="p">)</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">page</span><span class="p">[:</span><span class="mi">2048</span><span class="p">])</span> <span class="c1"># Nuke ECC
+</span>  <span class="n">o</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">o</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>With the data now cleaned, the next step is to identify the files present to verify the efficacy of our assumption. A quick look at the list of files highlighted by <em>binwalk</em> will give us an indication.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>binwalk F59L1G81MA@BGA63_1111.BIN
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+<span class="nt">--------------------------------------------------------------------------------</span>
+438548        0x6B114         Base64 standard index table
+439650        0x6B562         DES PC1 table
+439738        0x6B5BA         DES PC2 table
+440945        0x6BA71         DES SP2, little endian
+441738        0x6BD8A         DES SP1, little endian
+477666        0x749E2         Certificate <span class="k">in </span>DER format <span class="o">(</span>x509 v3<span class="o">)</span>, header <span class="o">(</span>...<span class="o">)</span>
+478540        0x74D4C         Object signature <span class="k">in </span>DER format <span class="o">(</span>PKCS header <span class="o">(</span>...<span class="o">)</span>
+479065        0x74F59         Object signature <span class="k">in </span>DER format <span class="o">(</span>PKCS header <span class="o">(</span>...<span class="o">)</span>
+1384724       0x152114        Base64 standard index table
+1385826       0x152562        DES PC1 table
+1385914       0x1525BA        DES PC2 table
+1387121       0x152A71        DES SP2, little endian
+1387914       0x152D8A        DES SP1, little endian
+1423842       0x15B9E2        Certificate <span class="k">in </span>DER format <span class="o">(</span>x509 v3<span class="o">)</span>, header <span class="o">(</span>...<span class="o">)</span>
+1424716       0x15BD4C        Object signature <span class="k">in </span>DER format <span class="o">(</span>PKCS header <span class="o">(</span>...<span class="o">)</span>
+1425241       0x15BF59        Object signature <span class="k">in </span>DER format <span class="o">(</span>PKCS header <span class="o">(</span>...<span class="o">)</span>
+3514378       0x35A00A        PC bitmap, Windows 3.x format,, 320 x 240 x 24
+7839754       0x77A00A        uImage header, header size: 64 bytes, header <span class="o">(</span>...<span class="o">)</span>
+7839818       0x77A04A        Linux kernel ARM boot executable zImage <span class="o">(</span>litt<span class="o">(</span>...<span class="o">)</span>
+7857081       0x77E3B9        <span class="nb">gzip </span>compressed data, maximum compression,   <span class="o">(</span>...<span class="o">)</span>
+<span class="o">(</span>...<span class="o">)</span>
+</code></pre></div></div>
+
+<p>We can identify a <em>bitmap</em> right at the beginning of the image, where <em>binwalk</em> is even able to identify its size and bit depth:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3514378       0x35A00A        PC bitmap, Windows 3.x format,, 320 x 240 x 24
+</code></pre></div></div>
+
+<p>A distinctive characteristic of <em>bitmaps</em> is the way they store color information. The bytes in the file map directly to the colors of the image. Thus, when we have a region of the image that displays a single color, that color is represented by consecutive sequences of identical bytes in the file. This property is especially useful when we try to discern the distribution of error-correcting bits (ECC). If a segment of the bitmap, fitting to a memory page, displays the same color as another segment on a different page, it’s expected that their corresponding ECC bits would be identical.</p>
+
+<p>Considering that the identified image has a color depth of 24 bpp (bits per pixel), each pixel is represented by 3 bytes. Given a memory page capacity of 2048 bytes, this translates to about 682 pixels per page. This is slightly more than two lines of the image. The attempt to access the <em>bitmap</em> in its current form suggests inconsistencies, leading us to question our initial assumptions about the distribution of ECC bits.</p>
+
+<p><img src="/assets/posts/analise-e-decodificacao-flash/pax-broken.jpg" alt="Corrupted PAX Logo"><em>Corrupted PAX Logo</em></p>
+
+<p>For proper interpretation, it’s vital to extract multiple pages from the memory containing the bitmap data in an aligned manner. This way, we can ensure that at every 2112 byte interval, we are dealing with a new page, not a continuation of the previous one. Subsequently, we can use an image editing software that allows manipulating images in arbitrary “RAW” formats. In this context, we will use GIMP to analyze the raw image data. One of the advantages of GIMP is the flexibility in defining the image geometry and pixel formatting.</p>
+
+<p>To facilitate the identification of ECC bits, we’ll set the image width to 2112, corresponding to the memory page size. This will allow us to visualize each memory page as a distinct line. We’ll choose an 8-bit per pixel representation in monochrome to ensure an exact correspondence of 2112 bytes per line. Regarding the height, we’ll opt for at least 100 lines to provide a clear view of variations between different memory pages.</p>
+
+<p>Examining the visual representation provided by GIMP, we notice clearly defined segments of 512 bytes within each memory page. These segments are interspersed with thinner columns, whose appearance seems directly influenced by the adjacent block.</p>
+
+<p><img src="/assets/posts/analise-e-decodificacao-flash/block-analysis.jpg" alt="512 byte blocks"><em>512 byte blocks</em></p>
+
+<p>Looking closer, we realize that the completely black lines display a column with consistent patterns to the left of the 512-byte mark. Contrary to this, lines that show some variation also manifest discrepancies in that same column on the left. Based on this observation, we can infer that the columns positioned both to the left and right of the 512-byte segment represent parity data, and are not an intrinsic part of the bitmap. This becomes even more evident considering that the first lines of the bitmap are entirely black.</p>
+
+<p>Considering the memory page as a whole, another detail stands out: despite the observed pattern, there is a completely white column in an unexpected position. Additionally, the first column, which theoretically should be white, appears to be displaced or altered in some way.</p>
+
+<p><img src="/assets/posts/analise-e-decodificacao-flash/block-analysis-1.png" alt="Column apparently switched place"><em>Column apparently switched place</em></p>
+
+<p>The hypothesis suggests that, for some reason, these columns may have been switched during the scattering process. To validate this assumption, a practical approach would be to use GIMP itself to reposition the column and assess if the resulting content aligns harmoniously with the rest of the memory page.</p>
+
+<p><img src="/assets/posts/analise-e-decodificacao-flash/block-analysis-3.png" alt="Switching identified columns"><em>Switching identified columns</em></p>
+
+<p>The above image validates our conjecture, highlighting that the reallocation of columns provides a more coherent visualization of the content. Although it seems unusual at first glance, considering the security nature of the device, it is plausible to think that this altered arrangement could be a deliberate way of hiding data. This peculiarity is not mentioned in any public documentation available for the device’s processor.</p>
+
+<p>Based on these findings, we have the tools needed to refine our Python script, aiming to eliminate the parity bits and rearrange the 512-byte segments, in order to obtain a refined and coherent image.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
+</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"F59L1G81MA@BGA63_1111.BIN"</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span>
+<span class="n">o</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"FIXEDDATA.bin"</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span>
+<span class="n">pagesToRead</span> <span class="o">=</span> <span class="mi">65536</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pagesToRead</span><span class="p">):</span>
+  <span class="n">page</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="mi">2112</span><span class="p">)</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">page</span><span class="p">[</span><span class="mi">10</span><span class="p">:</span><span class="mi">10</span><span class="o">+</span><span class="mi">512</span><span class="p">]</span> <span class="o">+</span> <span class="n">page</span><span class="p">[</span><span class="mi">535</span><span class="p">:</span><span class="mi">535</span><span class="o">+</span><span class="mi">512</span><span class="p">]</span> <span class="o">+</span> <span class="n">page</span><span class="p">[</span><span class="mi">1060</span><span class="p">:</span><span class="mi">1060</span><span class="o">+</span><span class="mi">512</span><span class="p">]</span> <span class="o">+</span> <span class="n">page</span><span class="p">[</span><span class="mi">1585</span><span class="p">:</span><span class="mi">1585</span><span class="o">+</span><span class="mi">512</span><span class="p">])</span>
+  <span class="n">data</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">-</span><span class="mi">48</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">page</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">o</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">o</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>After all the steps of analysis and correction, we successfully extracted the <em>bitmap</em> and validated that all our hypotheses and methods of analysis were correct:
+<img src="/assets/posts/analise-e-decodificacao-flash/pax-fixed.jpg" alt="Adjusted PAX Logo"><em>Adjusted PAX Logo</em></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>It is essential to highlight that our approach was limited to <strong>removing</strong> the parity bits, without actually applying the error correction algorithm. As mentioned earlier, flash memories, particularly NAND type, can have defective bits, even from the time of manufacturing. Omitting the specific ECC algorithm may result in inconsistencies in the final data.</p>
+
+<p>Fortunately, the content of this specific device <strong>was not</strong> encrypted, which made it easier for us in the analysis of scattering, taking advantage only of known content. If the content had been encrypted, it would be essential to identify a recurring pattern (such as empty memory pages) where the ECC information would be recorded.</p>
+
+
+  <hr>
+<div class="fb-comments" data-href="https://lucasteske.dev/2024/01/decoding-and-analysis-nand-flash" data-width="100%" data-numposts="5"></div>
+
+<hr>
+<div class="sharebuttons">
+  <ul>
+    <li>
+      <p class="sharetitle"> Share this: </p>
+    </li>
+    <li class="reddit">
+      <a href="http://www.reddit.com/submit?url=https://lucasteske.dev/2024/01/decoding-and-analysis-nand-flash&amp;title=NAND%20Flash%20Memory%20Analysis%20and%20Decoding%20-%20Unveiling%20ECC%20Scattering%20in%20Unknown%20Devices" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Reddit icon</title>
+<path d="M2.204 14.049c-.06.276-.091.56-.091.847 0 3.443 4.402 6.249 9.814 6.249 5.41 0 9.812-2.804 9.812-6.249 0-.274-.029-.546-.082-.809l-.015-.032c-.021-.055-.029-.11-.029-.165-.302-1.175-1.117-2.241-2.296-3.103-.045-.016-.088-.039-.126-.07-.026-.02-.045-.042-.067-.064-1.792-1.234-4.356-2.008-7.196-2.008-2.815 0-5.354.759-7.146 1.971-.014.018-.029.033-.049.049-.039.033-.084.06-.13.075-1.206.862-2.042 1.937-2.354 3.123 0 .058-.014.114-.037.171l-.008.015zm9.773 5.441c-1.794 0-3.057-.389-3.863-1.197-.173-.174-.173-.457 0-.632.176-.165.46-.165.635 0 .63.629 1.685.943 3.228.943 1.542 0 2.591-.3 3.219-.929.165-.164.45-.164.629 0 .165.18.165.465 0 .645-.809.808-2.065 1.198-3.862 1.198l.014-.028zm-3.606-7.573c-.914 0-1.677.765-1.677 1.677 0 .91.763 1.65 1.677 1.65s1.651-.74 1.651-1.65c0-.912-.739-1.677-1.651-1.677zm7.233 0c-.914 0-1.678.765-1.678 1.677 0 .91.764 1.65 1.678 1.65s1.651-.74 1.651-1.65c0-.912-.739-1.677-1.651-1.677zm4.548-1.595c1.037.833 1.8 1.821 2.189 2.904.45-.336.719-.864.719-1.449 0-1.002-.815-1.816-1.818-1.816-.399 0-.778.129-1.09.363v-.002zM2.711 9.963c-1.003 0-1.817.816-1.817 1.818 0 .543.239 1.048.644 1.389.401-1.079 1.172-2.053 2.213-2.876-.302-.21-.663-.329-1.039-.329v-.002zm9.217 12.079c-5.906 0-10.709-3.205-10.709-7.142 0-.275.023-.544.068-.809C.494 13.598 0 12.729 0 11.777c0-1.496 1.227-2.713 2.725-2.713.674 0 1.303.246 1.797.682 1.856-1.191 4.357-1.941 7.112-1.992l1.812-5.524.404.095s.016 0 .016.002l4.223.993c.344-.798 1.138-1.36 2.065-1.36 1.229 0 2.231 1.004 2.231 2.234 0 1.232-1.003 2.234-2.231 2.234s-2.23-1.004-2.23-2.23l-3.851-.912-1.467 4.477c2.65.105 5.047.854 6.844 2.021.494-.464 1.144-.719 1.833-.719 1.498 0 2.718 1.213 2.718 2.711 0 .987-.54 1.886-1.378 2.365.029.255.059.494.059.749-.015 3.938-4.806 7.143-10.72 7.143l-.034.009zm8.179-19.187c-.74 0-1.34.599-1.34 1.338 0 .738.6 1.34 1.34 1.34.732 0 1.33-.6 1.33-1.334 0-.733-.598-1.332-1.347-1.332l.017-.012z"></path></svg>
+      </a>
+    </li>
+    <li class="hn">
+      <a href="http://news.ycombinator.com/submitlink?u=https://lucasteske.dev/2024/01/decoding-and-analysis-nand-flash&amp;t=NAND%20Flash%20Memory%20Analysis%20and%20Decoding%20-%20Unveiling%20ECC%20Scattering%20in%20Unknown%20Devices" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Y Combinator icon</title>
+<path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"></path></svg>
+      </a>
+    </li>
+    <li class="twitter">
+      <a href="https://twitter.com/intent/tweet?via=lucasteske&url=https://lucasteske.dev/2024/01/decoding-and-analysis-nand-flash&amp;text=NAND%20Flash%20Memory%20Analysis%20and%20Decoding%20-%20Unveiling%20ECC%20Scattering%20in%20Unknown%20Devices" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Twitter icon</title>
+<path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"></path></svg>
+      </a>
+    </li>
+    <li class="linkedin">
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://lucasteske.dev/2024/01/decoding-and-analysis-nand-flash&amp;title=NAND%20Flash%20Memory%20Analysis%20and%20Decoding%20-%20Unveiling%20ECC%20Scattering%20in%20Unknown%20Devices" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn icon</title>
+<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+      </a>
+    </li>
+  </ul>
+</div>
+
+</div>
+
+<div class="pagination">
+  
+    <a href="/2024/01/tpm2-bitlocker-keys" class="left arrow">←</a>
+  
+  
+    <a href="/2024/01/stm32f0x-protected-firmware-dumper" class="right arrow">→</a>
+  
+
+  <a href="#" class="top">Top</a>
+</div>
+
+      <br><br>
+    </main>
+
+    <footer>
+  <span>
+    © <time datetime="2024-01-16 22:31:21 -0300">2024</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+  </span><br>
+  <span class="site-build">
+    Last build: 2024-01-16 22:31:21 -0300
+  </span>
+</footer>
+
+<script src="/assets/simple-jekyll-search.min.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="https://lucasteske.dev{url}">{date} - {title}</a></li>'
+  })
+</script>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+  <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P2HPZJM" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- AnchorJS -->
+<script src="/assets/anchor.min.js"></script>
+<script>
+  anchors.options.placement = 'left';
+  anchors.add('h1');
+  anchors.add();
+</script>
+<!-- End AnchorJS -->
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "6fdff3f05d2847b58d553381bb1e8115"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+  </body>
+</html>
