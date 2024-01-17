@@ -309,6 +309,57 @@
 
 <div class="catalogue">
   
+    <a href="/2016/11/goes-satellite-hunt-part-4-packet-demuxer/" class="catalogue-item catalogue-item-2">
+      <div>
+        <time datetime="2016-11-06 03:56:44 +0000" class="catalogue-time">November 06, 2016</time>
+        <h1 class="catalogue-title">GOES Satellite Hunt (Part 4 – Packet Demuxer)</h1>
+        <div class="catalogue-line"></div>
+        
+          <div class="post-image-div">
+            <img src="/wp-content/uploads/2016/11/5YBmBKt-624x129.png" class="post-image post-image-2">
+          </div>
+        
+        <p>
+          In the last chapter I showed how to get the frames from the demodulated bit stream. In this chapter I will show you how to parse these frames and get the packets that will on next chapter generate the files that GOES send. I will first add C code to the code I did in the last chapter to separated all the virtual channels by ID. But mainly this chapter will be done in python (just because its easier, I will eventually make a C code as well to do the stuff). De-randomization of the data One of the missing...
+        </p>
+
+      </div>
+    </a>
+  
+    <a href="/2016/11/goes-satellite-hunt-part-3-frame-decoder/" class="catalogue-item catalogue-item-2">
+      <div>
+        <time datetime="2016-11-02 20:50:34 +0000" class="catalogue-time">November 02, 2016</time>
+        <h1 class="catalogue-title">GOES Satellite Hunt (Part 3 – Frame Decoder)</h1>
+        <div class="catalogue-line"></div>
+        
+          <div class="post-image-div">
+            <img src="/wp-content/uploads/2016/11/qqk3UwA-624x135.png" class="post-image post-image-2">
+          </div>
+        
+        <p>
+          In the last chapter of GOES Satellite Hunt, I explained how I did the BPSK Demodulator for the LRIT Signal. Now I will explain how to decode the output of the data we got in the last chapter. One thing that is worth mentioning is that most (if not all) weather satellites that transmit digital signals use the CCSDS standard packet format, or at least something based on it. For example this frame decoder can be used (with some modifications due QPSK instead BPSK) for LRPT Signals from Meteor Satellites (I plan to do a LRPT decoder as well in...
+        </p>
+
+      </div>
+    </a>
+  
+    <a href="/2016/10/goes-satellite-hunt-part-2-demodulator/" class="catalogue-item catalogue-item-2">
+      <div>
+        <time datetime="2016-10-31 01:29:18 +0000" class="catalogue-time">October 31, 2016</time>
+        <h1 class="catalogue-title">GOES Satellite Hunt (Part 2 – Demodulator)</h1>
+        <div class="catalogue-line"></div>
+        
+          <div class="post-image-div">
+            <img src="/wp-content/uploads/2016/10/Captura-de-tela-de-2016-10-29-23-25-17-624x378.png" class="post-image post-image-2">
+          </div>
+        
+        <p>
+          In the last episode of my GOES Satellite Hunt I explained how I manage to build a reception system to get the GOES LRIT Signal. Now I will explain how to get the packets out of the LRIT signal. I choose the LRIT signal basically because of two reasons: It contains basically all EMWIN data + Full Disks from GOES 13 and 15. Less complexity on the demodulator side (Simple BPSK Demodulator) This is the LRIT Specification (theoretically): Demodulator in GNU Radio So first things first. We successfully acquired a LRIT signal from GOES. Our first step is to demodulate...
+        </p>
+
+      </div>
+    </a>
+  
     <a href="/2016/10/goes-satellite-hunt-part-1-antenna-system/" class="catalogue-item catalogue-item-2">
       <div>
         <time datetime="2016-10-18 22:24:40 +0000" class="catalogue-time">October 18, 2016</time>
@@ -343,53 +394,6 @@
       </div>
     </a>
   
-    <a href="/2016/03/fmtv-diplexer-test/" class="catalogue-item catalogue-item-2">
-      <div>
-        <time datetime="2016-03-24 01:29:24 +0000" class="catalogue-time">March 24, 2016</time>
-        <h1 class="catalogue-title">FM/TV Diplexer Test</h1>
-        <div class="catalogue-line"></div>
-        
-        <p>
-          So it has been a time since my last post (again). Today I’m writting about a TV/FM Diplexer that I bought to address a issue that I’m having here with my NOAA stuff. So the biggest problem is that in São Paulo the FM Radio (88-110MHz) are VERY strong. I can receive a -40dBm signal with a RTL-SDR with no gains in almost all channels. This is a big issue since the RTL-SDR does not have a input filter (actually it has, see my patches at https://github.com/librtlsdr/librtlsdr ) the LNA gets very easily saturated when getting gains over 25dB (usually needed by APT...
-        </p>
-
-      </div>
-    </a>
-  
-    <a href="/2016/02/recording-noaa-apt-signals-with-gqrx-and-rtl-sdr-on-linux/" class="catalogue-item catalogue-item-2">
-      <div>
-        <time datetime="2016-02-05 01:26:57 +0000" class="catalogue-time">February 05, 2016</time>
-        <h1 class="catalogue-title">Recording NOAA APT Signals with GQRX and RTL-SDR on Linux</h1>
-        <div class="catalogue-line"></div>
-        
-          <div class="post-image-div">
-            <img src="/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-44-17-624x408.png" class="post-image post-image-2">
-          </div>
-        
-        <p>
-          GQRX NOAA 18 Signal So you all saw my last posts [ Play with SDR and Intel Edison! QFH Antenna and my first reception of NOAA! ] but I actually didn’t explained how to capture and decode APT Signals using your computer (in this case, with Linux). So here it is! For this article I’m using Ubuntu 15.04, but actually any distro will work well (I think most of them have the needed packages) So the first thing you need to do is to get all needed hardware to start playing. I’ve already tested my i7 Skylake Laptop, a Intel Edison and LeMaker Guitar...
-        </p>
-
-      </div>
-    </a>
-  
-    <a href="/2016/02/lemaker-guitar-review/" class="catalogue-item catalogue-item-2">
-      <div>
-        <time datetime="2016-02-02 01:57:39 +0000" class="catalogue-time">February 02, 2016</time>
-        <h1 class="catalogue-title">LeMaker Guitar Review</h1>
-        <div class="catalogue-line"></div>
-        
-          <div class="post-image-div">
-            <img src="/wp-content/uploads/2016/02/lemaker-624x624.jpg" class="post-image post-image-2">
-          </div>
-        
-        <p>
-          So I few weeks ago I received a LeMaker Guitar board that I won on a contest. I got really happy about that and they sent by DHL that made everything went really fast. As usual, in Brazil the tax everything including prizes and samples, so I got R$90 of taxes over the board. I won’t complain much about it, because it was cheap and expected. So after some time (sorry for the long time, I got really busy 🙁 ) I managed to write this review about this board! So talking about the board specs. This is a QuadCore ARM Cortex...
-        </p>
-
-      </div>
-    </a>
-  
 </div>
 
 <div class="pagination">
@@ -408,10 +412,10 @@
 
     <footer>
   <span>
-    © <time datetime="2023-01-19 12:50:22 +0000">2023</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2024-01-17 00:54:05 +0000">2024</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2023-01-19 12:50:22 +0000
+    Last build: 2024-01-17 00:54:05 +0000
   </span>
 </footer>
 

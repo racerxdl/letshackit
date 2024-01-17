@@ -309,6 +309,75 @@
 
 <div class="catalogue">
   
+    <a href="/pt/2011/10/recondicionamento-de-um-variac/" class="catalogue-item catalogue-item-2">
+      <div>
+        <time datetime="2011-10-22 15:50:43 +0000" class="catalogue-time">October 22, 2011</time>
+        <h1 class="catalogue-title">Recondicionamento de um Variac</h1>
+        <div class="catalogue-line"></div>
+        
+        <p>
+          Como alguns sabem, meu variac pegou fogo (
+
+), e o meu outro queimou na semana da GV. Então precisei arrumar um pelo menos para poder usado aqui. Ai estão as fotos 😀
+
+Foi testado e está funcionando corretamente agora. Foi arrumado na gambiarra, mas ta arrumado.
+
+
+
+ 
+
+         
+
+        </p>
+
+      </div>
+    </a>
+  
+    <a href="/pt/2011/10/interruptor-midi-polifonico-com-pic-16f628a-interface/" class="catalogue-item catalogue-item-2">
+      <div>
+        <time datetime="2011-10-16 19:10:39 +0000" class="catalogue-time">October 16, 2011</time>
+        <h1 class="catalogue-title">Interruptor MIDI Polifônico com PIC 16F628A (Interface)</h1>
+        <div class="catalogue-line"></div>
+        
+        <p>
+          Neste tópico colocarei apenas como é a interface do interruptor descrito anteriormente.
+
+
+
+Para um interruptor monofônico, ligamos o Enable em Vcc e ignoramos o BUSY. Para polifônicos, colocamos o Enable do primeiro no Vcc, e nos seguintes ligamos no BUSY do anterior. Nas saídas fazemos uma operação OR, e as entradas MIDI são ligadas todas juntas.
+
+
+
+
+
+O Gate OR pode ser substituído por dois diodos para esse uso sem problemas, como mostrado abaixo:
+
+
+
+Boa sorte na montagem!
+
+Código fonte completo: MIDI INT.rar ou Project Source
+
+Créditos ao Uzzors2k pela ideia de cascatear microprocessadores para polifonia.
+
+        </p>
+
+      </div>
+    </a>
+  
+    <a href="/pt/2011/10/interruptor-midi-polifonico-com-pic-16f628a/" class="catalogue-item catalogue-item-2">
+      <div>
+        <time datetime="2011-10-16 18:17:52 +0000" class="catalogue-time">October 16, 2011</time>
+        <h1 class="catalogue-title">Interruptor MIDI Polifônico com PIC 16F628A</h1>
+        <div class="catalogue-line"></div>
+        
+        <p>
+          – Introdução Bom, muitos sabem que eu fiz um Interruptor MIDI (ou sintetizador como preferir) com um FPGA. Porém poucos tem acesso a um FPGA principalmente para fazer algo tão *simples*, então resolvi fazer um com PIC 16F628A. No começo queria fazer com um PIC menor, mas os menores não tem Receptor Serial via hardware, então ficaria mais complicado implementar. Outro ponto, é que o preço dos PIC’s menores são praticamente os mesmos, então era só uma questão de espaço mesmo. Usando um PIC maior, fica mais espaço livre para futuras modificações caso seja necessário. O PIC 16F628A tem 2KB...
+        </p>
+
+      </div>
+    </a>
+  
     <a href="/pt/2011/10/amostra-de-memoria-mram-da-everspin/" class="catalogue-item catalogue-item-2">
       <div>
         <time datetime="2011-10-13 19:42:09 +0000" class="catalogue-time">October 13, 2011</time>
@@ -335,45 +404,6 @@
       </div>
     </a>
   
-    <a href="/pt/2011/10/electronics-hacking/" class="catalogue-item catalogue-item-2">
-      <div>
-        <time datetime="2011-10-13 18:16:52 +0000" class="catalogue-time">October 13, 2011</time>
-        <h1 class="catalogue-title">Electronics Hacking</h1>
-        <div class="catalogue-line"></div>
-        
-        <p>
-          Bom, decidi postar hacks de eletrônica aqui também. Até por que são mais frequentes que os meus hacks. Ai vai umas fotos de um sensor CMOS que soldei numa placa pra facilitar, e verei um dia de brincar com ela: É um Sensor CMOS VGA Colorido, que roda em 3.3V. A sua interface também é CMOS (muitas vezes o sensor é cmos, mas a interface é analógica) e como o nível de tensão é 3v3 é fácil de eu trabalhar com um FPGA. Devo ter tirado isso de uma webcam ou câmera de vigilância, não lembro. A resolução é 644×484 pixels, porém ela tem...
-        </p>
-
-      </div>
-    </a>
-  
-    <a href="/pt/2011/10/funcao-javascript-para-multiplos-e-submultiplos-2/" class="catalogue-item catalogue-item-2">
-      <div>
-        <time datetime="2011-10-09 22:24:31 +0000" class="catalogue-time">October 09, 2011</time>
-        <h1 class="catalogue-title">Função Javascript para Múltiplos e Submúltiplos</h1>
-        <div class="catalogue-line"></div>
-        
-        <p>
-          Bom, vocês devem ter visto meu tópico anterior sobre Função Javascript para Submúltiplos e eu resolvi fazer uma função mais completa. Agora abrangendo mais submúltiplos e também abrangendo múltiplos. O conceito é o mesmo do anterior, gerar o valor com múltiplo ou submúltiplo e arredondar para duas casas decimais apenas. A função fica assim: function toNotationUnit(v) { var unit; var submultiplo = ["","m","µ","n","p","f","a","z","y"]; var multiplo = ["","k","M","G","T","P","E","Z","Y"] var counter= 0; var value = v; if(value &lt; 1) { while(value &lt; 1) { counter++; value=value*1e3; if(counter==8) break; } unit = submultiplo[counter]; }else{ while(value &gt;= 1000) { counter++; value=value/1e3; if(counter==8) break; } unit...
-        </p>
-
-      </div>
-    </a>
-  
-    <a href="/pt/2011/10/funcao-javascript-para-multiplos-e-submultiplos/" class="catalogue-item catalogue-item-2">
-      <div>
-        <time datetime="2011-10-08 08:50:12 +0000" class="catalogue-time">October 08, 2011</time>
-        <h1 class="catalogue-title">Função Javascript para Multiplos e Submultiplos</h1>
-        <div class="catalogue-line"></div>
-        
-        <p>
-          Bom, estava montando uma outra calculadora aqui para a EnergyLabs Brasil, e quis fazer algo mais legalzinho. Fiz uma função em javascript que concatena o valor com o submúltiplo, e já faz as multiplicações necessárias além de arrendondar para duas casas decimais. Não entendeu? Bom vou exemplificar. Em física se usa muito múltiplos e submúltiplos para ajudar a escrever unidades. Por exemplo, estamos habituados com a unidade segundo no nosso dia a dia. Para representarmos 0,1 segundo, podemos representar como 100ms (100 milissegundos), para 0,0001 segundo, podemos representar como 100us (100 microssegundos), e assim por diante. Isso são os submúltiplos. Ao invés de escrevermos 0,0001 escrevemos 100 *...
-        </p>
-
-      </div>
-    </a>
-  
 </div>
 
 <div class="pagination">
@@ -392,10 +422,10 @@
 
     <footer>
   <span>
-    © <time datetime="2023-01-19 12:50:33 +0000">2023</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2024-01-17 00:54:12 +0000">2024</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2023-01-19 12:50:33 +0000
+    Last build: 2024-01-17 00:54:12 +0000
   </span>
 </footer>
 

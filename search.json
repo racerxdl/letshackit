@@ -2,6 +2,36 @@
   
     {
 
+      "title"    : "TPM 2.0: Extracting Bitlocker keys through SPI",
+      "url"      : "/2024/01/tpm2-bitlocker-keys",
+      "category" : "",
+      "tags"     : "Flash, PAX, Hardware Hacking, RE, Reverse Engineering, NAND, PAX, RT809H",
+      "date"     : "2024-01-16 23:48:00 +0000"
+
+    } ,
+  
+    {
+
+      "title"    : "NAND Flash Memory Analysis and Decoding - Unveiling ECC Scattering in Unknown Devices",
+      "url"      : "/2024/01/decoding-and-analysis-nand-flash",
+      "category" : "",
+      "tags"     : "Flash, PAX, Hardware Hacking, RE, Reverse Engineering, NAND, PAX, RT809H",
+      "date"     : "2024-01-16 23:48:00 +0000"
+
+    } ,
+  
+    {
+
+      "title"    : "STM32F0x Protected Firmware Dumper",
+      "url"      : "/2024/01/stm32f0x-protected-firmware-dumper",
+      "category" : "",
+      "tags"     : "Protected Firmware, Hardware Hacking, RE, Reverse Engineering, STM32, Patreon, MCU",
+      "date"     : "2024-01-16 05:23:00 +0000"
+
+    } ,
+  
+    {
+
       "title"    : "Antenna Rotor - Part 2",
       "url"      : "/2021/04/rotor-antenna-parte-2",
       "category" : "",
