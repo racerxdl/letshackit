@@ -39,7 +39,7 @@
   <!-- Article -->
   <meta name="article:author" property="article:author" content="https://www.facebook.com/teskeslab">
   <meta name="article:publisher" property="article:publisher" content="https://www.facebook.com/teskeslab">
-  <meta name="article:published_time" property="article:published_time" content="2011-10-30T18:50:21-02:00">
+  <meta name="article:published_time" property="article:published_time" content="2011-10-30T20:50:21+00:00">
 
   <!-- Facebook -->
   <meta name="fb:admins" property="fb:admins" content="1234">
@@ -65,8 +65,8 @@
     "keywords": "",
     "description": "O Caio Alarcon me notificou de algumas coisas sobre minha função de múltiplos e submúltiplos, por exemplo, o tratamento de números negativos. Resolvi então revisar e otimizar a função em C. O Resultado está abaixo: #include &lt;stdio.h&gt; #include &lt;math.h&gt; char toNotationUnit(double value,float *out) { double val; char notacoes[] = {'y','z','a','f','p','n','u','m',' ', 'k','M','G','T','P','E','Z','Y'}; int counter=8; char...",
     "articleBody": "O Caio Alarcon me notificou de algumas coisas sobre minha função de múltiplos e submúltiplos, por exemplo, o tratamento de números negativos. Resolvi então revisar e otimizar a função em C. O Resultado está abaixo:\n\n#include &lt;stdio.h&gt;\n#include &lt;math.h&gt;\nchar toNotationUnit(double value,float *out) {\n        double val;\n        char notacoes[] = {'y','z','a','f','p','n','u','m',' ',\n\n                                   'k','M','G','T','P','E','Z','Y'};\n        int counter=8;\n        char unit;\n        val = value&gt;0?value:-value;\n        if(val &lt; 1) {\n                while( (val &lt; 1.00) &amp; (counter != 0)) {\n                        counter--;\n                        val=val*(double)1000;\n                }\n        }else{\n                while((val &gt;= 1000) &amp; (counter != 16)) {\n                        counter++;\n                        val=val/(double)1000;\n                }\n        }\n        unit = notacoes[counter];\n        val = round(val*(double)100)/(double)100;\n        *out = (float) value&gt;0?val:-val;\n        return unit;\n}\n \nint main() {\n  double x = -1230000;\n  float res;\n  char t;\n  t = toNotationUnit(x,&amp;res);\n  printf(\"%.2F%c\",res,t);\n  return 0;\n}\n\n\nQuem preferir, tem um link no ideone com este código funcionando 😀\n\nhttp://ideone.com/wpvZo\n\nBom uso!\n",
-    "datePublished": "2011-10-30 18:50:21 -0200",
-    "dateModified": "2011-10-30 18:50:21 -0200",
+    "datePublished": "2011-10-30 20:50:21 +0000",
+    "dateModified": "2011-10-30 20:50:21 +0000",
     "author": {
       "@type": "Person",
       "name": "Lucas Teske",
@@ -275,6 +275,13 @@
         Mastodon
       </a>
     </li>
+    <li class="btn-a btn-svg btn-bluesky">
+      <a rel="me" href="https://bsky.app/profile/lucasteske.dev">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Bluesky</title>
+<path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.206-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8Z"></path></svg>
+        Bluesky
+      </a>
+    </li>
   </ul>
 </div>
 <div class="search-input">
@@ -300,7 +307,7 @@
 
     
       <br>
-      <span>em </span><time datetime="2011-10-30 18:50:21 -0200">
+      <span>em </span><time datetime="2011-10-30 20:50:21 +0000">
   30
   
   Outubro
@@ -411,10 +418,10 @@ int main() {
 
     <footer>
   <span>
-    © <time datetime="2024-01-16 22:31:26 -0300">2024</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2024-09-08 01:53:49 +0000">2024</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2024-01-16 22:31:26 -0300
+    Last build: 2024-09-08 01:53:49 +0000
   </span>
 </footer>
 

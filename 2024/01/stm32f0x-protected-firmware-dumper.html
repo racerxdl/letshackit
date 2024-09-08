@@ -39,7 +39,7 @@
   <!-- Article -->
   <meta name="article:author" property="article:author" content="https://www.facebook.com/teskeslab">
   <meta name="article:publisher" property="article:publisher" content="https://www.facebook.com/teskeslab">
-  <meta name="article:published_time" property="article:published_time" content="2024-01-16T02:23:00-03:00">
+  <meta name="article:published_time" property="article:published_time" content="2024-01-16T05:23:00+00:00">
 
   <!-- Facebook -->
   <meta name="fb:admins" property="fb:admins" content="1234">
@@ -65,8 +65,8 @@
     "keywords": "Protected Firmware,Hardware Hacking,RE,Reverse Engineering,STM32,Patreon,MCU",
     "description": "In the process of my hobby hardware hacking, I encountered a Chinese clone of a HASP HL dongle equipped with a STM32F042G6U6 processor. My intention was to clone it, and during my exploration, I discovered four pins from the SWD debug interface located at the bottom of the PCB. I...",
     "articleBody": "In the process of my hobby hardware hacking, I encountered a Chinese clone of a HASP HL dongle equipped with a STM32F042G6U6 processor. My intention was to clone it, and during my exploration, I discovered four pins from the SWD debug interface located at the bottom of the PCB. I soldered a 4-pin header to these pins for ease of access. Utilizing my Segger J-Link as a debug probe, although any JTAG adapter should suffice, I paired it with OpenOCD. Given that the chipset is recognized by OpenOCD, I crafted a script to extract all possible data, conditional upon enablement. adapter driver jlink transport select swd adapter_khz 4000 source [find target/stm32f0x.cfg] init dap info reset halt flash read_bank 0 firmwareF1.bin 0 0x8000 reset shutdown But, hit a snag - the device’s RDP (Read-Out Protection) was on, even though SWD was active. No biggie, I thought, and tried to bypass this with voltage fault injection. However, the internal clock generator in the device made clock glitching a no-go. After a few hours of getting nowhere, it was clear I needed a new game plan. My search for alternatives led me to a comprehensive paper detailing three methodologies to extract protected memory:...",
-    "datePublished": "2024-01-16 02:23:00 -0300",
-    "dateModified": "2024-01-16 02:23:00 -0300",
+    "datePublished": "2024-01-16 05:23:00 +0000",
+    "dateModified": "2024-01-16 05:23:00 +0000",
     "author": {
       "@type": "Person",
       "name": "Lucas Teske",
@@ -275,6 +275,13 @@
         Mastodon
       </a>
     </li>
+    <li class="btn-a btn-svg btn-bluesky">
+      <a rel="me" href="https://bsky.app/profile/lucasteske.dev">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Bluesky</title>
+<path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.206-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8Z"></path></svg>
+        Bluesky
+      </a>
+    </li>
   </ul>
 </div>
 <div class="search-input">
@@ -302,7 +309,7 @@
 
     
       <br>
-      <span>on </span><time datetime="2024-01-16 02:23:00 -0300">
+      <span>on </span><time datetime="2024-01-16 05:23:00 +0000">
   16
   
   January
@@ -947,10 +954,10 @@ shutdown
 
     <footer>
   <span>
-    © <time datetime="2024-01-16 22:31:21 -0300">2024</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2024-09-08 01:53:42 +0000">2024</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2024-01-16 22:31:21 -0300
+    Last build: 2024-09-08 01:53:42 +0000
   </span>
 </footer>
 
