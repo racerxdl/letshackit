@@ -14,4 +14,4 @@ gem 'jekyll-multiple-languages-plugin', '= 1.7.0'
 gem 'jekyll-redirect-from', '>= 0.16.0'
 gem 'jekyll-spaceship', '>= 0.10.2'
 
-gem "webrick", "~> 1.8"
+gem "webrick", "~> 1.8", ">= 1.8.2"
