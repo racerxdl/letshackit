@@ -21,7 +21,7 @@
 
   <!-- Global -->
   <link rel="canonical" href="https://lucasteske.dev/2019/06/reverse-engineering-cheap-chinese-vrcam-protocol/">
-  <meta name="generator" property="generator" content="Jekyll v4.2.2">
+  <meta name="generator" property="generator" content="Jekyll v4.4.1">
   <meta name="author" property="author" content="Lucas Teske">
   <meta name="description" property="description" content="Reverse Engineering cheap chinese “VRCAM” protocol That’s not the first time I get a Chinese hardware that has some proprietary protocol that does not follow a single standard. It’s funny because when you get a VERY cheap thing, you expect to use many standards as possible to reduce the development...">
   
@@ -435,44 +435,44 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
 </span>
-<span class="kn">import</span> <span class="nn">socket</span><span class="p">,</span> <span class="n">struct</span><span class="p">,</span> <span class="n">os</span><span class="p">,</span> <span class="n">binascii</span>
+<span class="kn">import</span> <span class="n">socket</span><span class="p">,</span> <span class="n">struct</span><span class="p">,</span> <span class="n">os</span><span class="p">,</span> <span class="n">binascii</span>
 
-<span class="n">UOS</span> <span class="o">=</span> <span class="s">"</span><span class="se">\xFF</span><span class="s">UOS"</span>
+<span class="n">UOS</span> <span class="o">=</span> <span class="sh">"</span><span class="se">\xFF</span><span class="s">UOS</span><span class="sh">"</span>
 
-<span class="n">HOST</span> <span class="o">=</span> <span class="s">'10.10.5.123'</span>     <span class="c1"># Camera IP Address
+<span class="n">HOST</span> <span class="o">=</span> <span class="sh">'</span><span class="s">10.10.5.123</span><span class="sh">'</span>     <span class="c1"># Camera IP Address
 </span><span class="n">PORT</span> <span class="o">=</span> <span class="mi">64444</span>             <span class="c1"># Camera Port
-</span><span class="n">tcp</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="p">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="p">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+</span><span class="n">tcp</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="nf">socket</span><span class="p">(</span><span class="n">socket</span><span class="p">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="p">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
 <span class="n">dest</span> <span class="o">=</span> <span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">"Connecting to %s:%s"</span> <span class="o">%</span><span class="n">dest</span>
-<span class="n">tcp</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">"Connected"</span>
+<span class="k">print</span> <span class="sh">"</span><span class="s">Connecting to %s:%s</span><span class="sh">"</span> <span class="o">%</span><span class="n">dest</span>
+<span class="n">tcp</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
+<span class="k">print</span> <span class="sh">"</span><span class="s">Connected</span><span class="sh">"</span>
 
 <span class="k">def</span> <span class="nf">ReadNBytes</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-  <span class="n">buff</span> <span class="o">=</span> <span class="s">""</span>
-  <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">buff</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n</span><span class="p">:</span>
-    <span class="n">buff</span> <span class="o">+=</span> <span class="n">tcp</span><span class="p">.</span><span class="n">recv</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">buff</span><span class="p">))</span>
+  <span class="n">buff</span> <span class="o">=</span> <span class="sh">""</span>
+  <span class="k">while</span> <span class="nf">len</span><span class="p">(</span><span class="n">buff</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n</span><span class="p">:</span>
+    <span class="n">buff</span> <span class="o">+=</span> <span class="n">tcp</span><span class="p">.</span><span class="nf">recv</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="nf">len</span><span class="p">(</span><span class="n">buff</span><span class="p">))</span>
 
   <span class="k">return</span> <span class="n">buff</span>
 
 <span class="k">def</span> <span class="nf">ReadPacket</span><span class="p">():</span>
-  <span class="n">o</span> <span class="o">=</span> <span class="n">tcp</span><span class="p">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-  <span class="k">if</span> <span class="ow">not</span> <span class="n">o</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="s">"LTCP"</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">"Packet not LTCP"</span>
-    <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-  <span class="n">s</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">"&gt;I"</span><span class="p">,</span> <span class="n">o</span><span class="p">[</span><span class="mi">4</span><span class="p">:])[</span><span class="mi">0</span><span class="p">]</span>
-  <span class="n">data</span> <span class="o">=</span> <span class="n">ReadNBytes</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+  <span class="n">o</span> <span class="o">=</span> <span class="n">tcp</span><span class="p">.</span><span class="nf">recv</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">o</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="sh">"</span><span class="s">LTCP</span><span class="sh">"</span><span class="p">:</span>
+    <span class="k">print</span> <span class="sh">"</span><span class="s">Packet not LTCP</span><span class="sh">"</span>
+    <span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">s</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="nf">unpack</span><span class="p">(</span><span class="sh">"</span><span class="s">&gt;I</span><span class="sh">"</span><span class="p">,</span> <span class="n">o</span><span class="p">[</span><span class="mi">4</span><span class="p">:])[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="nc">ReadNBytes</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">data</span>
 
 <span class="k">def</span> <span class="nf">SendPacket</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-  <span class="k">print</span> <span class="s">"&gt;&gt;&gt;&gt; Sending %s"</span> <span class="o">%</span><span class="n">data</span>
-  <span class="n">s</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span><span class="p">(</span><span class="s">"&gt;I"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-  <span class="n">data</span> <span class="o">=</span> <span class="s">"LTCP"</span> <span class="o">+</span> <span class="n">s</span> <span class="o">+</span> <span class="n">data</span>
-  <span class="n">tcp</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+  <span class="k">print</span> <span class="sh">"</span><span class="s">&gt;&gt;&gt;&gt; Sending %s</span><span class="sh">"</span> <span class="o">%</span><span class="n">data</span>
+  <span class="n">s</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="nf">pack</span><span class="p">(</span><span class="sh">"</span><span class="s">&gt;I</span><span class="sh">"</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="sh">"</span><span class="s">LTCP</span><span class="sh">"</span> <span class="o">+</span> <span class="n">s</span> <span class="o">+</span> <span class="n">data</span>
+  <span class="n">tcp</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-<span class="n">SendPacket</span><span class="p">(</span><span class="s">'&lt;SOUP version="1.0"&gt;&lt;auth usr="admin" psw="admin" eseeid="" nat="symmetric" client="" imei="" isp="" buddleid=""/&gt;&lt;/SOUP&gt;</span><span class="se">\x00</span><span class="s">'</span><span class="p">)</span>
+<span class="nc">SendPacket</span><span class="p">(</span><span class="sh">'</span><span class="s">&lt;SOUP version=</span><span class="sh">"</span><span class="s">1.0</span><span class="sh">"</span><span class="s">&gt;&lt;auth usr=</span><span class="sh">"</span><span class="s">admin</span><span class="sh">"</span><span class="s"> psw=</span><span class="sh">"</span><span class="s">admin</span><span class="sh">"</span><span class="s"> eseeid=</span><span class="sh">""</span><span class="s"> nat=</span><span class="sh">"</span><span class="s">symmetric</span><span class="sh">"</span><span class="s"> client=</span><span class="sh">""</span><span class="s"> imei=</span><span class="sh">""</span><span class="s"> isp=</span><span class="sh">""</span><span class="s"> buddleid=</span><span class="sh">""</span><span class="s">/&gt;&lt;/SOUP&gt;</span><span class="se">\x00</span><span class="sh">'</span><span class="p">)</span>
 
-<span class="n">d</span> <span class="o">=</span> <span class="n">ReadPacket</span><span class="p">()</span>
-<span class="k">print</span> <span class="s">"Received %s: "</span><span class="o">%</span><span class="n">d</span>
+<span class="n">d</span> <span class="o">=</span> <span class="nc">ReadPacket</span><span class="p">()</span>
+<span class="k">print</span> <span class="sh">"</span><span class="s">Received %s: </span><span class="sh">"</span><span class="o">%</span><span class="n">d</span>
 </code></pre></div></div>
 
 <p>That should do the job. Whenever you want to send something just call SendPacket and when you want to receive, just call ReadPacket.</p>
@@ -522,61 +522,61 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
 </span>
 
-<span class="kn">import</span> <span class="nn">socket</span><span class="p">,</span> <span class="n">struct</span><span class="p">,</span> <span class="n">os</span><span class="p">,</span> <span class="n">binascii</span>
+<span class="kn">import</span> <span class="n">socket</span><span class="p">,</span> <span class="n">struct</span><span class="p">,</span> <span class="n">os</span><span class="p">,</span> <span class="n">binascii</span>
 
-<span class="n">UOS</span> <span class="o">=</span> <span class="s">"</span><span class="se">\xFF</span><span class="s">UOS"</span>
+<span class="n">UOS</span> <span class="o">=</span> <span class="sh">"</span><span class="se">\xFF</span><span class="s">UOS</span><span class="sh">"</span>
 
-<span class="n">HOST</span> <span class="o">=</span> <span class="s">'10.10.5.123'</span>     <span class="c1"># Endereco IP do Servidor
+<span class="n">HOST</span> <span class="o">=</span> <span class="sh">'</span><span class="s">10.10.5.123</span><span class="sh">'</span>     <span class="c1"># Endereco IP do Servidor
 </span><span class="n">PORT</span> <span class="o">=</span> <span class="mi">64444</span>            <span class="c1"># Porta que o Servidor esta
-</span><span class="n">tcp</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="p">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="p">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+</span><span class="n">tcp</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="nf">socket</span><span class="p">(</span><span class="n">socket</span><span class="p">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="p">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
 <span class="n">dest</span> <span class="o">=</span> <span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">"Connecting to %s:%s"</span> <span class="o">%</span><span class="n">dest</span>
-<span class="n">tcp</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">"Connected"</span>
+<span class="k">print</span> <span class="sh">"</span><span class="s">Connecting to %s:%s</span><span class="sh">"</span> <span class="o">%</span><span class="n">dest</span>
+<span class="n">tcp</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
+<span class="k">print</span> <span class="sh">"</span><span class="s">Connected</span><span class="sh">"</span>
 
 <span class="k">def</span> <span class="nf">ReadNBytes</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-  <span class="n">buff</span> <span class="o">=</span> <span class="s">""</span>
-  <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">buff</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n</span><span class="p">:</span>
-    <span class="n">buff</span> <span class="o">+=</span> <span class="n">tcp</span><span class="p">.</span><span class="n">recv</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">buff</span><span class="p">))</span>
+  <span class="n">buff</span> <span class="o">=</span> <span class="sh">""</span>
+  <span class="k">while</span> <span class="nf">len</span><span class="p">(</span><span class="n">buff</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n</span><span class="p">:</span>
+    <span class="n">buff</span> <span class="o">+=</span> <span class="n">tcp</span><span class="p">.</span><span class="nf">recv</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="nf">len</span><span class="p">(</span><span class="n">buff</span><span class="p">))</span>
 
   <span class="k">return</span> <span class="n">buff</span>
 
 <span class="k">def</span> <span class="nf">ReadPacket</span><span class="p">():</span>
-  <span class="n">o</span> <span class="o">=</span> <span class="n">tcp</span><span class="p">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-  <span class="k">if</span> <span class="ow">not</span> <span class="n">o</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="s">"LTCP"</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">"Packet not LTCP"</span>
-    <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-  <span class="n">s</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">"&gt;I"</span><span class="p">,</span> <span class="n">o</span><span class="p">[</span><span class="mi">4</span><span class="p">:])[</span><span class="mi">0</span><span class="p">]</span>
-  <span class="n">data</span> <span class="o">=</span> <span class="n">ReadNBytes</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+  <span class="n">o</span> <span class="o">=</span> <span class="n">tcp</span><span class="p">.</span><span class="nf">recv</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">o</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="sh">"</span><span class="s">LTCP</span><span class="sh">"</span><span class="p">:</span>
+    <span class="k">print</span> <span class="sh">"</span><span class="s">Packet not LTCP</span><span class="sh">"</span>
+    <span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">s</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="nf">unpack</span><span class="p">(</span><span class="sh">"</span><span class="s">&gt;I</span><span class="sh">"</span><span class="p">,</span> <span class="n">o</span><span class="p">[</span><span class="mi">4</span><span class="p">:])[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="nc">ReadNBytes</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">data</span>
 
 <span class="k">def</span> <span class="nf">SendPacket</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-  <span class="k">print</span> <span class="s">"&gt;&gt;&gt;&gt; Sending %s"</span> <span class="o">%</span><span class="n">data</span>
-  <span class="n">s</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span><span class="p">(</span><span class="s">"&gt;I"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-  <span class="n">data</span> <span class="o">=</span> <span class="s">"LTCP"</span> <span class="o">+</span> <span class="n">s</span> <span class="o">+</span> <span class="n">data</span>
-  <span class="n">tcp</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+  <span class="k">print</span> <span class="sh">"</span><span class="s">&gt;&gt;&gt;&gt; Sending %s</span><span class="sh">"</span> <span class="o">%</span><span class="n">data</span>
+  <span class="n">s</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="nf">pack</span><span class="p">(</span><span class="sh">"</span><span class="s">&gt;I</span><span class="sh">"</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="sh">"</span><span class="s">LTCP</span><span class="sh">"</span> <span class="o">+</span> <span class="n">s</span> <span class="o">+</span> <span class="n">data</span>
+  <span class="n">tcp</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
 
-<span class="n">SendPacket</span><span class="p">(</span><span class="s">'&lt;SOUP version="1.0"&gt;&lt;auth usr="admin" psw="admin" eseeid="" nat="symmetric" client="" imei="" isp="" buddleid=""/&gt;&lt;/SOUP&gt;</span><span class="se">\x00</span><span class="s">'</span><span class="p">)</span>
+<span class="nc">SendPacket</span><span class="p">(</span><span class="sh">'</span><span class="s">&lt;SOUP version=</span><span class="sh">"</span><span class="s">1.0</span><span class="sh">"</span><span class="s">&gt;&lt;auth usr=</span><span class="sh">"</span><span class="s">admin</span><span class="sh">"</span><span class="s"> psw=</span><span class="sh">"</span><span class="s">admin</span><span class="sh">"</span><span class="s"> eseeid=</span><span class="sh">""</span><span class="s"> nat=</span><span class="sh">"</span><span class="s">symmetric</span><span class="sh">"</span><span class="s"> client=</span><span class="sh">""</span><span class="s"> imei=</span><span class="sh">""</span><span class="s"> isp=</span><span class="sh">""</span><span class="s"> buddleid=</span><span class="sh">""</span><span class="s">/&gt;&lt;/SOUP&gt;</span><span class="se">\x00</span><span class="sh">'</span><span class="p">)</span>
 
-<span class="n">d</span> <span class="o">=</span> <span class="n">ReadPacket</span><span class="p">()</span>
-<span class="k">print</span> <span class="s">"Received %s: "</span><span class="o">%</span><span class="n">d</span>
+<span class="n">d</span> <span class="o">=</span> <span class="nc">ReadPacket</span><span class="p">()</span>
+<span class="k">print</span> <span class="sh">"</span><span class="s">Received %s: </span><span class="sh">"</span><span class="o">%</span><span class="n">d</span>
 
-<span class="n">SendPacket</span><span class="p">(</span><span class="s">'&lt;SOUP version="1.0"&gt;&lt;streamreq ch="vin0" stream="stream0" opt="start"/&gt;&lt;/SOUP&gt;</span><span class="se">\x00</span><span class="s">'</span><span class="p">)</span>
+<span class="nc">SendPacket</span><span class="p">(</span><span class="sh">'</span><span class="s">&lt;SOUP version=</span><span class="sh">"</span><span class="s">1.0</span><span class="sh">"</span><span class="s">&gt;&lt;streamreq ch=</span><span class="sh">"</span><span class="s">vin0</span><span class="sh">"</span><span class="s"> stream=</span><span class="sh">"</span><span class="s">stream0</span><span class="sh">"</span><span class="s"> opt=</span><span class="sh">"</span><span class="s">start</span><span class="sh">"</span><span class="s">/&gt;&lt;/SOUP&gt;</span><span class="se">\x00</span><span class="sh">'</span><span class="p">)</span>
 
-<span class="n">d</span> <span class="o">=</span> <span class="n">ReadPacket</span><span class="p">()</span>
-<span class="k">print</span> <span class="s">"&lt;&lt;&lt;&lt; Received %s: "</span><span class="o">%</span><span class="n">d</span>
+<span class="n">d</span> <span class="o">=</span> <span class="nc">ReadPacket</span><span class="p">()</span>
+<span class="k">print</span> <span class="sh">"</span><span class="s">&lt;&lt;&lt;&lt; Received %s: </span><span class="sh">"</span><span class="o">%</span><span class="n">d</span>
 
-<span class="n">f264</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"test.264"</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span>
+<span class="n">f264</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">test.264</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">wb</span><span class="sh">"</span><span class="p">)</span>
 
-<span class="k">print</span> <span class="s">"Receiving"</span>
+<span class="k">print</span> <span class="sh">"</span><span class="s">Receiving</span><span class="sh">"</span>
 <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-  <span class="n">d</span> <span class="o">=</span> <span class="n">ReadPacket</span><span class="p">()</span>
+  <span class="n">d</span> <span class="o">=</span> <span class="nc">ReadPacket</span><span class="p">()</span>
   <span class="k">if</span> <span class="n">d</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="n">UOS</span><span class="p">:</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span>
-  <span class="n">f264</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+  <span class="n">f264</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
 
-<span class="n">f264</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">f264</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p>Then ffplay should be able to open it:</p>
@@ -588,49 +588,49 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
 </span>
 
-<span class="kn">import</span> <span class="nn">socket</span><span class="p">,</span> <span class="n">struct</span><span class="p">,</span> <span class="n">os</span><span class="p">,</span> <span class="n">binascii</span><span class="p">,</span> <span class="n">sys</span>
+<span class="kn">import</span> <span class="n">socket</span><span class="p">,</span> <span class="n">struct</span><span class="p">,</span> <span class="n">os</span><span class="p">,</span> <span class="n">binascii</span><span class="p">,</span> <span class="n">sys</span>
 
-<span class="n">UOS</span> <span class="o">=</span> <span class="s">"</span><span class="se">\xFF</span><span class="s">UOS"</span>
+<span class="n">UOS</span> <span class="o">=</span> <span class="sh">"</span><span class="se">\xFF</span><span class="s">UOS</span><span class="sh">"</span>
 
-<span class="n">HOST</span> <span class="o">=</span> <span class="s">'10.10.5.123'</span>     <span class="c1"># Endereco IP do Servidor
+<span class="n">HOST</span> <span class="o">=</span> <span class="sh">'</span><span class="s">10.10.5.123</span><span class="sh">'</span>     <span class="c1"># Endereco IP do Servidor
 </span><span class="n">PORT</span> <span class="o">=</span> <span class="mi">64444</span>            <span class="c1"># Porta que o Servidor esta
-</span><span class="n">tcp</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="p">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="p">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+</span><span class="n">tcp</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="nf">socket</span><span class="p">(</span><span class="n">socket</span><span class="p">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="p">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
 <span class="n">dest</span> <span class="o">=</span> <span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
-<span class="n">tcp</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
+<span class="n">tcp</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">ReadNBytes</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-  <span class="n">buff</span> <span class="o">=</span> <span class="s">""</span>
-  <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">buff</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n</span><span class="p">:</span>
-    <span class="n">buff</span> <span class="o">+=</span> <span class="n">tcp</span><span class="p">.</span><span class="n">recv</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">buff</span><span class="p">))</span>
+  <span class="n">buff</span> <span class="o">=</span> <span class="sh">""</span>
+  <span class="k">while</span> <span class="nf">len</span><span class="p">(</span><span class="n">buff</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n</span><span class="p">:</span>
+    <span class="n">buff</span> <span class="o">+=</span> <span class="n">tcp</span><span class="p">.</span><span class="nf">recv</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="nf">len</span><span class="p">(</span><span class="n">buff</span><span class="p">))</span>
 
   <span class="k">return</span> <span class="n">buff</span>
 
 <span class="k">def</span> <span class="nf">ReadPacket</span><span class="p">():</span>
-  <span class="n">o</span> <span class="o">=</span> <span class="n">tcp</span><span class="p">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-  <span class="k">if</span> <span class="ow">not</span> <span class="n">o</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="s">"LTCP"</span><span class="p">:</span>
-    <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-  <span class="n">s</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">"&gt;I"</span><span class="p">,</span> <span class="n">o</span><span class="p">[</span><span class="mi">4</span><span class="p">:])[</span><span class="mi">0</span><span class="p">]</span>
-  <span class="n">data</span> <span class="o">=</span> <span class="n">ReadNBytes</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+  <span class="n">o</span> <span class="o">=</span> <span class="n">tcp</span><span class="p">.</span><span class="nf">recv</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">o</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="sh">"</span><span class="s">LTCP</span><span class="sh">"</span><span class="p">:</span>
+    <span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">s</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="nf">unpack</span><span class="p">(</span><span class="sh">"</span><span class="s">&gt;I</span><span class="sh">"</span><span class="p">,</span> <span class="n">o</span><span class="p">[</span><span class="mi">4</span><span class="p">:])[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="nc">ReadNBytes</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">data</span>
 
 <span class="k">def</span> <span class="nf">SendPacket</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-  <span class="n">s</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span><span class="p">(</span><span class="s">"&gt;I"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-  <span class="n">data</span> <span class="o">=</span> <span class="s">"LTCP"</span> <span class="o">+</span> <span class="n">s</span> <span class="o">+</span> <span class="n">data</span>
-  <span class="n">tcp</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+  <span class="n">s</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="nf">pack</span><span class="p">(</span><span class="sh">"</span><span class="s">&gt;I</span><span class="sh">"</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="sh">"</span><span class="s">LTCP</span><span class="sh">"</span> <span class="o">+</span> <span class="n">s</span> <span class="o">+</span> <span class="n">data</span>
+  <span class="n">tcp</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
 
-<span class="n">SendPacket</span><span class="p">(</span><span class="s">'&lt;SOUP version="1.0"&gt;&lt;auth usr="admin" psw="admin" eseeid="" nat="symmetric" client="" imei="" isp="" buddleid=""/&gt;&lt;/SOUP&gt;</span><span class="se">\x00</span><span class="s">'</span><span class="p">)</span>
-<span class="n">ReadPacket</span><span class="p">()</span>
-<span class="n">SendPacket</span><span class="p">(</span><span class="s">'&lt;SOUP version="1.0"&gt;&lt;streamreq ch="vin0" stream="stream0" opt="start"/&gt;&lt;/SOUP&gt;</span><span class="se">\x00</span><span class="s">'</span><span class="p">)</span>
-<span class="n">ReadPacket</span><span class="p">()</span>
+<span class="nc">SendPacket</span><span class="p">(</span><span class="sh">'</span><span class="s">&lt;SOUP version=</span><span class="sh">"</span><span class="s">1.0</span><span class="sh">"</span><span class="s">&gt;&lt;auth usr=</span><span class="sh">"</span><span class="s">admin</span><span class="sh">"</span><span class="s"> psw=</span><span class="sh">"</span><span class="s">admin</span><span class="sh">"</span><span class="s"> eseeid=</span><span class="sh">""</span><span class="s"> nat=</span><span class="sh">"</span><span class="s">symmetric</span><span class="sh">"</span><span class="s"> client=</span><span class="sh">""</span><span class="s"> imei=</span><span class="sh">""</span><span class="s"> isp=</span><span class="sh">""</span><span class="s"> buddleid=</span><span class="sh">""</span><span class="s">/&gt;&lt;/SOUP&gt;</span><span class="se">\x00</span><span class="sh">'</span><span class="p">)</span>
+<span class="nc">ReadPacket</span><span class="p">()</span>
+<span class="nc">SendPacket</span><span class="p">(</span><span class="sh">'</span><span class="s">&lt;SOUP version=</span><span class="sh">"</span><span class="s">1.0</span><span class="sh">"</span><span class="s">&gt;&lt;streamreq ch=</span><span class="sh">"</span><span class="s">vin0</span><span class="sh">"</span><span class="s"> stream=</span><span class="sh">"</span><span class="s">stream0</span><span class="sh">"</span><span class="s"> opt=</span><span class="sh">"</span><span class="s">start</span><span class="sh">"</span><span class="s">/&gt;&lt;/SOUP&gt;</span><span class="se">\x00</span><span class="sh">'</span><span class="p">)</span>
+<span class="nc">ReadPacket</span><span class="p">()</span>
 
 <span class="c1"># print "Receiving"
 </span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-  <span class="n">d</span> <span class="o">=</span> <span class="n">ReadPacket</span><span class="p">()</span>
+  <span class="n">d</span> <span class="o">=</span> <span class="nc">ReadPacket</span><span class="p">()</span>
   <span class="k">if</span> <span class="n">d</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="n">UOS</span><span class="p">:</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span>
-  <span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-  <span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">flush</span><span class="p">()</span>
+  <span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+  <span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="nf">flush</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p>Which can be ran like this:</p>
@@ -698,11 +698,13 @@
 
     <footer>
   <span>
-    © <time datetime="2024-09-08 01:53:42 +0000">2024</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2025-07-13 22:25:05 +0000">2025</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2024-09-08 01:53:42 +0000
+    Last build: 2025-07-13 22:25:05 +0000
   </span>
+  <!-- hehehe -->
+  <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">
 </footer>
 
 <script src="/assets/simple-jekyll-search.min.js"></script>

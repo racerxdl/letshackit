@@ -21,7 +21,7 @@
 
   <!-- Global -->
   <link rel="canonical" href="https://lucasteske.dev/pt/goes-satellite-hunt/file-assembler/file-name-from-header">
-  <meta name="generator" property="generator" content="Jekyll v4.2.2">
+  <meta name="generator" property="generator" content="Jekyll v4.4.1">
   <meta name="author" property="author" content="Lucas Teske">
   <meta name="description" property="description" content="# File Name from Header Some of the files has a filename in the header. So if they have, we can rename it. The header that contains the filename is header type 4 \(Annotation Record\). so I created a funcion called **manageFile** inside **packetmanager.py** to do the work of the filename. ```py...">
   
@@ -316,40 +316,40 @@
 <p>Some of the files has a filename in the header. So if they have, we can rename it. The header that contains the filename is header type 4 (Annotation Record). so I created a funcion called <strong>manageFile</strong> inside <strong>packetmanager.py</strong> to do the work of the filename.</p>
 
 <div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">manageFile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-  <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">"r"</span><span class="p">)</span>
+  <span class="n">f</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="sh">"</span><span class="s">r</span><span class="sh">"</span><span class="p">)</span>
  
   <span class="k">try</span><span class="p">:</span>
-    <span class="n">k</span> <span class="o">=</span> <span class="n">readHeader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="nf">readHeader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
     <span class="nb">type</span><span class="p">,</span> <span class="n">filetypecode</span><span class="p">,</span> <span class="n">headerlength</span><span class="p">,</span> <span class="n">datalength</span> <span class="o">=</span> <span class="n">k</span>
   <span class="k">except</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">"   Header 0 is corrupted for file %s"</span> <span class="o">%</span><span class="n">filename</span>
+    <span class="k">print</span> <span class="sh">"</span><span class="s">   Header 0 is corrupted for file %s</span><span class="sh">"</span> <span class="o">%</span><span class="n">filename</span>
     <span class="k">return</span>
  
   <span class="n">newfilename</span> <span class="o">=</span> <span class="n">filename</span>
-  <span class="k">while</span> <span class="n">f</span><span class="p">.</span><span class="n">tell</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">headerlength</span><span class="p">:</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">readHeader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+  <span class="k">while</span> <span class="n">f</span><span class="p">.</span><span class="nf">tell</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">headerlength</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nf">readHeader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
       <span class="c1">#print "   Filename is %s" % data[1]
 </span>      <span class="n">newfilename</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
       <span class="k">break</span>
-  <span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+  <span class="n">f</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
   <span class="k">if</span> <span class="n">filename</span> <span class="o">!=</span> <span class="n">newfilename</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">"   Renaming %s to %s/%s"</span> <span class="o">%</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="n">newfilename</span><span class="p">)</span>
-    <span class="n">os</span><span class="p">.</span><span class="n">rename</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">"%s/%s"</span> <span class="o">%</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="n">newfilename</span><span class="p">))</span>
+    <span class="k">print</span> <span class="sh">"</span><span class="s">   Renaming %s to %s/%s</span><span class="sh">"</span> <span class="o">%</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">dirname</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="n">newfilename</span><span class="p">)</span>
+    <span class="n">os</span><span class="p">.</span><span class="nf">rename</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="sh">"</span><span class="s">%s/%s</span><span class="sh">"</span> <span class="o">%</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">dirname</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="n">newfilename</span><span class="p">))</span>
   <span class="k">else</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">"   Couldn't find name in %s"</span> <span class="o">%</span><span class="n">filename</span>
+    <span class="k">print</span> <span class="sh">"</span><span class="s">   Couldn</span><span class="sh">'</span><span class="s">t find name in %s</span><span class="sh">"</span> <span class="o">%</span><span class="n">filename</span>
 </code></pre></div></div>
 
 <p>This code will search for a filename in header, if it finds, it will rename the input filename to whatever is in the header. If not, it will just keep the same name. So in the <strong>channeldecoder.py</strong> I can just do this to have everything processed:</p>
 
-<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">packet</span><span class="p">[</span><span class="s">"sequenceflag_int"</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">packet</span><span class="p">[</span><span class="s">"sequenceflag_int"</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">):</span>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">if </span><span class="p">(</span><span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">sequenceflag_int</span><span class="sh">"</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">sequenceflag_int</span><span class="sh">"</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">):</span>
   <span class="k">if</span> <span class="n">isCompressed</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">USEDECOMPRESSOR</span> <span class="ow">and</span> <span class="n">startnum</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-      <span class="n">decompressed</span> <span class="o">=</span> <span class="n">Decompressor</span><span class="p">(</span><span class="s">"channels/%s/%s_%s_"</span> <span class="o">%</span> <span class="p">(</span><span class="n">channelid</span><span class="p">,</span> <span class="n">packet</span><span class="p">[</span><span class="s">"apid"</span><span class="p">],</span> <span class="n">packet</span><span class="p">[</span><span class="s">"version"</span><span class="p">]),</span> <span class="n">pixels</span><span class="p">,</span> <span class="n">startnum</span><span class="p">,</span> <span class="n">endnum</span><span class="p">)</span>
-      <span class="n">packetmanager</span><span class="p">.</span><span class="n">manageFile</span><span class="p">(</span><span class="n">decompressed</span><span class="p">)</span>
+      <span class="n">decompressed</span> <span class="o">=</span> <span class="nc">Decompressor</span><span class="p">(</span><span class="sh">"</span><span class="s">channels/%s/%s_%s_</span><span class="sh">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">channelid</span><span class="p">,</span> <span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">apid</span><span class="sh">"</span><span class="p">],</span> <span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">version</span><span class="sh">"</span><span class="p">]),</span> <span class="n">pixels</span><span class="p">,</span> <span class="n">startnum</span><span class="p">,</span> <span class="n">endnum</span><span class="p">)</span>
+      <span class="n">packetmanager</span><span class="p">.</span><span class="nf">manageFile</span><span class="p">(</span><span class="n">decompressed</span><span class="p">)</span>
   <span class="k">else</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">"File is not compressed. Checking headers."</span>
-    <span class="n">packetmanager</span><span class="p">.</span><span class="n">manageFile</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">print</span> <span class="sh">"</span><span class="s">File is not compressed. Checking headers.</span><span class="sh">"</span>
+    <span class="n">packetmanager</span><span class="p">.</span><span class="nf">manageFile</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>After that, you should have all files with the correct naming (if they have in the header) and decompressed! The filenames are usually like </p>
@@ -377,11 +377,13 @@
 
     <footer>
   <span>
-    © <time datetime="2024-09-08 01:53:49 +0000">2024</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2025-07-13 22:25:13 +0000">2025</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2024-09-08 01:53:49 +0000
+    Last build: 2025-07-13 22:25:13 +0000
   </span>
+  <!-- hehehe -->
+  <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">
 </footer>
 
 <script src="/assets/simple-jekyll-search.min.js"></script>

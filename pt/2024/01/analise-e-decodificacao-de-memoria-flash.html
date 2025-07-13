@@ -21,7 +21,7 @@
 
   <!-- Global -->
   <link rel="canonical" href="https://lucasteske.dev/pt/2024/01/analise-e-decodificacao-de-memoria-flash">
-  <meta name="generator" property="generator" content="Jekyll v4.2.2">
+  <meta name="generator" property="generator" content="Jekyll v4.4.1">
   <meta name="author" property="author" content="Lucas Teske">
   <meta name="description" property="description" content="Explorando memorias NAND Quando em posse de um dispositivo a qual se deseja conhecer sobre, nem sempre é trivial o acesso ao conteúdo da memória flash. Devido a natureza das memórias NAND, é aplicado para todo conteúdo um algorítimo de correção de erros que pode causar uma ofuscação não intencional...">
   
@@ -454,16 +454,16 @@ DECIMAL       HEXADECIMAL     ENTROPY
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
 </span>
-<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"F59L1G81MA@BGA63_1111.BIN"</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span>
-<span class="n">o</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"FIXEDDATA.bin"</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">F59L1G81MA@BGA63_1111.BIN</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">rb</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">o</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">FIXEDDATA.bin</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">wb</span><span class="sh">"</span><span class="p">)</span>
 <span class="n">pagesToRead</span> <span class="o">=</span> <span class="mi">65536</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pagesToRead</span><span class="p">):</span>
-  <span class="n">page</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="mi">2112</span><span class="p">)</span>
-  <span class="n">data</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">page</span><span class="p">[:</span><span class="mi">2048</span><span class="p">])</span> <span class="c1"># Nuke ECC
-</span>  <span class="n">o</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">pagesToRead</span><span class="p">):</span>
+  <span class="n">page</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="mi">2112</span><span class="p">)</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span><span class="n">page</span><span class="p">[:</span><span class="mi">2048</span><span class="p">])</span> <span class="c1"># Nuke ECC
+</span>  <span class="n">o</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-<span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
-<span class="n">o</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">f</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
+<span class="n">o</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p>Com os dados agora limpos, a próxima etapa é identificar os arquivos presentes para verificar a eficácia da nossa suposição. Uma olhada rápida na lista de arquivos destacados pelo <em>binwalk</em> nos fornecerá uma indicação.</p>
@@ -530,17 +530,17 @@ DECIMAL       HEXADECIMAL     DESCRIPTION
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
 </span>
-<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"F59L1G81MA@BGA63_1111.BIN"</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span>
-<span class="n">o</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"FIXEDDATA.bin"</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">F59L1G81MA@BGA63_1111.BIN</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">rb</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">o</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">FIXEDDATA.bin</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">wb</span><span class="sh">"</span><span class="p">)</span>
 <span class="n">pagesToRead</span> <span class="o">=</span> <span class="mi">65536</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pagesToRead</span><span class="p">):</span>
-  <span class="n">page</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="mi">2112</span><span class="p">)</span>
-  <span class="n">data</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">page</span><span class="p">[</span><span class="mi">10</span><span class="p">:</span><span class="mi">10</span><span class="o">+</span><span class="mi">512</span><span class="p">]</span> <span class="o">+</span> <span class="n">page</span><span class="p">[</span><span class="mi">535</span><span class="p">:</span><span class="mi">535</span><span class="o">+</span><span class="mi">512</span><span class="p">]</span> <span class="o">+</span> <span class="n">page</span><span class="p">[</span><span class="mi">1060</span><span class="p">:</span><span class="mi">1060</span><span class="o">+</span><span class="mi">512</span><span class="p">]</span> <span class="o">+</span> <span class="n">page</span><span class="p">[</span><span class="mi">1585</span><span class="p">:</span><span class="mi">1585</span><span class="o">+</span><span class="mi">512</span><span class="p">])</span>
-  <span class="n">data</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">-</span><span class="mi">48</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">page</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-  <span class="n">o</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">pagesToRead</span><span class="p">):</span>
+  <span class="n">page</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="mi">2112</span><span class="p">)</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span><span class="n">page</span><span class="p">[</span><span class="mi">10</span><span class="p">:</span><span class="mi">10</span><span class="o">+</span><span class="mi">512</span><span class="p">]</span> <span class="o">+</span> <span class="n">page</span><span class="p">[</span><span class="mi">535</span><span class="p">:</span><span class="mi">535</span><span class="o">+</span><span class="mi">512</span><span class="p">]</span> <span class="o">+</span> <span class="n">page</span><span class="p">[</span><span class="mi">1060</span><span class="p">:</span><span class="mi">1060</span><span class="o">+</span><span class="mi">512</span><span class="p">]</span> <span class="o">+</span> <span class="n">page</span><span class="p">[</span><span class="mi">1585</span><span class="p">:</span><span class="mi">1585</span><span class="o">+</span><span class="mi">512</span><span class="p">])</span>
+  <span class="n">data</span><span class="p">[</span><span class="nf">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">-</span><span class="mi">48</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">page</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">o</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-<span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
-<span class="n">o</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">f</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
+<span class="n">o</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p>Após todos os passos de análise e correção, conseguimos extrair o <em>bitmap</em> e validar que todas as nossas hipóteses e métodos de análise estavam corretos:
@@ -607,11 +607,13 @@ DECIMAL       HEXADECIMAL     DESCRIPTION
 
     <footer>
   <span>
-    © <time datetime="2024-09-08 01:53:49 +0000">2024</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2025-07-13 22:25:13 +0000">2025</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2024-09-08 01:53:49 +0000
+    Last build: 2025-07-13 22:25:13 +0000
   </span>
+  <!-- hehehe -->
+  <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">
 </footer>
 
 <script src="/assets/simple-jekyll-search.min.js"></script>

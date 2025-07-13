@@ -21,7 +21,7 @@
 
   <!-- Global -->
   <link rel="canonical" href="https://lucasteske.dev/2019/12/creating-your-own-gsm-network-with-limesdr/">
-  <meta name="generator" property="generator" content="Jekyll v4.2.2">
+  <meta name="generator" property="generator" content="Jekyll v4.4.1">
   <meta name="author" property="author" content="Lucas Teske">
   <meta name="description" property="description" content="Creating your own GSM Network with LimeSDR DISCLAIMER: This procedure is highly ilegal basically anywhere in the world. Be sure to run this in a closed RF environment (aka Faraday Cage) This article works with any LimeSDR version. For this example we will use the Osmocom GSM Stack in the...">
   
@@ -588,20 +588,20 @@ trx
 <p>There is a simple python script to list the subscribers. What it does is to open the sqlite database and do a simple query and print.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
-</span><span class="kn">import</span> <span class="nn">sqlite3</span>
+</span><span class="kn">import</span> <span class="n">sqlite3</span>
 
-<span class="n">HLR_DATABASE</span> <span class="o">=</span> <span class="s">"hlr.sqlite3"</span>
-<span class="n">db</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">HLR_DATABASE</span><span class="p">)</span>
-<span class="n">c</span> <span class="o">=</span> <span class="n">db</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
-<span class="n">c</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"SELECT * FROM Subscriber"</span><span class="p">)</span>
+<span class="n">HLR_DATABASE</span> <span class="o">=</span> <span class="sh">"</span><span class="s">hlr.sqlite3</span><span class="sh">"</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="n">HLR_DATABASE</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">db</span><span class="p">.</span><span class="nf">cursor</span><span class="p">()</span>
+<span class="n">c</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="sh">"</span><span class="s">SELECT * FROM Subscriber</span><span class="sh">"</span><span class="p">)</span>
 
-<span class="k">print</span> <span class="s">"ID</span><span class="se">\t\t</span><span class="s">created</span><span class="se">\t\t</span><span class="s">IMSI</span><span class="se">\t\t\t</span><span class="s">TMSI</span><span class="se">\t\t</span><span class="s">extension</span><span class="se">\n</span><span class="s">"</span>
+<span class="k">print</span> <span class="sh">"</span><span class="s">ID</span><span class="se">\t\t</span><span class="s">created</span><span class="se">\t\t</span><span class="s">IMSI</span><span class="se">\t\t\t</span><span class="s">TMSI</span><span class="se">\t\t</span><span class="s">extension</span><span class="se">\n</span><span class="sh">"</span>
 <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
-    <span class="n">subscriber</span> <span class="o">=</span> <span class="n">c</span><span class="p">.</span><span class="n">fetchone</span><span class="p">()</span>
+    <span class="n">subscriber</span> <span class="o">=</span> <span class="n">c</span><span class="p">.</span><span class="nf">fetchone</span><span class="p">()</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">subscriber</span><span class="p">:</span>
         <span class="k">break</span>
 
-    <span class="k">print</span> <span class="s">"{0:1}</span><span class="se">\t</span><span class="s">{1:2}</span><span class="se">\t</span><span class="s">{2:&lt;15}</span><span class="se">\t\t</span><span class="s">{3:&lt;10}</span><span class="se">\t</span><span class="s">{4}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span>
+    <span class="k">print</span> <span class="sh">"</span><span class="s">{0:1}</span><span class="se">\t</span><span class="s">{1:2}</span><span class="se">\t</span><span class="s">{2:&lt;15}</span><span class="se">\t\t</span><span class="s">{3:&lt;10}</span><span class="se">\t</span><span class="s">{4}</span><span class="sh">"</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span>
             <span class="n">subscriber</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
             <span class="n">subscriber</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
             <span class="n">subscriber</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
@@ -609,7 +609,7 @@ trx
             <span class="n">subscriber</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
             <span class="p">)</span>
 
-<span class="n">db</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">db</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p>The IMSI field is unique to that phone / simcard combination. That’s the number you can use to track a specific user around the world. The extension is the assigned phone number for that specific phone.</p>
@@ -619,71 +619,71 @@ trx
 <p>There are two scripts I found in the internet to send SMS. They basically selects the IMSI from the sqlite database the Osmo stack creates and then connects through the telnet interface to issue the desired commands. One of them is <em>sms_broadcast.py</em>:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
-</span><span class="kn">import</span> <span class="nn">telnetlib</span>
-<span class="kn">import</span> <span class="nn">sqlite3</span>
-<span class="kn">import</span> <span class="nn">sys</span>
+</span><span class="kn">import</span> <span class="n">telnetlib</span>
+<span class="kn">import</span> <span class="n">sqlite3</span>
+<span class="kn">import</span> <span class="n">sys</span>
 
 <span class="n">imsi</span> <span class="o">=</span> <span class="mi">999999999999999</span>
-<span class="n">HLR_DATABASE</span> <span class="o">=</span> <span class="s">"hlr.sqlite3"</span>
+<span class="n">HLR_DATABASE</span> <span class="o">=</span> <span class="sh">"</span><span class="s">hlr.sqlite3</span><span class="sh">"</span>
 
 <span class="k">def</span> <span class="nf">check_extension</span><span class="p">(</span><span class="n">extension</span><span class="p">):</span>
-    <span class="n">conn</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s">"show subscriber extension %s</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> <span class="n">extension</span><span class="p">)</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">read_until</span><span class="p">(</span><span class="sa">b</span><span class="s">"OpenBSC&gt; "</span><span class="p">)</span>
+    <span class="n">conn</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">show subscriber extension %s</span><span class="se">\n</span><span class="sh">"</span> <span class="o">%</span> <span class="n">extension</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="nf">read_until</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">OpenBSC&gt; </span><span class="sh">"</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="sa">b</span><span class="s">"No subscriber found for extension"</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
-        <span class="n">create_subscriber</span><span class="p">(</span><span class="n">extension</span><span class="p">)</span>
+    <span class="k">if</span> <span class="sa">b</span><span class="sh">"</span><span class="s">No subscriber found for extension</span><span class="sh">"</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+        <span class="nf">create_subscriber</span><span class="p">(</span><span class="n">extension</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">create_subscriber</span><span class="p">(</span><span class="n">extension</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"No user with excension %s found. Creating new..."</span> <span class="o">%</span> <span class="n">extension</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"Extension: %s, IMSI: %d"</span> <span class="o">%</span> <span class="p">(</span><span class="n">extension</span><span class="p">,</span> <span class="n">imsi</span><span class="p">))</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">No user with excension %s found. Creating new...</span><span class="sh">"</span> <span class="o">%</span> <span class="n">extension</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Extension: %s, IMSI: %d</span><span class="sh">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">extension</span><span class="p">,</span> <span class="n">imsi</span><span class="p">))</span>
 
-    <span class="n">conn</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s">"show subscriber imsi %d</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> <span class="n">imsi</span><span class="p">)</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">read_until</span><span class="p">(</span><span class="sa">b</span><span class="s">"OpenBSC&gt; "</span><span class="p">)</span>
+    <span class="n">conn</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">show subscriber imsi %d</span><span class="se">\n</span><span class="sh">"</span> <span class="o">%</span> <span class="n">imsi</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="nf">read_until</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">OpenBSC&gt; </span><span class="sh">"</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="sa">b</span><span class="s">"No subscriber found for imsi"</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
-        <span class="n">conn</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s">"subscriber create imsi %d</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> <span class="n">imsi</span><span class="p">)</span>
-        <span class="n">conn</span><span class="p">.</span><span class="n">read_until</span><span class="p">(</span><span class="sa">b</span><span class="s">"OpenBSC&gt; "</span><span class="p">)</span>
+    <span class="k">if</span> <span class="sa">b</span><span class="sh">"</span><span class="s">No subscriber found for imsi</span><span class="sh">"</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+        <span class="n">conn</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">subscriber create imsi %d</span><span class="se">\n</span><span class="sh">"</span> <span class="o">%</span> <span class="n">imsi</span><span class="p">)</span>
+        <span class="n">conn</span><span class="p">.</span><span class="nf">read_until</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">OpenBSC&gt; </span><span class="sh">"</span><span class="p">)</span>
 
-    <span class="n">conn</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s">"enable</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
-    <span class="n">conn</span><span class="p">.</span><span class="n">read_until</span><span class="p">(</span><span class="sa">b</span><span class="s">"OpenBSC# "</span><span class="p">)</span>
-    <span class="n">conn</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s">"subscriber imsi %d extension %s</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">imsi</span><span class="p">,</span> <span class="n">extension</span><span class="p">))</span>
-    <span class="n">conn</span><span class="p">.</span><span class="n">read_until</span><span class="p">(</span><span class="sa">b</span><span class="s">"OpenBSC# "</span><span class="p">)</span>
-    <span class="n">conn</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s">"disable</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
-    <span class="n">conn</span><span class="p">.</span><span class="n">read_until</span><span class="p">(</span><span class="sa">b</span><span class="s">"OpenBSC&gt; "</span><span class="p">)</span>
+    <span class="n">conn</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">enable</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">conn</span><span class="p">.</span><span class="nf">read_until</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">OpenBSC# </span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">conn</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">subscriber imsi %d extension %s</span><span class="se">\n</span><span class="sh">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">imsi</span><span class="p">,</span> <span class="n">extension</span><span class="p">))</span>
+    <span class="n">conn</span><span class="p">.</span><span class="nf">read_until</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">OpenBSC# </span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">conn</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">disable</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">conn</span><span class="p">.</span><span class="nf">read_until</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">OpenBSC&gt; </span><span class="sh">"</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">get_users</span><span class="p">():</span>
     <span class="c1"># returns user id list generator
 </span>
-    <span class="n">db</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">HLR_DATABASE</span><span class="p">)</span>
-    <span class="n">c</span> <span class="o">=</span> <span class="n">db</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
-    <span class="n">c</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"SELECT * FROM Subscriber"</span><span class="p">)</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="n">HLR_DATABASE</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">db</span><span class="p">.</span><span class="nf">cursor</span><span class="p">()</span>
+    <span class="n">c</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="sh">"</span><span class="s">SELECT * FROM Subscriber</span><span class="sh">"</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">subscriber</span> <span class="ow">in</span> <span class="n">c</span><span class="p">.</span><span class="n">fetchall</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">subscriber</span> <span class="ow">in</span> <span class="n">c</span><span class="p">.</span><span class="nf">fetchall</span><span class="p">():</span>
         <span class="k">yield</span> <span class="n">subscriber</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
 <span class="k">def</span> <span class="nf">send_sms</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">extension</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-    <span class="n">conn</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s">"subscriber id %d sms sender extension %s send %s</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> <span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">extension</span><span class="p">,</span> <span class="n">message</span><span class="p">))</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">read_until</span><span class="p">(</span><span class="sa">b</span><span class="s">"OpenBSC&gt; "</span><span class="p">)</span>
-    <span class="k">if</span> <span class="sa">b</span><span class="s">"%"</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-        <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">conn</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">subscriber id %d sms sender extension %s send %s</span><span class="se">\n</span><span class="sh">"</span> <span class="o">%</span> <span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">extension</span><span class="p">,</span> <span class="n">message</span><span class="p">))</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="nf">read_until</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">OpenBSC&gt; </span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="sa">b</span><span class="sh">"</span><span class="s">%</span><span class="sh">"</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+        <span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">extension</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="s">" "</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="sh">"</span><span class="s"> </span><span class="sh">"</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
     <span class="k">except</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"usage: ./sms_broadcast.py extension message"</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"This script sends a message from the specified extension (number) to all devices connected to this base station"</span><span class="p">)</span>
-        <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">usage: ./sms_broadcast.py extension message</span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">This script sends a message from the specified extension (number) to all devices connected to this base station</span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">telnetlib</span><span class="p">.</span><span class="n">Telnet</span><span class="p">(</span><span class="s">"127.0.0.1"</span><span class="p">,</span> <span class="mi">4242</span><span class="p">)</span>
-    <span class="n">conn</span><span class="p">.</span><span class="n">read_until</span><span class="p">(</span><span class="sa">b</span><span class="s">"OpenBSC&gt; "</span><span class="p">)</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">telnetlib</span><span class="p">.</span><span class="nc">Telnet</span><span class="p">(</span><span class="sh">"</span><span class="s">127.0.0.1</span><span class="sh">"</span><span class="p">,</span> <span class="mi">4242</span><span class="p">)</span>
+    <span class="n">conn</span><span class="p">.</span><span class="nf">read_until</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">OpenBSC&gt; </span><span class="sh">"</span><span class="p">)</span>
 
-    <span class="n">check_extension</span><span class="p">(</span><span class="n">extension</span><span class="p">)</span>
+    <span class="nf">check_extension</span><span class="p">(</span><span class="n">extension</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">get_users</span><span class="p">():</span>
-        <span class="n">send_sms</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">extension</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+    <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="nf">get_users</span><span class="p">():</span>
+        <span class="nf">send_sms</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">extension</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>This one is pretty simple to use:</p>
@@ -696,66 +696,66 @@ trx
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 <span class="c1">#!/usr/bin/env python
-</span><span class="kn">import</span> <span class="nn">telnetlib</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">import</span> <span class="nn">time</span>
+</span><span class="kn">import</span> <span class="n">telnetlib</span>
+<span class="kn">import</span> <span class="n">sys</span>
+<span class="kn">import</span> <span class="n">random</span>
+<span class="kn">import</span> <span class="n">time</span>
 
 <span class="n">imsi</span> <span class="o">=</span> <span class="mi">999999999999999</span>
 
 <span class="k">def</span> <span class="nf">check_extension</span><span class="p">(</span><span class="n">extension</span><span class="p">):</span>
-    <span class="n">conn</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s">"show subscriber extension %s</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> <span class="n">extension</span><span class="p">)</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">read_until</span><span class="p">(</span><span class="sa">b</span><span class="s">"OpenBSC&gt; "</span><span class="p">)</span>
+    <span class="n">conn</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">show subscriber extension %s</span><span class="se">\n</span><span class="sh">"</span> <span class="o">%</span> <span class="n">extension</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="nf">read_until</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">OpenBSC&gt; </span><span class="sh">"</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="sa">b</span><span class="s">"No subscriber found for extension"</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"Phone with extension %s not found ;("</span> <span class="o">%</span> <span class="n">extension</span><span class="p">)</span>
-        <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="sa">b</span><span class="sh">"</span><span class="s">No subscriber found for extension</span><span class="sh">"</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Phone with extension %s not found ;(</span><span class="sh">"</span> <span class="o">%</span> <span class="n">extension</span><span class="p">)</span>
+        <span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">check_spam_subscriber</span><span class="p">():</span>
-    <span class="n">conn</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s">"show subscriber imsi %d</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> <span class="n">imsi</span><span class="p">)</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">read_until</span><span class="p">(</span><span class="sa">b</span><span class="s">"OpenBSC&gt; "</span><span class="p">)</span>
+    <span class="n">conn</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">show subscriber imsi %d</span><span class="se">\n</span><span class="sh">"</span> <span class="o">%</span> <span class="n">imsi</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="nf">read_until</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">OpenBSC&gt; </span><span class="sh">"</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="sa">b</span><span class="s">"No subscriber found for imsi"</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
-        <span class="n">conn</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s">"subscriber create imsi %d</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> <span class="n">imsi</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">conn</span><span class="p">.</span><span class="n">read_until</span><span class="p">(</span><span class="sa">b</span><span class="s">"OpenBSC&gt; "</span><span class="p">))</span>
+    <span class="k">if</span> <span class="sa">b</span><span class="sh">"</span><span class="s">No subscriber found for imsi</span><span class="sh">"</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+        <span class="n">conn</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">subscriber create imsi %d</span><span class="se">\n</span><span class="sh">"</span> <span class="o">%</span> <span class="n">imsi</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">conn</span><span class="p">.</span><span class="nf">read_until</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">OpenBSC&gt; </span><span class="sh">"</span><span class="p">))</span>
 
 <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="n">extension</span><span class="p">,</span> <span class="n">spam_number</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"Sending sms from %d..."</span> <span class="o">%</span> <span class="n">spam_number</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Sending sms from %d...</span><span class="sh">"</span> <span class="o">%</span> <span class="n">spam_number</span><span class="p">)</span>
 
-    <span class="n">conn</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s">"enable</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
-    <span class="n">conn</span><span class="p">.</span><span class="n">read_until</span><span class="p">(</span><span class="sa">b</span><span class="s">"OpenBSC# "</span><span class="p">)</span>
-    <span class="n">conn</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s">"subscriber imsi %d extension %d</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">imsi</span><span class="p">,</span> <span class="n">spam_number</span><span class="p">))</span>
-    <span class="n">conn</span><span class="p">.</span><span class="n">read_until</span><span class="p">(</span><span class="sa">b</span><span class="s">"OpenBSC# "</span><span class="p">)</span>
-    <span class="n">conn</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s">"disable</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
-    <span class="n">conn</span><span class="p">.</span><span class="n">read_until</span><span class="p">(</span><span class="sa">b</span><span class="s">"OpenBSC&gt; "</span><span class="p">)</span>
+    <span class="n">conn</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">enable</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">conn</span><span class="p">.</span><span class="nf">read_until</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">OpenBSC# </span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">conn</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">subscriber imsi %d extension %d</span><span class="se">\n</span><span class="sh">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">imsi</span><span class="p">,</span> <span class="n">spam_number</span><span class="p">))</span>
+    <span class="n">conn</span><span class="p">.</span><span class="nf">read_until</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">OpenBSC# </span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">conn</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">disable</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">conn</span><span class="p">.</span><span class="nf">read_until</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">OpenBSC&gt; </span><span class="sh">"</span><span class="p">)</span>
 
-    <span class="n">conn</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s">"subscriber extension %s sms sender extension %d send %s</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">extension</span><span class="p">,</span> <span class="n">spam_number</span><span class="p">,</span> <span class="n">message</span><span class="p">))</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">read_until</span><span class="p">(</span><span class="sa">b</span><span class="s">"OpenBSC&gt; "</span><span class="p">)</span>
+    <span class="n">conn</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">subscriber extension %s sms sender extension %d send %s</span><span class="se">\n</span><span class="sh">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">extension</span><span class="p">,</span> <span class="n">spam_number</span><span class="p">,</span> <span class="n">message</span><span class="p">))</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="nf">read_until</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">OpenBSC&gt; </span><span class="sh">"</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="sa">b</span><span class="s">"%"</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-        <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="sa">b</span><span class="sh">"</span><span class="s">%</span><span class="sh">"</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+        <span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">extension</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">repeats</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="s">" "</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span>
+        <span class="n">repeats</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="sh">"</span><span class="s"> </span><span class="sh">"</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span>
     <span class="k">except</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"usage: ./sms_spam.py extension [num of repeats] message"</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"This script sends a message to specified number"</span><span class="p">)</span>
-        <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">usage: ./sms_spam.py extension [num of repeats] message</span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">This script sends a message to specified number</span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">telnetlib</span><span class="p">.</span><span class="n">Telnet</span><span class="p">(</span><span class="s">"127.0.0.1"</span><span class="p">,</span> <span class="mi">4242</span><span class="p">)</span>
-    <span class="n">conn</span><span class="p">.</span><span class="n">read_until</span><span class="p">(</span><span class="sa">b</span><span class="s">"OpenBSC&gt; "</span><span class="p">)</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">telnetlib</span><span class="p">.</span><span class="nc">Telnet</span><span class="p">(</span><span class="sh">"</span><span class="s">127.0.0.1</span><span class="sh">"</span><span class="p">,</span> <span class="mi">4242</span><span class="p">)</span>
+    <span class="n">conn</span><span class="p">.</span><span class="nf">read_until</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">OpenBSC&gt; </span><span class="sh">"</span><span class="p">)</span>
 
-    <span class="n">check_extension</span><span class="p">(</span><span class="n">extension</span><span class="p">)</span>
-    <span class="n">check_spam_subscriber</span><span class="p">()</span>
+    <span class="nf">check_extension</span><span class="p">(</span><span class="n">extension</span><span class="p">)</span>
+    <span class="nf">check_spam_subscriber</span><span class="p">()</span>
 
-    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">repeats</span><span class="p">):</span>
-        <span class="n">spam_number</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">9999</span><span class="p">)</span>
-        <span class="n">send</span><span class="p">(</span><span class="n">extension</span><span class="p">,</span> <span class="n">spam_number</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
-        <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">repeats</span><span class="p">):</span>
+        <span class="n">spam_number</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">9999</span><span class="p">)</span>
+        <span class="nf">send</span><span class="p">(</span><span class="n">extension</span><span class="p">,</span> <span class="n">spam_number</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+        <span class="n">time</span><span class="p">.</span><span class="nf">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>This one generates a random source number and sends the specified message <strong>n</strong> times.</p>
@@ -824,11 +824,13 @@ trx
 
     <footer>
   <span>
-    © <time datetime="2024-09-08 01:53:42 +0000">2024</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2025-07-13 22:25:05 +0000">2025</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2024-09-08 01:53:42 +0000
+    Last build: 2025-07-13 22:25:05 +0000
   </span>
+  <!-- hehehe -->
+  <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">
 </footer>
 
 <script src="/assets/simple-jekyll-search.min.js"></script>

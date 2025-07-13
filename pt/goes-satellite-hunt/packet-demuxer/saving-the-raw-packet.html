@@ -21,7 +21,7 @@
 
   <!-- Global -->
   <link rel="canonical" href="https://lucasteske.dev/pt/goes-satellite-hunt/packet-demuxer/saving-the-raw-packet">
-  <meta name="generator" property="generator" content="Jekyll v4.2.2">
+  <meta name="generator" property="generator" content="Jekyll v4.4.1">
   <meta name="author" property="author" content="Lucas Teske">
   <meta name="description" property="description" content="# Saving the Raw Packet Now that we have the handler for the demuxing, we will implement the function **SavePacket**. It will receive two arguments, the channel id and  a packetdict. The channel id will be used for saving the packets in the correct folder \(separating them from other channel...">
   
@@ -318,15 +318,15 @@
 <p>In the last step we assembled a packet dict with this structure:</p>
 
 <div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
-  <span class="s">"data"</span><span class="p">:</span> <span class="n">pdata</span><span class="p">,</span>
-  <span class="s">"version"</span><span class="p">:</span> <span class="n">version</span><span class="p">,</span>
-  <span class="s">"type"</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span>
-  <span class="s">"apid"</span><span class="p">:</span> <span class="n">apid</span><span class="p">,</span>
-  <span class="s">"sequenceflag"</span><span class="p">:</span> <span class="n">SEQUENCE_FLAG_MAP</span><span class="p">[</span><span class="n">sequenceflag</span><span class="p">],</span>
-  <span class="s">"sequenceflag_int"</span><span class="p">:</span> <span class="n">sequenceflag</span><span class="p">,</span>
-  <span class="s">"packetnumber"</span><span class="p">:</span> <span class="n">packetnumber</span><span class="p">,</span>
-  <span class="s">"framesdropped"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
-  <span class="s">"size"</span><span class="p">:</span> <span class="n">packetlength</span>
+  <span class="sh">"</span><span class="s">data</span><span class="sh">"</span><span class="p">:</span> <span class="n">pdata</span><span class="p">,</span>
+  <span class="sh">"</span><span class="s">version</span><span class="sh">"</span><span class="p">:</span> <span class="n">version</span><span class="p">,</span>
+  <span class="sh">"</span><span class="s">type</span><span class="sh">"</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span>
+  <span class="sh">"</span><span class="s">apid</span><span class="sh">"</span><span class="p">:</span> <span class="n">apid</span><span class="p">,</span>
+  <span class="sh">"</span><span class="s">sequenceflag</span><span class="sh">"</span><span class="p">:</span> <span class="n">SEQUENCE_FLAG_MAP</span><span class="p">[</span><span class="n">sequenceflag</span><span class="p">],</span>
+  <span class="sh">"</span><span class="s">sequenceflag_int</span><span class="sh">"</span><span class="p">:</span> <span class="n">sequenceflag</span><span class="p">,</span>
+  <span class="sh">"</span><span class="s">packetnumber</span><span class="sh">"</span><span class="p">:</span> <span class="n">packetnumber</span><span class="p">,</span>
+  <span class="sh">"</span><span class="s">framesdropped</span><span class="sh">"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+  <span class="sh">"</span><span class="s">size</span><span class="sh">"</span><span class="p">:</span> <span class="n">packetlength</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -351,16 +351,16 @@
   <span class="n">lsb</span> <span class="o">=</span> <span class="mh">0xFF</span>
   <span class="n">msb</span> <span class="o">=</span> <span class="mh">0xFF</span>
   <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-      <span class="n">x</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">^</span> <span class="n">msb</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="nf">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">^</span> <span class="n">msb</span>
       <span class="n">x</span> <span class="o">^=</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">)</span>
       <span class="n">msb</span> <span class="o">=</span> <span class="p">(</span><span class="n">lsb</span> <span class="o">^</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">))</span> <span class="o">&amp;</span> <span class="mi">255</span>
       <span class="n">lsb</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">^</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span><span class="p">))</span> <span class="o">&amp;</span> <span class="mi">255</span>
-  <span class="k">return</span> <span class="p">(</span><span class="n">msb</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="n">lsb</span>
+  <span class="nf">return </span><span class="p">(</span><span class="n">msb</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="n">lsb</span>
 
 <span class="k">def</span> <span class="nf">CheckCRC</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">crc</span><span class="p">):</span>
-  <span class="n">c</span> <span class="o">=</span> <span class="n">CalcCRC</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+  <span class="n">c</span> <span class="o">=</span> <span class="nc">CalcCRC</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
   <span class="k">if</span> <span class="ow">not</span> <span class="n">c</span> <span class="o">==</span> <span class="n">crc</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">"   Expected: %s Found %s"</span> <span class="o">%</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">crc</span><span class="p">),</span> <span class="nb">hex</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+    <span class="k">print</span> <span class="sh">"</span><span class="s">   Expected: %s Found %s</span><span class="sh">"</span> <span class="o">%</span><span class="p">(</span><span class="nf">hex</span><span class="p">(</span><span class="n">crc</span><span class="p">),</span> <span class="nf">hex</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
   <span class="k">return</span> <span class="n">c</span> <span class="o">==</span> <span class="n">crc</span>
 </code></pre></div></div>
 
@@ -377,61 +377,61 @@
   <span class="k">global</span> <span class="n">endnum</span>
 
   <span class="k">try</span><span class="p">:</span>
-    <span class="n">os</span><span class="p">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s">"channels/%s"</span> <span class="o">%</span><span class="n">channelid</span><span class="p">)</span>
+    <span class="n">os</span><span class="p">.</span><span class="nf">mkdir</span><span class="p">(</span><span class="sh">"</span><span class="s">channels/%s</span><span class="sh">"</span> <span class="o">%</span><span class="n">channelid</span><span class="p">)</span>
   <span class="k">except</span><span class="p">:</span>
     <span class="k">pass</span>
 
-  <span class="k">if</span> <span class="n">packet</span><span class="p">[</span><span class="s">"apid"</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2047</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">"  Fill Packet. Skipping"</span>
+  <span class="k">if</span> <span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">apid</span><span class="sh">"</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2047</span><span class="p">:</span>
+    <span class="k">print</span> <span class="sh">"</span><span class="s">  Fill Packet. Skipping</span><span class="sh">"</span>
     <span class="k">return</span>
 
-  <span class="n">datasize</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">packet</span><span class="p">[</span><span class="s">"data"</span><span class="p">])</span>
+  <span class="n">datasize</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">data</span><span class="sh">"</span><span class="p">])</span>
 
-  <span class="k">if</span> <span class="ow">not</span> <span class="n">datasize</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">==</span> <span class="n">packet</span><span class="p">[</span><span class="s">"size"</span><span class="p">]:</span> <span class="c1"># CRC is the latest 2 bytes of the payload
-</span>    <span class="k">print</span> <span class="s">"   WARNING: Packet Size does not match! Expected %s Found: %s"</span> <span class="o">%</span><span class="p">(</span><span class="n">packet</span><span class="p">[</span><span class="s">"size"</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">packet</span><span class="p">[</span><span class="s">"data"</span><span class="p">]))</span>
-    <span class="k">if</span> <span class="n">datasize</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="n">packet</span><span class="p">[</span><span class="s">"size"</span><span class="p">]:</span>
-      <span class="n">datasize</span> <span class="o">=</span> <span class="n">packet</span><span class="p">[</span><span class="s">"size"</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span>
-      <span class="k">print</span> <span class="s">"   WARNING: Trimming data to %s"</span> <span class="o">%</span> <span class="n">datasize</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">datasize</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">==</span> <span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">size</span><span class="sh">"</span><span class="p">]:</span> <span class="c1"># CRC is the latest 2 bytes of the payload
+</span>    <span class="k">print</span> <span class="sh">"</span><span class="s">   WARNING: Packet Size does not match! Expected %s Found: %s</span><span class="sh">"</span> <span class="o">%</span><span class="p">(</span><span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">size</span><span class="sh">"</span><span class="p">],</span> <span class="nf">len</span><span class="p">(</span><span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">data</span><span class="sh">"</span><span class="p">]))</span>
+    <span class="k">if</span> <span class="n">datasize</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">size</span><span class="sh">"</span><span class="p">]:</span>
+      <span class="n">datasize</span> <span class="o">=</span> <span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">size</span><span class="sh">"</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span>
+      <span class="k">print</span> <span class="sh">"</span><span class="s">   WARNING: Trimming data to %s</span><span class="sh">"</span> <span class="o">%</span> <span class="n">datasize</span>
 
-  <span class="n">data</span> <span class="o">=</span> <span class="n">packet</span><span class="p">[</span><span class="s">"data"</span><span class="p">][:</span><span class="n">datasize</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">data</span><span class="sh">"</span><span class="p">][:</span><span class="n">datasize</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
 
-  <span class="k">if</span> <span class="n">packet</span><span class="p">[</span><span class="s">"sequenceflag_int"</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">"Starting packet %s_%s_%s.lrit"</span>  <span class="o">%</span> <span class="p">(</span><span class="n">packet</span><span class="p">[</span><span class="s">"apid"</span><span class="p">],</span> <span class="n">packet</span><span class="p">[</span><span class="s">"version"</span><span class="p">],</span> <span class="n">packet</span><span class="p">[</span><span class="s">"packetnumber"</span><span class="p">])</span>
-    <span class="n">startnum</span> <span class="o">=</span> <span class="n">packet</span><span class="p">[</span><span class="s">"packetnumber"</span><span class="p">]</span>
-  <span class="k">elif</span> <span class="n">packet</span><span class="p">[</span><span class="s">"sequenceflag_int"</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">"Ending packet %s_%s_%s.lrit"</span>  <span class="o">%</span> <span class="p">(</span><span class="n">packet</span><span class="p">[</span><span class="s">"apid"</span><span class="p">],</span> <span class="n">packet</span><span class="p">[</span><span class="s">"version"</span><span class="p">],</span> <span class="n">packet</span><span class="p">[</span><span class="s">"packetnumber"</span><span class="p">])</span>
-    <span class="n">endnum</span> <span class="o">=</span> <span class="n">packet</span><span class="p">[</span><span class="s">"packetnumber"</span><span class="p">]</span>
+  <span class="k">if</span> <span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">sequenceflag_int</span><span class="sh">"</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">print</span> <span class="sh">"</span><span class="s">Starting packet %s_%s_%s.lrit</span><span class="sh">"</span>  <span class="o">%</span> <span class="p">(</span><span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">apid</span><span class="sh">"</span><span class="p">],</span> <span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">version</span><span class="sh">"</span><span class="p">],</span> <span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">packetnumber</span><span class="sh">"</span><span class="p">])</span>
+    <span class="n">startnum</span> <span class="o">=</span> <span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">packetnumber</span><span class="sh">"</span><span class="p">]</span>
+  <span class="k">elif</span> <span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">sequenceflag_int</span><span class="sh">"</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="k">print</span> <span class="sh">"</span><span class="s">Ending packet %s_%s_%s.lrit</span><span class="sh">"</span>  <span class="o">%</span> <span class="p">(</span><span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">apid</span><span class="sh">"</span><span class="p">],</span> <span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">version</span><span class="sh">"</span><span class="p">],</span> <span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">packetnumber</span><span class="sh">"</span><span class="p">])</span>
+    <span class="n">endnum</span> <span class="o">=</span> <span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">packetnumber</span><span class="sh">"</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">startnum</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-      <span class="k">print</span> <span class="s">"Orphan Packet. Dropping"</span>
+      <span class="k">print</span> <span class="sh">"</span><span class="s">Orphan Packet. Dropping</span><span class="sh">"</span>
       <span class="k">return</span>
-  <span class="k">elif</span> <span class="n">packet</span><span class="p">[</span><span class="s">"sequenceflag_int"</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">startnum</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">"Orphan Packet. Dropping."</span>
+  <span class="k">elif</span> <span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">sequenceflag_int</span><span class="sh">"</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">startnum</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+    <span class="k">print</span> <span class="sh">"</span><span class="s">Orphan Packet. Dropping.</span><span class="sh">"</span>
     <span class="k">return</span>
 
-  <span class="k">if</span> <span class="n">packet</span><span class="p">[</span><span class="s">"framesdropped"</span><span class="p">]:</span>
-    <span class="k">print</span> <span class="s">"   WARNING: Some frames has been droped for this packet."</span>
-  <span class="n">filename</span> <span class="o">=</span> <span class="s">"channels/%s/%s_%s_%s.lrit"</span> <span class="o">%</span> <span class="p">(</span><span class="n">channelid</span><span class="p">,</span> <span class="n">packet</span><span class="p">[</span><span class="s">"apid"</span><span class="p">],</span> <span class="n">packet</span><span class="p">[</span><span class="s">"version"</span><span class="p">],</span> <span class="n">packet</span><span class="p">[</span><span class="s">"packetnumber"</span><span class="p">])</span>
-  <span class="k">print</span> <span class="s">"- Saving packet to %s"</span> <span class="o">%</span><span class="n">filename</span>
+  <span class="k">if</span> <span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">framesdropped</span><span class="sh">"</span><span class="p">]:</span>
+    <span class="k">print</span> <span class="sh">"</span><span class="s">   WARNING: Some frames has been droped for this packet.</span><span class="sh">"</span>
+  <span class="n">filename</span> <span class="o">=</span> <span class="sh">"</span><span class="s">channels/%s/%s_%s_%s.lrit</span><span class="sh">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">channelid</span><span class="p">,</span> <span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">apid</span><span class="sh">"</span><span class="p">],</span> <span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">version</span><span class="sh">"</span><span class="p">],</span> <span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">packetnumber</span><span class="sh">"</span><span class="p">])</span>
+  <span class="k">print</span> <span class="sh">"</span><span class="s">- Saving packet to %s</span><span class="sh">"</span> <span class="o">%</span><span class="n">filename</span>
 
 
-  <span class="n">crc</span> <span class="o">=</span> <span class="n">packet</span><span class="p">[</span><span class="s">"data"</span><span class="p">][</span><span class="n">datasize</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span><span class="n">datasize</span><span class="p">]</span>
-  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">crc</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-    <span class="n">crc</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">"&gt;H"</span><span class="p">,</span> <span class="n">crc</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">crc</span> <span class="o">=</span> <span class="n">CheckCRC</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">crc</span><span class="p">)</span>
+  <span class="n">crc</span> <span class="o">=</span> <span class="n">packet</span><span class="p">[</span><span class="sh">"</span><span class="s">data</span><span class="sh">"</span><span class="p">][</span><span class="n">datasize</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span><span class="n">datasize</span><span class="p">]</span>
+  <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">crc</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">crc</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="nf">unpack</span><span class="p">(</span><span class="sh">"</span><span class="s">&gt;H</span><span class="sh">"</span><span class="p">,</span> <span class="n">crc</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">crc</span> <span class="o">=</span> <span class="nc">CheckCRC</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">crc</span><span class="p">)</span>
   <span class="k">else</span><span class="p">:</span>
     <span class="n">crc</span> <span class="o">=</span> <span class="bp">False</span>
   <span class="k">if</span> <span class="ow">not</span> <span class="n">crc</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">"   WARNING: CRC does not match!"</span>
+    <span class="k">print</span> <span class="sh">"</span><span class="s">   WARNING: CRC does not match!</span><span class="sh">"</span>
     <span class="n">totalCRCErrors</span> <span class="o">+=</span> <span class="mi">1</span>
 
   <span class="k">if</span> <span class="n">crc</span> <span class="ow">or</span> <span class="p">(</span><span class="n">EXPORTCORRUPT</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">crc</span><span class="p">):</span>
-    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span>
-    <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="sh">"</span><span class="s">wb</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">f</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">f</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
 
     <span class="n">totalSavedPackets</span> <span class="o">+=</span> <span class="mi">1</span>
   <span class="k">else</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">"   Corrupted frame, skipping..."</span>
+    <span class="k">print</span> <span class="sh">"</span><span class="s">   Corrupted frame, skipping...</span><span class="sh">"</span>
 </code></pre></div></div>
 
 <p>With that you should be able to see a lot of files being out of your channel, each one being a packet. If you get the first packet (with the sequenceflag = 1), you will also have the Transport Layer header that contains the decompressed file size, and file number. We will handle the decompression and lrit file composition in next chapter. You can check the final code here:</p>
@@ -459,11 +459,13 @@
 
     <footer>
   <span>
-    © <time datetime="2024-09-08 01:53:49 +0000">2024</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2025-07-13 22:25:13 +0000">2025</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2024-09-08 01:53:49 +0000
+    Last build: 2025-07-13 22:25:13 +0000
   </span>
+  <!-- hehehe -->
+  <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">
 </footer>
 
 <script src="/assets/simple-jekyll-search.min.js"></script>

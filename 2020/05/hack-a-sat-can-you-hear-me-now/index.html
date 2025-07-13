@@ -21,7 +21,7 @@
 
   <!-- Global -->
   <link rel="canonical" href="https://lucasteske.dev/2020/05/hack-a-sat-can-you-hear-me-now/">
-  <meta name="generator" property="generator" content="Jekyll v4.2.2">
+  <meta name="generator" property="generator" content="Jekyll v4.4.1">
   <meta name="author" property="author" content="Lucas Teske">
   <meta name="description" property="description" content="Hack-a-sat — Can you hear me now? That challenged asked us to decode a Telemetry data that was being sent over a TCP port. If you open the netcat, the following happen: Then if you connect to the Telemetry Service using netcat: In the provided zip file there is a telemetry.xtce file...">
   
@@ -405,11 +405,11 @@
 
 <p>Then started writing a simple python script. First by</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">struct</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">struct</span>
 
-<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"dump.bin"</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">())</span>
-<span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">dump.bin</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">rb</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="nf">read</span><span class="p">())</span>
+<span class="n">f</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
 
 <span class="k">def</span> <span class="nf">DecodeHeader</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
   <span class="n">c_version</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xE0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span>
@@ -421,9 +421,9 @@
   <span class="n">c_plen</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="p">)</span>
   <span class="k">return</span> <span class="n">c_version</span><span class="p">,</span> <span class="n">c_type</span><span class="p">,</span> <span class="n">c_sechd</span><span class="p">,</span> <span class="n">c_apid</span><span class="p">,</span> <span class="n">c_gpflags</span><span class="p">,</span> <span class="n">c_ssc</span><span class="p">,</span> <span class="n">c_plen</span>
 
-<span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-  <span class="n">c_version</span><span class="p">,</span> <span class="n">c_type</span><span class="p">,</span> <span class="n">c_sechd</span><span class="p">,</span> <span class="n">c_apid</span><span class="p">,</span> <span class="n">c_gpflags</span><span class="p">,</span> <span class="n">c_ssc</span><span class="p">,</span> <span class="n">c_plen</span> <span class="o">=</span> <span class="n">DecodeHeader</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-  <span class="k">print</span><span class="p">(</span><span class="s">"GOT PACKET %d with LENGTH %d"</span> <span class="o">%</span><span class="p">(</span><span class="n">c_apid</span><span class="p">,</span> <span class="n">c_plen</span><span class="p">))</span>
+<span class="k">while</span> <span class="nf">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+  <span class="n">c_version</span><span class="p">,</span> <span class="n">c_type</span><span class="p">,</span> <span class="n">c_sechd</span><span class="p">,</span> <span class="n">c_apid</span><span class="p">,</span> <span class="n">c_gpflags</span><span class="p">,</span> <span class="n">c_ssc</span><span class="p">,</span> <span class="n">c_plen</span> <span class="o">=</span> <span class="nc">DecodeHeader</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+  <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">GOT PACKET %d with LENGTH %d</span><span class="sh">"</span> <span class="o">%</span><span class="p">(</span><span class="n">c_apid</span><span class="p">,</span> <span class="n">c_plen</span><span class="p">))</span>
   <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">6</span><span class="p">:]</span>         <span class="c1"># Skip the header
 </span>                          <span class="c1"># data[:c_plen+1] has content
 </span>  <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">c_plen</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1"># remove the current data
@@ -437,11 +437,11 @@
 
 <p>If we check the Flag Packet definition, besides the header, there is only the FLAGXXX fields there which means the entire content is the flag. Then we can just get the whole content and decode from 7 bit to 8 bit. Do do that, I was really lazy to do the proper bit shifting, so I just created an array with 1’s and 0’s strings, when it reached 8, I packed into a char and added to an array. That would be really slow for big data, but for a 120 byte flag should be good. So thats the code I tried:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">struct</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">struct</span>
 
-<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"dump.bin"</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">())</span>
-<span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">dump.bin</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">rb</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="nf">read</span><span class="p">())</span>
+<span class="n">f</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
 
 <span class="k">def</span> <span class="nf">DecodeHeader</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
   <span class="n">c_version</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xE0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span>
@@ -455,32 +455,32 @@
 
 <span class="k">def</span> <span class="nf">DecodeFlag</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
   <span class="n">bitstream</span> <span class="o">=</span> <span class="p">[]</span>
-  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
-    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">format</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s">"08b"</span><span class="p">):</span>
-      <span class="n">bitstream</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nf">format</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="sh">"</span><span class="s">08b</span><span class="sh">"</span><span class="p">):</span>
+      <span class="n">bitstream</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
 
-  <span class="n">flagdata</span> <span class="o">=</span> <span class="s">""</span>
+  <span class="n">flagdata</span> <span class="o">=</span> <span class="sh">""</span>
 
-  <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">bitstream</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="s">""</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
-      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bitstream</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">i</span><span class="p">:</span>
+  <span class="k">while</span> <span class="nf">len</span><span class="p">(</span><span class="n">bitstream</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="sh">""</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
+      <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">bitstream</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">i</span><span class="p">:</span>
         <span class="n">b</span> <span class="o">+=</span> <span class="n">bitstream</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
-    <span class="k">if</span> <span class="n">b</span> <span class="o">!=</span> <span class="s">""</span><span class="p">:</span>
-      <span class="n">flagdata</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">b</span> <span class="o">!=</span> <span class="sh">""</span><span class="p">:</span>
+      <span class="n">flagdata</span> <span class="o">+=</span> <span class="nf">chr</span><span class="p">(</span><span class="nf">int</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
     <span class="n">bitstream</span> <span class="o">=</span> <span class="n">bitstream</span><span class="p">[</span><span class="mi">7</span><span class="p">:]</span>
 
   <span class="k">return</span> <span class="n">flagdata</span>
 
-<span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-  <span class="n">c_version</span><span class="p">,</span> <span class="n">c_type</span><span class="p">,</span> <span class="n">c_sechd</span><span class="p">,</span> <span class="n">c_apid</span><span class="p">,</span> <span class="n">c_gpflags</span><span class="p">,</span> <span class="n">c_ssc</span><span class="p">,</span> <span class="n">c_plen</span> <span class="o">=</span> <span class="n">DecodeHeader</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-  <span class="k">print</span><span class="p">(</span><span class="s">"GOT PACKET %d with LENGTH %d"</span> <span class="o">%</span><span class="p">(</span><span class="n">c_apid</span><span class="p">,</span> <span class="n">c_plen</span><span class="p">))</span>
+<span class="k">while</span> <span class="nf">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+  <span class="n">c_version</span><span class="p">,</span> <span class="n">c_type</span><span class="p">,</span> <span class="n">c_sechd</span><span class="p">,</span> <span class="n">c_apid</span><span class="p">,</span> <span class="n">c_gpflags</span><span class="p">,</span> <span class="n">c_ssc</span><span class="p">,</span> <span class="n">c_plen</span> <span class="o">=</span> <span class="nc">DecodeHeader</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+  <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">GOT PACKET %d with LENGTH %d</span><span class="sh">"</span> <span class="o">%</span><span class="p">(</span><span class="n">c_apid</span><span class="p">,</span> <span class="n">c_plen</span><span class="p">))</span>
   <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">6</span><span class="p">:]</span>         <span class="c1"># Skip the header
 </span>                          <span class="c1"># data[:c_plen+1] has content
 </span>  <span class="k">if</span> <span class="n">c_apid</span> <span class="o">==</span> <span class="mi">102</span><span class="p">:</span>
-    <span class="n">flag</span> <span class="o">=</span> <span class="n">DecodeFlag</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="n">c_plen</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"THE FLAG: %s"</span> <span class="o">%</span> <span class="n">flag</span><span class="p">)</span>
+    <span class="n">flag</span> <span class="o">=</span> <span class="nc">DecodeFlag</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="n">c_plen</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">THE FLAG: %s</span><span class="sh">"</span> <span class="o">%</span> <span class="n">flag</span><span class="p">)</span>
   <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">c_plen</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1"># remove the current data
 </span></code></pre></div></div>
 
@@ -500,13 +500,13 @@
 <p>We can also decode the EPS data which should give us some satellite info (and a spoiler to the next flag):</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="n">struct</span>
 
-<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">from</span> <span class="n">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
 
-<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"dump.bin"</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">())</span>
-<span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">dump.bin</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">rb</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="nf">read</span><span class="p">())</span>
+<span class="n">f</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
 
 <span class="k">def</span> <span class="nf">DecodeHeader</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
   <span class="n">c_version</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xE0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span>
@@ -520,28 +520,28 @@
 
 <span class="k">def</span> <span class="nf">DecodeFlag</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
   <span class="n">bitstream</span> <span class="o">=</span> <span class="p">[]</span>
-  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
-    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">format</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s">"08b"</span><span class="p">):</span>
-      <span class="n">bitstream</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nf">format</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="sh">"</span><span class="s">08b</span><span class="sh">"</span><span class="p">):</span>
+      <span class="n">bitstream</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
 
-  <span class="n">flagdata</span> <span class="o">=</span> <span class="s">""</span>
+  <span class="n">flagdata</span> <span class="o">=</span> <span class="sh">""</span>
 
-  <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">bitstream</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="s">""</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
-      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bitstream</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">i</span><span class="p">:</span>
+  <span class="k">while</span> <span class="nf">len</span><span class="p">(</span><span class="n">bitstream</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="sh">""</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
+      <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">bitstream</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">i</span><span class="p">:</span>
         <span class="n">b</span> <span class="o">+=</span> <span class="n">bitstream</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
-    <span class="k">if</span> <span class="n">b</span> <span class="o">!=</span> <span class="s">""</span><span class="p">:</span>
-      <span class="n">flagdata</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">b</span> <span class="o">!=</span> <span class="sh">""</span><span class="p">:</span>
+      <span class="n">flagdata</span> <span class="o">+=</span> <span class="nf">chr</span><span class="p">(</span><span class="nf">int</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
     <span class="n">bitstream</span> <span class="o">=</span> <span class="n">bitstream</span><span class="p">[</span><span class="mi">7</span><span class="p">:]</span>
 
   <span class="k">return</span> <span class="n">flagdata</span>
 
 <span class="k">def</span> <span class="nf">DecodeEPS</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
   <span class="n">battemp</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
-  <span class="n">voltage</span> <span class="o">=</span> <span class="p">(</span><span class="n">struct</span><span class="p">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">"&gt;H"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">])[</span><span class="mi">0</span><span class="p">])</span>
-  <span class="n">low_pwr_thresh</span> <span class="o">=</span> <span class="p">(</span><span class="n">struct</span><span class="p">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">"&gt;H"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">])[</span><span class="mi">0</span><span class="p">])</span>
+  <span class="n">voltage</span> <span class="o">=</span> <span class="p">(</span><span class="n">struct</span><span class="p">.</span><span class="nf">unpack</span><span class="p">(</span><span class="sh">"</span><span class="s">&gt;H</span><span class="sh">"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">])[</span><span class="mi">0</span><span class="p">])</span>
+  <span class="n">low_pwr_thresh</span> <span class="o">=</span> <span class="p">(</span><span class="n">struct</span><span class="p">.</span><span class="nf">unpack</span><span class="p">(</span><span class="sh">"</span><span class="s">&gt;H</span><span class="sh">"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">])[</span><span class="mi">0</span><span class="p">])</span>
   <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">6</span><span class="p">:]</span>
 
   <span class="n">LOW_PWR_MODE</span>  <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span>
@@ -561,36 +561,36 @@
   <span class="n">RADIO2_ENABLE</span>  <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span>
 
   <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-  <span class="n">BAD_CMD_COUNT</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">"&gt;I"</span><span class="p">,</span> <span class="n">data</span><span class="p">[:</span><span class="mi">4</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">BAD_CMD_COUNT</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="nf">unpack</span><span class="p">(</span><span class="sh">"</span><span class="s">&gt;I</span><span class="sh">"</span><span class="p">,</span> <span class="n">data</span><span class="p">[:</span><span class="mi">4</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
 
   <span class="k">return</span> <span class="p">{</span>
-    <span class="s">"low_pwr_thresh"</span><span class="p">:</span> <span class="n">low_pwr_thresh</span><span class="p">,</span>
-    <span class="s">"voltage"</span><span class="p">:</span> <span class="n">voltage</span><span class="p">,</span>
-    <span class="s">"LOW_PWR_MODE"</span><span class="p">:</span> <span class="n">LOW_PWR_MODE</span><span class="p">,</span>
-    <span class="s">"BATT_HTR"</span><span class="p">:</span> <span class="n">BATT_HTR</span><span class="p">,</span>
-    <span class="s">"PAYLOAD_PWR"</span><span class="p">:</span> <span class="n">PAYLOAD_PWR</span><span class="p">,</span>
-    <span class="s">"FLAG_PWR"</span><span class="p">:</span> <span class="n">FLAG_PWR</span><span class="p">,</span>
-    <span class="s">"ADCS_PWR"</span><span class="p">:</span> <span class="n">ADCS_PWR</span><span class="p">,</span>
-    <span class="s">"RADIO1_PWR"</span><span class="p">:</span> <span class="n">RADIO1_PWR</span><span class="p">,</span>
-    <span class="s">"RADIO2_PWR"</span><span class="p">:</span> <span class="n">RADIO2_PWR</span><span class="p">,</span>
-    <span class="s">"PAYLOAD_ENABLE"</span><span class="p">:</span> <span class="n">PAYLOAD_ENABLE</span><span class="p">,</span>
-    <span class="s">"FLAG_ENABLE"</span><span class="p">:</span> <span class="n">FLAG_ENABLE</span><span class="p">,</span>
-    <span class="s">"ADCS_ENABLE"</span><span class="p">:</span> <span class="n">ADCS_ENABLE</span><span class="p">,</span>
-    <span class="s">"RADIO1_ENABLE"</span><span class="p">:</span> <span class="n">RADIO1_ENABLE</span><span class="p">,</span>
-    <span class="s">"RADIO2_ENABLE"</span><span class="p">:</span> <span class="n">RADIO2_ENABLE</span><span class="p">,</span>
-    <span class="s">"BAD_CMD_COUNT"</span><span class="p">:</span> <span class="n">BAD_CMD_COUNT</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">low_pwr_thresh</span><span class="sh">"</span><span class="p">:</span> <span class="n">low_pwr_thresh</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">voltage</span><span class="sh">"</span><span class="p">:</span> <span class="n">voltage</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">LOW_PWR_MODE</span><span class="sh">"</span><span class="p">:</span> <span class="n">LOW_PWR_MODE</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">BATT_HTR</span><span class="sh">"</span><span class="p">:</span> <span class="n">BATT_HTR</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">PAYLOAD_PWR</span><span class="sh">"</span><span class="p">:</span> <span class="n">PAYLOAD_PWR</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">FLAG_PWR</span><span class="sh">"</span><span class="p">:</span> <span class="n">FLAG_PWR</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">ADCS_PWR</span><span class="sh">"</span><span class="p">:</span> <span class="n">ADCS_PWR</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">RADIO1_PWR</span><span class="sh">"</span><span class="p">:</span> <span class="n">RADIO1_PWR</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">RADIO2_PWR</span><span class="sh">"</span><span class="p">:</span> <span class="n">RADIO2_PWR</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">PAYLOAD_ENABLE</span><span class="sh">"</span><span class="p">:</span> <span class="n">PAYLOAD_ENABLE</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">FLAG_ENABLE</span><span class="sh">"</span><span class="p">:</span> <span class="n">FLAG_ENABLE</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">ADCS_ENABLE</span><span class="sh">"</span><span class="p">:</span> <span class="n">ADCS_ENABLE</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">RADIO1_ENABLE</span><span class="sh">"</span><span class="p">:</span> <span class="n">RADIO1_ENABLE</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">RADIO2_ENABLE</span><span class="sh">"</span><span class="p">:</span> <span class="n">RADIO2_ENABLE</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">BAD_CMD_COUNT</span><span class="sh">"</span><span class="p">:</span> <span class="n">BAD_CMD_COUNT</span><span class="p">,</span>
   <span class="p">}</span>
 
-<span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-  <span class="n">c_version</span><span class="p">,</span> <span class="n">c_type</span><span class="p">,</span> <span class="n">c_sechd</span><span class="p">,</span> <span class="n">c_apid</span><span class="p">,</span> <span class="n">c_gpflags</span><span class="p">,</span> <span class="n">c_ssc</span><span class="p">,</span> <span class="n">c_plen</span> <span class="o">=</span> <span class="n">DecodeHeader</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-  <span class="k">print</span><span class="p">(</span><span class="s">"GOT PACKET %d with LENGTH %d"</span> <span class="o">%</span><span class="p">(</span><span class="n">c_apid</span><span class="p">,</span> <span class="n">c_plen</span><span class="p">))</span>
+<span class="k">while</span> <span class="nf">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+  <span class="n">c_version</span><span class="p">,</span> <span class="n">c_type</span><span class="p">,</span> <span class="n">c_sechd</span><span class="p">,</span> <span class="n">c_apid</span><span class="p">,</span> <span class="n">c_gpflags</span><span class="p">,</span> <span class="n">c_ssc</span><span class="p">,</span> <span class="n">c_plen</span> <span class="o">=</span> <span class="nc">DecodeHeader</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+  <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">GOT PACKET %d with LENGTH %d</span><span class="sh">"</span> <span class="o">%</span><span class="p">(</span><span class="n">c_apid</span><span class="p">,</span> <span class="n">c_plen</span><span class="p">))</span>
   <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">6</span><span class="p">:]</span>         <span class="c1"># Skip the header
 </span>                          <span class="c1"># data[:c_plen+1] has content
 </span>  <span class="k">if</span> <span class="n">c_apid</span> <span class="o">==</span> <span class="mi">102</span><span class="p">:</span>
-    <span class="n">flag</span> <span class="o">=</span> <span class="n">DecodeFlag</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="n">c_plen</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"THE FLAG: %s"</span> <span class="o">%</span> <span class="n">flag</span><span class="p">)</span>
+    <span class="n">flag</span> <span class="o">=</span> <span class="nc">DecodeFlag</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="n">c_plen</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">THE FLAG: %s</span><span class="sh">"</span> <span class="o">%</span> <span class="n">flag</span><span class="p">)</span>
   <span class="k">elif</span> <span class="n">c_apid</span> <span class="o">==</span> <span class="mi">103</span><span class="p">:</span>
-   <span class="n">pprint</span><span class="p">(</span><span class="n">DecodeEPS</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+   <span class="nf">pprint</span><span class="p">(</span><span class="nc">DecodeEPS</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
   <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">c_plen</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1"># remove the current data
 </span></code></pre></div></div>
 
@@ -651,11 +651,13 @@
 
     <footer>
   <span>
-    © <time datetime="2024-09-08 01:53:42 +0000">2024</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2025-07-13 22:25:05 +0000">2025</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2024-09-08 01:53:42 +0000
+    Last build: 2025-07-13 22:25:05 +0000
   </span>
+  <!-- hehehe -->
+  <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">
 </footer>
 
 <script src="/assets/simple-jekyll-search.min.js"></script>
