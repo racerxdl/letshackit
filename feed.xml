@@ -1,4 +1,593 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://lucasteske.dev/feed.xml" rel="self" type="application/atom+xml" /><link href="https://lucasteske.dev/" rel="alternate" type="text/html" hreflang="en" /><updated>2025-07-13T22:25:05+00:00</updated><id>https://lucasteske.dev/feed.xml</id><title type="html">Lets Hack It</title><subtitle>Sou Lucas Teske, gosto de Eletrônica, Computação, Física.  Todos os hacks que eu fizer, serão colocados aqui. Aceito sugestões :D</subtitle><author><name>Lucas Teske</name><email>letshackit@nvx.li</email></author><entry><title type="html">NAND Flash Memory Analysis and Decoding - Unveiling ECC Scattering in Unknown Devices</title><link href="https://lucasteske.dev/2024/01/decoding-and-analysis-nand-flash" rel="alternate" type="text/html" title="NAND Flash Memory Analysis and Decoding - Unveiling ECC Scattering in Unknown Devices" /><published>2024-01-16T23:48:00+00:00</published><updated>2024-01-16T23:48:00+00:00</updated><id>https://lucasteske.dev/2024/01/decoding-and-analysis-nand-flash</id><content type="html" xml:base="https://lucasteske.dev/2024/01/decoding-and-analysis-nand-flash"><![CDATA[<h2 id="exploring-nand-memories">Exploring NAND Memories</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://lucasteske.dev/feed.xml" rel="self" type="application/atom+xml" /><link href="https://lucasteske.dev/" rel="alternate" type="text/html" hreflang="en" /><updated>2025-09-05T22:00:40+00:00</updated><id>https://lucasteske.dev/feed.xml</id><title type="html">Lets Hack It</title><subtitle>Sou Lucas Teske, gosto de Eletrônica, Computação, Física.  Todos os hacks que eu fizer, serão colocados aqui. Aceito sugestões :D</subtitle><author><name>Lucas Teske</name><email>letshackit@nvx.li</email></author><entry><title type="html">Running code in a PAX Credit Card Payment Machine (part1)</title><link href="https://lucasteske.dev/2025/09/running-code-in-pax-machines" rel="alternate" type="text/html" title="Running code in a PAX Credit Card Payment Machine (part1)" /><published>2025-09-05T19:30:00+00:00</published><updated>2025-09-05T19:30:00+00:00</updated><id>https://lucasteske.dev/2025/09/running-code-in-pax-machines</id><content type="html" xml:base="https://lucasteske.dev/2025/09/running-code-in-pax-machines"><![CDATA[<h2 id="disclaimer">Disclaimer</h2>
+
+<p><strong>All procedures described here were done with public available stuff</strong> - No security flaws were actually explored here to get code execution. The processor swap technique <strong>does not bypass the tamper protections neither allow a fake machine to actually emit payments.</strong></p>
+
+<p>Brazilian credit card payment machines <em>usually</em> are in state of the art regarding security measures. I remember once a Elavon employee told me that <strong>Brazil got all the first releases of payment machines and systems</strong>. When asked why, he said: <strong>frauds in Brazil are sophisticated enough, that if the system is secure enough to Brazil, it works for anywhere in the world</strong>.</p>
+
+<p>In the future, I will make an article about the security measures that both, MegaHunt, PAX and Brazilian companies implement in their machines to avoid systems to be tampered with.</p>
+
+<p>If you’re sharing / commenting over this article, please put the same disclaimer there. I don’t mind using information here to make new articles, but Brazil suffers a <strong>lot</strong> with fake news (specially involving security hardware made here) and someone can think that makes it possible to hack their credit cards or accounts (you know, people lacking the knowledge to actually understand whats involved).</p>
+
+<h3 id="head-notes">Head Notes</h3>
+
+<p>This article is sort of incomplete. I will still publish the reverse engineering of the boot rom and how I created an emulator to better map out what the firmares do. Here I just mention briefly that I did an emulator and I think that deserves its own article. I will update this head note when they’re published.</p>
+
+<p>I want to thank <a href="https://www.linkedin.com/in/gutem/">Gutem</a> and <a href="https://www.instagram.com/penegui">Penegui</a> for a quick technical review of the tech content of the article, and Pag, which gave a really fast and friendly response when I sent to them. A short timeline is provided at bottom of this page.</p>
+
+<h2 id="credit-card-payment-machines">Credit card payment machines</h2>
+
+<p>Here in Brazil, there are several companies that act as payment gateways and these sort of stuff. I would guess the biggest ones are <a href="https://pagbank.com.br/">PagSeguro</a> and <a href="https://mercadopago.com.br/">MercadoPago</a>. While PagSeguro is originally from Brazil, MercadoPago is from Argentina and came from a completely different business (MercadoLivre, which is basically the south american equivalent of eBay).</p>
+
+<p>There are also lots of banks that also has payment machines nowadays, but I would guess most of them, if not all, buy the machines from a Brazilian manufacturer called <a href="https://www.tectoy.com.br/">TecToy</a> (which was previously done only by <a href="https://www.transire.com/">Transire</a>, but now they’re merged into the same company).</p>
+
+<p>I find it funny, because TecToy is a toy maker, but they are huge and old and basically one of the few surviving companies that <strong>actually make hardware</strong> in Brazil. Nonetheless to say, the machines are not designed by them, but most by Chinese OEM. Mostly nowadays, its either <a href="https://www.paxglobal.com.hk/">PAX</a> or <a href="https://www.sunmi.com/">Sunmi</a>.</p>
+
+<p>In Brazil, its very easy and cheap to buy them basically anywhere, easiest ones are from the companies I described above (Pag and MP). For example, for PagSeguro, you can find them in their website.</p>
+
+<p>Just for a reference, by the time I wrote this article, US$1 ~ R$5,48 so most of these machines are under US$20, which is cheap even for Brazilian standards by the hardware they posses.</p>
+
+<p>Mercado pago is a bit more expensive, but easier to buy since you can just go to their normal market place (Mercado Livre) which is like EBay and buy the machines (see <a href="https://lista.mercadolivre.com.br/maquina-de-cart%C3%A3o#D[A:Maquina%20de%20Cart%C3%A3o]">https://lista.mercadolivre.com.br/maquina-de-cart%C3%A3o#D[A:Maquina%20de%20Cart%C3%A3o]</a> )</p>
+
+<p>In short: they are usually PAX based machines, with same “Operating System” but custom application which are totally different beast between then. Additionally, Pag also does “Merchant OEM” and <strong>lots</strong> of payment companies that offer machines actually use a unbranded Pag machine and use their API for doing all the stuff (so for any Brazilians reading this, if you buy a machine that’s not from MP or Pag, chances are, its from Pag anyways).</p>
+
+<p>For sake of simplicity, these machines correspond to these PAX ones:</p>
+
+<ul>
+  <li>Mini Chip 3 - PAX D188 (Baremetal)</li>
+  <li>Moder Plus 2 - PAX D195 (Linux OS)</li>
+  <li>Moder Pro 2 - PAX Q92S (Linux OS)</li>
+  <li>Mini NFC 2 - PAX D177 (Baremetal)</li>
+  <li>Mini Smart 2 - Sunmi P2 (Android)</li>
+</ul>
+
+<p>For this article, I decided to use the Mini NFC 2, which is a simple and cheap PAX D177. Worth notice, that even though the Chip 3 (D188) looks way more advanced, it has basically the same hardware as D177, but an additional LTE Modem and a bigger screen. Firmware that runs on both <strong>are basically the same</strong>.</p>
+
+<h2 id="first-works-and-identifying-stuff">First works and Identifying stuff</h2>
+
+<p>So usually for reversing secure hardware, I buy <strong>at least</strong> three machines when possible. Usually it goes like:</p>
+
+<ol>
+  <li>Will open, let every single protection trip on it</li>
+  <li>Will use to <strong>try</strong> bypass protections (if needed to my objective)</li>
+  <li>Will keep as is, for comparing with a working machine.</li>
+</ol>
+
+<p>In that specific scenario, I just wanted to run DOOM on them, just because, if it computes, it needs DOOM.</p>
+
+<p>I had previous experience reverse engineering these machines, so most of the article is just an example how I would do it (for this article, it actually took me few years to get to the current state) and how I remember I did. So I was expecting:</p>
+
+<ol>
+  <li>Heavy security
+    <ol>
+      <li>Tamper protection</li>
+      <li>Clock Glitching protection</li>
+      <li>RNG Manipulation protection</li>
+      <li>Code signatures</li>
+      <li>Code encryption</li>
+    </ol>
+  </li>
+  <li>Lots of frustration</li>
+</ol>
+
+<p>I could go into two ways for code running: Exploiting it, swapping CPU. For exploiting it, I would need to find a flaw that allowed to execute code through Bluetooth, Smartcard, NFC or USB. These are the only interfaces. For that, I would need to have the entire code, and as we will see, that was sort of not possible.</p>
+
+<p>Second way, would be to get whatever CPU was in the board, remove it and install a new and unfused one. The problem with that, is to actually find the CPU to sell anywhere.</p>
+
+<p>So either way, I would need to open the machine and identify stuff.
+Just for the reference, the machine was this one:</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/cb3d6416e80906d1e1a3cfa7c27ec46c_MD5.jpeg" alt="" /></p>
+
+<p>On the back side, there are few screws which are easily removed. I usually do this with the <strong>machine turned on</strong>. So I can see which actions would trigger the tamper protection.</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/942368afcd3a8b5c2f6280b0686279ad_MD5.jpeg" alt="" />
+Removing the screws does not trigger the tamper protection, but removing the case does. In the picture below, you can see the case removed, and I highlighted two of the tamper detection points.</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/9a88c682e238fdb16c61122c76c2e14c_MD5.jpeg" alt="" />
+on the back side of the case, there is some carbon-rubber points that touch these tamper points in the PCB. It works exactly the same as video game consoles controller buttons, but in this case, they just ensure the “button is always pressed”.</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/3744913eb7cc7b866b64eb363d6fbbe5_MD5.jpeg" alt="" /></p>
+
+<p>And for some reason, the machine decided to tell us which one of the tampers we triggered :)</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/9b728a005ceb00f991633d8d6ece65ed_MD5.jpeg" alt="" />
+Also this resets over boot, do if you bridge them, you can use it to identify the names of each tamper point hehe.</p>
+
+<p>So in this bottom part, we can see some stuff. There is the round coin cell battery in the left, and there is a big boring green PCB. They’re basically over the card reader and all the core circuits.</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/4454b7008ef72e53db283abd4afafb86_MD5.jpeg" alt="" /></p>
+
+<p>Although this PCB looks boring, don’t get fooled by it. That’s basically a 4 layer PCB with a DENSE mesh inside it. Any damage or removal will trigger another tamper point. Just for quick reference, this is a scan of the PCB:</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/930418d0ee33dd3362d0ac27de43fa8e_MD5.jpeg" alt="" /></p>
+
+<p>Removing all the plastic stuff, we reach the main PCB:
+<img src="/assets/Running code in a PAX Credit Card Payment Machine/1d47f48f4cf614dd72e26c37c839895c_MD5.jpeg" alt="" /></p>
+
+<p>There is lot of stuff, but the stuff that we care in the bottom.
+<img src="/assets/Running code in a PAX Credit Card Payment Machine/e808d21c32ba0866a386d155077709e4_MD5.jpeg" alt="" /></p>
+
+<p>Here we can see some interesting stuff:</p>
+
+<ul>
+  <li>MH1903 - Our main SoC (CPU)</li>
+  <li>NXP 8035S - Smartcard Interface PHY</li>
+  <li>FM17660 - NFC Reader</li>
+  <li>XM25Q65 - 16MB SPI Flash Memory</li>
+</ul>
+
+<p>(And as you guessed, we trigger about every tamper point in the back)</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/55e76a7d0d22410d56bada5afad18bd8_MD5.jpeg" alt="" /></p>
+
+<p>The flash memory, we can dump it. I have both tampered and untampered dumps from it. Bypassing tamper is left as exercise for the reader :). But if you just want to understand how it works, you can just dump as is, since the tamper doesn’t actually erase the entire flash, but just some parameters for communicating with the payment servers.</p>
+
+<p>I was expecting always that the flash would be encrypted, but it isn’t. Still, we can’t change its contents since its signed (everything is signed basically) so we can use it for reverse engineering but not for code execution. But its neat that it is a 16MB flash, so it fits a entire DOOM WAD file :D</p>
+
+<h2 id="what-we-know-about-mh1903">What we know about MH1903</h2>
+
+<p>So here is where things get REALLY annoying. This SoC is actually behind a curtain of obscurity. The core is done by MegaHunt, which only provides this as information:</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/cf4f007fbd8b87c83cb0e4f3c3560cc7_MD5.jpeg" alt="" />
+(see <a href="https://www.megahuntmicro.com/en/index.php?catid=5">https://www.megahuntmicro.com/en/index.php?catid=5</a> )</p>
+
+<p>Digging it a bit deeper in google, we can find few suppliers that has more info. It has <strong>lots</strong> of variants, but in short their core is the same, just changing exposed pins and/or flash/ram inside the SoC. That specific one, is the QFN88 version which has the following specs:</p>
+
+<ul>
+  <li>RAM: 1MB</li>
+  <li>FLASH: 1MB</li>
+  <li>SPI: 4</li>
+  <li>ADC: 5</li>
+  <li>DAC: 1</li>
+  <li>GPIO: 64</li>
+  <li>USB: 1</li>
+  <li>Serial: 4</li>
+</ul>
+
+<p>As you can see, there is an internal flash which is a pity for me. I’m still building my gear to be able to probe directly to the flash. I already did some decaps, and the flash isn’t embedded in the main silicon, but just glued over the main die and bound wired to it. I heard from some people from semiconductor industry that this is because its very hard to do flash and CPU in the same process, at least with decent enough density, so its usually preferable (and cheaper) to make them separated.</p>
+
+<p>One thing worth noticing though, the BGA versions does not have embedded flash, so their program are loaded from external flashes. Spoiler alert: the D188 has two flash memories onboard :)</p>
+
+<p>Also there is the MH1903S variant with has a beefy spec on flash but less RAM and less GPIO / SPI</p>
+
+<ul>
+  <li>RAM: 640KB</li>
+  <li>FLASH: 4MB</li>
+  <li>SPI: 3</li>
+  <li>ADC: 6</li>
+  <li>DAC: 1</li>
+  <li>GPIO: 56</li>
+  <li>USB: 1</li>
+  <li>Serial: 3</li>
+</ul>
+
+<p>So google didn’t had much information, although I did found some SDKs around github (mostly mirrored from chinese git) and I had to search in Baidu. So this part took a very long time, since lots of information are not available outside mainland china, and since there is several variants of MH1903, I got several datasheets with conflicting information. Also most of them I had to pay for accessing it on CSDN, which luckily there are some brokers that does that for you. In the foot of this page there is a note with a link to all datasheets I could find so if you ever need, there is there. Just be warned: lots of conflicted info and it seens some wrong and omitted stuff is everywhere.</p>
+
+<p>So how did I test my assumptions? Well, I found <em>by a chance</em> that there is a arduino like chinese board from LUAT that uses an SoC called AIR105, it seens boring, but some of my baidu search pointed out that AIR105 actually uses a MH1903S core. The AIR105 are also available in aliexpress very easily to buy: <a href="https://s.click.aliexpress.com/e/_oBLNTrc">https://s.click.aliexpress.com/e/_oBLNTrc</a></p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/427a383619233fb72eef5161e05511e8_MD5.jpeg" alt="" /></p>
+
+<p>I bought a few, decaped one and guess what. it is indeed a MH1903S :D</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/9138886ea831b06c18888099fd0e26a6_MD5.jpeg" alt="" />
+As a reference, when I decaped one of t he SoC from the machine, the writing was 1903A:
+<img src="/assets/Running code in a PAX Credit Card Payment Machine/feb55758da95a7ecb62f02451c058606_MD5.jpeg" alt="" />
+Also, remember when I said flash memory is glued over the main die? Here is a shot showing both of them (sorry, I didn’t made a focus stacking). Flash memory is the one out of focus in the right. Bound wires are dead because I used 78% Nitric Acid and they’re copper ones.
+<img src="/assets/Running code in a PAX Credit Card Payment Machine/551efee7006a314cf9d0b9257bb61edc_MD5.jpeg" alt="" />
+<img src="/assets/Running code in a PAX Credit Card Payment Machine/4fd85cc5f052df9b22c267e7559b0af5_MD5.jpeg" alt="" />
+So basically, we could assume they’re similar at least. Their datasheets also tell about the same thing (seems like the only different is actually flash + ram)</p>
+
+<p>The block diagram for this CPU is described in datasheet, and this is basically the only info that matches across <strong>all</strong> datasheets I’ve found:</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/8cd0cc82e5b752464a0617442e0c765f_MD5.jpeg" alt="" /></p>
+
+<p>So SC300 is actually a ARM spec called SecurCore. Its a Cortex M3 (in case of MH190x is a M4F) with some security enhancements. For example, although they’re 32 bit simple ARMs, they have security boundaries between OS &lt;&gt; App which are configured in memory controller registers (primitive version of TrustZone). It also follows some standards that are only available under NDA, and I can only guess what they’re. Just for quick reference: The CPUs inside your credit cards, follow the exact same specification.</p>
+
+<p>Datasheets also specifies some memory maps, which at least all datasheets agree, although its <strong>clearly</strong> not everything the device has. For example, MH claims that CPU has hardware acceleration for RSA, AES, hashes and stuff, but there is nothing in memory map of the datasheet. I found out later, that they’re just being obscure or require a NDA to that. I will eventually map everything by reverse engineering apps I dumped and some SDK with binaries I found over the internet. Also please let me know if these addresses matches any target arch you actually played with. I couldnt find anything, so it seens not a direct clone of any existing SoC in the market (I speculated a STM32 or ATSAMD but they dont match).</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Address Range</th>
+      <th>Peripheral name</th>
+      <th>Bus Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x4000_0000-0x4000_03FF</td>
+      <td>SSC</td>
+      <td>AHB</td>
+    </tr>
+    <tr>
+      <td>0x4000_0800-0x4000_0BFF</td>
+      <td>DMA</td>
+      <td>AHB</td>
+    </tr>
+    <tr>
+      <td>0x4000_0C00-0x4000_0FFF</td>
+      <td>USB</td>
+      <td>AHB</td>
+    </tr>
+    <tr>
+      <td>0x4000_1000-0x4000_13FF</td>
+      <td>LCD</td>
+      <td>AHB</td>
+    </tr>
+    <tr>
+      <td>0x4000_8000-0x4000_BFFF</td>
+      <td>OTP</td>
+      <td>AHB</td>
+    </tr>
+    <tr>
+      <td>0x4006_0000-0x4006_FFFF</td>
+      <td>DCMI</td>
+      <td>AHB</td>
+    </tr>
+    <tr>
+      <td>0x4008_0000-0x4008_FFFF</td>
+      <td>CACHE</td>
+      <td>AHB</td>
+    </tr>
+    <tr>
+      <td>0x400A_2000-0x400A_2FFF</td>
+      <td>QSPI</td>
+      <td>AHB</td>
+    </tr>
+    <tr>
+      <td>0x400A_3000-0x400A_3FFF</td>
+      <td>SPIM5</td>
+      <td>AHB</td>
+    </tr>
+    <tr>
+      <td>0x4001_0000-0x4001_0FFF</td>
+      <td>SCI0</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_2000-0x4001_2FFF</td>
+      <td>CRC</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_3000-0x4001_3FFF</td>
+      <td>Timer0</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_4000-0x4001_4FFF</td>
+      <td>ADC</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_5000-0x4001_5FFF</td>
+      <td>SCI2</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_6000-0x4001_6FFF</td>
+      <td>UART0</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_7000-0x4001_7FFF</td>
+      <td>UART1</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_8000-0x4001_8FFF</td>
+      <td>SPIM1</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_9000-0x4001_9FFF</td>
+      <td>SPIM2</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_A000-0x4001_AFFF</td>
+      <td>SPIM0</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_B000-0x4001_BFFF</td>
+      <td>SPIS0</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_C000-0x4001_CFFF</td>
+      <td>Watchdog</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_D000-0x4001_DFFF</td>
+      <td>GPIO</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_E000-0x4001_EFFF</td>
+      <td>TRNG</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_F000-0x4001_FFFF</td>
+      <td>SYS_CTRL</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4002_0000-0x4002_FFFF</td>
+      <td>MSR</td>
+      <td>APB1</td>
+    </tr>
+    <tr>
+      <td>0x4003_0000-0x4003_7FFF</td>
+      <td>BPU</td>
+      <td>APB2</td>
+    </tr>
+    <tr>
+      <td>0x4004_4000-0x4004_4FFF</td>
+      <td>UART2</td>
+      <td>APB3</td>
+    </tr>
+    <tr>
+      <td>0x4004_5000-0x4004_5FFF</td>
+      <td>UART3</td>
+      <td>APB3</td>
+    </tr>
+    <tr>
+      <td>0x4004_8000-0x4004_8FFF</td>
+      <td>KEYBOARD</td>
+      <td>APB3</td>
+    </tr>
+    <tr>
+      <td>0x4004_9000-0x4004_9FFF</td>
+      <td>I2C0</td>
+      <td>APB3</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>RAM is mapped in the usual place for most of these ARM Cortex chips. They’re based on 0x2000_0000, and span up to the max size (640KB for MH1903S and 1MB for MH1903). The bit bands are also in the places we expected, being 0x2200_0000  for the SRAM. There are also more devices there, that I didn’t wrote here. These will have their own article after I finish mapping it everything I can.</p>
+
+<p>The main MH1903S datasheet shows two variants of the QFN88, one having a <code class="language-plaintext highlighter-rouge">_J</code> suffix. The non J has a internal 3.3V regulator which is very handy for boards like the AIR105. By reverse engineering the D177 machine board, it seems like the pin-out almost exactly matches the J variant. We will see later, that I had a hard time because I assumed that the datasheet would be correct.</p>
+
+<h2 id="finding-out-how-things-are-wired">Finding out how things are wired</h2>
+
+<p>So first thing, I need to figure out <strong>at least</strong> where the UART is wired (if wired). I know the USB is wired to the hardware USB (since pins are fixed) but for some reason, I don’t see the boot rom up in the USB so I must find the direct UART.</p>
+
+<p>UART pins are usually exposed for diagnostics during manufacturing, either that or JTAG. JTAG (or more specific here, SWD) in case of this device is disabled during boot, so I decided to not waste much time finding it in the board.</p>
+
+<p>So how to start finding things on the board? Well I usually like to remove <strong>all</strong> components from the board and make a nice scan of it (using normal paper scanners). Then I overlay the pinout of the CPU and “trace back”. A nice application to do that is <a href="https://inkscape.org/">Inkscape</a>. It allows you to draw stuff vector based, and scanned images has 1:1 size match with real world (in case you need measurements).</p>
+
+<p>Then I draw the pads as gray rectangles, name them:</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/bacf2a2ebe249871db70adb98d4fa2b7_MD5.jpeg" alt="" />
+I usually like to mark vias as well, since these boards are multilayred and you probably will need it to fully follow the tracks:</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/fdeaa9034f0f2a2217c7d55f05e2e6f4_MD5.jpeg" alt="" />
+For example this TX/RX tracks passes through the front of the PCB as well (don’t mind the misalignment, not sure why the image currently is like that)</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/652fd1331e348c4861938eadf3f0a824_MD5.jpeg" alt="" />
+After following it through, I reached 2 of the 5 test pads in the right corner of the backside of the PCB, which I also marked in inkscape.
+<img src="/assets/Running code in a PAX Credit Card Payment Machine/985831c28a29ecc016e52f876980476a_MD5.jpeg" alt="" />
+So now that I had the UART, I could use it to reprogram the machine after a CPU Swap.
+And for those who are wondering: this UART, application wise, is the same as the USB port and Bluetooth so no leaky stuff (usually) is there, but the same thing the mobile application acesses it. And if it does, you don’t actually need to open it, since Bluetooth / USB will leak it the same.</p>
+
+<h2 id="cpu-swap">CPU Swap</h2>
+
+<p>So one of the easiest ways I could get code running and skip requiring bypassing the secure boot of the MH devices is by just getting the CPU and swap. Some might consider this a vulnerability, although I personally don’t consider it: Even if someone gets hand in the entire code for the machines, there are still the keys and data loaded into the NVRAM which are used for the card transactions. I already saw some cases few years ago that the keys were actually stored inside the flash memory (so if you nuke the CPU before the tamper detect, you retain everything). That’s not the case of these machines.</p>
+
+<p>Sadly these MH1903 devices are pretty rare to buy outside mainland china. From time to time they appear in Aliexpress as well. Here is an affiliate link: <a href="https://s.click.aliexpress.com/e/_oBMot6n">https://s.click.aliexpress.com/e/_oBMot6n</a> although it might be dead when you check this out (since they’re pretty rare).</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/c94d5244a68733e5cfbec91c6f08f5f0_MD5.jpeg" alt="" /></p>
+
+<p>So its a bit expensive, R$34 (CPU) + R$15 (TAX) per device, plus R$28 shipping. I bought 5 of them just in case which was about R$150 (US$28) with the shipping.</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/edad8e809adbb209bf4eca20043fd1dd_MD5.jpeg" alt="" />
+Few years ago I tried swapping the CPU in that machine without any success. So I thought the issue was that the variant I had wasnt the J but the same as AIR105 (which would sort of make sense) and that made me sad. But I decided to try swap one of the AIR105 for that one just to dump the bootloader (more bootloaders = more info)</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/8fabf3473c8ee086fdea127b537c4ef6_MD5.jpeg" alt="" /></p>
+
+<p>After trying to that, I noticed the board was fully dead. No power besides the +5V. After swapping two boards I remember something I saw in the datasheet:</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/725ff8aa056e6d095a4ac1ea1882fa1a_MD5.jpeg" alt="" /></p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/839cea0de243ff5cc485a19e6a0fb849_MD5.jpeg" alt="" />
+One of the differences between the J and non J version, is that the <strong>non J</strong> version (in this case AIR105) had an internal 3.3V LDO. And checking the schematics of the AIR105 board, guess what? No regulator onboard, everything was powered from the LDO.</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/87356f1a4622aa38a746dd5676123bf5_MD5.jpeg" alt="" /></p>
+
+<p>So it would make sense that the board doesn’t have any power at 3.3V, since the J version does not have it. So I decided to give another try swapping the CPU on the D177 board. For that, I decided a fully fresh start: new machine with the box just open and a not used MH1903 CPU. The result? Nothing from the board. Not on UART, not on USB (and there should be both activity).</p>
+
+<p>Basically what happened is that, the boot rom never answered to handshake calls, which was odd. So I decided to give a try on the AIR105 board, just to notice that the board actually had to be reset by toggling the RTS signal in the serial port.</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/fd96942840f9a3924a76e5d843ee88a2_MD5.jpeg" alt="" />
+So that made me wonder: How was it resetting the board? By looking at the pin-out, there is no reset button. But looking at AIR105 board schematic, we see a interesting thing:</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/217023812ae3d8552e72a67306105efa_MD5.jpeg" alt="" /></p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/0c7f3862853471f760b69c71098168a4_MD5.jpeg" alt="" /></p>
+
+<p>Basically, the board didn’t had any coin-cell battery where it should, just a capacitor for emulating the board (the XH311H battery in the schematic, is just a not populated connector in the board), and what the reset pin actually did, was to <strong>short it out</strong> the power supply at that pin, making it 0V. And guess what? The datasheet told me all the time, but my lack of Chinese reading skills just bypassed it 😆</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/7a75d13b7c4758f46f7c29717f7907cd_MD5.jpeg" alt="" />
+For those (like me) which is very rusty in Chinese, the marked text says basically: Battery power supply, must be powered otherwise the chip cannot work.</p>
+
+<p>So I investigated a bit the boot rom (I will post more details about the reverse engineering of that chip boot rom later) and I noticed that what happens is that, when the VBAT33 signal drops below about 2.3V, it triggers a tamper in the CPU. The way CPU deals with tamper is to actually reset itself, which in turn wipes the secure NVRAM and set some registers that can be checked by the boot rom or application. So basically, the reset button of the AIR105 is basically a tamper button 😆</p>
+
+<p>So looking at the D177 PCB, there is no specific test pad to actually act as a reset, but usually to avoid spending the coin cell battery energy when the power is supplied there is a series diode which I can use for soldering my reset wire. By tracing the pads I could find that the diode was in edge of the board.</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/ea6eb39aabf1f914c71bda9f6eb79907_MD5.jpeg" alt="" /></p>
+
+<p>So I just soldered a wire there, open my <a href="https://github.com/racerxdl/air105-uploader/">air105-uploader</a> program and manually set it to GND and <strong>PROFIT</strong></p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/a4da09ed6fa71e3bd9b38a0097594756_MD5.jpeg" alt="" />
+Now I could run code in the real machine!</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/3247c212e1baa37421f763ede653c022_MD5.jpeg" alt="" /></p>
+
+<h2 id="building-code-to-it">Building code to it</h2>
+
+<p>I won’t get into much detail here (since this article is already getting bigger than I expected) but the TL;DR: LuatOS provides a way to build stuff, and has a “boiler plate” for initializing all the lua stuff. The CPU itself is a ARM Cortex so its easily buildable by GCC, just requiring a custom linker script to stitch everything in the right place.</p>
+
+<p>Basically, I reused about everything I did for the AIR105, just changed the linker-script to be aware that MH1903 actually has 1MB of RAM instead 640KB. For making it easier to use, I created some <a href="https://platformio.org/">platform.io</a> libs that you can use directly.</p>
+
+<p>If you want to try it, just install it through pip</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install</span> <span class="nt">-U</span> platformio
+</code></pre></div></div>
+
+<p>Then you can create a new project:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir </span>my-project <span class="o">&amp;&amp;</span> <span class="nb">cd </span>my-project
+pio init
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The following files/directories have been created in /tmp/m
+include - Put project header files here
+lib - Put project specific (private) libraries here
+src - Put project source files here
+platformio.ini - Project Configuration File
+Project has been successfully initialized!
+</code></pre></div></div>
+
+<p>After that, you can just edit platformio.ini to map it to use the air105 platform:</p>
+<div class="language-toml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[env:air105]</span>
+<span class="py">platform</span> <span class="p">=</span> <span class="err">https://github.com/racerxdl/platformio-air</span><span class="mi">105</span>
+<span class="py">board</span> <span class="p">=</span> <span class="err">mh</span><span class="mi">1903</span>
+<span class="py">framework</span> <span class="p">=</span> <span class="err">baremetal</span>
+<span class="py">;monitor_port</span> <span class="p">=</span> <span class="err">SERIAL_PORT</span>
+<span class="py">;monitor_speed</span> <span class="p">=</span> <span class="mi">115200</span>
+<span class="py">monitor_rts</span> <span class="p">=</span> <span class="mi">0</span> <span class="err">;</span> <span class="err">AIR</span><span class="mi">105</span> <span class="err">board</span> <span class="err">has</span> <span class="err">inverted</span> <span class="err">RTS</span>
+<span class="py">build_flags</span> <span class="p">=</span> <span class="err">-g</span> <span class="err">-ggdb</span>
+</code></pre></div></div>
+
+<p>You can change <code class="language-plaintext highlighter-rouge">board</code> parameter between <code class="language-plaintext highlighter-rouge">mh1903</code> and <code class="language-plaintext highlighter-rouge">air105</code> depending on what you’re targeting. The MH1903 is the 1MB variant, so code will crash on AIR105 due stack being positioned at the end of RAM space.</p>
+
+<p>And for running:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pio run <span class="nt">-t</span> upload
+</code></pre></div></div>
+
+<p>This should build and upload (using the air105-uploader) directly. It will also download any toolchain and libs needed to do so. You can also add <code class="language-plaintext highlighter-rouge">-t monitor</code> to spawn a serial console and see the return from the machine.</p>
+
+<p>The source code for the framework and platform on platform.io links are in the end of this article.</p>
+
+<h2 id="magic-stuff">MAGIC STUFF</h2>
+
+<p>So, this article is getting huge and I feel lots of details will be badly written if I keep pushing content here. After all, this is like a 4 years+ research project. So I will eventually write two more articles about how I did map some magic stuff.</p>
+
+<p>When I say magic stuff, next sections of this article will assume we know how the LCD is wired to the CPU, which I initially guessed it was in the same port as  the flash memory we saw in the PCB. TL;DR it is, but not the Chip Select, neither the LCD backlight control, and these were not trivial to find since the LCD pinout is non-standard and I couldn’t find any datasheet of it.</p>
+
+<p>I did emulate the firmware to figure out some stuff (other stuff was just looking at decompiled sections) and the magic stuff I discovered is that the pins that control the LCD, are mapped into a GPIO that <strong>does not exists</strong> according to the datasheet 😃 (Spoiler, there are <strong>two</strong> undocumented GPIOs and few other stuff)</p>
+
+<p>For now, let’s just pretend I wrote a nice article on how I did those. I promise I will write a new one with details on the reverse engineering and the details on how I made an emulator for it (that could even show the LCD images) 👀</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/e129a7f1554e79536be3ca8d71fe03d9_MD5.jpeg" alt="" /></p>
+
+<h2 id="making-the-crasharalho">Making the “crasharalho”</h2>
+
+<p>The “crasharalho” is a sticker I use a lot in discord and telegram. “Caralho” is sort of the portuguese equivalent of “fuck” in the sense “OMG”. So the Crash Bandicoot screaming it on the machine, seem a perfect fit.</p>
+
+<p>Making it was easy, just created a 160x128 image in GIMP and stamped the sticker there.</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/67e6e21e4aca4b6c3ceeb47bf2b57530_MD5.jpeg" alt="" />
+Gimp is also nice that it can export directly to a C header, sort of compressed with a macro to actually get each R,G,B pixel values. So it was pretty easy to convert it.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* GIMP header image file format (RGB): include/crasharalho.h */</span>
+
+<span class="k">static</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">160</span><span class="p">;</span>
+<span class="k">static</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">128</span><span class="p">;</span>
+
+<span class="cm">/* Call this macro repeatedly. After each use, the pixel data can be extracted */</span>
+
+<span class="cp">#define HEADER_PIXEL(data,pixel) {\
+pixel[0] = (((data[0] - 33) &lt;&lt; 2) | ((data[1] - 33) &gt;&gt; 4)); \
+pixel[1] = ((((data[1] - 33) &amp; 0xF) &lt;&lt; 4) | ((data[2] - 33) &gt;&gt; 2)); \
+pixel[2] = ((((data[2] - 33) &amp; 0x3) &lt;&lt; 6) | ((data[3] - 33))); \
+data += 4; \
+}
+</span>
+<span class="k">static</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">header_data</span> <span class="o">=</span>
+
+<span class="s">")#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A"</span>
+
+<span class="s">")#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A"</span>
+<span class="p">(...)</span>
+</code></pre></div></div>
+
+<p>The ST7735 LCD the machine uses has several pixel modes. I decided to use RGB565 since that would be exactly 16 bit wide (which gives two bytes over SPI) and easy to convert. I was lazy, so I used a local LLM to generate a macro to convert it, which worked pretty good (I didn’t remember how to convert the spaces, were not sure if was just cutting bits or actually a LUT)</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define RGB888_TO_RGB565(r, g, b) ( \
+(((r) &amp; 0xF8) &lt;&lt; 8) | </span><span class="cm">/* 5 bits of red, shifted to bits 15-11 */</span><span class="cp"> \
+(((g) &amp; 0xFC) &lt;&lt; 3) | </span><span class="cm">/* 6 bits of green, shifted to bits 10-5 */</span><span class="cp"> \
+(((b) &amp; 0xF8) &gt;&gt; 3) </span><span class="cm">/* 5 bits of blue, shifted to bits 4-0 */</span><span class="cp"> \
+)
+</span></code></pre></div></div>
+
+<p>LLM generated a bit cut, and it worked nice. So I left as is.  Then I could just send it in the code directly:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="p">{</span>
+        <span class="c1">// 0x2C RAMWR</span>
+        <span class="n">SendCMD</span><span class="p">(</span><span class="n">LCD_SPI</span><span class="p">,</span> <span class="mh">0x2C</span><span class="p">);</span>                <span class="c1">// RAMWR</span>
+        <span class="n">P15_ON</span><span class="p">;</span>
+        <span class="kt">uint8_t</span> <span class="n">rgb</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+        <span class="c1">// Fill the screen with white color // 16 bit mode</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">160</span> <span class="o">*</span> <span class="mi">128</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">HEADER_PIXEL</span><span class="p">(</span><span class="n">header_data</span><span class="p">,</span> <span class="n">rgb</span><span class="p">);</span>
+            <span class="kt">uint16_t</span> <span class="n">color</span> <span class="o">=</span> <span class="n">RGB888_TO_RGB565</span><span class="p">(</span><span class="n">rgb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rgb</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">rgb</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+            <span class="n">SendCMDParam</span><span class="p">(</span><span class="n">LCD_SPI</span><span class="p">,</span><span class="n">color</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">);</span> <span class="c1">// Send high byte</span>
+            <span class="n">SendCMDParam</span><span class="p">(</span><span class="n">LCD_SPI</span><span class="p">,</span> <span class="n">color</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">);</span> <span class="c1">// Send low byte</span>
+        <span class="p">}</span>
+        <span class="n">P15_OFF</span><span class="p">;</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>And tested it on my emulator:</p>
+
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/947b71be153e6405b62909b62e93385d_MD5.jpeg" alt="" /></p>
+
+<h2 id="result">Result</h2>
+
+<p><img src="/assets/Running code in a Credit Card Payment Machine/23c966b8036e41fe19f78b38bfa8bf73_MD5.jpeg" alt="" /></p>
+
+<h2 id="next-steps">Next steps</h2>
+
+<p>Running doom, of course :D - I planned of making this article only after doom, but I found out that the 1MB of ram, its sort of low for standard doom. I saw there is a RP2040 port of doom which works great, so I will probably port it to that core.</p>
+
+<p>I still want to reverse engineer about everything I can from these SoCs, since they’re pretty powerful and has nice accelerators which can be used for some other secure stuff. I also managed to dump both MH1903S and MH1903 boot roms which has their own interesting aspects. I almost finished reversing engineering the MH1903S boot rom and I plan to make an article about it soon. It seens like that is several versions of boot roms around (they basically all do the same thing, but has different revisions and builds). So if you stumble across any MH190x device which you can either JTAG it or doesn’t have boot signature enabled. Let me know, lets make an archive of boot roms 😃</p>
+
+<h2 id="notes">Notes</h2>
+
+<ol>
+  <li>There was a bit of research over both PAX and PagBank codes for finding out how it interacts with the hardware. No security flaw was explored and there is nothing they can do about the CPU swapping.</li>
+  <li>There is nothing specific to PagBank in that case. Any D177 should work fine. The work here <strong>is not due a security flaw</strong>.</li>
+  <li>Megahunt does a LOT of “Silicon OEM” (the AIR105 mentioned here is just one of them). Decaps should point out.</li>
+  <li>Besides the boot rom, I don’t share binaries I dumped from machines. I hadn’t reverse engineer enough to know which info they store, and they might contain stuff that should be private. So please don’t ask, you can dump it yourself. Its pretty easy.</li>
+  <li>Following articles will show how I reverse engineered the boot loaders, pax image format and found out how the LCD pins were mapped.</li>
+</ol>
+
+<h3 id="links">Links</h3>
+
+<ul>
+  <li><a href="https://github.com/racerxdl/platformio-air105">https://github.com/racerxdl/platformio-air105</a> - PIO Platform for AIR105/MH1903</li>
+  <li><a href="https://github.com/racerxdl/framework-megahunt">https://github.com/racerxdl/framework-megahunt</a> - PIO Framework for Megahunt devices</li>
+  <li><a href="https://github.com/racerxdl/air105-uploader">https://github.com/racerxdl/air105-uploader</a> - Python script to upload using the boot rom</li>
+  <li><a href="https://archive.org/details/mh-1903-s-v-1.5">https://archive.org/details/mh-1903-s-v-1.5</a> - Some usefull MH1903 datasheets</li>
+  <li><a href="https://github.com/racerxdl/d177-crasharalho">https://github.com/racerxdl/d177-crasharalho</a> - Crasharalho Source Code</li>
+  <li><a href="https://github.com/racerxdl/megahunt-bootroms">https://github.com/racerxdl/megahunt-bootroms</a> - Megahunt Bootroms</li>
+  <li><a href="https://github.com/racerxdl/mhdumper">https://github.com/racerxdl/mhdumper</a> - Megahunt ROM Dumper Tool</li>
+</ul>
+
+<h3 id="timeline">Timeline</h3>
+
+<ul>
+  <li><strong>01/04/2025</strong> - Resumed works on reverse-engineering and mapping</li>
+  <li><strong>17/06/2025</strong> - Got first code running (crasharalho)</li>
+  <li><strong>22/06/2025</strong> - Finished article, sent for peer review (tech-wise)</li>
+  <li><strong>27/08/2025</strong> - Send the article to Pag for review</li>
+  <li><strong>28/08/2025</strong> - Approved by Pag for publishing</li>
+  <li><strong>31/08/2025</strong> - More reviews, translation, etc…</li>
+  <li><strong>05/09/2025</strong> - Published</li>
+</ul>]]></content><author><name>Lucas Teske</name></author><category term="Reverse Engineering" /><category term="Payment Machines" /><category term="Flash" /><category term="PAX" /><category term="Hardware Hacking" /><category term="RE" /><category term="Reverse Engineering" /><category term="D177" /><category term="D188" /><category term="Minizinha" /><category term="Moderninha" /><category term="Smart" /><category term="Sunmi" /><category term="TecToy" /><category term="Transire" /><category term="Megahunt" /><category term="MH1903" /><category term="Air105" /><category term="LuatOS" /><summary type="html"><![CDATA[Disclaimer]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/7383f9c5e7832856c90b25549fb08115_MD5.jpeg" /><media:content medium="image" url="https://lucasteske.dev/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/7383f9c5e7832856c90b25549fb08115_MD5.jpeg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">NAND Flash Memory Analysis and Decoding - Unveiling ECC Scattering in Unknown Devices</title><link href="https://lucasteske.dev/2024/01/decoding-and-analysis-nand-flash" rel="alternate" type="text/html" title="NAND Flash Memory Analysis and Decoding - Unveiling ECC Scattering in Unknown Devices" /><published>2024-01-16T23:48:00+00:00</published><updated>2024-01-16T23:48:00+00:00</updated><id>https://lucasteske.dev/2024/01/decoding-and-analysis-nand-flash</id><content type="html" xml:base="https://lucasteske.dev/2024/01/decoding-and-analysis-nand-flash"><![CDATA[<h2 id="exploring-nand-memories">Exploring NAND Memories</h2>
 
 <p>When in possession of a device whose internals one wishes to understand, accessing the content of the flash memory is not always straightforward. Due to the nature of NAND memories, an error correction algorithm is applied to all content, which can cause unintentional obfuscation of the content. Some manufacturers of processors that directly control NAND-type memories or developers of “protected” software choose to customize the way these algorithms function.</p>
 
@@ -2172,271 +2761,4 @@ These boards are relatively cheap, about US$15 and contains a Lattice ECP5 FPGA 
 
 <p>Final flow:</p>
 
-<p><img src="/assets/posts/medium/1_lEYyYL0REStDYZi7xkGmag.png" alt="Final GNU Radio Flow" /><em>Final GNU Radio Flow</em></p>]]></content><author><name>Lucas Teske</name></author><category term="English" /><category term="Hacking" /><category term="Linux" /><category term="CTF" /><category term="SDR" /><category term="Camera" /><category term="Hacking" /><category term="CTF" /><category term="Hackasat" /><category term="CTF Writeup" /><category term="Satellite" /><category term="SDR" /><category term="GNU Radio" /><category term="Radio" /><summary type="html"><![CDATA[Hack a sat  —  Phasors to Stun]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_R1n7vaNfInOP6BCFXkjv1Q.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_R1n7vaNfInOP6BCFXkjv1Q.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Hack a Sat - Can you hear me now?</title><link href="https://lucasteske.dev/2020/05/hack-a-sat-can-you-hear-me-now/" rel="alternate" type="text/html" title="Hack a Sat - Can you hear me now?" /><published>2020-05-30T01:47:00+00:00</published><updated>2020-05-30T01:47:00+00:00</updated><id>https://lucasteske.dev/2020/05/hack-a-sat-can-you-hear-me-now</id><content type="html" xml:base="https://lucasteske.dev/2020/05/hack-a-sat-can-you-hear-me-now/"><![CDATA[<h1 id="hack-a-satcan-you-hear-me-now">Hack-a-sat — Can you hear me now?</h1>
-
-<p>That challenged asked us to decode a Telemetry data that was being sent over a TCP port. If you open the netcat, the following happen:</p>
-
-<p><img src="/assets/posts/medium/1_WTSv1hH_Rbrc98-SLlmUOw.png" alt="" /></p>
-
-<p>Then if you connect to the Telemetry Service using netcat:</p>
-
-<p><img src="/assets/posts/medium/1_7DSxuzMFhO7bWNiUofvCZQ.png" alt="" /></p>
-
-<p>In the provided zip file there is a telemetry.xtce file which is a XML file that tells us how the binary packet is encoded. A quick search over the internet lead me to the Wikipedia: <a href="https://en.wikipedia.org/wiki/XML_Telemetric_and_Command_Exchange">https://en.wikipedia.org/wiki/XML_Telemetric_and_Command_Exchange</a></p>
-
-<p>It is defined in the CCSDS Green Book (the spec <a href="https://public.ccsds.org/Pubs/660x0g1.pdf">https://public.ccsds.org/Pubs/660x0g1.pdf</a> )</p>
-
-<p>The file has several sections. I will describe a few of them:</p>
-
-<ul>
-  <li><strong>ParameterTypeSet</strong> — Describes the type of parameters to be used in the protocol definition</li>
-  <li><strong>ParameterSet</strong> — Describes parameters to be used in protocol definition</li>
-  <li><strong>ContainerSet</strong> — Describes the structures inside the protocol</li>
-</ul>
-
-<p>We will get back to them afterwards. I’m bit lazy to check the whole spec since it should be straightforward to read directly the XTCE. I usually find that when it comes to Aerospace Stuff (Sorry NASA and friends) <strong>it’s easier to reverse engineer</strong> than read the docs. So I just did a quick look in the documentation and quit (its huge).</p>
-
-<p>By a quick look inside the xtce file we can find how the flag is defined:</p>
-
-<p><img src="/assets/posts/medium/1_HwFLwpkgNcTIOqAyOCOHVg.png" alt="Flag definition on XTCE" /></p>
-
-<p>Each of the parameters looks like a single character from the flag, <strong>but they’re 7 bit encoded</strong>. That means if we look at the raw binary, we will not see the flag itself since each ASCII character is 8 bits wide.</p>
-
-<p>In the <strong>ContainerSet</strong> we can see the possible structs that we received. Let’s take a look in a piece:</p>
-
-<p><img src="/assets/posts/medium/1_Iw2Q-LIH_Lh60mY9YeloJw.png" alt="AbstractTM Packet Header Definition" /><em>AbstractTM Packet Header Definition</em></p>
-
-<p>That piece specifies a <strong>Container</strong> called “AbstractTM Packet Header” (I think I will launch a company called <strong>Abstract</strong> after that) in which there are few entries. These entries are mapped to the binary itself. Notice the parameterRef which points to a previous defined parameter at <strong>ParameterSet</strong> section. Let’s take a look:</p>
-
-<p><img src="/assets/posts/medium/1_GJ1T6nETTg4SZe-g-DFoLQ.png" alt="CCSDS Header Parameter Types" /><em>CCSDS Header Parameter Types</em></p>
-
-<p>From there we can infer:</p>
-
-<ul>
-  <li>The field CCSDS_VERSION is encoded in 3 bit</li>
-  <li>The field CCSDS_TYPE is encoded in 1 bit</li>
-  <li>The field CCSDS_SEC_HD is encoded in 1 bit</li>
-  <li>The field CCSDS_APID is encoded in 11 bit</li>
-  <li>The field CCSDS_GP_FLAGS is encoded in 2 bit</li>
-  <li>The field CCSDS_SSC is encoded in 14 bit</li>
-  <li>The field CCSDS_PLENGTH is encoded in 2 bytes (16 bit)</li>
-</ul>
-
-<p>If you sum up all, you will get a header that is 6 bytes long. When seeing this two fields came to my attention. The APID and PLENGTH . <strong>APID</strong> is usually refered to <strong>AP</strong>plication <strong>ID</strong>entification and <strong>PLENGTH</strong> to <strong>P</strong>acket <strong>LENGTH</strong>.</p>
-
-<p>That means that even if there are a lot of packets, we dont need to <em>really</em> parse them, just the flag one. We can skip by knowing the APID and Packet Length. So let’s search the Flag packet!</p>
-
-<p><img src="/assets/posts/medium/1_99xgvX4FJB4oieHVz2ug8g.png" alt="Start of Flag Packet definition" /><em>Start of Flag Packet definition</em></p>
-
-<p><img src="/assets/posts/medium/1_ozGAORywhHA7M1C5tb9mVQ.png" alt="End of Flag Packet definition" /><em>End of Flag Packet definition</em></p>
-
-<p>So here I split the image because the packet definition is huge (lots of FLAGXX fields). We can see a new section here: <strong>RestrictionCriteria</strong>.</p>
-
-<p>That section tells us which is the condition that the parser should met to parse the content as that packet. That says that if a packet has the following Field =&gt; Values in the Packet Header:</p>
-
-<ul>
-  <li><strong>CCSDS_VERSION</strong> =&gt; 0</li>
-  <li><strong>CCSDS_TYPE</strong>    =&gt; 0</li>
-  <li><strong>CCSDS_SEC_HD</strong>  =&gt; 0</li>
-  <li><strong>CCSDS_APID</strong>    =&gt; 102</li>
-</ul>
-
-<p>That means we got our Flag Packet. So let’s assume all packets have a header and make our parser!</p>
-
-<p>I started dumping the netcat to a file so I can process without having to connect every time. That’s simple by just piping:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nc 18.219.199.203 20072 <span class="o">&gt;</span> dump.bin
-</code></pre></div></div>
-
-<p>Then started writing a simple python script. First by</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">struct</span>
-
-<span class="n">f</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">dump.bin</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">rb</span><span class="sh">"</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="nf">read</span><span class="p">())</span>
-<span class="n">f</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
-
-<span class="k">def</span> <span class="nf">DecodeHeader</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-  <span class="n">c_version</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xE0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span>
-  <span class="n">c_type</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span>
-  <span class="n">c_sechd</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x8</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">3</span>
-  <span class="n">c_apid</span> <span class="o">=</span> <span class="p">((</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x7</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-  <span class="n">c_gpflags</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xC0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">6</span>
-  <span class="n">c_ssc</span> <span class="o">=</span> <span class="p">((</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x3F</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
-  <span class="n">c_plen</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="p">)</span>
-  <span class="k">return</span> <span class="n">c_version</span><span class="p">,</span> <span class="n">c_type</span><span class="p">,</span> <span class="n">c_sechd</span><span class="p">,</span> <span class="n">c_apid</span><span class="p">,</span> <span class="n">c_gpflags</span><span class="p">,</span> <span class="n">c_ssc</span><span class="p">,</span> <span class="n">c_plen</span>
-
-<span class="k">while</span> <span class="nf">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-  <span class="n">c_version</span><span class="p">,</span> <span class="n">c_type</span><span class="p">,</span> <span class="n">c_sechd</span><span class="p">,</span> <span class="n">c_apid</span><span class="p">,</span> <span class="n">c_gpflags</span><span class="p">,</span> <span class="n">c_ssc</span><span class="p">,</span> <span class="n">c_plen</span> <span class="o">=</span> <span class="nc">DecodeHeader</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-  <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">GOT PACKET %d with LENGTH %d</span><span class="sh">"</span> <span class="o">%</span><span class="p">(</span><span class="n">c_apid</span><span class="p">,</span> <span class="n">c_plen</span><span class="p">))</span>
-  <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">6</span><span class="p">:]</span>         <span class="c1"># Skip the header
-</span>                          <span class="c1"># data[:c_plen+1] has content
-</span>  <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">c_plen</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1"># remove the current data
-</span></code></pre></div></div>
-
-<p>This decodes the header by doing some bit shifting. And if my assumption that every packet has a header and the packet length I could iterate over the file until no bytes are left. Since the file is small, I could load the entire file in the memory. Then running the script gave me:</p>
-
-<p><img src="/assets/posts/medium/1_mOSeuplpeXYIbF0eq7Kl-Q.png" alt="" /></p>
-
-<p>Got no errors and the data looks fine! We also got the APID 102 which is what the APID for Flag Packet. Then the content should be easy to read.</p>
-
-<p>If we check the Flag Packet definition, besides the header, there is only the FLAGXXX fields there which means the entire content is the flag. Then we can just get the whole content and decode from 7 bit to 8 bit. Do do that, I was really lazy to do the proper bit shifting, so I just created an array with 1’s and 0’s strings, when it reached 8, I packed into a char and added to an array. That would be really slow for big data, but for a 120 byte flag should be good. So thats the code I tried:</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">struct</span>
-
-<span class="n">f</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">dump.bin</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">rb</span><span class="sh">"</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="nf">read</span><span class="p">())</span>
-<span class="n">f</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
-
-<span class="k">def</span> <span class="nf">DecodeHeader</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-  <span class="n">c_version</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xE0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span>
-  <span class="n">c_type</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span>
-  <span class="n">c_sechd</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x8</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">3</span>
-  <span class="n">c_apid</span> <span class="o">=</span> <span class="p">((</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x7</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-  <span class="n">c_gpflags</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xC0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">6</span>
-  <span class="n">c_ssc</span> <span class="o">=</span> <span class="p">((</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x3F</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
-  <span class="n">c_plen</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="p">)</span>
-  <span class="k">return</span> <span class="n">c_version</span><span class="p">,</span> <span class="n">c_type</span><span class="p">,</span> <span class="n">c_sechd</span><span class="p">,</span> <span class="n">c_apid</span><span class="p">,</span> <span class="n">c_gpflags</span><span class="p">,</span> <span class="n">c_ssc</span><span class="p">,</span> <span class="n">c_plen</span>
-
-<span class="k">def</span> <span class="nf">DecodeFlag</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-  <span class="n">bitstream</span> <span class="o">=</span> <span class="p">[]</span>
-  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
-    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nf">format</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="sh">"</span><span class="s">08b</span><span class="sh">"</span><span class="p">):</span>
-      <span class="n">bitstream</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-
-  <span class="n">flagdata</span> <span class="o">=</span> <span class="sh">""</span>
-
-  <span class="k">while</span> <span class="nf">len</span><span class="p">(</span><span class="n">bitstream</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="sh">""</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
-      <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">bitstream</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">i</span><span class="p">:</span>
-        <span class="n">b</span> <span class="o">+=</span> <span class="n">bitstream</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-
-    <span class="k">if</span> <span class="n">b</span> <span class="o">!=</span> <span class="sh">""</span><span class="p">:</span>
-      <span class="n">flagdata</span> <span class="o">+=</span> <span class="nf">chr</span><span class="p">(</span><span class="nf">int</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-    <span class="n">bitstream</span> <span class="o">=</span> <span class="n">bitstream</span><span class="p">[</span><span class="mi">7</span><span class="p">:]</span>
-
-  <span class="k">return</span> <span class="n">flagdata</span>
-
-<span class="k">while</span> <span class="nf">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-  <span class="n">c_version</span><span class="p">,</span> <span class="n">c_type</span><span class="p">,</span> <span class="n">c_sechd</span><span class="p">,</span> <span class="n">c_apid</span><span class="p">,</span> <span class="n">c_gpflags</span><span class="p">,</span> <span class="n">c_ssc</span><span class="p">,</span> <span class="n">c_plen</span> <span class="o">=</span> <span class="nc">DecodeHeader</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-  <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">GOT PACKET %d with LENGTH %d</span><span class="sh">"</span> <span class="o">%</span><span class="p">(</span><span class="n">c_apid</span><span class="p">,</span> <span class="n">c_plen</span><span class="p">))</span>
-  <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">6</span><span class="p">:]</span>         <span class="c1"># Skip the header
-</span>                          <span class="c1"># data[:c_plen+1] has content
-</span>  <span class="k">if</span> <span class="n">c_apid</span> <span class="o">==</span> <span class="mi">102</span><span class="p">:</span>
-    <span class="n">flag</span> <span class="o">=</span> <span class="nc">DecodeFlag</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="n">c_plen</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
-    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">THE FLAG: %s</span><span class="sh">"</span> <span class="o">%</span> <span class="n">flag</span><span class="p">)</span>
-  <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">c_plen</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1"># remove the current data
-</span></code></pre></div></div>
-
-<p>Then when running:</p>
-
-<p><img src="/assets/posts/medium/1_OXCEAcC4nNZ-0okS2GW0Zg.png" alt="" /></p>
-
-<p>BINGO, THERE IS OUR FLAG!</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flag{echo22103romeo:GBd3nn6tIl060NgQ1e_mLZx-1ccydJ1LMAtqgZlWURHX-GPLmnLTZ3CfNvIvTi7JkB4hxxM5uuOuCT5SMmfFz2k}
-</code></pre></div></div>
-
-<p>I hope you liked the explanation. I didn’t take a deep dive in XTCE stuff but just the enough to get the flag. The XTCE format looks interesting (pretty much like a protobuf but in XML) and I will take a look eventually. That also has been my first CTF in my life and was really fun to play!</p>
-
-<h2 id="bonus">BONUS</h2>
-
-<p>We can also decode the EPS data which should give us some satellite info (and a spoiler to the next flag):</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="kn">import</span> <span class="n">struct</span>
-
-<span class="kn">from</span> <span class="n">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
-
-<span class="n">f</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">dump.bin</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">rb</span><span class="sh">"</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="nf">read</span><span class="p">())</span>
-<span class="n">f</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
-
-<span class="k">def</span> <span class="nf">DecodeHeader</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-  <span class="n">c_version</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xE0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span>
-  <span class="n">c_type</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span>
-  <span class="n">c_sechd</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x8</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">3</span>
-  <span class="n">c_apid</span> <span class="o">=</span> <span class="p">((</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x7</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-  <span class="n">c_gpflags</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xC0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">6</span>
-  <span class="n">c_ssc</span> <span class="o">=</span> <span class="p">((</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x3F</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
-  <span class="n">c_plen</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="p">)</span>
-  <span class="k">return</span> <span class="n">c_version</span><span class="p">,</span> <span class="n">c_type</span><span class="p">,</span> <span class="n">c_sechd</span><span class="p">,</span> <span class="n">c_apid</span><span class="p">,</span> <span class="n">c_gpflags</span><span class="p">,</span> <span class="n">c_ssc</span><span class="p">,</span> <span class="n">c_plen</span>
-
-<span class="k">def</span> <span class="nf">DecodeFlag</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-  <span class="n">bitstream</span> <span class="o">=</span> <span class="p">[]</span>
-  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
-    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nf">format</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="sh">"</span><span class="s">08b</span><span class="sh">"</span><span class="p">):</span>
-      <span class="n">bitstream</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-
-  <span class="n">flagdata</span> <span class="o">=</span> <span class="sh">""</span>
-
-  <span class="k">while</span> <span class="nf">len</span><span class="p">(</span><span class="n">bitstream</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="sh">""</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
-      <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">bitstream</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">i</span><span class="p">:</span>
-        <span class="n">b</span> <span class="o">+=</span> <span class="n">bitstream</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-
-    <span class="k">if</span> <span class="n">b</span> <span class="o">!=</span> <span class="sh">""</span><span class="p">:</span>
-      <span class="n">flagdata</span> <span class="o">+=</span> <span class="nf">chr</span><span class="p">(</span><span class="nf">int</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-    <span class="n">bitstream</span> <span class="o">=</span> <span class="n">bitstream</span><span class="p">[</span><span class="mi">7</span><span class="p">:]</span>
-
-  <span class="k">return</span> <span class="n">flagdata</span>
-
-<span class="k">def</span> <span class="nf">DecodeEPS</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-  <span class="n">battemp</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
-  <span class="n">voltage</span> <span class="o">=</span> <span class="p">(</span><span class="n">struct</span><span class="p">.</span><span class="nf">unpack</span><span class="p">(</span><span class="sh">"</span><span class="s">&gt;H</span><span class="sh">"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">])[</span><span class="mi">0</span><span class="p">])</span>
-  <span class="n">low_pwr_thresh</span> <span class="o">=</span> <span class="p">(</span><span class="n">struct</span><span class="p">.</span><span class="nf">unpack</span><span class="p">(</span><span class="sh">"</span><span class="s">&gt;H</span><span class="sh">"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">])[</span><span class="mi">0</span><span class="p">])</span>
-  <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">6</span><span class="p">:]</span>
-
-  <span class="n">LOW_PWR_MODE</span>  <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span>
-  <span class="n">BATT_HTR</span>      <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span>
-  <span class="n">PAYLOAD_PWR</span>   <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span>
-  <span class="n">FLAG_PWR</span>      <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span>
-  <span class="n">ADCS_PWR</span>      <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span>
-  <span class="n">RADIO1_PWR</span>    <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span>
-  <span class="n">RADIO2_PWR</span>    <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">6</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span>
-
-  <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-
-  <span class="n">PAYLOAD_ENABLE</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span>
-  <span class="n">FLAG_ENABLE</span>    <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span>
-  <span class="n">ADCS_ENABLE</span>    <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span>
-  <span class="n">RADIO1_ENABLE</span>  <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span>
-  <span class="n">RADIO2_ENABLE</span>  <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span>
-
-  <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-  <span class="n">BAD_CMD_COUNT</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="nf">unpack</span><span class="p">(</span><span class="sh">"</span><span class="s">&gt;I</span><span class="sh">"</span><span class="p">,</span> <span class="n">data</span><span class="p">[:</span><span class="mi">4</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
-
-  <span class="k">return</span> <span class="p">{</span>
-    <span class="sh">"</span><span class="s">low_pwr_thresh</span><span class="sh">"</span><span class="p">:</span> <span class="n">low_pwr_thresh</span><span class="p">,</span>
-    <span class="sh">"</span><span class="s">voltage</span><span class="sh">"</span><span class="p">:</span> <span class="n">voltage</span><span class="p">,</span>
-    <span class="sh">"</span><span class="s">LOW_PWR_MODE</span><span class="sh">"</span><span class="p">:</span> <span class="n">LOW_PWR_MODE</span><span class="p">,</span>
-    <span class="sh">"</span><span class="s">BATT_HTR</span><span class="sh">"</span><span class="p">:</span> <span class="n">BATT_HTR</span><span class="p">,</span>
-    <span class="sh">"</span><span class="s">PAYLOAD_PWR</span><span class="sh">"</span><span class="p">:</span> <span class="n">PAYLOAD_PWR</span><span class="p">,</span>
-    <span class="sh">"</span><span class="s">FLAG_PWR</span><span class="sh">"</span><span class="p">:</span> <span class="n">FLAG_PWR</span><span class="p">,</span>
-    <span class="sh">"</span><span class="s">ADCS_PWR</span><span class="sh">"</span><span class="p">:</span> <span class="n">ADCS_PWR</span><span class="p">,</span>
-    <span class="sh">"</span><span class="s">RADIO1_PWR</span><span class="sh">"</span><span class="p">:</span> <span class="n">RADIO1_PWR</span><span class="p">,</span>
-    <span class="sh">"</span><span class="s">RADIO2_PWR</span><span class="sh">"</span><span class="p">:</span> <span class="n">RADIO2_PWR</span><span class="p">,</span>
-    <span class="sh">"</span><span class="s">PAYLOAD_ENABLE</span><span class="sh">"</span><span class="p">:</span> <span class="n">PAYLOAD_ENABLE</span><span class="p">,</span>
-    <span class="sh">"</span><span class="s">FLAG_ENABLE</span><span class="sh">"</span><span class="p">:</span> <span class="n">FLAG_ENABLE</span><span class="p">,</span>
-    <span class="sh">"</span><span class="s">ADCS_ENABLE</span><span class="sh">"</span><span class="p">:</span> <span class="n">ADCS_ENABLE</span><span class="p">,</span>
-    <span class="sh">"</span><span class="s">RADIO1_ENABLE</span><span class="sh">"</span><span class="p">:</span> <span class="n">RADIO1_ENABLE</span><span class="p">,</span>
-    <span class="sh">"</span><span class="s">RADIO2_ENABLE</span><span class="sh">"</span><span class="p">:</span> <span class="n">RADIO2_ENABLE</span><span class="p">,</span>
-    <span class="sh">"</span><span class="s">BAD_CMD_COUNT</span><span class="sh">"</span><span class="p">:</span> <span class="n">BAD_CMD_COUNT</span><span class="p">,</span>
-  <span class="p">}</span>
-
-<span class="k">while</span> <span class="nf">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-  <span class="n">c_version</span><span class="p">,</span> <span class="n">c_type</span><span class="p">,</span> <span class="n">c_sechd</span><span class="p">,</span> <span class="n">c_apid</span><span class="p">,</span> <span class="n">c_gpflags</span><span class="p">,</span> <span class="n">c_ssc</span><span class="p">,</span> <span class="n">c_plen</span> <span class="o">=</span> <span class="nc">DecodeHeader</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-  <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">GOT PACKET %d with LENGTH %d</span><span class="sh">"</span> <span class="o">%</span><span class="p">(</span><span class="n">c_apid</span><span class="p">,</span> <span class="n">c_plen</span><span class="p">))</span>
-  <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">6</span><span class="p">:]</span>         <span class="c1"># Skip the header
-</span>                          <span class="c1"># data[:c_plen+1] has content
-</span>  <span class="k">if</span> <span class="n">c_apid</span> <span class="o">==</span> <span class="mi">102</span><span class="p">:</span>
-    <span class="n">flag</span> <span class="o">=</span> <span class="nc">DecodeFlag</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="n">c_plen</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
-    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">THE FLAG: %s</span><span class="sh">"</span> <span class="o">%</span> <span class="n">flag</span><span class="p">)</span>
-  <span class="k">elif</span> <span class="n">c_apid</span> <span class="o">==</span> <span class="mi">103</span><span class="p">:</span>
-   <span class="nf">pprint</span><span class="p">(</span><span class="nc">DecodeEPS</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-  <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">c_plen</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1"># remove the current data
-</span></code></pre></div></div>
-
-<p><img src="/assets/posts/medium/1_zs_TGnP0aqNndWHg_h8rKw.png" alt="" /></p>]]></content><author><name>Lucas Teske</name></author><category term="English" /><category term="Hacking" /><category term="Linux" /><category term="CTF" /><category term="Camera" /><category term="Hacking" /><category term="CTF" /><category term="Hackasat" /><category term="CTF Writeup" /><category term="Satellite" /><category term="XTCE" /><summary type="html"><![CDATA[Hack-a-sat — Can you hear me now?]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_87tDTK5_FodI9TghHRpznQ.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_87tDTK5_FodI9TghHRpznQ.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+<p><img src="/assets/posts/medium/1_lEYyYL0REStDYZi7xkGmag.png" alt="Final GNU Radio Flow" /><em>Final GNU Radio Flow</em></p>]]></content><author><name>Lucas Teske</name></author><category term="English" /><category term="Hacking" /><category term="Linux" /><category term="CTF" /><category term="SDR" /><category term="Camera" /><category term="Hacking" /><category term="CTF" /><category term="Hackasat" /><category term="CTF Writeup" /><category term="Satellite" /><category term="SDR" /><category term="GNU Radio" /><category term="Radio" /><summary type="html"><![CDATA[Hack a sat  —  Phasors to Stun]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_R1n7vaNfInOP6BCFXkjv1Q.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_R1n7vaNfInOP6BCFXkjv1Q.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>

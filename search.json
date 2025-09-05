@@ -2,6 +2,16 @@
   
     {
 
+      "title"    : "Running code in a PAX Credit Card Payment Machine (part1)",
+      "url"      : "/2025/09/running-code-in-pax-machines",
+      "category" : "",
+      "tags"     : "Flash, PAX, Hardware Hacking, RE, Reverse Engineering, D177, D188, Minizinha, Moderninha, Smart, Sunmi, TecToy, Transire, Megahunt, MH1903, Air105, LuatOS",
+      "date"     : "2025-09-05 19:30:00 +0000"
+
+    } ,
+  
+    {
+
       "title"    : "TPM 2.0: Extracting Bitlocker keys through SPI",
       "url"      : "/2024/01/tpm2-bitlocker-keys",
       "category" : "",

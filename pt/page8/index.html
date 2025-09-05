@@ -316,6 +316,21 @@
 
 <div class="catalogue">
   
+    <a href="/pt/2016/01/play-with-sdr-and-intel-edison/" class="catalogue-item catalogue-item-2">
+      <div>
+        <time datetime="2016-01-16 03:25:25 +0000" class="catalogue-time">January 16, 2016</time>
+        <h1 class="catalogue-title">Play with SDR and Intel Edison!</h1>
+        <div class="catalogue-line"></div>
+        
+        <p>
+          
+Somente disponível em Inglês
+
+        </p>
+
+      </div>
+    </a>
+  
     <a href="/pt/2015/02/um-presente-inesperado-na-campus-party/" class="catalogue-item catalogue-item-2">
       <div>
         <time datetime="2015-02-18 20:40:39 +0000" class="catalogue-time">February 18, 2015</time>
@@ -374,19 +389,6 @@ Somente disponível em Inglês
       </div>
     </a>
   
-    <a href="/pt/2011/10/funcao-c-para-multiplos-e-submultiplos-revisado/" class="catalogue-item catalogue-item-2">
-      <div>
-        <time datetime="2011-10-30 20:50:21 +0000" class="catalogue-time">October 30, 2011</time>
-        <h1 class="catalogue-title">Função C para múltiplos e submúltiplos (REVISADO)</h1>
-        <div class="catalogue-line"></div>
-        
-        <p>
-          O Caio Alarcon me notificou de algumas coisas sobre minha função de múltiplos e submúltiplos, por exemplo, o tratamento de números negativos. Resolvi então revisar e otimizar a função em C. O Resultado está abaixo: #include &lt;stdio.h&gt; #include &lt;math.h&gt; char toNotationUnit(double value,float *out) { double val; char notacoes[] = {'y','z','a','f','p','n','u','m',' ', 'k','M','G','T','P','E','Z','Y'}; int counter=8; char unit; val = value&gt;0?value:-value; if(val &lt; 1) { while( (val &lt; 1.00) &amp; (counter != 0)) { counter--; val=val*(double)1000; } }else{ while((val &gt;= 1000) &amp; (counter != 16)) { counter++; val=val/(double)1000; } } unit = notacoes[counter]; val = round(val*(double)100)/(double)100; *out = (float) value&gt;0?val:-val; return unit; } int main() { double...
-        </p>
-
-      </div>
-    </a>
-  
 </div>
 
 <div class="pagination">
@@ -405,10 +407,10 @@ Somente disponível em Inglês
 
     <footer>
   <span>
-    © <time datetime="2025-07-13 22:25:13 +0000">2025</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2025-09-05 22:00:48 +0000">2025</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2025-07-13 22:25:13 +0000
+    Last build: 2025-09-05 22:00:48 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">
