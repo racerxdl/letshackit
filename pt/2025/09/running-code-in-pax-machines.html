@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" property="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  <title>Rodando código em uma máquina de cartão de crédito PAX (parte 1) | Lets Hack It</title>
+
+  <!-- Global -->
+  <link rel="canonical" href="https://lucasteske.dev/pt/2025/09/running-code-in-pax-machines">
+  <meta name="generator" property="generator" content="Jekyll v4.4.1">
+  <meta name="author" property="author" content="Lucas Teske">
+  <meta name="description" property="description" content="Disclaimer Todos os procedimentos descritos aqui foram feitos com material disponível publicamente - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos. As máquinas de pagamento...">
+  
+  <meta name="keywords" content="Flash, PAX, Hardware Hacking, RE, Reverse Engineering, D177, D188, Minizinha, Moderninha, Smart, Sunmi, TecToy, Transire, Megahunt, MH1903, Air105, LuatOS">
+  
+  <!-- Open Graph -->
+  <meta name="og:locale" property="og:locale" content="pt">
+  <meta name="og:type" property="og:type" content="article">
+  <meta name="og:title" property="og:title" content="Rodando código em uma máquina de cartão de crédito PAX (parte 1) | Lets Hack It">
+  <meta name="og:url" property="og:url" content="https://lucasteske.dev/pt/2025/09/running-code-in-pax-machines">
+  <meta name="og:image" property="og:image" content="https://lucasteske.dev/assets/Running code in a PAX Credit Card Payment Machine/7383f9c5e7832856c90b25549fb08115_MD5.jpeg">
+  <meta name="og:site_name" property="og:site_name" content="Lets Hack It">
+  <meta name="og:description" property="og:description" content="Disclaimer Todos os procedimentos descritos aqui foram feitos com material disponível publicamente - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos. As máquinas de pagamento...">
+
+  <!-- Article -->
+  <meta name="article:author" property="article:author" content="https://www.facebook.com/teskeslab">
+  <meta name="article:publisher" property="article:publisher" content="https://www.facebook.com/teskeslab">
+  <meta name="article:published_time" property="article:published_time" content="2025-09-05T16:30:00-03:00">
+
+  <!-- Facebook -->
+  <meta name="fb:admins" property="fb:admins" content="1234">
+  <meta name="fb:app_id" property="fb:app_id" content="1209208119176770">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" property="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" property="twitter:title" content="Rodando código em uma máquina de cartão de crédito PAX (parte 1) | Lets Hack It">
+  <meta name="twitter:site" property="twitter:site" content="@lucasteske">
+  <meta name="twitter:creator" property="twitter:creator" content="@lucasteske">
+  <meta name="twitter:description" property="twitter:description" content="Disclaimer Todos os procedimentos descritos aqui foram feitos com material disponível publicamente - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos. As máquinas de pagamento...">
+  <meta name="twitter:image" property="twitter:image" content="https://lucasteske.dev/assets/Running code in a PAX Credit Card Payment Machine/7383f9c5e7832856c90b25549fb08115_MD5.jpeg">
+  <meta name="twitter:image:alt" property="twitter:image:alt" content="Disclaimer Todos os procedimentos descritos aqui foram feitos com material disponível publicamente - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos. As máquinas de pagamento...">
+
+  <!-- JSON LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "url": "https://lucasteske.dev/pt/2025/09/running-code-in-pax-machines",
+    "name": "Rodando código em uma máquina de cartão de crédito PAX (parte 1) | Lets Hack It",
+    "headline": "Rodando código em uma máquina de cartão de crédito PAX (parte 1) | Lets Hack It",
+    "keywords": "Flash,PAX,Hardware Hacking,RE,Reverse Engineering,D177,D188,Minizinha,Moderninha,Smart,Sunmi,TecToy,Transire,Megahunt,MH1903,Air105,LuatOS",
+    "description": "Disclaimer Todos os procedimentos descritos aqui foram feitos com material disponível publicamente - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos. As máquinas de pagamento...",
+    "articleBody": "Disclaimer Todos os procedimentos descritos aqui foram feitos com material disponível publicamente - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos. As máquinas de pagamento com cartão de crédito no Brasil geralmente estão no estado da arte em relação às medidas de segurança. Lembro-me uma vez que um funcionário da Elavon me disse que o Brasil recebeu todos os primeiros lançamentos de máquinas e sistemas de pagamento. Quando perguntei por que, ele disse: as fraudes no Brasil são sofisticadas o suficiente, que se o sistema for seguro o suficiente para o Brasil, funciona em qualquer lugar do mundo. No futuro, farei um artigo sobre as medidas de segurança que tanto a MegaHunt, quanto a PAX e as empresas brasileiras implementam em suas máquinas para evitar que os sistemas sejam adulterados. Se você estiver compartilhando / comentando sobre este artigo, por favor coloque o mesmo aviso de isenção de responsabilidade lá. Não me importo de usar as informações aqui para fazer novos artigos, mas o Brasil sofre muito com fake news (especialmente envolvendo hardware de segurança...",
+    "datePublished": "2025-09-05 16:30:00 -0300",
+    "dateModified": "2025-09-05 16:30:00 -0300",
+    "author": {
+      "@type": "Person",
+      "name": "Lucas Teske",
+      "email": "letshackit@nvx.li"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Lets Hack It",
+      "url": "https://lucasteske.dev",
+      "logo": {
+        "@type": "ImageObject",
+        "width": 32,
+        "height": 32,
+        "url": "https://lucasteske.dev/icon/favicon.ico"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://lucasteske.dev/pt/2025/09/running-code-in-pax-machines"
+    },
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://lucasteske.dev/assets/Running code in a PAX Credit Card Payment Machine/7383f9c5e7832856c90b25549fb08115_MD5.jpeg"
+    }
+  }
+  </script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/assets/theme.css">
+  <link rel="stylesheet" href="/assets/flag-icon.min.css">
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="manifest" href="/assets/site.webmanifest">
+  <link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="/assets/favicon.ico">
+  <meta name="msapplication-TileColor" property="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-config" property="msapplication-config" content="/assets/browserconfig.xml">
+  <meta name="theme-color" property="theme-color" content="#ffffff">
+
+  <!-- Custom Scripts -->
+  <script async src="/assets/syntaxhighlighter.min.js"></script>
+  <script async src="/assets/simple-jekyll-search.min.js"></script>
+
+  <!-- RSS -->
+  <link type="application/atom+xml" rel="alternate" href="https://lucasteske.dev/feed.xml" title="Lets Hack It">
+
+  <!-- Google Analytics-->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-32251405-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-32251405-2');
+</script>
+  
+</head>
+
+  <body>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&amp;version=v4.0&amp;appId=1209208119176770&amp;autoLogAppEvents=1"></script>
+    <div class="like-box">
+      <div class="fb-like" data-href="https://lucasteske.dev/pt/2025/09/running-code-in-pax-machines" data-width="" data-layout="box_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+    </div>
+    <a href="https://github.com/racerxdl/letshackit" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#70B7FD; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+    <main class="site">
+      
+<br>
+<img src="/assets/cropped-logo.png" style="margin-left: auto; margin-right: auto;">
+<ul class="language-bar">
+  
+  
+  <a class="link-pt flag-icon flag-icon-us" href="/2025/09/running-code-in-pax-machines"></a>
+  <a class="link-en flag-icon flag-icon-br" href="/pt/2025/09/running-code-in-pax-machines"></a>
+</ul>
+<nav class="nav">
+  <div class="nav-container" style="height: 50px">
+    <ul class="navul">
+      <li><a href="/pt/">Home</a></li>
+    
+      <li><a href="/pt/donate">Doação</a></li>
+      <li><a href="/pt/calculators">Calculadoras</a></li>
+      <li><a href="/pt/my-presentations">Minhas Apresentações</a></li>
+      <li><a href="/pt/satcom-projects">Projetos de Satélite</a></li>
+      <li><a href="/pt/my-tesla-coils">Bobinas de Tesla</a></li>
+      <li><a href="/pt/biggateboy">Gameboy Gigante</a></li>
+      <li><a href="/pt/about">Sobre</a></li>
+    
+    </ul>
+  </div>
+</nav>
+<div class="social-icon">
+  <ul>
+    <li class="btn-a btn-svg btn-twitch">
+      <a href="https://twitch.tv/racerxdl">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><title>Twitch icon</title>
+<path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"></path></svg>
+
+        RacerXDL
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-twitter">
+      <a href="https://twitter.com/lucasteske">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Twitter icon</title>
+<path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"></path></svg>
+        @lucasteske
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-instagram">
+      <a href="https://instagram.com/racerxdl/">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Instagram icon</title>
+<path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"></path></svg>
+        @racerxdl
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-facebook">
+      <a href="https://www.facebook.com/teskeslab">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Facebook icon</title>
+<path d="M23.9981 11.9991C23.9981 5.37216 18.626 0 11.9991 0C5.37216 0 0 5.37216 0 11.9991C0 17.9882 4.38789 22.9522 10.1242 23.8524V15.4676H7.07758V11.9991H10.1242V9.35553C10.1242 6.34826 11.9156 4.68714 14.6564 4.68714C15.9692 4.68714 17.3424 4.92149 17.3424 4.92149V7.87439H15.8294C14.3388 7.87439 13.8739 8.79933 13.8739 9.74824V11.9991H17.2018L16.6698 15.4676H13.8739V23.8524C19.6103 22.9522 23.9981 17.9882 23.9981 11.9991Z"></path></svg>
+        Teske's Lab
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-github">
+      <a href="https://github.com/racerxdl">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub icon</title>
+<path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg>
+        @racerxdl
+      </a>
+    </li>
+<br>
+    <li class="btn-a btn-svg btn-youtube">
+      <a href="https://www.youtube.com/c/TeskesLab">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><title>YouTube icon</title>
+<path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"></path></svg>
+        Teske's Lab
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-linkedin">
+      <a href="https://www.linkedin.com/in/lucas-teske-8206301b/">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn icon</title>
+<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+        Lucas Teske
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-code-stats">
+      <a href="https://codestats.net/users/racerxdl">
+        <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="360px" height="360px" viewbox="0 0 360 360" enable-background="new 0 0 360 360" xml:space="preserve">
+<path d="M174,81.741v27.509C161.913,104,133.5,93.5,109.789,94.6c-23.859,1.107-42.172,7.301-54.859,21.902
+	c-12.689,14.603-19.033,35.71-19.033,63.326c0,27.524,6.344,48.585,19.033,63.186c12.687,14.603,30.974,21.901,54.859,21.901
+	c12.127,0,41.461-5.665,64.211-19.115v29.528c-8.75,2.672-33.75,12.422-65.891,12.818c-31.625,0.39-56.538-9.678-74.731-29.039
+	c-18.193-19.358-27.29-45.784-27.29-79.28c0-33.587,9.097-60.059,27.29-79.42c18.193-19.358,43.113-28.252,74.731-29.039
+	C133,70.75,155.808,77.431,174,81.741z M341.423,82.005v27.569c-10.729-5.13-20.852-8.957-30.368-11.476s-18.707-3.778-27.569-3.778
+	c-15.395,0-27.268,2.987-35.616,8.957c-8.352,5.972-12.525,14.462-12.525,25.47c0,9.236,2.774,16.212,8.327,20.922
+	c5.55,4.712,16.069,8.515,31.558,11.406l17.073,3.499c21.084,4.013,36.643,11.08,46.673,21.202
+	c10.027,10.124,15.044,23.675,15.044,40.654c0,20.247-6.787,35.595-20.362,46.043c-13.575,10.45-33.472,15.674-59.688,15.674
+	c-9.89,0-20.41-1.119-31.558-3.358c-11.15-2.239-22.695-5.55-34.637-9.937v-29.109c11.476,6.438,22.717,11.29,33.727,14.555
+	c11.008,3.267,21.832,4.898,32.468,4.898c16.14,0,28.596-3.171,37.366-9.517c8.769-6.344,13.155-15.395,13.155-27.149
+	c0-10.262-3.149-18.285-9.447-24.071c-6.297-5.783-16.632-10.122-30.998-13.015l-17.213-3.358
+	c-21.086-4.199-36.341-10.776-45.763-19.733c-9.425-8.957-14.135-21.412-14.135-37.366c0-18.473,6.508-33.027,19.522-43.664
+	c13.015-10.636,30.95-15.954,53.81-15.954c9.796,0,19.778,0.888,29.948,2.659C320.383,75.801,330.787,78.46,341.423,82.005z"></path>
+<path d="M86.199,153.037c0-2.98,1.024-5.495,3.074-7.544c2.048-2.048,4.563-3.073,7.544-3.073c3.034,0,5.561,1.011,7.584,3.034
+	c2.022,2.023,3.034,4.55,3.034,7.584s-1.012,5.563-3.034,7.584c-2.023,2.023-4.551,3.034-7.584,3.034
+	c-2.981,0-5.496-1.024-7.544-3.074C87.223,158.533,86.199,156.018,86.199,153.037z M86.199,205.089c0-2.979,1.024-5.509,3.074-7.584
+	c2.048-2.076,4.563-3.113,7.544-3.113c2.98,0,5.495,1.037,7.544,3.113c2.048,2.075,3.074,4.604,3.074,7.584
+	c0,2.981-1.012,5.496-3.034,7.545c-2.023,2.048-4.551,3.073-7.584,3.073s-5.562-1.025-7.584-3.073
+	C87.209,210.585,86.199,208.07,86.199,205.089z M141.135,153.037c0-2.98,1.024-5.495,3.074-7.544
+	c2.048-2.048,4.563-3.073,7.544-3.073c3.034,0,5.561,1.011,7.584,3.034c2.022,2.023,3.034,4.55,3.034,7.584
+	s-1.012,5.563-3.034,7.584c-2.023,2.023-4.551,3.034-7.584,3.034c-2.981,0-5.496-1.024-7.544-3.074
+	C142.159,158.533,141.135,156.018,141.135,153.037z M141.135,205.089c0-2.979,1.024-5.509,3.074-7.584
+	c2.048-2.076,4.563-3.113,7.544-3.113c2.98,0,5.495,1.037,7.544,3.113c2.048,2.075,3.074,4.604,3.074,7.584
+	c0,2.981-1.012,5.496-3.034,7.545c-2.023,2.048-4.551,3.073-7.584,3.073s-5.563-1.025-7.584-3.073
+	C142.146,210.585,141.135,208.07,141.135,205.089z"></path>
+</svg>
+
+        racerxdl
+      </a>
+    </li>
+<br>
+    <li class="btn-a btn-svg btn-telegram">
+      <a href="https://t.me/hardwareHackingBrasil">
+        <svg role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><title>Telegram icon</title>
+<path d="M23.91 3.79L20.3 20.84c-.25 1.21-.98 1.5-2 .94l-5.5-4.07-2.66 2.57c-.3.3-.55.56-1.1.56-.72 0-.6-.27-.84-.95L6.3 13.7l-5.45-1.7c-1.18-.35-1.19-1.16.26-1.75l21.26-8.2c.97-.43 1.9.24 1.53 1.73z"></path></svg>
+        Hardware Hacking Brasil
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-patreon">
+      <a href="https://www.patreon.com/teskeslab">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Patreon</title>
+<path d="M0 .48v23.04h4.22V.48zm15.385 0c-4.764 0-8.641 3.88-8.641 8.65 0 4.755 3.877 8.623 8.641 8.623 4.75 0 8.615-3.868 8.615-8.623C24 4.36 20.136.48 15.385.48z"></path></svg>
+        Patreon
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-mastodon">
+      <a rel="me" href="https://infosec.exchange/@lucasteske">
+        <svg width="24px" height="24px" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"><path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"></path></svg>
+        Mastodon
+      </a>
+    </li>
+    <li class="btn-a btn-svg btn-bluesky">
+      <a rel="me" href="https://bsky.app/profile/lucasteske.dev">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Bluesky</title>
+<path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.206-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8Z"></path></svg>
+        Bluesky
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="search-input">
+  <input type="text" id="search-input" style="margin: 0 auto;" placeholder="Procurar por conteúdo">
+</div>
+<ul id="results-container" class="results-container"></ul>
+
+      
+
+
+
+
+
+<div class="post">
+  <h1 class="post-title">Rodando código em uma máquina de cartão de crédito PAX (parte 1)</h1>
+  <div class="post-info">
+    
+      <img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/7383f9c5e7832856c90b25549fb08115_MD5.jpeg">
+    
+    <span>Escrito por</span>
+    
+        Lucas Teske
+    
+    
+
+    
+      <br>
+      <span>em </span><time datetime="2025-09-05 16:30:00 -0300">
+  5
+  
+  Setembro
+  2025
+</time>
+    
+  </div>
+
+  <div class="post-line"></div>
+
+  <h2 id="disclaimer">Disclaimer</h2>
+
+<p><strong>Todos os procedimentos descritos aqui foram feitos com material disponível publicamente</strong> - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador <strong>não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos.</strong></p>
+
+<p>As máquinas de pagamento com cartão de crédito no Brasil <em>geralmente</em> estão no estado da arte em relação às medidas de segurança. Lembro-me uma vez que um funcionário da Elavon me disse que <strong>o Brasil recebeu todos os primeiros lançamentos de máquinas e sistemas de pagamento</strong>. Quando perguntei por que, ele disse: <strong>as fraudes no Brasil são sofisticadas o suficiente, que se o sistema for seguro o suficiente para o Brasil, funciona em qualquer lugar do mundo</strong>.</p>
+
+<p>No futuro, farei um artigo sobre as medidas de segurança que tanto a MegaHunt, quanto a PAX e as empresas brasileiras implementam em suas máquinas para evitar que os sistemas sejam adulterados.</p>
+
+<p>Se você estiver compartilhando / comentando sobre este artigo, por favor coloque o mesmo aviso de isenção de responsabilidade lá. Não me importo de usar as informações aqui para fazer novos artigos, mas o Brasil sofre <strong>muito</strong> com fake news (especialmente envolvendo hardware de segurança feito aqui) e alguém pode pensar que isso torna possível hackear seus cartões de crédito ou contas (você sabe, pessoas sem conhecimento suficiente para realmente entender o que está envolvido).</p>
+
+<h3 id="notas-iniciais">Notas iniciais</h3>
+
+<p>Este artigo está meio incompleto. Ainda vou publicar a engenharia reversa do boot rom e como criei um emulador para mapear melhor o que os firmwares fazem. Aqui eu apenas menciono brevemente que fiz um emulador e acho que isso merece seu próprio artigo. Vou atualizar esta nota inicial quando eles forem publicados.</p>
+
+<p>Eu quero agradecer ao <a href="https://www.linkedin.com/in/gutem/">Gutem</a> e ao <a href="https://www.instagram.com/penegui">Penegui</a> por uma revisão técnica rapida do conteúdo do artigo, e a Pag, a qual deu uma resposta super rápida e amigável quando enviei este artigo a eles. Uma pequena linha do tempo de como rolou o processo está no fim da pagina.</p>
+
+<h2 id="máquinas-de-pagamento-com-cartão-de-crédito">Máquinas de pagamento com cartão de crédito</h2>
+
+<p>Aqui no Brasil, existem várias empresas que atuam como gateways de pagamento e esse tipo de coisa. Eu diria que as maiores são <a href="https://pagbank.com.br/">PagSeguro</a> e <a href="https://mercadopago.com.br/">MercadoPago</a>. Enquanto o PagSeguro é originalmente do Brasil, o MercadoPago é da Argentina e veio de um negócio completamente diferente (MercadoLivre, que é basicamente o equivalente sul-americano do eBay).</p>
+
+<p>Há também muitos bancos que hoje em dia possuem máquinas de pagamento, mas eu diria que a maioria deles, senão todos, compram as máquinas de um fabricante brasileiro chamado <a href="https://www.tectoy.com.br/">TecToy</a> (o que anteriormente era feito pela <a href="https://www.transire.com/">Transire</a>, mas agora eles fundiram e são a mesma empresa).</p>
+
+<p>E eu acho muito engraçado, porque a TecToy é uma fabricante de brinquedos, mas eles são enormes e antigos e uma das poucas empresas sobreviventes que <strong>realmente fabricam hardware</strong> no Brasil. Vale ressaltar que as máquinas não são projetadas por eles, mas principalmente por OEMs chineses como a <a href="https://www.paxglobal.com.hk/">PAX</a> ou <a href="https://www.sunmi.com/">Sunmi</a>.</p>
+
+<p>No Brasil, é muito fácil e barato para conseguir estas máquinas basicamente em qualquer lugar. Você consegue achar as máquinas descritas aqui no próprio site das empresas de pagamento (tente procurar Máquinas de Cartão no mercado livre ou google ;D )</p>
+
+<p>Em resumo: Geralmente elas são máquinas baseadas na PAX, com o mesmo “Sistema Operacional” mas uma aplicação especifica customizada. Além disso a Pag também faz serviço de “OEM” e <strong>muitas</strong> empresas de pagamento usam as máquinas deles como base. Então basicamente, se você comprar uma máquina de cartão qualquer, a grande chance é que seja indiretamente deles também.</p>
+
+<p>Pra simplificar, aqui estão as correspondências dos modelos para a PAX:</p>
+
+<ul>
+  <li>Mini Chip 3 - PAX D188 (Baremetal)</li>
+  <li>Moder Plus 2 - PAX D195 (Linux OS)</li>
+  <li>Moder Pro 2 - PAX Q92S (Linux OS)</li>
+  <li>Mini NFC 2 - PAX D177 (Baremetal)</li>
+  <li>Mini Smart 2 - Sunmi P2 (Android)</li>
+</ul>
+
+<p>Pra esse artigo eu acabei usando uma NFC2 que é uma simples e barata PAX D177. Vale notar que a D188 parece uma máquina completamente diferente, mas usa o mesmo processador (apenas em formato BGA e não QFN88), tem um modem 4G a mais e uma tela maior. A firmware que roda em ambas <strong>é a mesma</strong> (runtime selection).</p>
+
+<h2 id="primeiros-trabalhos-e-identificação-de-coisas">Primeiros trabalhos e Identificação de coisas</h2>
+
+<p>Geralmente quando estou fazendo engenharia reversa em hardwares considerados seguros, eu peço <strong>pelo menos</strong> três máquinas quando possível. Por que geralmente rola da seguinte maneira:</p>
+
+<ol>
+  <li>Vou abrir, e deixar <strong>todas</strong> proteções dispararem.</li>
+  <li>Vou usar para <strong>tentar</strong> bypassar todas proteções (caso seja meu objetivo)</li>
+  <li>Vou manter como está, para poder ter um modelo de referência para os estudos.</li>
+</ol>
+
+<p>Nesse cenário especifico, eu apenas queria rodar DOOM nela. Por que, se compute, ela precisa de DOOM.</p>
+
+<p>Baseado nas minhas experiencias anteriores fazendo engenharia reversa nestas maquinas, eu já sabia o que esperar. Este artigo é apenas um resumo do caminho (dado que levei alguns anos pra chegar ao estado atual) que me lembro que segui. Então o que eu estava esperando era basicamente isso:</p>
+
+<ol>
+  <li>Segurança pesada
+    <ol>
+      <li>Proteção contra tamper</li>
+      <li>Proteção contra clock-glitching</li>
+      <li>Proetção contra manipulacao de RNG</li>
+      <li>Assinaturas de código</li>
+      <li>Criptografia de Código</li>
+    </ol>
+  </li>
+  <li>Muita frustração</li>
+</ol>
+
+<p>Eu podia seguir dois caminhos: exploitar o código que roda, ou trocar a CPU. Para exploitar, eu teria que achar uma falha de segurança que permitisse execução de código via Bluetooth, Smartcard, NFC ou USB, dado que estas são as únicas interfaces disponíveis. Para isso, eu teria que ter todo código, e como vocês vão ver mais pra frente, para está maquina em especifico, isso não era exatamente possível.</p>
+
+<p>Segundo jeito era basicamente ver qual CPU estava na placa, comprar uma nova e trocar. O problema mesmo, é achar a CPU pra vender.</p>
+
+<p>Mas, de um jeito ou de outro, eu precisaria abrir e identificar como as coisas estão ligadas e o que é usado. De referência, esta é a maquina que usei:</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/cb3d6416e80906d1e1a3cfa7c27ec46c_MD5.jpeg" alt=""></p>
+
+<p>No lado de trás, alguns parafusos que são facilmente removidos. Eu geralmente faço isso com a <strong>máquina ligada</strong>, pois desta maneira consigo ver que ações minhas acionam as proteções anti-tamper.</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/942368afcd3a8b5c2f6280b0686279ad_MD5.jpeg" alt=""></p>
+
+<p>Remover os parafusos, porém, não disparou nenhuma proteção. Apesar disso, assim que a tampa é removida, a tela indica que duas proteções foram acionadas.</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/9a88c682e238fdb16c61122c76c2e14c_MD5.jpeg" alt=""></p>
+
+<p>na parte de trás do case, há alguns pontos de borracha-carbono, que encostam nos pontos de detecção na PCB. Eles funcionam basicamente da mesma maneira que os botões de um controle de video-game funcionam, só que neste caso, eles só garantem que “o botão está sempre apertado”.</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/3744913eb7cc7b866b64eb363d6fbbe5_MD5.jpeg" alt=""></p>
+
+<p>E por alguma razão, a máquina decidiu falar pra gente quais pontos de tamper foram acionados :)</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/9b728a005ceb00f991633d8d6ece65ed_MD5.jpeg" alt=""></p>
+
+<p>Ah, isso também reseta pelo boot, então se você soldar os pinos de tamper (pra forçar eles a ficarem em contato) você consegue identificar os nomes de cada um hehe :)</p>
+
+<p>Então, isso é a parte de baixo. Podemos ver algumas coisas, por exemplo a bateria-moeda na esquerda e uma grande PCB verde que parece inútil. Ela basicamente está em cima de todo circuito de leitura do cartão e os controladores da máquina.</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/4454b7008ef72e53db283abd4afafb86_MD5.jpeg" alt=""></p>
+
+<p>Porém, mesmo que pareça inútil esta PCB, não a subestime: ela é basicamente uma PCB de 4 layers com uma mesh DENSA dentro dela. Qualquer dano ou remoção, aciona outro ponto de tamper. Só pra ter uma ideia, isso daqui é a PCB escaneada:</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/930418d0ee33dd3362d0ac27de43fa8e_MD5.jpeg" alt=""></p>
+
+<p>Removendo todo plástico e a PCB, chegamos a placa principal:
+<img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/1d47f48f4cf614dd72e26c37c839895c_MD5.jpeg" alt=""></p>
+
+<p>E temos muitas coisas aqui, mas as coisas que nos importam estão na parte de baixo.</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/e808d21c32ba0866a386d155077709e4_MD5.jpeg" alt=""></p>
+
+<p>Aqui conseguimos ver algumas coisas interessantes:</p>
+
+<ul>
+  <li>MH1903 - Nosso principal SoC (CPU)</li>
+  <li>NXP 8035S - PHY de Interface de SmartCard</li>
+  <li>FM17660 - Leitor NFC</li>
+  <li>XM25Q65 - Memória Flash SPI de 16MB</li>
+</ul>
+
+<p>(E como você adivinhou, ativamos quase todos os pontos de tamper na parte de trás)</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/55e76a7d0d22410d56bada5afad18bd8_MD5.jpeg" alt=""></p>
+
+<p>A memória flash, conseguimos dumpa-la. Eu tenho amostras tanto com tamper quanto sem tamper. O bypass da detecção de tamper fica como exercicio ao leitor :) - Mas se você quiser entender como funciona, você pode dumpar ela diretamente mesmo com tamper, por que o tamper não apaga a memória flash inteira, apenas a porção onde tem conteúdo sensível para comunicação com os servidores de pagamento.</p>
+
+<p>Eu estava esperando que a memória flash fosse sempre criptografada, mas não é. Apesar disso, não dá pra mudar os conteúdos (código) dela pois é tudo assinado. então conseguimos usar para engenharia reversa, mas não para execução de código. Ainda assim, é massa. Temos 16MB de flash, então podemos colocar um WAD inteiro do DOOM nela! :D</p>
+
+<h2 id="o-que-sabemos-sobre-o-mh1903">O que sabemos sobre o MH1903</h2>
+
+<p>Aqui é quando bicho pega. O SoC está por trás de um véu de obscuridade. O núcleo é feito pela megahunt, que basicamente só provê essas informações:</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/cf4f007fbd8b87c83cb0e4f3c3560cc7_MD5.jpeg" alt="">
+(veja <a href="https://www.megahuntmicro.com/en/index.php?catid=5">https://www.megahuntmicro.com/en/index.php?catid=5</a> )</p>
+
+<p>Indo um pouco mais a fundo no google, a gente consegue achar algumas informações a mais de alguns vendedores. Ele tem <strong>muitas</strong> variações, mas em resumo, o núcleo é o mesmo. Só mudando quantos pinos estão expostos, quantidade de memória flash, ram etc… Essa versão especifica é a QFN88, que tem essas especificações:</p>
+
+<ul>
+  <li>RAM: 1MB</li>
+  <li>FLASH: 1MB</li>
+  <li>SPI: 4</li>
+  <li>ADC: 5</li>
+  <li>DAC: 1</li>
+  <li>GPIO: 64</li>
+  <li>USB: 1</li>
+  <li>Serial: 4</li>
+</ul>
+
+<p>Como vocês podem ver, essa versão tem uma memória flash inteira, o que é uma pena pra mim. Ainda estou montando meu equipamento para inspeções diretas no chip. Eu já fiz alguns decaps, e a memória flash não está embutida no mesmo silicio, mas apenas colada em cima do chip principal e ligada através de fios. Eu ouvi alguns amigos da industria de semicondutores dizer, que a razão disso é que o processo de fabricação entre memórias flash e CPUs diferente um pouco e é difícil unificar ambos. Por isso, geralmente é preferível faze-los separados (especialmente caso precise de uma densidade muito alta).</p>
+
+<p>Uma coisa pra se notar, as versões BGA do SoC não tem memória flash embutida, então elas são obrigadas a carregar de uma flash externa. Spoiler: A D188 tem duas memórias flash na placa :)</p>
+
+<p>E também temos uma variante MH1903S, que tem mais flash, mas menos RAM / GPIO / SPI</p>
+
+<ul>
+  <li>RAM: 640KB</li>
+  <li>FLASH: 4MB</li>
+  <li>SPI: 3</li>
+  <li>ADC: 6</li>
+  <li>DAC: 1</li>
+  <li>GPIO: 56</li>
+  <li>USB: 1</li>
+  <li>Serial: 3</li>
+</ul>
+
+<p>Então, o google não me deu muita informação sobre, apesar de eu ter achado <em>algumas</em> SDK no github (a maioria mirror dos git chinês) e eu tive que recorrer ao Baidu. Essa parte levou um bom tempo, por que muitas informações não estão disponível fora da china continental, e existem muitas variações do MH1903. Eu achei vários datasheets com informações conflitantes, e boa parte deles eu tive que pagar para baixar do CSDN. Por sorte, existem alguns brokers que fazem isso por você. No fim desta página há um link com todos os datasheets relevantes que eu achei, caso você precise. Só esteja avisado: Mesmo neles, há muita informação omitida e conflitante.</p>
+
+<p>Tá, mas como testei então todas as suposições que fiz sobre o chip? Bom, eu achei <em>por um acaso</em> que existe uma placa chinesa similar ao Arduino, feito pela LUAT chamada AIR105. Parece nada a ver, mas uma pesquisa no baidu indicou que o AIR105 usa um núcleo MH1903S. E o lado bom, AIR105 é fácilmente comprável na Aliexpress: <a href="https://s.click.aliexpress.com/e/_oBLNTrc">https://s.click.aliexpress.com/e/_oBLNTrc</a></p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/427a383619233fb72eef5161e05511e8_MD5.jpeg" alt=""></p>
+
+<p>Eu compreo alguns, decapei alguns e adivinha só: realmente é um MH1903S :D</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/9138886ea831b06c18888099fd0e26a6_MD5.jpeg" alt=""></p>
+
+<p>Pra comparação, eu também decapei um SoC da máquina, e a escrita indicava 1903A:</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/feb55758da95a7ecb62f02451c058606_MD5.jpeg" alt=""></p>
+
+<p>Ah, e lembra que falei que a memoria flash era colada no chip principal? Aqui tá uma foto mostrando ambos (E malz, eu ainda não fiz um equipamento pra focus stacking). A memória flash está fora de foco na direita. Os boundwires estão mortos por que usei ácido nítrico 78% e os fios eram de cobre.</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/551efee7006a314cf9d0b9257bb61edc_MD5.jpeg" alt=""></p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/4fd85cc5f052df9b22c267e7559b0af5_MD5.jpeg" alt=""></p>
+
+<p>Então basicamente, eu poderia assumir que eles são pelo menos similares. Os Datasheets de ambos também dizem a mesma coisa (única diferença mesmo é flash e ram).</p>
+
+<p>O diagrama de blocos pra essa CPU está no datasheet, e é basicamente <strong>a única</strong> informação que bate em relação a todos datasheets:</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/8cd0cc82e5b752464a0617442e0c765f_MD5.jpeg" alt=""></p>
+
+<p>O SC300 é na verdade uma especificação de ARM chamada <strong>SecurCore</strong>. É um Cortex M3 (no caso do MH190x é um M4F) com alguns recursos de segurança. Por exemplo, mesmo eles sendo simples processadores ARM de 32 bit, eles tem algumas proteções de memória para restringir acessos entre OS &lt;&gt; APP (uma versão primitiva do TrustZone). Ah e claro, as especificações oficiais só estão disponíveis através de NDA, então só podemos deduzir o que exatamente a especificação diz. Pra uma ideia: As CPUs no seu cartão de crédito, seguem a mesma especificação.</p>
+
+<p>Os datasheets também especificam um mapa da memória, o qual todos datasheets concordam. Porém, <strong>claramente</strong> não é tudo que o dispositivo tem. Por exemplo, a MH diz que a CPU tem acelerador de RSA, AES e hashes via hardware, mas não existe nenhuma descrição deles no datasheet. Depois eu descobri que eles só estão obscurecendo o conteúdo ou precisam de um NDA. Eu vou eventualmente fazer engenharia reversa de todos aplicativos que eu dumpei e também de uns binarios de SDK que eu achei pela internet. Ah, e por favor, se esses endereços baterem com algum dispositivo que você usa, me avise. Na minha experiência os dispositivos chineses tentam ser compatíveis com alguma coisa do mercado, mas nada que achei indica ser um clone direto de algum SoC do mercado. (Eu especulei ser um STM32 ou ATMSAMD, mas não bate).</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Address Range</th>
+      <th>Peripheral name</th>
+      <th>Bus Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x4000_0000-0x4000_03FF</td>
+      <td>SSC</td>
+      <td>AHB</td>
+    </tr>
+    <tr>
+      <td>0x4000_0800-0x4000_0BFF</td>
+      <td>DMA</td>
+      <td>AHB</td>
+    </tr>
+    <tr>
+      <td>0x4000_0C00-0x4000_0FFF</td>
+      <td>USB</td>
+      <td>AHB</td>
+    </tr>
+    <tr>
+      <td>0x4000_1000-0x4000_13FF</td>
+      <td>LCD</td>
+      <td>AHB</td>
+    </tr>
+    <tr>
+      <td>0x4000_8000-0x4000_BFFF</td>
+      <td>OTP</td>
+      <td>AHB</td>
+    </tr>
+    <tr>
+      <td>0x4006_0000-0x4006_FFFF</td>
+      <td>DCMI</td>
+      <td>AHB</td>
+    </tr>
+    <tr>
+      <td>0x4008_0000-0x4008_FFFF</td>
+      <td>CACHE</td>
+      <td>AHB</td>
+    </tr>
+    <tr>
+      <td>0x400A_2000-0x400A_2FFF</td>
+      <td>QSPI</td>
+      <td>AHB</td>
+    </tr>
+    <tr>
+      <td>0x400A_3000-0x400A_3FFF</td>
+      <td>SPIM5</td>
+      <td>AHB</td>
+    </tr>
+    <tr>
+      <td>0x4001_0000-0x4001_0FFF</td>
+      <td>SCI0</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_2000-0x4001_2FFF</td>
+      <td>CRC</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_3000-0x4001_3FFF</td>
+      <td>Timer0</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_4000-0x4001_4FFF</td>
+      <td>ADC</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_5000-0x4001_5FFF</td>
+      <td>SCI2</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_6000-0x4001_6FFF</td>
+      <td>UART0</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_7000-0x4001_7FFF</td>
+      <td>UART1</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_8000-0x4001_8FFF</td>
+      <td>SPIM1</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_9000-0x4001_9FFF</td>
+      <td>SPIM2</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_A000-0x4001_AFFF</td>
+      <td>SPIM0</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_B000-0x4001_BFFF</td>
+      <td>SPIS0</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_C000-0x4001_CFFF</td>
+      <td>Watchdog</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_D000-0x4001_DFFF</td>
+      <td>GPIO</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_E000-0x4001_EFFF</td>
+      <td>TRNG</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4001_F000-0x4001_FFFF</td>
+      <td>SYS_CTRL</td>
+      <td>APB0</td>
+    </tr>
+    <tr>
+      <td>0x4002_0000-0x4002_FFFF</td>
+      <td>MSR</td>
+      <td>APB1</td>
+    </tr>
+    <tr>
+      <td>0x4003_0000-0x4003_7FFF</td>
+      <td>BPU</td>
+      <td>APB2</td>
+    </tr>
+    <tr>
+      <td>0x4004_4000-0x4004_4FFF</td>
+      <td>UART2</td>
+      <td>APB3</td>
+    </tr>
+    <tr>
+      <td>0x4004_5000-0x4004_5FFF</td>
+      <td>UART3</td>
+      <td>APB3</td>
+    </tr>
+    <tr>
+      <td>0x4004_8000-0x4004_8FFF</td>
+      <td>KEYBOARD</td>
+      <td>APB3</td>
+    </tr>
+    <tr>
+      <td>0x4004_9000-0x4004_9FFF</td>
+      <td>I2C0</td>
+      <td>APB3</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A RAM está mapeada no lugar esperado pra esses ARM Cortex. Começa em 0x2000_0000 e vão até o tamanho máximo da RAM (640KB pro MH1903S e 1MB pro MH1903). As bit-bands também estão no lugar esperado, 0x2200_0000 pra RAM. Também há mais devices que não estão listados acima, esses terão seu próprio artigo depois que eu terminar de mapear tudo.</p>
+
+<p>O datasheet principal mostra duas variantes do QFN88, uma tendo um sufixo <code class="language-plaintext highlighter-rouge">_J</code>. A versão não J tem um regulador 3.3V interno, que é muito bom para placas tipo o AIR105. Fazendo engenharia reversa da placa da D177, parece que o pin-out bate exatamente com a variante J. Vocês verão que eu tive um grande problema por que eu assumi que o datasheet estava correto XD</p>
+
+<h2 id="descobrindo-como-as-coisas-estão-conectadas">Descobrindo como as coisas estão conectadas</h2>
+
+<p>A primeira coisa que preciso descobrir é <strong>pelo menos</strong> onde a UART está (se está). Eu sei que o USB da máquina é fixo, por que os pinos são fixos. Mas por alguma razão eu não consegui ativar a bootrom pela USB então tive que caçar a UART.</p>
+
+<p>Os pinos da UART geralmente estão exposto de alguma maneira, para diagnósticos durante a fabricação. Isso ou o JTAG (ou mais especificamente aqui, o SWD). Porém no caso desse micro controlador, eles estão desativados durante o boot, então decidi não perder muito tempo tentando achar eles na placa.</p>
+
+<p>Tá, mas como eu consigo achar as coisas na placa? Bom, eu geralmente removo <strong>todos</strong> componentes da placa e faço um scan dela (usando scanner normal de papel). E aí eu faço um overlay com o pinout da CPU e traço até onde vai. Uma boa aplicação pra isso é o <a href="https://inkscape.org/">Inkscape</a>. Ele permite desenhar tudo vetorizado e as imagens de scanner doméstico tem 1:1 com tamanho real dela (então caso você precise de medidas, elas são realistas).</p>
+
+<p>Então desenho retângulos cinzas e coloco os nomes:</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/bacf2a2ebe249871db70adb98d4fa2b7_MD5.jpeg" alt=""></p>
+
+<p>Eu também marco as vias, por que essas placas costumam ser multi-layer e você vai precisar de tudo pra seguir elas:</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/fdeaa9034f0f2a2217c7d55f05e2e6f4_MD5.jpeg" alt=""></p>
+
+<p>Por exemplo, o TX e RX passa através da parte frontal da PCB também (esquece esse desalinhamento, nao sei por que a imagem bugou).</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/652fd1331e348c4861938eadf3f0a824_MD5.jpeg" alt=""></p>
+
+<p>Depois de seguir tudo, eu cheguei em 2 de 5 testpads, no canto direito da parte de trás da PCB, os quais marquei também no Inkscape.</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/985831c28a29ecc016e52f876980476a_MD5.jpeg" alt=""></p>
+
+<p>Agora que eu tinha a UART, eu poderia usa-la para reprogramar a máquina após a troca da CPU. E pra aqueles que estão pensando: a UART, para a aplicação da máquina, é basicamente a mesma coisa do USB e do bluetooth, então (geralmente) não há leak de informações ali. É exatamente o que o aplicativo móvel acessa. E caso você queira explorar, você pode usar USB ou Bluetooth que elas vão agir da mesma maneira desta UART.</p>
+
+<h2 id="troca-de-cpu">Troca de CPU</h2>
+
+<p>Um dos jeitos mais fáceis que eu consigo rodar um código nela e pulando a parte de tentar bypassar o secureboot, é apenas comprar uma CPU nova e trocar. Alguns podem considerar isso uma vulnerabilidade, mas eu pessoalmente não considero: Mesmo que alguém tenha acesso a todo código que roda nas máquinas, ainda assim eles precisam das chaves e dos dados carregados na NVRAM para a transação de cartão. Eu já vi uns tempos atrás o caso de algumas máquinas que armazenavam isso na memória flash (então se você quebrasse a CPU antes de ela detectar o tamper, o conteúdo estava lá). Mas este não é o caso desta máquina.</p>
+
+<p>Infelizmente esses MH1903 são bem raros pra comprar fora da china continental. De tempos em tempos eles aparecem na Aliexpress. Aqui está um link <a href="https://s.click.aliexpress.com/e/_oBMot6n">https://s.click.aliexpress.com/e/_oBMot6n</a> embora ele provavelmente vai estar morto quando você estiver lendo isso.</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/c94d5244a68733e5cfbec91c6f08f5f0_MD5.jpeg" alt=""></p>
+
+<p>É uma CPU bem cara, R$34 de CPU e ainda R$15 de taxad por dispositivo. E ainda tem os R$28 de frete. Eu comprei 5 deles (caso eu precisasse de mais) e saiu por volta de R$150 com o frete.</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/edad8e809adbb209bf4eca20043fd1dd_MD5.jpeg" alt=""></p>
+
+<p>Uns anos atrás eu tentei trocar a CPU dessa maquina sem nenhum sucesso. Então eu pensei que a variante que eu tinha não era a J, mas a mesma do AIR105 (o que faria sentido) e isso me deixou triste. Mas recentemente eu estava colecionando as bootroms, e decidi trocar um AIR105 por um MH1903 que comprei apenas para dumpar o bootloader (mais bootloaders == mais informações).</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/8fabf3473c8ee086fdea127b537c4ef6_MD5.jpeg" alt=""></p>
+
+<p>E depois de fazer isso, eu percebi que a placa estava full morta. Nenhuma energia além dos 5V. Depois de trocar eu notei uma coisa no datasheet:</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/725ff8aa056e6d095a4ac1ea1882fa1a_MD5.jpeg" alt=""></p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/839cea0de243ff5cc485a19e6a0fb849_MD5.jpeg" alt=""></p>
+
+<p>Uma das diferenças entre o J e não J, é que a versão <strong>não J</strong> (nesse caso AIR105) tem um LDO interno de 3.3V. E olhando os esquemáticos do AIR105, adivinha só? Não existe nenhum outro regulador na placa. É tudo alimentado por esse LDO.</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/87356f1a4622aa38a746dd5676123bf5_MD5.jpeg" alt=""></p>
+
+<p>Então, fazia sentido não ter nada no 3.3V dado que a versão J nao tinha o regulador. Então eu decidi novamente trocar a CPU da D177. Pra isso, eu decidi começar do zero: Máquina recém tirada da caixa e um MH1903 que nao tinha usado. O resultado? Nada ainda. Nada na UART, nada na USB (e ambos deveriam ter atividade da bootrom).</p>
+
+<p>O que acontecia é que, a bootrom nunca respondia as chamadas de handshake do meu leitor, o que era estranho. Decidi tentar no AIR105, até que notei que a placa sempre resetava quando eu enviava o sinal RTS na porta serial.</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/fd96942840f9a3924a76e5d843ee88a2_MD5.jpeg" alt=""></p>
+
+<p>Isso me fez pensar: como ele tava resetando a placa? Olhando pela pinagem do chip, não existe reset. Mas olhando pelo esquema do AIR105 vemos uma coisa interessante:</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/217023812ae3d8552e72a67306105efa_MD5.jpeg" alt=""></p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/0c7f3862853471f760b69c71098168a4_MD5.jpeg" alt=""></p>
+
+<p>Basicamente a placa, não tinha a bateria-moeda onde deveria ter, só um capacitor pra emular (o XH311H no esquemático, era basicamente um conector nao populado), e o que o pino de reset fazia na verdade era <strong>colocar essa bateria em curto</strong> fazendo ela marcar 0V. E adivinha só? O datasheet estava me falando o tempo todo, mas minha falta de experiência lendo chines só passou batido 😆</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/7a75d13b7c4758f46f7c29717f7907cd_MD5.jpeg" alt="">
+Pra aqueles (como eu) que estão enferrujados no Chines, o texto acima basicamente diz: Alimentação da bateria, precisa ser energizado caso contrario o chip não funciona.</p>
+
+<p>Então eu investiguei um pouco mais a bootrom (ainda vou postar detalhes da engenharia reversa da bootrom desse chip) e notei que o que acontece é: Quando o VBAT33 cai para baixo de 2.3V, ele aciona um tamper na CPU. O jeito que a CPU lida com esse tamper, é basicamente se resetar, o que apaga a NVRAM e seta alguns registradores que podem ser lidos pela bootrom ou pela aplicação. Então basicamente, o botão de reset do AIR105 é um botão de tamper 😆</p>
+
+<p>Olhando na PCB da D177, não há nenhum testpad especifico para atuar como reset, mas geralmente para evitar que a bateria seja usada quando existe energia externa, colocam um diodo em série com ela a maneira de isolar ela. Posso soldar um fio nesse diodo para usar como reset. Seguindo os traços na PCB, achei um diodo na borda da placa.</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/ea6eb39aabf1f914c71bda9f6eb79907_MD5.jpeg" alt=""></p>
+
+<p>Então apenas soldei um fio, abri meu <a href="https://github.com/racerxdl/air105-uploader/">air105-uploader</a> e manualmente setei ele pro GND. E <strong>PROFIT</strong>:</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/a4da09ed6fa71e3bd9b38a0097594756_MD5.jpeg" alt=""></p>
+
+<p>Agora eu consigo rodar código na máquina!!!</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/3247c212e1baa37421f763ede653c022_MD5.jpeg" alt=""></p>
+
+<h2 id="construindo-código-para-isso">Construindo código para isso</h2>
+
+<p>Não vou entrar em muitos detalhes aqui (já que este artigo já está ficando maior do que eu esperava), mas o resumo é: o LuatOS fornece uma maneira de construir coisas e tem um “boilerplate” para inicializar todas as coisas do lua. O próprio CPU é um ARM Cortex, então é facilmente construível pelo GCC, apenas requerendo um script de ligação personalizado para juntar tudo no lugar certo.</p>
+
+<p>Basicamente, reutilizei quase tudo que fiz para o AIR105, apenas mudei o script de ligação para estar ciente de que o MH1903 na verdade tem 1MB de RAM em vez de 640KB. Para torná-lo mais fácil de usar, criei algumas libs para <a href="https://platformio.org/">platform.io</a> que você pode usar diretamente.</p>
+
+<p>Se você quiser experimentar, basta instalá-lo através do pip.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install</span> <span class="nt">-U</span> platformio
+</code></pre></div></div>
+
+<p>Em seguida, você pode criar um novo projeto:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir </span>my-project <span class="o">&amp;&amp;</span> <span class="nb">cd </span>my-project
+pio init
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The following files/directories have been created in /tmp/m
+include - Put project header files here
+lib - Put project specific (private) libraries here
+src - Put project source files here
+platformio.ini - Project Configuration File
+Project has been successfully initialized!
+</code></pre></div></div>
+
+<p>Depois disso, você pode simplesmente editar o <code class="language-plaintext highlighter-rouge">platformio.ini</code> para mapeá-lo para usar a plataforma air105:</p>
+
+<div class="language-toml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[env:air105]</span>
+<span class="py">platform</span> <span class="p">=</span> <span class="err">https://github.com/racerxdl/platformio-air</span><span class="mi">105</span>
+<span class="py">board</span> <span class="p">=</span> <span class="err">mh</span><span class="mi">1903</span>
+<span class="py">framework</span> <span class="p">=</span> <span class="err">baremetal</span>
+<span class="py">;monitor_port</span> <span class="p">=</span> <span class="err">SERIAL_PORT</span>
+<span class="py">;monitor_speed</span> <span class="p">=</span> <span class="mi">115200</span>
+<span class="py">monitor_rts</span> <span class="p">=</span> <span class="mi">0</span> <span class="err">;</span> <span class="err">AIR</span><span class="mi">105</span> <span class="err">board</span> <span class="err">has</span> <span class="err">inverted</span> <span class="err">RTS</span>
+<span class="py">build_flags</span> <span class="p">=</span> <span class="err">-g</span> <span class="err">-ggdb</span>
+</code></pre></div></div>
+
+<p>Você pode alterar o parâmetro <code class="language-plaintext highlighter-rouge">board</code> entre <code class="language-plaintext highlighter-rouge">mh1903</code> e <code class="language-plaintext highlighter-rouge">air105</code>, dependendo do que você está direcionando. O MH1903 é a variante de 1MB, portanto, o código travará no AIR105 devido à stack estar posicionada no final do espaço RAM.</p>
+
+<p>E para executar:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pio run <span class="nt">-t</span> upload
+</code></pre></div></div>
+
+<p>Isso deve compilar e carregar (usando o air105-uploader) diretamente. Também irá baixar qualquer ferramenta e bibliotecas necessárias para isso. Você também pode adicionar <code class="language-plaintext highlighter-rouge">-t monitor</code> para abrir um console serial e ver o retorno da máquina.</p>
+
+<p>O código-fonte para o framework e a plataforma nos links do platform.io estão no final deste artigo.</p>
+
+<h2 id="magic-stuff">MAGIC STUFF</h2>
+
+<p>Então, este artigo está ficando enorme e sinto que muitos detalhes serão mal escritos se eu continuar colocando conteúdo aqui. Afinal, este é um projeto de pesquisa de mais de 4 anos. Portanto, eventualmente escreverei mais dois artigos sobre como mapeei algumas coisas mágicas.</p>
+
+<p>Quando digo coisas mágicas, as próximas seções deste artigo vão assumir que sabemos como o LCD está conectado à CPU, o que inicialmente supus que estava na mesma porta que a memória flash que vimos na PCB. Resumindo, está, mas não o Chip Select, nem o controle da backlight do LCD, e esses não foram triviais de encontrar, já que o pinout do LCD não é padrão e eu não consegui encontrar nenhum datasheet dele.</p>
+
+<p>Eu emulei o firmware para descobrir algumas coisas (outras coisas foram apenas observando seções descompiladas) e a coisa mágica que descobri é que os pinos que controlam o LCD estão mapeados em um GPIO que <strong>não existe</strong> de acordo com o datasheet 😃 (Spoiler, existem <strong>dois</strong> GPIOs não documentados e algumas outras coisas)</p>
+
+<p>Por agora, vamos apenas fingir que escrevi um bom artigo sobre como fiz isso. Prometo que escreverei um novo com detalhes sobre a engenharia reversa e os detalhes de como fiz um emulador para isso (que poderia até mostrar as imagens do LCD) 👀</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/e129a7f1554e79536be3ca8d71fe03d9_MD5.jpeg" alt=""></p>
+
+<h2 id="fazendo-o-crasharalho">Fazendo o “crasharalho”</h2>
+
+<p>O “crasharalho” é um sticker que uso muito no Discord e no Telegram. No artigo inglês eu explico o que é o crasharalho, mas acho que em português, é auto explicativo hehe.</p>
+
+<p>Fazer foi fácil, apenas criei uma imagem 160x128 no GIMP e colei o sticker lá.</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/67e6e21e4aca4b6c3ceeb47bf2b57530_MD5.jpeg" alt=""></p>
+
+<p>O Gimp também é bom porque pode exportar diretamente para um cabeçalho C, meio que comprimido com uma macro para realmente obter os valores de pixel R,G,B. Então foi bem fácil convertê-lo.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* GIMP header image file format (RGB): include/crasharalho.h */</span>
+
+<span class="k">static</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">160</span><span class="p">;</span>
+<span class="k">static</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">128</span><span class="p">;</span>
+
+<span class="cm">/* Call this macro repeatedly. After each use, the pixel data can be extracted */</span>
+
+<span class="cp">#define HEADER_PIXEL(data,pixel) {\
+pixel[0] = (((data[0] - 33) &lt;&lt; 2) | ((data[1] - 33) &gt;&gt; 4)); \
+pixel[1] = ((((data[1] - 33) &amp; 0xF) &lt;&lt; 4) | ((data[2] - 33) &gt;&gt; 2)); \
+pixel[2] = ((((data[2] - 33) &amp; 0x3) &lt;&lt; 6) | ((data[3] - 33))); \
+data += 4; \
+}
+</span>
+<span class="k">static</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">header_data</span> <span class="o">=</span>
+
+<span class="s">")#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A"</span>
+
+<span class="s">")#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A)#!A"</span>
+<span class="p">(...)</span>
+</code></pre></div></div>
+
+<p>O LCD ST7735 que a máquina usa tem vários modos de pixel. Decidi usar RGB565, pois seria exatamente 16 bits de largura (o que dá dois bytes sobre SPI) e fácil de converter. Fui preguiçoso, então usei uma LLM local para gerar uma macro para convertê-lo, o que funcionou muito bem (eu não lembrava como converter os espaços, não tinha certeza se era apenas cortar bits ou realmente uma LUT).</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define RGB888_TO_RGB565(r, g, b) ( \
+(((r) &amp; 0xF8) &lt;&lt; 8) | </span><span class="cm">/* 5 bits of red, shifted to bits 15-11 */</span><span class="cp"> \
+(((g) &amp; 0xFC) &lt;&lt; 3) | </span><span class="cm">/* 6 bits of green, shifted to bits 10-5 */</span><span class="cp"> \
+(((b) &amp; 0xF8) &gt;&gt; 3) </span><span class="cm">/* 5 bits of blue, shifted to bits 4-0 */</span><span class="cp"> \
+)
+</span></code></pre></div></div>
+
+<p>A LLM gerou um pequeno corte, e funcionou bem. Então, deixei como estava. Depois, pude simplesmente enviá-lo diretamente no código:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="p">{</span>
+        <span class="c1">// 0x2C RAMWR</span>
+        <span class="n">SendCMD</span><span class="p">(</span><span class="n">LCD_SPI</span><span class="p">,</span> <span class="mh">0x2C</span><span class="p">);</span>                <span class="c1">// RAMWR</span>
+        <span class="n">P15_ON</span><span class="p">;</span>
+        <span class="kt">uint8_t</span> <span class="n">rgb</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+        <span class="c1">// Fill the screen with white color // 16 bit mode</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">160</span> <span class="o">*</span> <span class="mi">128</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">HEADER_PIXEL</span><span class="p">(</span><span class="n">header_data</span><span class="p">,</span> <span class="n">rgb</span><span class="p">);</span>
+            <span class="kt">uint16_t</span> <span class="n">color</span> <span class="o">=</span> <span class="n">RGB888_TO_RGB565</span><span class="p">(</span><span class="n">rgb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rgb</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">rgb</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+            <span class="n">SendCMDParam</span><span class="p">(</span><span class="n">LCD_SPI</span><span class="p">,</span><span class="n">color</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">);</span> <span class="c1">// Send high byte</span>
+            <span class="n">SendCMDParam</span><span class="p">(</span><span class="n">LCD_SPI</span><span class="p">,</span> <span class="n">color</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">);</span> <span class="c1">// Send low byte</span>
+        <span class="p">}</span>
+        <span class="n">P15_OFF</span><span class="p">;</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>E testei no meu emulador:</p>
+
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/947b71be153e6405b62909b62e93385d_MD5.jpeg" alt=""></p>
+
+<h2 id="resultado">Resultado</h2>
+
+<p><img src="/assets/Running%20code%20in%20a%20Credit%20Card%20Payment%20Machine/23c966b8036e41fe19f78b38bfa8bf73_MD5.jpeg" alt=""></p>
+
+<h2 id="próximos-passos">Próximos passos</h2>
+
+<p>Rodar doom, é claro 😃 - Eu planejava fazer este artigo apenas após o doom, mas descobri que 1MB de RAM é meio baixo para o doom padrão. Vi que há uma versão RP2040 do doom que funciona muito bem, então provavelmente vou portar para esse núcleo.</p>
+
+<p>Ainda quero fazer engenharia reversa de tudo que puder desses SoCs, já que são bastante poderosos e têm bons aceleradores que podem ser usados para outras coisas seguras. Também consegui extrair as ROMs de boot do MH1903S e do MH1903, que têm seus próprios aspectos interessantes. Quase terminei de fazer a engenharia reversa da ROM de boot do MH1903S e pretendo fazer um artigo sobre isso em breve. Parece que existem várias versões de ROMs de boot por aí (elas basicamente fazem a mesma coisa, mas têm diferentes revisões e builds). Então, se você encontrar algum dispositivo MH190x que você possa fazer JTAG ou que não tenha a assinatura de boot habilitada, me avise. Vamos fazer um arquivo de ROMs de boot 😃</p>
+
+<h2 id="notas">Notas</h2>
+
+<ol>
+  <li>Houve um pouco de pesquisa sobre os códigos da PAX e PagBank para descobrir como eles interagem com o hardware. Nenhuma falha de segurança foi explorada e não há nada que eles possam fazer sobre a troca de CPU.</li>
+  <li>Não há nada específico para o PagBank nesse caso. Qualquer D177 deve funcionar bem. O trabalho aqui <strong>não é devido a uma falha de segurança</strong>.</li>
+  <li>Megahunt faz MUITO “Silicon OEM” (o AIR105 mencionado aqui é apenas um deles). Decaps devem apontar.</li>
+  <li>Além da boot rom, não compartilho binários que extraí de máquinas. Não fiz engenharia reversa o suficiente para saber quais informações eles armazenam, e eles podem conter coisas que devem ser privadas. Portanto, por favor, não peça, você pode extraí-lo você mesmo. É bem fácil.</li>
+  <li>Os artigos seguintes mostrarão como fiz engenharia reversa dos boot loaders, formato de imagem pax e descobri como os pinos do LCD foram mapeados.</li>
+</ol>
+
+<h3 id="links">Links</h3>
+
+<ul>
+  <li>
+<a href="https://github.com/racerxdl/platformio-air105">https://github.com/racerxdl/platformio-air105</a> - PIO Platform for AIR105/MH1903</li>
+  <li>
+<a href="https://github.com/racerxdl/framework-megahunt">https://github.com/racerxdl/framework-megahunt</a> - PIO Framework for Megahunt devices</li>
+  <li>
+<a href="https://github.com/racerxdl/air105-uploader">https://github.com/racerxdl/air105-uploader</a> - Python script to upload using the boot rom</li>
+  <li>
+<a href="https://archive.org/details/mh-1903-s-v-1.5">https://archive.org/details/mh-1903-s-v-1.5</a> - Some usefull MH1903 datasheets</li>
+  <li>
+<a href="https://github.com/racerxdl/d177-crasharalho">https://github.com/racerxdl/d177-crasharalho</a> - Crasharalho Source Code</li>
+  <li>
+<a href="https://github.com/racerxdl/megahunt-bootroms">https://github.com/racerxdl/megahunt-bootroms</a> - Megahunt Bootroms</li>
+  <li>
+<a href="https://github.com/racerxdl/mhdumper">https://github.com/racerxdl/mhdumper</a> - Megahunt ROM Dumper Tool</li>
+</ul>
+
+<h3 id="timeline">Timeline</h3>
+
+<ul>
+  <li>
+<strong>01/04/2025</strong> - Voltei aos trabalhos de engenharia reversa e mapeamento</li>
+  <li>
+<strong>17/06/2025</strong> - Consegui rodar o primeiro código (crasharalho)</li>
+  <li>
+<strong>22/06/2025</strong> - Terminei o artigo, mandei para revisão (técnica)</li>
+  <li>
+<strong>27/08/2025</strong> - Enviei o artigo para pag para revisão</li>
+  <li>
+<strong>28/08/2025</strong> - Aprovado pela pag para publicação</li>
+  <li>
+<strong>31/08/2025</strong> - Mais reviews, tradução, etc…</li>
+  <li>
+<strong>05/09/2025</strong> - Publicado</li>
+</ul>
+
+
+  <hr>
+<div class="fb-comments" data-href="https://lucasteske.dev/pt/2025/09/running-code-in-pax-machines" data-width="100%" data-numposts="5"></div>
+
+<hr>
+<div class="sharebuttons">
+  <ul>
+    <li>
+      <p class="sharetitle"> Share this: </p>
+    </li>
+    <li class="reddit">
+      <a href="http://www.reddit.com/submit?url=https://lucasteske.dev/pt/2025/09/running-code-in-pax-machines&amp;title=Rodando%20c%C3%B3digo%20em%20uma%20m%C3%A1quina%20de%20cart%C3%A3o%20de%20cr%C3%A9dito%20PAX%20(parte%201)" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Reddit icon</title>
+<path d="M2.204 14.049c-.06.276-.091.56-.091.847 0 3.443 4.402 6.249 9.814 6.249 5.41 0 9.812-2.804 9.812-6.249 0-.274-.029-.546-.082-.809l-.015-.032c-.021-.055-.029-.11-.029-.165-.302-1.175-1.117-2.241-2.296-3.103-.045-.016-.088-.039-.126-.07-.026-.02-.045-.042-.067-.064-1.792-1.234-4.356-2.008-7.196-2.008-2.815 0-5.354.759-7.146 1.971-.014.018-.029.033-.049.049-.039.033-.084.06-.13.075-1.206.862-2.042 1.937-2.354 3.123 0 .058-.014.114-.037.171l-.008.015zm9.773 5.441c-1.794 0-3.057-.389-3.863-1.197-.173-.174-.173-.457 0-.632.176-.165.46-.165.635 0 .63.629 1.685.943 3.228.943 1.542 0 2.591-.3 3.219-.929.165-.164.45-.164.629 0 .165.18.165.465 0 .645-.809.808-2.065 1.198-3.862 1.198l.014-.028zm-3.606-7.573c-.914 0-1.677.765-1.677 1.677 0 .91.763 1.65 1.677 1.65s1.651-.74 1.651-1.65c0-.912-.739-1.677-1.651-1.677zm7.233 0c-.914 0-1.678.765-1.678 1.677 0 .91.764 1.65 1.678 1.65s1.651-.74 1.651-1.65c0-.912-.739-1.677-1.651-1.677zm4.548-1.595c1.037.833 1.8 1.821 2.189 2.904.45-.336.719-.864.719-1.449 0-1.002-.815-1.816-1.818-1.816-.399 0-.778.129-1.09.363v-.002zM2.711 9.963c-1.003 0-1.817.816-1.817 1.818 0 .543.239 1.048.644 1.389.401-1.079 1.172-2.053 2.213-2.876-.302-.21-.663-.329-1.039-.329v-.002zm9.217 12.079c-5.906 0-10.709-3.205-10.709-7.142 0-.275.023-.544.068-.809C.494 13.598 0 12.729 0 11.777c0-1.496 1.227-2.713 2.725-2.713.674 0 1.303.246 1.797.682 1.856-1.191 4.357-1.941 7.112-1.992l1.812-5.524.404.095s.016 0 .016.002l4.223.993c.344-.798 1.138-1.36 2.065-1.36 1.229 0 2.231 1.004 2.231 2.234 0 1.232-1.003 2.234-2.231 2.234s-2.23-1.004-2.23-2.23l-3.851-.912-1.467 4.477c2.65.105 5.047.854 6.844 2.021.494-.464 1.144-.719 1.833-.719 1.498 0 2.718 1.213 2.718 2.711 0 .987-.54 1.886-1.378 2.365.029.255.059.494.059.749-.015 3.938-4.806 7.143-10.72 7.143l-.034.009zm8.179-19.187c-.74 0-1.34.599-1.34 1.338 0 .738.6 1.34 1.34 1.34.732 0 1.33-.6 1.33-1.334 0-.733-.598-1.332-1.347-1.332l.017-.012z"></path></svg>
+      </a>
+    </li>
+    <li class="hn">
+      <a href="http://news.ycombinator.com/submitlink?u=https://lucasteske.dev/pt/2025/09/running-code-in-pax-machines&amp;t=Rodando%20c%C3%B3digo%20em%20uma%20m%C3%A1quina%20de%20cart%C3%A3o%20de%20cr%C3%A9dito%20PAX%20(parte%201)" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Y Combinator icon</title>
+<path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"></path></svg>
+      </a>
+    </li>
+    <li class="twitter">
+      <a href="https://twitter.com/intent/tweet?via=lucasteske&url=https://lucasteske.dev/pt/2025/09/running-code-in-pax-machines&amp;text=Rodando%20c%C3%B3digo%20em%20uma%20m%C3%A1quina%20de%20cart%C3%A3o%20de%20cr%C3%A9dito%20PAX%20(parte%201)" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Twitter icon</title>
+<path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"></path></svg>
+      </a>
+    </li>
+    <li class="linkedin">
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://lucasteske.dev/pt/2025/09/running-code-in-pax-machines&amp;title=Rodando%20c%C3%B3digo%20em%20uma%20m%C3%A1quina%20de%20cart%C3%A3o%20de%20cr%C3%A9dito%20PAX%20(parte%201)" target="_blank">
+        <svg role="img" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn icon</title>
+<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+      </a>
+    </li>
+  </ul>
+</div>
+
+</div>
+
+<div class="pagination">
+  
+  
+    <a href="/pt/2024/01/tpm-2-extraindo-chaves-bitlocker" class="right arrow">→</a>
+  
+
+  <a href="#" class="top">Top</a>
+</div>
+
+      <br><br>
+    </main>
+
+    <footer>
+  <span>
+    © <time datetime="2025-09-05 19:03:58 -0300">2025</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+  </span><br>
+  <span class="site-build">
+    Last build: 2025-09-05 19:03:58 -0300
+  </span>
+  <!-- hehehe -->
+  <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">
+</footer>
+
+<script src="/assets/simple-jekyll-search.min.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="https://lucasteske.dev{url}">{date} - {title}</a></li>'
+  })
+</script>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+  <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P2HPZJM" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- AnchorJS -->
+<script src="/assets/anchor.min.js"></script>
+<script>
+  anchors.options.placement = 'left';
+  anchors.add('h1');
+  anchors.add();
+</script>
+<!-- End AnchorJS -->
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "6fdff3f05d2847b58d553381bb1e8115"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+  </body>
+</html>

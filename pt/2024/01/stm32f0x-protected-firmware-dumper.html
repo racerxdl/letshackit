@@ -39,7 +39,7 @@
   <!-- Article -->
   <meta name="article:author" property="article:author" content="https://www.facebook.com/teskeslab">
   <meta name="article:publisher" property="article:publisher" content="https://www.facebook.com/teskeslab">
-  <meta name="article:published_time" property="article:published_time" content="2024-01-16T05:23:00+00:00">
+  <meta name="article:published_time" property="article:published_time" content="2024-01-16T02:23:00-03:00">
 
   <!-- Facebook -->
   <meta name="fb:admins" property="fb:admins" content="1234">
@@ -65,8 +65,8 @@
     "keywords": "Protected Firmware,Hardware Hacking,RE,Reverse Engineering,STM32,Patreon,MCU",
     "description": "No processo do meu hobby de hackear hardware, encontrei um clone chinês de um dongle HASP HL equipado com um processador STM32F042G6U6. Minha intenção era cloná-lo, e durante minha exploração, descobri quatro pinos da interface de depuração SWD localizados na parte inferior da PCB. Soldei um conector de 4 pinos...",
     "articleBody": "No processo do meu hobby de hackear hardware, encontrei um clone chinês de um dongle HASP HL equipado com um processador STM32F042G6U6. Minha intenção era cloná-lo, e durante minha exploração, descobri quatro pinos da interface de depuração SWD localizados na parte inferior da PCB. Soldei um conector de 4 pinos nesses pinos para facilitar o acesso. Utilizando meu Segger J-Link como uma sonda de depuração, embora qualquer adaptador JTAG deva ser suficiente, eu o combinei com o OpenOCD. Dado que o chipset é reconhecido pelo OpenOCD, eu criei um script para extrair todos os dados possíveis, condicionados à habilitação. adapter driver jlink transport select swd adapter_khz 4000 source [find target/stm32f0x.cfg] init dap info reset halt flash read_bank 0 firmwareF1.bin 0 0x8000 reset shutdown Mas, encontrei um obstáculo - a proteção RDP (Read-Out Protection) do dispositivo estava ativada, mesmo com o SWD ativo. Sem problemas, pensei, e tentei contornar isso com injeção de falha de tensão. No entanto, o gerador de clock interno no dispositivo tornou a interferência no clock inviável. Após algumas horas sem progresso, ficou claro que eu precisava de um novo plano. Minha busca por alternativas me levou a um artigo abrangente detalhando três metodologias para extrair memória...",
-    "datePublished": "2024-01-16 05:23:00 +0000",
-    "dateModified": "2024-01-16 05:23:00 +0000",
+    "datePublished": "2024-01-16 02:23:00 -0300",
+    "dateModified": "2024-01-16 02:23:00 -0300",
     "author": {
       "@type": "Person",
       "name": "Lucas Teske",
@@ -309,7 +309,7 @@
 
     
       <br>
-      <span>em </span><time datetime="2024-01-16 05:23:00 +0000">
+      <span>em </span><time datetime="2024-01-16 02:23:00 -0300">
   16
   
   Janeiro
@@ -954,10 +954,10 @@ shutdown
 
     <footer>
   <span>
-    © <time datetime="2025-09-05 22:00:48 +0000">2025</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2025-09-05 19:03:58 -0300">2025</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2025-09-05 22:00:48 +0000
+    Last build: 2025-09-05 19:03:58 -0300
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

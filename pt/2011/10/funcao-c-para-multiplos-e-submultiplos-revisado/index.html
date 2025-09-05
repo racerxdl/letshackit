@@ -39,7 +39,7 @@
   <!-- Article -->
   <meta name="article:author" property="article:author" content="https://www.facebook.com/teskeslab">
   <meta name="article:publisher" property="article:publisher" content="https://www.facebook.com/teskeslab">
-  <meta name="article:published_time" property="article:published_time" content="2011-10-30T20:50:21+00:00">
+  <meta name="article:published_time" property="article:published_time" content="2011-10-30T18:50:21-02:00">
 
   <!-- Facebook -->
   <meta name="fb:admins" property="fb:admins" content="1234">
@@ -65,8 +65,8 @@
     "keywords": "",
     "description": "O Caio Alarcon me notificou de algumas coisas sobre minha função de múltiplos e submúltiplos, por exemplo, o tratamento de números negativos. Resolvi então revisar e otimizar a função em C. O Resultado está abaixo: #include &lt;stdio.h&gt; #include &lt;math.h&gt; char toNotationUnit(double value,float *out) { double val; char notacoes[] = {'y','z','a','f','p','n','u','m',' ', 'k','M','G','T','P','E','Z','Y'}; int counter=8; char...",
     "articleBody": "O Caio Alarcon me notificou de algumas coisas sobre minha função de múltiplos e submúltiplos, por exemplo, o tratamento de números negativos. Resolvi então revisar e otimizar a função em C. O Resultado está abaixo:\n\n#include &lt;stdio.h&gt;\n#include &lt;math.h&gt;\nchar toNotationUnit(double value,float *out) {\n        double val;\n        char notacoes[] = {'y','z','a','f','p','n','u','m',' ',\n\n                                   'k','M','G','T','P','E','Z','Y'};\n        int counter=8;\n        char unit;\n        val = value&gt;0?value:-value;\n        if(val &lt; 1) {\n                while( (val &lt; 1.00) &amp; (counter != 0)) {\n                        counter--;\n                        val=val*(double)1000;\n                }\n        }else{\n                while((val &gt;= 1000) &amp; (counter != 16)) {\n                        counter++;\n                        val=val/(double)1000;\n                }\n        }\n        unit = notacoes[counter];\n        val = round(val*(double)100)/(double)100;\n        *out = (float) value&gt;0?val:-val;\n        return unit;\n}\n \nint main() {\n  double x = -1230000;\n  float res;\n  char t;\n  t = toNotationUnit(x,&amp;res);\n  printf(\"%.2F%c\",res,t);\n  return 0;\n}\n\n\nQuem preferir, tem um link no ideone com este código funcionando 😀\n\nhttp://ideone.com/wpvZo\n\nBom uso!\n",
-    "datePublished": "2011-10-30 20:50:21 +0000",
-    "dateModified": "2011-10-30 20:50:21 +0000",
+    "datePublished": "2011-10-30 18:50:21 -0200",
+    "dateModified": "2011-10-30 18:50:21 -0200",
     "author": {
       "@type": "Person",
       "name": "Lucas Teske",
@@ -307,7 +307,7 @@
 
     
       <br>
-      <span>em </span><time datetime="2011-10-30 20:50:21 +0000">
+      <span>em </span><time datetime="2011-10-30 18:50:21 -0200">
   30
   
   Outubro
@@ -418,10 +418,10 @@ int main() {
 
     <footer>
   <span>
-    © <time datetime="2025-09-05 22:00:48 +0000">2025</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2025-09-05 19:03:58 -0300">2025</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2025-09-05 22:00:48 +0000
+    Last build: 2025-09-05 19:03:58 -0300
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">
