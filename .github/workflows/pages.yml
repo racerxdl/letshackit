@@ -13,6 +13,7 @@ jobs:
         fetch-depth: 0
     - name: Prepare env
       run: |
+        sudo apt update -y
         sudo apt install -y graphviz texlive-full npm inkscape pdf2svg
         sudo gem install bundler
         npm -g install svgo
