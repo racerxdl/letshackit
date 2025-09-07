@@ -81,12 +81,12 @@ Baseado nas minhas experiencias anteriores fazendo engenharia reversa nestas maq
 1. Segurança pesada
     1. Proteção contra tamper
     2. Proteção contra clock-glitching
-    3. Proetção contra manipulacao de RNG
+    3. Proteção contra manipulação de RNG
     4. Assinaturas de código
     5. Criptografia de Código
 2. Muita frustração
 
-Eu podia seguir dois caminhos: exploitar o código que roda, ou trocar a CPU. Para exploitar, eu teria que achar uma falha de segurança que permitisse execução de código via Bluetooth, Smartcard, NFC ou USB, dado que estas são as únicas interfaces disponíveis. Para isso, eu teria que ter todo código, e como vocês vão ver mais pra frente, para está maquina em especifico, isso não era exatamente possível.
+Eu podia seguir dois caminhos: exploitar o código que roda, ou trocar a CPU. Para exploitar, eu teria que achar uma falha de segurança que permitisse execução de código via Bluetooth, SmartCard, NFC ou USB, dado que estas são as únicas interfaces disponíveis. Para isso, eu teria que ter todo código, e como vocês vão ver mais pra frente, para está maquina em especifico, isso não era exatamente possível.
 
 Segundo jeito era basicamente ver qual CPU estava na placa, comprar uma nova e trocar. O problema mesmo, é achar a CPU pra vender.
 
@@ -110,7 +110,7 @@ E por alguma razão, a máquina decidiu falar pra gente quais pontos de tamper f
 
 ![](/assets/Running code in a PAX Credit Card Payment Machine/9b728a005ceb00f991633d8d6ece65ed_MD5.jpeg)
 
-Ah, isso também reseta pelo boot, então se você soldar os pinos de tamper (pra forçar eles a ficarem em contato) você consegue identificar os nomes de cada um hehe :)
+Ah, isso também resetar pelo boot, então se você soldar os pinos de tamper (pra forçar eles a ficarem em contato) você consegue identificar os nomes de cada um hehe :)
 
 Então, isso é a parte de baixo. Podemos ver algumas coisas, por exemplo a bateria-moeda na esquerda e uma grande PCB verde que parece inútil. Ela basicamente está em cima de todo circuito de leitura do cartão e os controladores da máquina.
 
@@ -138,13 +138,13 @@ Aqui conseguimos ver algumas coisas interessantes:
 
 ![](/assets/Running code in a PAX Credit Card Payment Machine/55e76a7d0d22410d56bada5afad18bd8_MD5.jpeg)
 
-A memória flash, conseguimos dumpa-la. Eu tenho amostras tanto com tamper quanto sem tamper. O bypass da detecção de tamper fica como exercicio ao leitor :) - Mas se você quiser entender como funciona, você pode dumpar ela diretamente mesmo com tamper, por que o tamper não apaga a memória flash inteira, apenas a porção onde tem conteúdo sensível para comunicação com os servidores de pagamento.
+A memória flash, conseguimos dumpa-la. Eu tenho amostras tanto com tamper quanto sem tamper. O bypass da detecção de tamper fica como exercício ao leitor :) - Mas se você quiser entender como funciona, você pode dumpar ela diretamente mesmo com tamper, por que o tamper não apaga a memória flash inteira, apenas a porção onde tem conteúdo sensível para comunicação com os servidores de pagamento.
 
 Eu estava esperando que a memória flash fosse sempre criptografada, mas não é. Apesar disso, não dá pra mudar os conteúdos (código) dela pois é tudo assinado. então conseguimos usar para engenharia reversa, mas não para execução de código. Ainda assim, é massa. Temos 16MB de flash, então podemos colocar um WAD inteiro do DOOM nela! :D
 
 ## O que sabemos sobre o MH1903
 
-Aqui é quando bicho pega. O SoC está por trás de um véu de obscuridade. O núcleo é feito pela megahunt, que basicamente só provê essas informações:
+Aqui é quando bicho pega. O SoC está por trás de um véu de obscuridade. O núcleo é feito pela Megahunt, que basicamente só provê essas informações:
 
 ![](/assets/Running code in a PAX Credit Card Payment Machine/cf4f007fbd8b87c83cb0e4f3c3560cc7_MD5.jpeg)
 (veja <https://www.megahuntmicro.com/en/index.php?catid=5> )
@@ -160,7 +160,7 @@ Indo um pouco mais a fundo no google, a gente consegue achar algumas informaçõ
 * USB: 1
 * Serial: 4
 
-Como vocês podem ver, essa versão tem uma memória flash inteira, o que é uma pena pra mim. Ainda estou montando meu equipamento para inspeções diretas no chip. Eu já fiz alguns decaps, e a memória flash não está embutida no mesmo silicio, mas apenas colada em cima do chip principal e ligada através de fios. Eu ouvi alguns amigos da industria de semicondutores dizer, que a razão disso é que o processo de fabricação entre memórias flash e CPUs diferente um pouco e é difícil unificar ambos. Por isso, geralmente é preferível faze-los separados (especialmente caso precise de uma densidade muito alta).
+Como vocês podem ver, essa versão tem uma memória flash inteira, o que é uma pena pra mim. Ainda estou montando meu equipamento para inspeções diretas no chip. Eu já fiz alguns decaps, e a memória flash não está embutida no mesmo silício, mas apenas colada em cima do chip principal e ligada através de fios. Eu ouvi alguns amigos da industria de semicondutores dizer, que a razão disso é que o processo de fabricação entre memórias flash e CPUs diferente um pouco e é difícil unificar ambos. Por isso, geralmente é preferível faze-los separados (especialmente caso precise de uma densidade muito alta).
 
 Uma coisa pra se notar, as versões BGA do SoC não tem memória flash embutida, então elas são obrigadas a carregar de uma flash externa. Spoiler: A D188 tem duas memórias flash na placa :)
 
@@ -177,11 +177,11 @@ E também temos uma variante MH1903S, que tem mais flash, mas menos RAM / GPIO /
 
 Então, o google não me deu muita informação sobre, apesar de eu ter achado _algumas_ SDK no github (a maioria mirror dos git chinês) e eu tive que recorrer ao Baidu. Essa parte levou um bom tempo, por que muitas informações não estão disponível fora da china continental, e existem muitas variações do MH1903. Eu achei vários datasheets com informações conflitantes, e boa parte deles eu tive que pagar para baixar do CSDN. Por sorte, existem alguns brokers que fazem isso por você. No fim desta página há um link com todos os datasheets relevantes que eu achei, caso você precise. Só esteja avisado: Mesmo neles, há muita informação omitida e conflitante.
 
-Tá, mas como testei então todas as suposições que fiz sobre o chip? Bom, eu achei _por um acaso_ que existe uma placa chinesa similar ao Arduino, feito pela LUAT chamada AIR105. Parece nada a ver, mas uma pesquisa no baidu indicou que o AIR105 usa um núcleo MH1903S. E o lado bom, AIR105 é fácilmente comprável na Aliexpress: <https://s.click.aliexpress.com/e/_oBLNTrc>
+Tá, mas como testei então todas as suposições que fiz sobre o chip? Bom, eu achei _por um acaso_ que existe uma placa chinesa similar ao Arduino, feito pela LUAT chamada AIR105. Parece nada a ver, mas uma pesquisa no baidu indicou que o AIR105 usa um núcleo MH1903S. E o lado bom, AIR105 é facilmente comprável na Aliexpress: <https://s.click.aliexpress.com/e/_oBLNTrc>
 
 ![](/assets/Running code in a PAX Credit Card Payment Machine/427a383619233fb72eef5161e05511e8_MD5.jpeg)
 
-Eu compreo alguns, decapei alguns e adivinha só: realmente é um MH1903S :D
+Eu comprei alguns, decapei alguns e adivinha só: realmente é um MH1903S :D
 
 ![](/assets/Running code in a PAX Credit Card Payment Machine/9138886ea831b06c18888099fd0e26a6_MD5.jpeg)
 
@@ -203,7 +203,7 @@ O diagrama de blocos pra essa CPU está no datasheet, e é basicamente **a únic
 
 O SC300 é na verdade uma especificação de ARM chamada **SecurCore**. É um Cortex M3 (no caso do MH190x é um M4F) com alguns recursos de segurança. Por exemplo, mesmo eles sendo simples processadores ARM de 32 bit, eles tem algumas proteções de memória para restringir acessos entre OS <> APP (uma versão primitiva do TrustZone). Ah e claro, as especificações oficiais só estão disponíveis através de NDA, então só podemos deduzir o que exatamente a especificação diz. Pra uma ideia: As CPUs no seu cartão de crédito, seguem a mesma especificação.
 
-Os datasheets também especificam um mapa da memória, o qual todos datasheets concordam. Porém, **claramente** não é tudo que o dispositivo tem. Por exemplo, a MH diz que a CPU tem acelerador de RSA, AES e hashes via hardware, mas não existe nenhuma descrição deles no datasheet. Depois eu descobri que eles só estão obscurecendo o conteúdo ou precisam de um NDA. Eu vou eventualmente fazer engenharia reversa de todos aplicativos que eu dumpei e também de uns binarios de SDK que eu achei pela internet. Ah, e por favor, se esses endereços baterem com algum dispositivo que você usa, me avise. Na minha experiência os dispositivos chineses tentam ser compatíveis com alguma coisa do mercado, mas nada que achei indica ser um clone direto de algum SoC do mercado. (Eu especulei ser um STM32 ou ATMSAMD, mas não bate).
+Os datasheets também especificam um mapa da memória, o qual todos datasheets concordam. Porém, **claramente** não é tudo que o dispositivo tem. Por exemplo, a MH diz que a CPU tem acelerador de RSA, AES e hashes via hardware, mas não existe nenhuma descrição deles no datasheet. Depois eu descobri que eles só estão obscurecendo o conteúdo ou precisam de um NDA. Eu vou eventualmente fazer engenharia reversa de todos aplicativos que eu dumpei e também de uns binários de SDK que eu achei pela internet. Ah, e por favor, se esses endereços baterem com algum dispositivo que você usa, me avise. Na minha experiência os dispositivos chineses tentam ser compatíveis com alguma coisa do mercado, mas nada que achei indica ser um clone direto de algum SoC do mercado. (Eu especulei ser um STM32 ou ATMSAMD, mas não bate).
 
 
 | Address Range           | Peripheral name | Bus Name |
@@ -458,7 +458,7 @@ E testei no meu emulador:
 
 ## Resultado
 
-![](/assets/Running code in a Credit Card Payment Machine/23c966b8036e41fe19f78b38bfa8bf73_MD5.jpeg)
+![](/assets/Running code in a PAX Credit Card Payment Machine/23c966b8036e41fe19f78b38bfa8bf73_MD5.jpeg)
 
 ## Próximos passos
 

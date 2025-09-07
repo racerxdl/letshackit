@@ -442,7 +442,7 @@ And tested it on my emulator:
 
 ## Result
 
-![](/assets/Running code in a Credit Card Payment Machine/23c966b8036e41fe19f78b38bfa8bf73_MD5.jpeg)
+![](/assets/Running code in a PAX Credit Card Payment Machine/23c966b8036e41fe19f78b38bfa8bf73_MD5.jpeg)
 
 ## Next steps
 
