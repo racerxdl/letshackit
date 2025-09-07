@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="pt"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://lucasteske.dev/feed.xml" rel="self" type="application/atom+xml" /><link href="https://lucasteske.dev/" rel="alternate" type="text/html" hreflang="pt" /><updated>2025-09-05T19:03:58-03:00</updated><id>https://lucasteske.dev/feed.xml</id><title type="html">Lets Hack It</title><subtitle>Sou Lucas Teske, gosto de Eletrônica, Computação, Física.  Todos os hacks que eu fizer, serão colocados aqui. Aceito sugestões :D</subtitle><author><name>Lucas Teske</name><email>letshackit@nvx.li</email></author><entry><title type="html">Rodando código em uma máquina de cartão de crédito PAX (parte 1)</title><link href="https://lucasteske.dev/2025/09/running-code-in-pax-machines" rel="alternate" type="text/html" title="Rodando código em uma máquina de cartão de crédito PAX (parte 1)" /><published>2025-09-05T16:30:00-03:00</published><updated>2025-09-05T16:30:00-03:00</updated><id>https://lucasteske.dev/2025/09/running-code-in-pax-machines</id><content type="html" xml:base="https://lucasteske.dev/2025/09/running-code-in-pax-machines"><![CDATA[<h2 id="disclaimer">Disclaimer</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="pt"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://lucasteske.dev/feed.xml" rel="self" type="application/atom+xml" /><link href="https://lucasteske.dev/" rel="alternate" type="text/html" hreflang="pt" /><updated>2025-09-07T14:47:29-03:00</updated><id>https://lucasteske.dev/feed.xml</id><title type="html">Lets Hack It</title><subtitle>Sou Lucas Teske, gosto de Eletrônica, Computação, Física.  Todos os hacks que eu fizer, serão colocados aqui. Aceito sugestões :D</subtitle><author><name>Lucas Teske</name><email>letshackit@nvx.li</email></author><entry><title type="html">Rodando código em uma máquina de cartão de crédito PAX (parte 1)</title><link href="https://lucasteske.dev/2025/09/running-code-in-pax-machines" rel="alternate" type="text/html" title="Rodando código em uma máquina de cartão de crédito PAX (parte 1)" /><published>2025-09-05T16:30:00-03:00</published><updated>2025-09-05T16:30:00-03:00</updated><id>https://lucasteske.dev/2025/09/running-code-in-pax-machines</id><content type="html" xml:base="https://lucasteske.dev/2025/09/running-code-in-pax-machines"><![CDATA[<h2 id="disclaimer">Disclaimer</h2>
 
 <p><strong>Todos os procedimentos descritos aqui foram feitos com material disponível publicamente</strong> - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador <strong>não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos.</strong></p>
 
@@ -57,7 +57,7 @@
     <ol>
       <li>Proteção contra tamper</li>
       <li>Proteção contra clock-glitching</li>
-      <li>Proetção contra manipulacao de RNG</li>
+      <li>Proteção contra manipulação de RNG</li>
       <li>Assinaturas de código</li>
       <li>Criptografia de Código</li>
     </ol>
@@ -65,7 +65,7 @@
   <li>Muita frustração</li>
 </ol>
 
-<p>Eu podia seguir dois caminhos: exploitar o código que roda, ou trocar a CPU. Para exploitar, eu teria que achar uma falha de segurança que permitisse execução de código via Bluetooth, Smartcard, NFC ou USB, dado que estas são as únicas interfaces disponíveis. Para isso, eu teria que ter todo código, e como vocês vão ver mais pra frente, para está maquina em especifico, isso não era exatamente possível.</p>
+<p>Eu podia seguir dois caminhos: exploitar o código que roda, ou trocar a CPU. Para exploitar, eu teria que achar uma falha de segurança que permitisse execução de código via Bluetooth, SmartCard, NFC ou USB, dado que estas são as únicas interfaces disponíveis. Para isso, eu teria que ter todo código, e como vocês vão ver mais pra frente, para está maquina em especifico, isso não era exatamente possível.</p>
 
 <p>Segundo jeito era basicamente ver qual CPU estava na placa, comprar uma nova e trocar. O problema mesmo, é achar a CPU pra vender.</p>
 
@@ -89,7 +89,7 @@
 
 <p><img src="/assets/Running code in a PAX Credit Card Payment Machine/9b728a005ceb00f991633d8d6ece65ed_MD5.jpeg" alt="" /></p>
 
-<p>Ah, isso também reseta pelo boot, então se você soldar os pinos de tamper (pra forçar eles a ficarem em contato) você consegue identificar os nomes de cada um hehe :)</p>
+<p>Ah, isso também resetar pelo boot, então se você soldar os pinos de tamper (pra forçar eles a ficarem em contato) você consegue identificar os nomes de cada um hehe :)</p>
 
 <p>Então, isso é a parte de baixo. Podemos ver algumas coisas, por exemplo a bateria-moeda na esquerda e uma grande PCB verde que parece inútil. Ela basicamente está em cima de todo circuito de leitura do cartão e os controladores da máquina.</p>
 
@@ -119,13 +119,13 @@
 
 <p><img src="/assets/Running code in a PAX Credit Card Payment Machine/55e76a7d0d22410d56bada5afad18bd8_MD5.jpeg" alt="" /></p>
 
-<p>A memória flash, conseguimos dumpa-la. Eu tenho amostras tanto com tamper quanto sem tamper. O bypass da detecção de tamper fica como exercicio ao leitor :) - Mas se você quiser entender como funciona, você pode dumpar ela diretamente mesmo com tamper, por que o tamper não apaga a memória flash inteira, apenas a porção onde tem conteúdo sensível para comunicação com os servidores de pagamento.</p>
+<p>A memória flash, conseguimos dumpa-la. Eu tenho amostras tanto com tamper quanto sem tamper. O bypass da detecção de tamper fica como exercício ao leitor :) - Mas se você quiser entender como funciona, você pode dumpar ela diretamente mesmo com tamper, por que o tamper não apaga a memória flash inteira, apenas a porção onde tem conteúdo sensível para comunicação com os servidores de pagamento.</p>
 
 <p>Eu estava esperando que a memória flash fosse sempre criptografada, mas não é. Apesar disso, não dá pra mudar os conteúdos (código) dela pois é tudo assinado. então conseguimos usar para engenharia reversa, mas não para execução de código. Ainda assim, é massa. Temos 16MB de flash, então podemos colocar um WAD inteiro do DOOM nela! :D</p>
 
 <h2 id="o-que-sabemos-sobre-o-mh1903">O que sabemos sobre o MH1903</h2>
 
-<p>Aqui é quando bicho pega. O SoC está por trás de um véu de obscuridade. O núcleo é feito pela megahunt, que basicamente só provê essas informações:</p>
+<p>Aqui é quando bicho pega. O SoC está por trás de um véu de obscuridade. O núcleo é feito pela Megahunt, que basicamente só provê essas informações:</p>
 
 <p><img src="/assets/Running code in a PAX Credit Card Payment Machine/cf4f007fbd8b87c83cb0e4f3c3560cc7_MD5.jpeg" alt="" />
 (veja <a href="https://www.megahuntmicro.com/en/index.php?catid=5">https://www.megahuntmicro.com/en/index.php?catid=5</a> )</p>
@@ -143,7 +143,7 @@
   <li>Serial: 4</li>
 </ul>
 
-<p>Como vocês podem ver, essa versão tem uma memória flash inteira, o que é uma pena pra mim. Ainda estou montando meu equipamento para inspeções diretas no chip. Eu já fiz alguns decaps, e a memória flash não está embutida no mesmo silicio, mas apenas colada em cima do chip principal e ligada através de fios. Eu ouvi alguns amigos da industria de semicondutores dizer, que a razão disso é que o processo de fabricação entre memórias flash e CPUs diferente um pouco e é difícil unificar ambos. Por isso, geralmente é preferível faze-los separados (especialmente caso precise de uma densidade muito alta).</p>
+<p>Como vocês podem ver, essa versão tem uma memória flash inteira, o que é uma pena pra mim. Ainda estou montando meu equipamento para inspeções diretas no chip. Eu já fiz alguns decaps, e a memória flash não está embutida no mesmo silício, mas apenas colada em cima do chip principal e ligada através de fios. Eu ouvi alguns amigos da industria de semicondutores dizer, que a razão disso é que o processo de fabricação entre memórias flash e CPUs diferente um pouco e é difícil unificar ambos. Por isso, geralmente é preferível faze-los separados (especialmente caso precise de uma densidade muito alta).</p>
 
 <p>Uma coisa pra se notar, as versões BGA do SoC não tem memória flash embutida, então elas são obrigadas a carregar de uma flash externa. Spoiler: A D188 tem duas memórias flash na placa :)</p>
 
@@ -162,11 +162,11 @@
 
 <p>Então, o google não me deu muita informação sobre, apesar de eu ter achado <em>algumas</em> SDK no github (a maioria mirror dos git chinês) e eu tive que recorrer ao Baidu. Essa parte levou um bom tempo, por que muitas informações não estão disponível fora da china continental, e existem muitas variações do MH1903. Eu achei vários datasheets com informações conflitantes, e boa parte deles eu tive que pagar para baixar do CSDN. Por sorte, existem alguns brokers que fazem isso por você. No fim desta página há um link com todos os datasheets relevantes que eu achei, caso você precise. Só esteja avisado: Mesmo neles, há muita informação omitida e conflitante.</p>
 
-<p>Tá, mas como testei então todas as suposições que fiz sobre o chip? Bom, eu achei <em>por um acaso</em> que existe uma placa chinesa similar ao Arduino, feito pela LUAT chamada AIR105. Parece nada a ver, mas uma pesquisa no baidu indicou que o AIR105 usa um núcleo MH1903S. E o lado bom, AIR105 é fácilmente comprável na Aliexpress: <a href="https://s.click.aliexpress.com/e/_oBLNTrc">https://s.click.aliexpress.com/e/_oBLNTrc</a></p>
+<p>Tá, mas como testei então todas as suposições que fiz sobre o chip? Bom, eu achei <em>por um acaso</em> que existe uma placa chinesa similar ao Arduino, feito pela LUAT chamada AIR105. Parece nada a ver, mas uma pesquisa no baidu indicou que o AIR105 usa um núcleo MH1903S. E o lado bom, AIR105 é facilmente comprável na Aliexpress: <a href="https://s.click.aliexpress.com/e/_oBLNTrc">https://s.click.aliexpress.com/e/_oBLNTrc</a></p>
 
 <p><img src="/assets/Running code in a PAX Credit Card Payment Machine/427a383619233fb72eef5161e05511e8_MD5.jpeg" alt="" /></p>
 
-<p>Eu compreo alguns, decapei alguns e adivinha só: realmente é um MH1903S :D</p>
+<p>Eu comprei alguns, decapei alguns e adivinha só: realmente é um MH1903S :D</p>
 
 <p><img src="/assets/Running code in a PAX Credit Card Payment Machine/9138886ea831b06c18888099fd0e26a6_MD5.jpeg" alt="" /></p>
 
@@ -188,7 +188,7 @@
 
 <p>O SC300 é na verdade uma especificação de ARM chamada <strong>SecurCore</strong>. É um Cortex M3 (no caso do MH190x é um M4F) com alguns recursos de segurança. Por exemplo, mesmo eles sendo simples processadores ARM de 32 bit, eles tem algumas proteções de memória para restringir acessos entre OS &lt;&gt; APP (uma versão primitiva do TrustZone). Ah e claro, as especificações oficiais só estão disponíveis através de NDA, então só podemos deduzir o que exatamente a especificação diz. Pra uma ideia: As CPUs no seu cartão de crédito, seguem a mesma especificação.</p>
 
-<p>Os datasheets também especificam um mapa da memória, o qual todos datasheets concordam. Porém, <strong>claramente</strong> não é tudo que o dispositivo tem. Por exemplo, a MH diz que a CPU tem acelerador de RSA, AES e hashes via hardware, mas não existe nenhuma descrição deles no datasheet. Depois eu descobri que eles só estão obscurecendo o conteúdo ou precisam de um NDA. Eu vou eventualmente fazer engenharia reversa de todos aplicativos que eu dumpei e também de uns binarios de SDK que eu achei pela internet. Ah, e por favor, se esses endereços baterem com algum dispositivo que você usa, me avise. Na minha experiência os dispositivos chineses tentam ser compatíveis com alguma coisa do mercado, mas nada que achei indica ser um clone direto de algum SoC do mercado. (Eu especulei ser um STM32 ou ATMSAMD, mas não bate).</p>
+<p>Os datasheets também especificam um mapa da memória, o qual todos datasheets concordam. Porém, <strong>claramente</strong> não é tudo que o dispositivo tem. Por exemplo, a MH diz que a CPU tem acelerador de RSA, AES e hashes via hardware, mas não existe nenhuma descrição deles no datasheet. Depois eu descobri que eles só estão obscurecendo o conteúdo ou precisam de um NDA. Eu vou eventualmente fazer engenharia reversa de todos aplicativos que eu dumpei e também de uns binários de SDK que eu achei pela internet. Ah, e por favor, se esses endereços baterem com algum dispositivo que você usa, me avise. Na minha experiência os dispositivos chineses tentam ser compatíveis com alguma coisa do mercado, mas nada que achei indica ser um clone direto de algum SoC do mercado. (Eu especulei ser um STM32 ou ATMSAMD, mas não bate).</p>
 
 <table>
   <thead>
@@ -562,7 +562,7 @@ data += 4; \
 
 <h2 id="resultado">Resultado</h2>
 
-<p><img src="/assets/Running code in a Credit Card Payment Machine/23c966b8036e41fe19f78b38bfa8bf73_MD5.jpeg" alt="" /></p>
+<p><img src="/assets/Running code in a PAX Credit Card Payment Machine/23c966b8036e41fe19f78b38bfa8bf73_MD5.jpeg" alt="" /></p>
 
 <h2 id="próximos-passos">Próximos passos</h2>
 
