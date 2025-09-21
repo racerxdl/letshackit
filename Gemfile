@@ -10,7 +10,7 @@ gem "jekyll-sitemap", ">= 1.4.0"
 group :jekyll_plugins do
   gem 'jekyll-graphviz'
 end
-gem 'jekyll-multiple-languages-plugin', '= 1.7.0'
+gem 'jekyll-multiple-languages-plugin', '= 1.8.0'
 gem 'jekyll-redirect-from', '>= 0.16.0'
 gem 'jekyll-spaceship', '>= 0.10.2'
 
