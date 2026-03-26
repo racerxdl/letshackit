@@ -185,3 +185,39 @@ table.truth .tv { color: #00ff41; font-weight: bold; }
 
 .latex svg { max-width: 100%; }
 
+/* ─── WaveDrom waveforms ─────────────────────────────────────────────────── */
+/* Waveforms use black strokes on transparent background; give them a bright
+   glass frame so the signals are readable on the dark cyberpunk theme.      */
+.wavedrom {
+  background: rgba(220, 255, 220, 0.12);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 255, 65, 0.4);
+  border-radius: 6px;
+  box-shadow: 0 0 14px rgba(0, 255, 65, 0.18), inset 0 0 8px rgba(0, 255, 65, 0.05);
+  margin: 1rem 0;
+  overflow-x: auto;
+  padding: 1rem;
+  text-align: center;
+}
+
+/* Invert the SVG so black-on-transparent becomes white-on-dark and shift
+   hue to the cyberpunk green palette.                                       */
+.wavedrom svg {
+  display: block;
+  filter: invert(0.9) hue-rotate(100deg) brightness(1.05);
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+/* ─── Transparent-background images ─────────────────────────────────────── */
+/* Wrap images in the same glass style so transparent-BG assets are legible. */
+.post-content img,
+article img {
+  background: rgba(200, 240, 200, 0.08);
+  border: 1px solid rgba(0, 255, 65, 0.2);
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.08);
+  padding: 4px;
+}
+
