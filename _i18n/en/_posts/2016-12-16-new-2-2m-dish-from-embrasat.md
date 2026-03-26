@@ -1,41 +1,52 @@
 ---
 id: 32
 title: New 2.2m dish from Embrasat!
-date: 2016-12-16T16:42:02-03:00
+date: 2016-12-16 16:42:02-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=287
 permalink: /2016/12/new-2-2m-dish-from-embrasat/
 image: /wp-content/uploads/2016/12/20161214_192121-1-624x351.jpg
 categories:
-  - English
-  - Satellite
-  - SDR
+- Satellite
+- Hardware Hacking
+- Hardware
 tags:
-  - 2.2m Prime Focus
-  - Airspy
-  - Antenna
-  - Dish
-  - Embrasat
-  - English
-  - Gnuradio
-  - GOES
-  - GOES 13
-  - GOES 16
-  - GOES-R
-  - GQRX
-  - HackRF
-  - Hearsat
-  - Linux
-  - LRIT
-  - Open Satellite Project
-  - OSP
-  - Prime Focus
-  - RTLSDR
-  - Satellite
-  - SDR
-  - Waveguide
-  - Waveguide Feed
+- 2.2m Prime Focus
+- Airspy
+- Antenna
+- Dish
+- Embrasat
+- English
+- Gnuradio
+- GOES
+- GOES 13
+- GOES 16
+- GOES-R
+- GQRX
+- HackRF
+- Hearsat
+- Linux
+- LRIT
+- Open Satellite Project
+- OSP
+- Prime Focus
+- RTLSDR
+- Satellite
+- SDR
+- Waveguide
+- Waveguide Feed
+- GOES-16
+- GRB
+- DVB-S2
+- Satellite Dish
+- Signal Reception
+- SNR
+- Geostationary
+- Fiberglass
+description: Building a new 2.2m Embrasat dish for GOES-16 GRB reception. Learn about
+  DVB-S2, signal improvements, and assembly.
+enriched: true
 ---
 It has been some time since I posted something here about my satellite projects. So now I finished assembling my new dish! Previous (on GOES Satellite Hunt) I use a 1.9m TV dish that was cheap (R$200 or about US$70) and got really nice results (about 6dB SNR on LRIT and 10dB SNR on EMWIN). But I was willing to get the new GRB Signal from GOES-16 (previous named as GOES-R) that went up to Geostationary orbit last month. The GRB is the replacement for the GOES 13/14/15 GVAR signal. Basically GVAR is a rebroadcast of the partially processed data from the satellite. It is basically the raw sensor data packed in a format so the users can get and process by their own. The disadvantage of GVAR system over LRIT is that it does not have any error correcting methods. So either you have a very good signal, or you don&#8217;t have anything at all. The GRB signal that is on GOES-16 will send same raw data as the GVAR (actually it will send more data than GVAR, but that's another point) but now it will use DVB-S2, a market standard, for transmitting their data. Being DVB-S2 it does have error correcting like LRIT signal ( wikipedia has a good info about [DVB-S2](https://en.wikipedia.org/wiki/DVB-S2)). But the bandwidth of GRB is much higher than LRIT and GVAR (LRIT is 600kHz wide, GVAR is 2.5MHz wide and GRB is 9MHz wide) so I would need a bigger dish to get a good signal.
 

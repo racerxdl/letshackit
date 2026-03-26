@@ -1,32 +1,50 @@
 ---
 id: 19
 title: Play with SDR and Intel Edison!
-date: 2016-01-16T00:25:25-03:00
+date: 2016-01-16 00:25:25-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=99
 permalink: /2016/01/play-with-sdr-and-intel-edison/
 categories:
-  - English
-  - SDR
+- Software Defined Radio
+- Hardware
+- Linux
 tags:
-  - ADSB
-  - Airplane
-  - Antenna
-  - edison
-  - FM
-  - GNU Radio
-  - intel
-  - Intel Edison
-  - NOAA
-  - Radio
-  - Realtek
-  - RTL2832U
-  - RTLSDR
-  - SDR
-  - Software
-  - Software Defined Radio
-  - VHF
+- ADSB
+- Airplane
+- Antenna
+- edison
+- FM
+- GNU Radio
+- intel
+- Intel Edison
+- NOAA
+- Radio
+- Realtek
+- RTL2832U
+- RTLSDR
+- SDR
+- Software
+- Software Defined Radio
+- VHF
+- RTL-SDR
+- rtl_tcp
+- NOAA Satellite
+- APT
+- GQRX
+- Linux
+- Compilation
+- libusb
+- WiFi
+- Embedded Systems
+- Remote Receiver
+- Hardware Hacking
+- TCP Server
+- R820T2
+description: Build a remote radio receiver with Intel Edison and RTL-SDR. Compile
+  rtl-sdr, set up rtl_tcp, and receive NOAA satellites via GQRX.
+enriched: true
 ---
 So some people already saw in my facebook that I started playing with SDRs (Software Defined Radio).
 

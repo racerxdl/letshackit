@@ -1,28 +1,36 @@
 ---
 title: Hackeando um ESP32 num FPGA
-date: 2020-06-14T16:17:00-03:00
+date: 2020-06-14 16:17:00-03:00
 author: Lucas Teske
 layout: post
 guid: https://medium.com/@lucasteske/hacking-a-esp32-into-fpga-board-65a933cbaff
 image: /assets/posts/medium/1_ALnLx9L06FSciqeEV5OCuQ.png
 categories:
-  - English
-  - Hacking
-  - Linux
-  - FPGA
-  - ESP32
-
+- FPGA
+- Hardware Hacking
 tags:
-  - Hacking
-  - FPGA
-  - ICEWolf
-  - IceStick
-  - ECP5
-  - Lattice
-  - ESP32
-  - Colorlight
-
+- Hacking
+- FPGA
+- ICEWolf
+- IceStick
+- ECP5
+- Lattice
+- ESP32
+- Colorlight
+- Lattice ECP5
+- JTAG
+- OpenOCD
+- Remote Bitbang
+- Hardware Hacking
+- Soldering
+- RISC-V
+- VHDL
+- Bitstream
+- Serial
 translated-by: Lucas Teske
+description: Aprenda a conectar um ESP32 a uma placa FPGA via JTAG e usar OpenOCD.
+  Tutorial completo de hardware hacking.
+enriched: true
 ---
 
 # Hackeando um ESP32 num FPGA

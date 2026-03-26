@@ -1,39 +1,45 @@
 ---
 id: 26
 title: GOES Satellite Hunt (Part 2 – Demodulator)
-date: 2016-10-30T22:29:18-03:00
+date: 2016-10-30 22:29:18-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=208
 permalink: /2016/10/goes-satellite-hunt-part-2-demodulator/
 image: /wp-content/uploads/2016/10/Captura-de-tela-de-2016-10-29-23-25-17-624x378.png
 categories:
-  - English
-  - Reverse Engineering
-  - Satellite
-  - SDR
+- Satellite
+- Software Defined Radio
 tags:
-  - AGC
-  - Airspy
-  - Automatic Gain Control
-  - Bug
-  - Compile
-  - EMWIN
-  - English
-  - GNU Radio
-  - Gnuradio
-  - GOES
-  - GRC
-  - Hearsat
-  - LRIT
-  - Osmocom
-  - RE
-  - Reverse Engineering
-  - Root Raised Cosine Filter
-  - RRC Filter
-  - Sat
-  - Satellite
-  - SDR
+- AGC
+- Airspy
+- Automatic Gain Control
+- Bug
+- Compile
+- EMWIN
+- English
+- GNU Radio
+- Gnuradio
+- GOES
+- GRC
+- Hearsat
+- LRIT
+- Osmocom
+- RE
+- Reverse Engineering
+- Root Raised Cosine Filter
+- RRC Filter
+- Sat
+- Satellite
+- SDR
+- BPSK
+- Demodulation
+- Costas Loop
+- RTLSDR
+- Symbol Clock
+description: Build a GOES LRIT demodulator using GNU Radio and SDR. Learn about BPSK,
+  Costas Loop, and symbol clock recovery techniques.
+enriched: true
 ---
 In the [last episode of my GOES Satellite Hunt](https://www.teske.net.br/lucas/2016/10/goes-satellite-hunt-part-1-antenna-system/) I explained how I manage to build a reception system to get the GOES LRIT Signal. Now I will explain how to get the packets out of the LRIT signal. I choose the LRIT signal basically because of two reasons:
 

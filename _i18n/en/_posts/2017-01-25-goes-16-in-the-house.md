@@ -1,39 +1,50 @@
 ---
 id: 33
 title: GOES 16 in the house!
-date: 2017-01-25T15:29:20-03:00
+date: 2017-01-25 15:29:20-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=299
 permalink: /2017/01/goes-16-in-the-house/
 image: /wp-content/uploads/2017/01/201701251701745-10-624x624.gif
 categories:
-  - English
-  - Reverse Engineering
-  - Satellite
-  - SDR
+- Satellite
+- Hardware Hacking
+- Software Defined Radio
 tags:
-  - Airspy
-  - Convolutional Code
-  - Convolutional Encoding
-  - EMWIN
-  - English
-  - GNU Radio
-  - Gnuradio
-  - GOES
-  - GOES 16
-  - GOES-R
-  - GRC
-  - HackRF
-  - HRIT
-  - LRIT
-  - NOAA
-  - Osmocom
-  - RE
-  - Reed Solomon
-  - Root Raised Cosine Filter
-  - Satellite
-  - SDR
+- Airspy
+- Convolutional Code
+- Convolutional Encoding
+- EMWIN
+- English
+- GNU Radio
+- Gnuradio
+- GOES
+- GOES 16
+- GOES-R
+- GRC
+- HackRF
+- HRIT
+- LRIT
+- NOAA
+- Osmocom
+- RE
+- Reed Solomon
+- Root Raised Cosine Filter
+- Satellite
+- SDR
+- GOES-16
+- NRZ-M
+- Differential Encoding
+- OpenSatelliteProject
+- Viterbi
+- Software Defined Radio
+- Satellite Reception
+- Weather Satellite
+- Python
+description: Decode GOES-16 weather satellite data using NRZ-M differential encoding
+  and Viterbi. A technical guide on HRIT signals and OpenSatelliteProject.
+enriched: true
 ---
 Few \*times\* ago I started to check on GOES 16 transmissions to see if I can get any data from it and make [OpenSatelliteProject](https://github.com/opensatelliteproject) work with it. Me and @usa_satcom noticed that the HRIT signal was transmitting using differential encoding that was not predicted on NOAA&#8217;s HRIT Specification (You can check it here <http://www.goes-r.gov/users/hrit-links.html> ). So I decided to send an email to NOAA asking what was the current HRIT specs for GOES-16. Of course I expected no answer from them (they would probably be really busy with GOES-16 Testing), but surprisingly they answered sending the specs and saying that any feedbacks would be helpful and appreciated. So the HRIT indeed uses Differential Encoding (NRZ-M to be more specific). Knowing that I could start changing OpenSatelliteProject to be compatible with HRIT.
 

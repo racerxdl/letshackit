@@ -1,46 +1,57 @@
 ---
 id: 29
 title: GOES Satellite Hunt (Part 5 – File Assembler)
-date: 2016-11-07T20:58:57-03:00
+date: 2016-11-07 20:58:57-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=245
 permalink: /2016/11/goes-satellite-hunt-part-5-file-assembler/
 image: /wp-content/uploads/2016/11/3Zz7gvgh-624x568.jpg
 categories:
-  - English
-  - Reverse Engineering
-  - Satellite
-  - SDR
+- Satellite
+- Software Defined Radio
+- Programming
 tags:
-  - AGC
-  - Airspy
-  - Automatic Gain Control
-  - Bug
-  - Compile
-  - Convolutional Code
-  - Convolutional Encoding
-  - EMWIN
-  - English
-  - Full Disk
-  - GNU Radio
-  - Gnuradio
-  - GOES
-  - GRC
-  - Hearsat
-  - LRIT
-  - Osmocom
-  - RE
-  - Reed Solomon
-  - Reverse Engineering
-  - Root Raised Cosine Filter
-  - RRC Filter
-  - RS
-  - Sat
-  - Satellite
-  - SDR
-  - Statistics
-  - Viterbi
+- AGC
+- Airspy
+- Automatic Gain Control
+- Bug
+- Compile
+- Convolutional Code
+- Convolutional Encoding
+- EMWIN
+- English
+- Full Disk
+- GNU Radio
+- Gnuradio
+- GOES
+- GRC
+- Hearsat
+- LRIT
+- Osmocom
+- RE
+- Reed Solomon
+- Reverse Engineering
+- Root Raised Cosine Filter
+- RRC Filter
+- RS
+- Sat
+- Satellite
+- SDR
+- Statistics
+- Viterbi
+- RICE compression
+- Python
+- Packet aggregation
+- Header parsing
+- NOAA
+- GCC ABI
+- Decompression
+- Software Defined Radio
+- File Assembler
+description: Learn to assemble GOES satellite LRIT files. This guide covers packet
+  aggregation, header parsing, and decompressing modified RICE data.
+enriched: true
 ---
 In the last chapter of my GOES Satellite Hunt, I explained how to obtain the packets. In this part I will explain how to aggregate and decompress the packets to generate the LRIT files.  This part will be somewhat quick, because most of the hard stuff was already done in the last part. Sadly the decompression algorithm is a modified RICE algorithm, and the Linux version of the library provided by NOAA cannot be used anymore because of incompatibilities between GCC ABIs ( The NOAA library has been compiled with GCC 2). Until I reverse engineer and create a open version of the decompression algorithm, I will use the  workaround I will explain here.
 

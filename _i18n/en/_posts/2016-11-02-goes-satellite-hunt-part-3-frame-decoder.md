@@ -1,43 +1,54 @@
 ---
 id: 27
 title: GOES Satellite Hunt (Part 3 – Frame Decoder)
-date: 2016-11-02T17:50:34-03:00
+date: 2016-11-02 17:50:34-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=216
 permalink: /2016/11/goes-satellite-hunt-part-3-frame-decoder/
 image: /wp-content/uploads/2016/11/qqk3UwA-624x135.png
 categories:
-  - Reverse Engineering
-  - Satellite
+- Satellite
+- Programming
+- Software Defined Radio
 tags:
-  - AGC
-  - Airspy
-  - Automatic Gain Control
-  - Bug
-  - Compile
-  - Convolutional Code
-  - Convolutional Encoding
-  - EMWIN
-  - English
-  - GNU Radio
-  - Gnuradio
-  - GOES
-  - GRC
-  - Hearsat
-  - LRIT
-  - Osmocom
-  - RE
-  - Reed Solomon
-  - Reverse Engineering
-  - Root Raised Cosine Filter
-  - RRC Filter
-  - RS
-  - Sat
-  - Satellite
-  - SDR
-  - Statistics
-  - Viterbi
+- AGC
+- Airspy
+- Automatic Gain Control
+- Bug
+- Compile
+- Convolutional Code
+- Convolutional Encoding
+- EMWIN
+- English
+- GNU Radio
+- Gnuradio
+- GOES
+- GRC
+- Hearsat
+- LRIT
+- Osmocom
+- RE
+- Reed Solomon
+- Reverse Engineering
+- Root Raised Cosine Filter
+- RRC Filter
+- RS
+- Sat
+- Satellite
+- SDR
+- Statistics
+- Viterbi
+- CCSDS
+- Frame Synchronization
+- Generator Polynomials
+- libfec
+- C++
+- Digital Signal Processing
+- Weather Satellite
+description: Master the GOES satellite frame decoder! This guide explains convolution
+  encoding, Viterbi decoding, and CCSDS packet synchronization for LRIT signals.
+enriched: true
 ---
 In the last chapter of GOES Satellite Hunt, I explained how I did the BPSK Demodulator for the LRIT Signal. Now I will explain how to decode the output of the data we got in the last chapter.
 

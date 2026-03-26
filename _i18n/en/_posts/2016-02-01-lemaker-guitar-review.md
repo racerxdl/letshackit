@@ -1,35 +1,53 @@
 ---
 id: 21
 title: LeMaker Guitar Review
-date: 2016-02-01T22:57:39-03:00
+date: 2016-02-01 22:57:39-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=141
 permalink: /2016/02/lemaker-guitar-review/
 image: /wp-content/uploads/2016/02/lemaker-624x624.jpg
 categories:
-  - English
+- Hardware
+- Linux
+- Software Defined Radio
 tags:
-  - ARM
-  - Chalk-Elec
-  - LCD TouchScreen
-  - Le Maker Guitar
-  - LeMaker
-  - Linux
-  - Open Hardware
-  - Open Source
-  - OpenHardware
-  - OpenSource
-  - QFH
-  - Receiver
-  - RTL SDR
-  - Satellite
-  - SDR
-  - Software Defined Radio
-  - Ubuntu
-  - Weather
-  - Weather Satellite Receiver
+- ARM
+- Chalk-Elec
+- LCD TouchScreen
+- Le Maker Guitar
+- LeMaker
+- Linux
+- Open Hardware
+- Open Source
+- OpenHardware
+- OpenSource
+- QFH
+- Receiver
+- RTL SDR
+- Satellite
+- SDR
+- Software Defined Radio
+- Ubuntu
+- Weather
+- Weather Satellite Receiver
+- LeMaker Guitar
+- QuadCore ARM Cortex A9
+- rtl-sdr
+- Spectrum Server
+- NOAA APT
+- LRPT
+- HDMI Touchscreen
+- Wireless Network
+- Single Board Computer
+- ARM Cortex A9
+- Ubuntu Linux
+- Wireless Networking
+- Linux ARM
 format: image
+description: Review of the LeMaker Guitar SBC. Quad-core ARM Cortex A9 running Ubuntu.
+  Tested as an SDR spectrum server for NOAA signals.
+enriched: true
 ---
 <a title="20160119_191023" href="https://www.flickr.com/photos/energylabs/24762647165/in/dateposted-public/" data-flickr-embed="true"><img class="alignleft" src="https://farm2.staticflickr.com/1484/24762647165_1cff28db6d_n.jpg" alt="20160119_191023" width="180" height="320" /></a>
 

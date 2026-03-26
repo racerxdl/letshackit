@@ -1,31 +1,43 @@
 ---
-title: 'Running code in a PAX Credit Card Payment Machine (part1)'
-date: 2025-09-05T16:30:00-03:00
+title: Running code in a PAX Credit Card Payment Machine (part1)
+date: 2025-09-05 16:30:00-03:00
 author: Lucas Teske
 layout: post
 image: /assets/Running code in a PAX Credit Card Payment Machine/7383f9c5e7832856c90b25549fb08115_MD5.jpeg
 categories:
-  - Reverse Engineering
-  - Payment Machines
+- Hardware Hacking
+- Hacking
+- Reverse Engineering
 tags:
-  - Flash
-  - PAX
-  - Hardware Hacking
-  - RE
-  - Reverse Engineering
-  - D177
-  - D188
-  - Minizinha
-  - Moderninha
-  - Smart
-  - Sunmi
-  - TecToy
-  - Transire
-  - Megahunt
-  - MH1903
-  - Air105
-  - LuatOS
-
+- Flash
+- PAX
+- Hardware Hacking
+- RE
+- Reverse Engineering
+- D177
+- D188
+- Minizinha
+- Moderninha
+- Smart
+- Sunmi
+- TecToy
+- Transire
+- Megahunt
+- MH1903
+- Air105
+- LuatOS
+- Credit Card Payment Machine
+- Tamper Protection
+- Processor Swap
+- Boot ROM
+- Firmware
+- Payment Terminal
+- PAX D177
+- Brazil
+- DOOM
+description: Explore reverse engineering a PAX credit card payment machine to run
+  code via processor swap and bypass tamper protection.
+enriched: true
 ---
 
 ## Disclaimer

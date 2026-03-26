@@ -1,13 +1,31 @@
 ---
 id: 12
 title: Interruptor MIDI Polifônico com PIC 16F628A
-date: 2011-10-16T15:17:52-03:00
+date: 2011-10-16 15:17:52-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=42
 permalink: /2011/10/interruptor-midi-polifonico-com-pic-16f628a/
 categories:
-  - Sem categoria
+- Hardware
+- Programming
+- Hardware Hacking
+tags:
+- PIC 16F628A
+- MIDI
+- Microcontrolador
+- UART
+- Timer
+- Protocolo MIDI
+- CCS C
+- Eletrônica
+- Interruptor
+- Baud Rate
+- Frequência
+- Hardware
+description: Tutorial completo para criar um interruptor MIDI polifônico com PIC 16F628A.
+  Código em C, UART e cálculo de frequências musicais.
+enriched: true
 ---
 # &#8211; Introdução
 

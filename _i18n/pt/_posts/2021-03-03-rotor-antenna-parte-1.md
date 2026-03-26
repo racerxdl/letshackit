@@ -1,25 +1,36 @@
 ---
-title: 'Rotor de Antena - Parte 1'
-date: 2021-03-03T20:57:00-03:00
+title: Rotor de Antena - Parte 1
+date: 2021-03-03 20:57:00-03:00
 author: Lucas Teske
 layout: post
 image: /assets/posts/tracker-mount/head.jpg
 categories:
-  - Reverse Engineering
-  - Satellite
-  - SDR
+- Hardware Hacking
+- Satellite
 tags:
-  - Airspy
-  - EMWIN
-  - GOES
-  - Hearsat
-  - LRIT
-  - RE
-  - Reverse Engineering
-  - Sat
-  - Satellite
-  - SDR
-
+- Airspy
+- EMWIN
+- GOES
+- Hearsat
+- LRIT
+- RE
+- Reverse Engineering
+- Sat
+- Satellite
+- SDR
+- Rotor de antena
+- Motor de passo
+- Tracking satélite
+- Pelco
+- Eletrônica
+- Hardware
+- Antena parabólica
+- Modificação de hardware
+- Baixa órbita
+- Controle de posição
+description: Modificação de rotor Pelco para rastrear satélites. Substituição de motores
+  AC por motores de passo e limpeza completa.
+enriched: true
 ---
 
 Há uns anos eu comprei um rotor para câmera da Pelco, modelo PT175-24P. Esse rotor é feito para carregar uma câmera com lente de até 8kg, e contém dois motores bifásicos reversíveis internamente. Minha ideia era (e é) colocar uma parabólica acoplada, e controlar seu movimento para rastrear satélites. Assim eu poderia executar a recepção de satélites de baixa órbita.

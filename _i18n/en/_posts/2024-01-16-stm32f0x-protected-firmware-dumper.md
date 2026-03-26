@@ -1,21 +1,32 @@
 ---
-title: 'STM32F0x Protected Firmware Dumper'
-date: 2024-01-16T02:23:00-03:00
+title: STM32F0x Protected Firmware Dumper
+date: 2024-01-16 02:23:00-03:00
 author: Lucas Teske
 layout: post
 image: /assets/posts/patreon/Pasted image 20230124035811.png
 categories:
-  - Reverse Engineering
-  - Hardware Hacking
+- Hardware Hacking
+- Reverse Engineering
 tags:
-  - Protected Firmware
-  - Hardware Hacking
-  - RE
-  - Reverse Engineering
-  - STM32
-  - Patreon
-  - MCU
-
+- Protected Firmware
+- Hardware Hacking
+- RE
+- Reverse Engineering
+- STM32
+- Patreon
+- MCU
+- STM32F0
+- Firmware Dump
+- Read-Out Protection
+- SWD
+- Raspberry Pi Pico
+- J-Link
+- OpenOCD
+- Glitching
+- Embedded Systems
+description: A guide on dumping STM32F0 protected firmware using Raspberry Pi Pico
+  and SWD glitching to bypass Read-Out Protection (RDP).
+enriched: true
 ---
 
 In the process of my hobby hardware hacking, I encountered a Chinese clone of a HASP HL dongle equipped with a STM32F042G6U6 processor. My intention was to clone it, and during my exploration, I discovered four pins from the SWD debug interface located at the bottom of the PCB. I soldered a 4-pin header to these pins for ease of access.

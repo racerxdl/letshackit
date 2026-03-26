@@ -1,27 +1,36 @@
 ---
 id: 41
 title: Creating your own GSM Network with LimeSDR
-date: 2019-12-21T14:48:00-03:00
+date: 2019-12-21 14:48:00-03:00
 author: Lucas Teske
 layout: post
 guid: https://medium.com/@lucasteske/creating-your-own-gsm-network-with-limesdr-1935bac257f4
 permalink: /2019/12/creating-your-own-gsm-network-with-limesdr/
 image: /assets/posts/medium/1_KbNtmYsmaCMVJinWnJdhFg.png
 categories:
-  - English
-  - LimeSDR
-  - Hacking
-  - SDR
-  - Linux
+- LimeSDR
+- Software Defined Radio
+- Hardware
 tags:
-  - Camera
-  - Hacking
-  - SDR
-  - Ubuntu
-  - GSM
-  - BTS
-  - Osmocom
-  - Sysmocom
+- Camera
+- Hacking
+- SDR
+- Ubuntu
+- GSM
+- BTS
+- Osmocom
+- Sysmocom
+- LimeSDR
+- OpenBSC
+- NITB
+- Base Transceiver Station
+- Linux
+- RF
+- Faraday Cage
+- Network in a Box
+description: Build a private GSM network with LimeSDR. Learn to install Osmocom, configure
+  OpenBSC, and set up a Network in a Box.
+enriched: true
 ---
 
 # Creating your own GSM Network with LimeSDR

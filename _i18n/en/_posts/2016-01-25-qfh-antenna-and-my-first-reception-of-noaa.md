@@ -1,24 +1,42 @@
 ---
 id: 20
 title: QFH Antenna and my first reception of NOAA!
-date: 2016-01-25T00:55:41-03:00
+date: 2016-01-25 00:55:41-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=120
 permalink: /2016/01/qfh-antenna-and-my-first-reception-of-noaa/
 categories:
-  - English
-  - SDR
+- Hardware
+- Satellite
+- Software Defined Radio
 tags:
-  - APT
-  - Images
-  - Linux
-  - NOAA
-  - RTL SDR
-  - Satellite
-  - SDR
-  - SDR Sharp
-  - Windows
+- APT
+- Images
+- Linux
+- NOAA
+- RTL SDR
+- Satellite
+- SDR
+- SDR Sharp
+- Windows
+- QFH
+- Quadrifilar Helix
+- RTL-SDR
+- Circular Polarization
+- Weather Satellite
+- Antenna
+- Software Defined Radio
+- Intel Edison
+- QFH Antenna
+- NOAA Satellite
+- Weather Satellites
+- Sun-synchronous Orbit
+- 137 MHz
+- Antenna Construction
+description: Build a QFH antenna to receive NOAA weather satellite APT signals. Learn
+  about circular polarization and using RTL-SDR with Intel Edison.
+enriched: true
 ---
 <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/20160119_203854.jpg" rel="attachment wp-att-121"><img class="size-medium wp-image-121 aligncenter" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/20160119_203854-169x300.jpg" alt="20160119_203854" width="169" height="300" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/20160119_203854-169x300.jpg 169w, https://www.teske.net.br/lucas/wp-content/uploads/2016/01/20160119_203854.jpg 551w" sizes="(max-width: 169px) 100vw, 169px" /></a>
 

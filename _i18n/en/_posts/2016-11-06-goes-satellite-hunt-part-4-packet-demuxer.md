@@ -1,45 +1,56 @@
 ---
 id: 28
 title: GOES Satellite Hunt (Part 4 – Packet Demuxer)
-date: 2016-11-06T00:56:44-03:00
+date: 2016-11-06 00:56:44-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=232
 permalink: /2016/11/goes-satellite-hunt-part-4-packet-demuxer/
 image: /wp-content/uploads/2016/11/5YBmBKt-624x129.png
 categories:
-  - English
-  - Reverse Engineering
-  - Satellite
-  - SDR
+- Satellite
+- Software Defined Radio
+- Programming
 tags:
-  - AGC
-  - Airspy
-  - Automatic Gain Control
-  - Bug
-  - Compile
-  - Convolutional Code
-  - Convolutional Encoding
-  - EMWIN
-  - English
-  - GNU Radio
-  - Gnuradio
-  - GOES
-  - GRC
-  - Hearsat
-  - LRIT
-  - Osmocom
-  - RE
-  - Reed Solomon
-  - Reverse Engineering
-  - Root Raised Cosine Filter
-  - RRC Filter
-  - RS
-  - Sat
-  - Satellite
-  - SDR
-  - Statistics
-  - Viterbi
+- AGC
+- Airspy
+- Automatic Gain Control
+- Bug
+- Compile
+- Convolutional Code
+- Convolutional Encoding
+- EMWIN
+- English
+- GNU Radio
+- Gnuradio
+- GOES
+- GRC
+- Hearsat
+- LRIT
+- Osmocom
+- RE
+- Reed Solomon
+- Reverse Engineering
+- Root Raised Cosine Filter
+- RRC Filter
+- RS
+- Sat
+- Satellite
+- SDR
+- Statistics
+- Viterbi
+- CCSDS
+- Error Correction
+- De-randomization
+- PN Sequence
+- Demuxer
+- Python
+- C Programming
+- Bitstream
+description: Master GOES satellite decoding! This tutorial covers de-randomization,
+  Reed Solomon error correction, and packet demuxing for LRIT frames using Python
+  and C.
+enriched: true
 ---
 In the last chapter I showed how to get the frames from the demodulated bit stream. In this chapter I will show you how to parse these frames and get the packets that will on next chapter generate the files that GOES send. I will first add C code to the code I did in the last chapter to separated all the virtual channels by ID. But mainly this chapter will be done in python (just because its easier, I will eventually make a C code as well to do the stuff).
 

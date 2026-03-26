@@ -1,13 +1,28 @@
 ---
 id: 4
 title: Enviando Tweet com Python
-date: 2011-09-07T17:57:56-03:00
+date: 2011-09-07 17:57:56-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=20
 permalink: /2011/09/enviando-tweet-com-python/
 categories:
-  - Sem categoria
+- Programming
+- Automation
+tags:
+- Python
+- Twitter API
+- Tweepy
+- OAuth
+- Automação
+- Scripting
+- API Twitter
+- Twitter Developer
+- Python Script
+- Twitter Automation
+description: Tutorial completo para enviar tweets com Python. Aprenda a configurar
+  OAuth, gerar chaves de API e usar a biblioteca Tweepy para automação.
+enriched: true
 ---
 [Migrado do LetsHack It no Tumblr]  
 Bom, como estou sem ideias para novos hacks, vou mostrar a vocês um jeito simples de enviar um Tweet com o Python.

@@ -1,31 +1,39 @@
 ---
 id: 34
 title: GOES 16 Test Week
-date: 2017-03-25T12:38:50-03:00
+date: 2017-03-25 12:38:50-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=319
 permalink: /2017/03/goes-16-test-week/
 categories:
-  - English
-  - Satellite
-  - SDR
+- Satellite
 tags:
-  - Airspy
-  - Antenna
-  - Automatic Gain Control
-  - CMI
-  - EMWIN
-  - English
-  - GRC
-  - Hearsat
-  - HRIT
-  - Linux
-  - LRIT
-  - NetCDF
-  - NOAA
-  - SDR
-  - Ubuntu
+- Airspy
+- Antenna
+- Automatic Gain Control
+- CMI
+- EMWIN
+- English
+- GRC
+- Hearsat
+- HRIT
+- Linux
+- LRIT
+- NetCDF
+- NOAA
+- SDR
+- Ubuntu
+- GOES-16
+- OpenSatelliteProject
+- Satellite Reception
+- Linear Polarization
+- 1694MHz
+- Cloud and Moisture Imaging
+- IQ Recording
+description: NOAA's GOES-16 test week runs March 27-31. Discover the HRIT and CMI
+  downlink schedules and how to receive satellite imagery using OpenSatelliteProject.
+enriched: true
 ---
 Yesterday I received an email from NOAA (I&#8217;m on their &#8220;tester&#8221; list) about some tests on GOES-16 that will happen this week. Before I start talking about what will be the tests I want to be clear that GOES-16 **is NOT operational ye****t** and any data received from the LRIT/HRIT downlink are **test only data**. **This means the user of that link assumes all risks related to the use of their data and NOAA disclaims and any and all warranties, whether express or implied, including (without limitation) any implied warranties of merchantability or fitness for a particular purpose.**
 

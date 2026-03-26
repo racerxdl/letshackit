@@ -1,13 +1,28 @@
 ---
 id: 10
 title: Fonte 3v3 do FPGA
-date: 2011-10-13T15:25:34-03:00
+date: 2011-10-13 15:25:34-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=36
 permalink: /2011/10/fonte-3v3-do-fpga/
 categories:
-  - Sem categoria
+- FPGA
+- Hardware Hacking
+tags:
+- FPGA
+- Xilinx
+- Spartan 3A
+- Regulador
+- Fonte 3.3V
+- QFN
+- SMD
+- Soldagem
+- Manutenção
+- Eletrônica
+description: Arrumei a placa de FPGA Xilinx substituindo o regulador de 3.3V queimado
+  por um modelo mais robusto. Veja o resultado.
+enriched: true
 ---
 Bom, alguns talvez lembrem que um pouco antes do Flisol de Salto uma das minhas placas de Desenvolvimento Xilinx Spartan 3A Evaluation Kit parou de funcionar. Descobri que era o regulador de 3.3V da placa que havia queimado (bom, eu meti em curto várias vezes sem querer, apesar de ele ter proteção, nunca é a prova de falhas). Por sorte eu tinha outra e pude apresentar o projeto.
 

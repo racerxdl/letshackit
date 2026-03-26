@@ -1,23 +1,36 @@
 ---
 id: 24
 title: New way to measure filters and my new filter
-date: 2016-07-22T19:28:48-03:00
+date: 2016-07-22 19:28:48-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=183
 permalink: /2016/07/new-way-to-measure-filters-and-my-new-filter/
 image: /wp-content/uploads/2016/07/20160722_190915-624x351.jpg
 categories:
-  - SDR
+- Hardware Hacking
+- Software Defined Radio
 tags:
-  - Adam
-  - FM
-  - FM Trap
-  - FM TV Diplexer
-  - HackRF
-  - LNA4ALL
-  - RTLSDR
-  - SDR
+- Adam
+- FM
+- FM Trap
+- FM TV Diplexer
+- HackRF
+- LNA4ALL
+- RTLSDR
+- SDR
+- FM Spectrum
+- LNA
+- GNU Radio
+- White Noise Source
+- Filter Response
+- Band Stop Filter
+- Impedance Mismatch
+- Capacitors
+- Coil
+description: Construa um filtro FM Trap e teste-o com HackRF e GNU Radio. Veja como
+  eliminar ruídos na banda FM e medir a resposta do filtro com precisão.
+enriched: true
 ---
 So I&#8217;m still mad about the FM Spectrum (88-108MHz) noise I get when using a LNA or something else. So I&#8217;m still looking for a nice and easy way to filter out these signals.
 

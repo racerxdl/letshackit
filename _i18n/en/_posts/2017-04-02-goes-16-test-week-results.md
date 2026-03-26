@@ -1,35 +1,45 @@
 ---
 id: 35
 title: GOES 16 Test Week Results
-date: 2017-04-02T02:50:37-03:00
+date: 2017-04-02 02:50:37-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=323
 permalink: /2017/04/goes-16-test-week-results/
 image: /wp-content/uploads/2017/04/goes-16-abi-624x312.jpg
 categories:
-  - English
-  - Satellite
-  - SDR
+- Satellite
+- Hardware Hacking
+- Programming
 tags:
-  - Airspy
-  - EMWIN
-  - English
-  - False Color
-  - GOES
-  - GOES 16
-  - Hearsat
-  - HRIT
-  - LRIT
-  - NOAA
-  - Open Satellite Project
-  - OSP
-  - Reverse Engineering
-  - RTL SDR
-  - Sat
-  - Satellite
-  - SDR
-  - Software Defined Radio
+- Airspy
+- EMWIN
+- English
+- False Color
+- GOES
+- GOES 16
+- Hearsat
+- HRIT
+- LRIT
+- NOAA
+- Open Satellite Project
+- OSP
+- Reverse Engineering
+- RTL SDR
+- Sat
+- Satellite
+- SDR
+- Software Defined Radio
+- GOES-16
+- ABI
+- CMI
+- Satellite Reception
+- Weather Satellite
+- OpenSatelliteProject
+- XRIT
+description: 'GOES-16 Test Week Results: Receiving NOAA HRIT data, CMI images, and
+  ABI products. Fixes for GOES Dump and OpenSatelliteProject updates.'
+enriched: true
 ---
 In the week from March 27th to 31 NOAA performed some new downstream tests over HRIT link on GOES-16. The idea was to transfer some CMI (Cloud and Moisture Imaging) products and see if the software developers and current stations could receive it fine. Before starting talking about that, please notice that **all data** sent so far is stated as **test data** and should not be used for any real world measurements. As NOAA states (and I forwarded on my last post):
 

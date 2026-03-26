@@ -1,13 +1,29 @@
 ---
 id: 11
 title: Interruptor MIDI Polifônico com PIC 16F628A (Interface)
-date: 2011-10-16T16:10:39-03:00
+date: 2011-10-16 16:10:39-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=44
 permalink: /2011/10/interruptor-midi-polifonico-com-pic-16f628a-interface/
 categories:
-  - Sem categoria
+- Hardware
+- Hardware Hacking
+- Programming
+tags:
+- PIC 16F628A
+- MIDI
+- Interface
+- Polifônico
+- Microcontrolador
+- Cascata
+- Hardware
+- Interruptor
+- Energia Labs
+- Uzzors2k
+description: Monte um interruptor MIDI polifônico com PIC 16F628A. Veja a interface,
+  código fonte e como cascatear microprocessadores.
+enriched: true
 ---
 Neste tópico colocarei apenas como é a interface do interruptor descrito anteriormente.
 

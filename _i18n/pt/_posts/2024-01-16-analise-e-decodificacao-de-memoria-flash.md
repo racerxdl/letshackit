@@ -1,23 +1,35 @@
 ---
-title: 'Análise e Decodificação de Memória Flash NAND - Revelando a Dispersão ECC em Dispositivos Desconhecidos'
-date: 2024-01-16T20:48:00-03:00
+title: Análise e Decodificação de Memória Flash NAND - Revelando a Dispersão ECC em
+  Dispositivos Desconhecidos
+date: 2024-01-16 20:48:00-03:00
 author: Lucas Teske
 layout: post
 image: /assets/posts/analise-e-decodificacao-flash/flash-cell-programmed.svg
 categories:
-  - Reverse Engineering
-  - Satellite
-  - SDR
+- Hardware Hacking
+- Reverse Engineering
 tags:
-  - Flash
-  - PAX
-  - Hardware Hacking
-  - RE
-  - Reverse Engineering
-  - NAND
-  - PAX
-  - RT809H
-
+- Flash
+- PAX
+- Hardware Hacking
+- RE
+- Reverse Engineering
+- NAND
+- PAX
+- RT809H
+- NAND Flash
+- Memória Flash
+- ECC
+- Binwalk
+- Análise de Memória
+- BGA
+- Máquina de Cartão
+- ARM
+- Linux Kernel
+description: Aprenda a analisar memórias NAND Flash e decodificar dados usando binwalk.
+  Entenda a arquitetura ECC e realize hardware hacking em dispositivos como máquinas
+  de cartão.
+enriched: true
 ---
 
 

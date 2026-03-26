@@ -5,7 +5,6 @@ author: Lucas Teske
 layout: post
 image: /assets/Running code in a PAX Credit Card Payment Machine/7383f9c5e7832856c90b25549fb08115_MD5.jpeg
 categories:
-- Hacking
 - Hardware Hacking
 - Payment Machines
 tags:
@@ -35,8 +34,15 @@ tags:
 - Linux OS
 - CPU Swap
 - Security
-description: Explore a engenharia reversa de uma máquina de cartão PAX. Veja como
-  rodar código, identificar proteções e realizar hardware hacking.
+- Credit Card Machine
+- Payment Terminal
+- ARM
+- Embedded Systems
+- Payment Gateway
+- Payment Fraud
+description: Rodando código em uma máquina de cartão de crédito PAX. Engenharia reversa,
+  troca de CPU e análise de segurança de terminais de pagamento.
+enriched: true
 ---
 
 ## Disclaimer

@@ -1,28 +1,36 @@
 ---
 id: 45
 title: Hack a Sat - Phasors to Stun
-date: 2020-05-30T13:15:00-03:00
+date: 2020-05-30 13:15:00-03:00
 author: Lucas Teske
 layout: post
 guid: https://medium.com/@lucasteske/hack-a-sat-phasors-to-stun-b535649f474f
 permalink: /2020/05/hack-a-sat-phasors-to-stun/
 image: /assets/posts/medium/1_R1n7vaNfInOP6BCFXkjv1Q.png
 categories:
-  - English
-  - Hacking
-  - Linux
-  - CTF
-  - SDR
+- CTF
+- Software Defined Radio
+- Hacking
 tags:
-  - Camera
-  - Hacking
-  - CTF
-  - Hackasat
-  - CTF Writeup
-  - Satellite
-  - SDR
-  - GNU Radio
-  - Radio
+- Camera
+- Hacking
+- CTF
+- Hackasat
+- CTF Writeup
+- Satellite
+- SDR
+- GNU Radio
+- Radio
+- FSK
+- Signal Processing
+- Clock Recovery
+- WAV
+- Binary Slicer
+- Bitstream
+- Demodulation
+description: Learn to hack a satellite CTF challenge using SDR and GNU Radio. Decode
+  2-FSK signals from WAV files to find the hidden flag.
+enriched: true
 ---
 
 # Hack a sat  —  Phasors to Stun

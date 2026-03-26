@@ -1,13 +1,27 @@
 ---
 id: 5
 title: Desenhando com Canvas do HTML5
-date: 2011-09-12T16:10:53-03:00
+date: 2011-09-12 16:10:53-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=25
 permalink: /2011/09/desenhando-com-canvas-do-html5/
 categories:
-  - Sem categoria
+- Programming
+tags:
+- HTML5
+- Canvas
+- JavaScript
+- Web Graphics
+- 2D Drawing
+- Context 2D
+- Sine Wave
+- Cartesian Coordinates
+- Pixel Manipulation
+- Web Development
+description: Guia prático de HTML5 Canvas. Aprenda a criar gráficos, desenhar ondas
+  senoidais e manipular pixels com JavaScript e Context 2D.
+enriched: true
 ---
 [ Migrado do LetsHack It ]
 

@@ -1,25 +1,34 @@
 ---
 id: 44
 title: Hack a Sat - Can you hear me now?
-date: 2020-05-29T22:47:00-03:00
+date: 2020-05-29 22:47:00-03:00
 author: Lucas Teske
 layout: post
 guid: https://medium.com/@lucasteske/hack-a-sat-can-you-hear-me-now-c6f68ed6086b
 permalink: /2020/05/hack-a-sat-can-you-hear-me-now/
 image: /assets/posts/medium/1_87tDTK5_FodI9TghHRpznQ.png
 categories:
-  - English
-  - Hacking
-  - Linux
-  - CTF
+- CTF
+- Satellite
+- Reverse Engineering
 tags:
-  - Camera
-  - Hacking
-  - CTF
-  - Hackasat
-  - CTF Writeup
-  - Satellite
-  - XTCE
+- Camera
+- Hacking
+- CTF
+- Hackasat
+- CTF Writeup
+- Satellite
+- XTCE
+- Telemetry
+- Python
+- Binary
+- CCSDS
+- XML
+- Reverse Engineering
+- Netcat
+description: Learn to decode satellite telemetry in this CTF write-up. We use Python
+  and CCSDS standards to parse binary packets and find the flag.
+enriched: true
 ---
 
 # Hack-a-sat — Can you hear me now?

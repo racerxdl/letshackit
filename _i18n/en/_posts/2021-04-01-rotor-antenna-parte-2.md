@@ -1,27 +1,38 @@
 ---
-title: 'Antenna Rotor - Part 2'
-date: 2021-04-01T02:23:00-03:00
+title: Antenna Rotor - Part 2
+date: 2021-04-01 02:23:00-03:00
 author: Lucas Teske
 layout: post
 image: /assets/posts/tracker-mount-2/assembled-elevation-shaft.jpg
 categories:
-  - English
-  - Reverse Engineering
-  - Satellite
-  - SDR
+- Satellite
+- Hardware Hacking
+- Programming
 tags:
-  - Airspy
-  - EMWIN
-  - English
-  - GOES
-  - Hearsat
-  - LRIT
-  - RE
-  - Reverse Engineering
-  - Sat
-  - Satellite
-  - SDR
-
+- Airspy
+- EMWIN
+- English
+- GOES
+- Hearsat
+- LRIT
+- RE
+- Reverse Engineering
+- Sat
+- Satellite
+- SDR
+- Antenna Rotor
+- Satellite Tracking
+- ESP32
+- TMC2209
+- NEMA17
+- 3D Printing
+- FreeCAD
+- Closed-loop Motor
+- Stepper Motor
+- Tracker Project
+description: Build a satellite tracking antenna rotor. This guide covers modifying
+  motors, 3D printing parts, and using ESP32 with TMC2209 drivers.
+enriched: true
 ---
 
 Continuing the tracker project, I managed to make some significant progress. As Demilson (PY2UEP) had cut the original motors, I did the same. The azimuth motor was too rusted and I eventually destroyed one of the coils (which I wanted to salvage the wire), but in the end the shaft went out.

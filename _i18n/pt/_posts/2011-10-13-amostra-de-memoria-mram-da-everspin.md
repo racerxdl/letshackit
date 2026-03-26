@@ -1,13 +1,29 @@
 ---
 id: 8
 title: Amostra de Memória MRAM da Everspin
-date: 2011-10-13T16:42:09-03:00
+date: 2011-10-13 16:42:09-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=38
 permalink: /2011/10/amostra-de-memoria-mram-da-everspin/
 categories:
-  - Sem categoria
+- FPGA
+- Hardware
+- Hardware Hacking
+tags:
+- MRAM
+- Everspin
+- MR2A16AYS35
+- Non-volatile memory
+- SRAM
+- FPGA
+- Boot-instantâneo
+- Hardware Hacking
+- Interface
+- Memória RAM
+description: Testando a memória MRAM da Everspin no FPGA. Saiba como essa tecnologia
+  não volátil promete revolucionar o boot instantâneo dos computadores.
+enriched: true
 ---
 Há muito tempo atrás pedi amostras de uma memória magnética da **[Everspin](http://www.everspin.com/)** para fazer testes aqui, porém depois me deparei com o problema de que ela é 3.3V.
 

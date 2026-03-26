@@ -1,23 +1,37 @@
 ---
 title: 'TPM 2.0: Extracting Bitlocker keys through SPI'
-date: 2024-01-16T20:48:00-03:00
+date: 2024-01-16 20:48:00-03:00
 author: Lucas Teske
 layout: post
 image: /assets/gepeto/tpm2.0.jpg
 categories:
-  - Reverse Engineering
-  - Satellite
-  - SDR
+- Hacking
+- Hardware Hacking
+- Reverse Engineering
 tags:
-  - Flash
-  - PAX
-  - Hardware Hacking
-  - RE
-  - Reverse Engineering
-  - NAND
-  - PAX
-  - RT809H
-
+- Flash
+- PAX
+- Hardware Hacking
+- RE
+- Reverse Engineering
+- NAND
+- PAX
+- RT809H
+- TPM 2.0
+- Bitlocker
+- SPI
+- Logic Analyzer
+- Pulseview
+- Sigrok
+- FDE
+- VMK
+- AES256-XTS
+- Trusted Computing Group
+- Bus Sniffing
+- Cryptography
+description: Learn how to extract BitLocker keys from TPM 2.0 using SPI bus sniffing.
+  A guide to reverse engineering hardware security with logic analyzers.
+enriched: true
 ---
 
 The TPM 2.0, also known as Trusted Platform Module 2.0, is a hardware security feature embedded in many modern computers. Its purpose is to provide a secure way to store cryptographic keys and other sensitive data, such as passwords and digital certificates, aiming to protect against various security threats, including unauthorized access to a computer's hardware and software. TPM 2.0 represents an evolution of the original TPM specification, developed by the Trusted Computing Group (TCG), and features additional capabilities and resources, such as support for additional cryptographic algorithms and the ability to store larger amounts of data.

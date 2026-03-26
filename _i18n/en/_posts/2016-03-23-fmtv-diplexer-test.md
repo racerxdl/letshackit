@@ -1,28 +1,41 @@
 ---
 id: 23
 title: FM/TV Diplexer Test
-date: 2016-03-23T22:29:24-03:00
+date: 2016-03-23 22:29:24-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=173
 permalink: /2016/03/fmtv-diplexer-test/
 categories:
-  - SDR
+- Hardware
+- Software Defined Radio
 tags:
-  - Band Pass
-  - Band Stop
-  - Diplexer
-  - Filter
-  - FM
-  - FM TV Diplexer
-  - High Pass
-  - Linux
-  - Low Pass
-  - qspectrumanalyzer
-  - RTL SDR
-  - RTLSDR
-  - SDR
-  - TV
+- Band Pass
+- Band Stop
+- Diplexer
+- Filter
+- FM
+- FM TV Diplexer
+- High Pass
+- Linux
+- Low Pass
+- qspectrumanalyzer
+- RTL SDR
+- RTLSDR
+- SDR
+- TV
+- RTL-SDR
+- FM Filter
+- Signal Saturation
+- Spectrum Analysis
+- QFH Antenna
+- NOAA
+- LNA
+- RF
+- Band Stop Filter
+description: Solve RTL-SDR signal saturation with a commercial FM/TV diplexer. This
+  test shows how to filter strong FM signals for better NOAA reception.
+enriched: true
 ---
 So it has been a time since my last post (again). Today I&#8217;m writing about a TV/FM Diplexer that I bought to address an issue that I&#8217;m having here with my NOAA stuff.
 

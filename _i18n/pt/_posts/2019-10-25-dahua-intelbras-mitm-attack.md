@@ -1,21 +1,32 @@
 ---
 id: 40
 title: Dahua / Intelbras MitM Attack
-date: 2019-10-25T12:00:00-03:00
+date: 2019-10-25 12:00:00-03:00
 author: Lucas Teske
 layout: post
 guid: https://medium.com/@lucasteske/dahua-intelbras-mitm-attack-768536e8b991
 permalink: /2019/10/dahua-intelbras-mitm-attack/
 image: /assets/posts/medium/0_EtFMEwgxuAJGBNT0.jpg
 categories:
-  - English
-  - Camera
-  - Hacking
+- Camera
+- Hacking
 tags:
-  - Camera
-  - Hacking
-  - English
-
+- Camera
+- Hacking
+- English
+- Dahua
+- Intelbras
+- MitM
+- Man-in-the-Middle
+- IP Camera
+- Security
+- Vulnerability
+- IoT
+- Network Security
+- Exploit
+description: Descubra a vulnerabilidade crítica de MitM afetando câmeras Dahua e Intelbras.
+  Aprenda como proteger seus sistemas de segurança contra intrusões.
+enriched: true
 ---
 
 

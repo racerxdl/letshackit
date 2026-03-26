@@ -1,13 +1,28 @@
 ---
 id: 1
 title: Ed Poliglota
-date: 2011-09-06T12:42:24-03:00
+date: 2011-09-06 12:42:24-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=6
 permalink: /2011/09/ed-poliglota/
 categories:
-  - Sem categoria
+- Hacking
+- Reverse Engineering
+tags:
+- Python
+- Reverse Engineering
+- Web Scraping
+- Google Translate API
+- Chatbot
+- Bot Gateway
+- mod_perl
+- CGI
+- Source Code Analysis
+- HTTP Request
+description: Aprenda a interagir com o Robô Ed do governo brasileiro. Use Python e
+  Google Translate para fazer o bot responder em qualquer idioma.
+enriched: true
 ---
 [Migrado do LetsHackIt]
 

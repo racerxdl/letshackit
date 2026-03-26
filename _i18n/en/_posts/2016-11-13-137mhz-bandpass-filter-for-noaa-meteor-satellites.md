@@ -1,40 +1,52 @@
 ---
 id: 30
 title: 137MHz Bandpass filter for NOAA / Meteor Satellites
-date: 2016-11-13T14:44:12-03:00
+date: 2016-11-13 14:44:12-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=256
 permalink: /2016/11/137mhz-bandpass-filter-for-noaa-meteor-satellites/
 image: /wp-content/uploads/2016/11/newfilter_predict-624x482.png
 categories:
-  - English
-  - Satellite
-  - SDR
+- Hardware
+- Satellite
+- Software Defined Radio
 tags:
-  - 9A4QV
-  - Adam
-  - AGC
-  - Antenna
-  - APT
-  - English
-  - Filter
-  - GQRX
-  - HackRF
-  - Linux
-  - LNA4ALL
-  - QFH
-  - qspectrumanalyzer
-  - RFSim99
-  - RTL SDR
-  - RTLSDR
-  - Satellite
-  - Satellites
-  - SDR
-  - Software Defined Radio
-  - Ubuntu
-  - Weather Satellites
-  - WXSat
+- 9A4QV
+- Adam
+- AGC
+- Antenna
+- APT
+- English
+- Filter
+- GQRX
+- HackRF
+- Linux
+- LNA4ALL
+- QFH
+- qspectrumanalyzer
+- RFSim99
+- RTL SDR
+- RTLSDR
+- Satellite
+- Satellites
+- SDR
+- Software Defined Radio
+- Ubuntu
+- Weather Satellites
+- WXSat
+- 137MHz
+- Bandpass filter
+- NOAA
+- Meteor
+- Spectrum Analyzer
+- Insertion Loss
+- RF
+- Electronics
+- DIY
+description: Build a 137MHz bandpass filter for NOAA and Meteor satellites. DIY electronics
+  project using HackRF and RTLSDR for testing.
+enriched: true
 ---
 Yesterday I saw a new blog post by Adam (9a4qv) in LNA4ALL. The post ([here](http://lna4all.blogspot.com.br/2015/11/diy-137-mhz-wx-sat-bp-filter.html)) talks about a band pass filter he did for Weather Satellites and I decided to try as well.
 

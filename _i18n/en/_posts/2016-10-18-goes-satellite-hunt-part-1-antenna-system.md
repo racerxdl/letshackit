@@ -1,29 +1,41 @@
 ---
 id: 25
-title: 'GOES Satellite Hunt (Part 1 &#8211; Antenna System)'
-date: 2016-10-18T19:24:40-03:00
+title: GOES Satellite Hunt (Part 1 &#8211; Antenna System)
+date: 2016-10-18 19:24:40-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=196
 permalink: /2016/10/goes-satellite-hunt-part-1-antenna-system/
 image: /wp-content/uploads/2016/10/Sem-título.png
 categories:
-  - English
-  - Reverse Engineering
-  - Satellite
-  - SDR
+- Satellite
+- Hardware
+- Hardware Hacking
 tags:
-  - Airspy
-  - EMWIN
-  - English
-  - GOES
-  - Hearsat
-  - LRIT
-  - RE
-  - Reverse Engineering
-  - Sat
-  - Satellite
-  - SDR
+- Airspy
+- EMWIN
+- English
+- GOES
+- Hearsat
+- LRIT
+- RE
+- Reverse Engineering
+- Sat
+- Satellite
+- SDR
+- Geostationary Satellite
+- L-Band
+- Cantenna
+- Waveguide
+- TE11
+- TM01
+- Prime Focus
+- SNR
+- RF Engineering
+- Satellite Reception
+description: Build a GOES satellite antenna system for high-res weather images. Learn
+  about prime focus dishes, Cantenna feeds, and waveguide modes in this DIY guide.
+enriched: true
 ---
   
 So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that&#8217;s reachable in São Paulo) with a good SNR (enough to decode) and then make all the tools to demodulate, decode and output the images and other data they send. I wanted a high-res image, and the L-Band transmissions usually provide that (GOES for example is 1km/px with whole earth sphere in frame. A 10000 x 10000 pixels image)

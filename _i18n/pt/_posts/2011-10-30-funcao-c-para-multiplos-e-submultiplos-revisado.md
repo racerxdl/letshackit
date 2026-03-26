@@ -1,13 +1,27 @@
 ---
 id: 14
 title: Função C para múltiplos e submúltiplos (REVISADO)
-date: 2011-10-30T17:50:21-03:00
+date: 2011-10-30 17:50:21-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=40
 permalink: /2011/10/funcao-c-para-multiplos-e-submultiplos-revisado/
 categories:
-  - Sem categoria
+- Programming
+tags:
+- C programming
+- function
+- notation
+- SI units
+- multiples
+- submultiples
+- floating point
+- rounding
+- optimization
+- code snippet
+description: Veja a função C revisada para múltiplos e submúltiplos. Converta números
+  para notação SI (k, M, G, p, n, u) com precisão.
+enriched: true
 ---
 O _Caio Alarcon_ me notificou de algumas coisas sobre minha função de múltiplos e submúltiplos, por exemplo, o tratamento de números negativos. Resolvi então revisar e otimizar a função em C. O Resultado está abaixo:
 

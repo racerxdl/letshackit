@@ -1,23 +1,43 @@
 ---
 id: 17
 title: The Parallella Board and HyperSignal
-date: 2014-10-01T20:18:48-03:00
+date: 2014-10-01 20:18:48-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=4
 permalink: /2014/10/the-parallella-board-and-hypersignal/
 categories:
-  - English
+- Hardware
+- Programming
+- Hardware Hacking
 tags:
-  - ARM
-  - Bootleneck
-  - Epiphany
-  - Manycore
-  - Multithreading
-  - Parallella
-  - Performance
-  - Power
-  - x86
+- ARM
+- Bootleneck
+- Epiphany
+- Manycore
+- Multithreading
+- Parallella
+- Performance
+- Power
+- x86
+- Epiphany Processor
+- ManyCore Architecture
+- Matrix Upscaler
+- Bilinear Interpolation
+- Bicosine Interpolation
+- HyperSignal
+- Google Maps Tiles
+- Embedded Systems
+- Parallel Computing
+- Python
+- C++
+- Interpolation
+- Bilinear
+- Bicosine
+- Campus Party
+description: Discover how the Parallella board accelerates the HyperSignal Matrix
+  Upscaler using Epiphany ManyCore Architecture instead of a power-hungry i7.
+enriched: true
 ---
 [<img class="size-medium wp-image-67 aligncenter" src="https://www.teske.net.br/lucas/wp-content/uploads/2014/10/parallella-300x300.jpg" alt="parallella" width="300" height="300" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2014/10/parallella-300x300.jpg 300w, https://www.teske.net.br/lucas/wp-content/uploads/2014/10/parallella-150x150.jpg 150w, https://www.teske.net.br/lucas/wp-content/uploads/2014/10/parallella-624x624.jpg 624w, https://www.teske.net.br/lucas/wp-content/uploads/2014/10/parallella.jpg 640w" sizes="(max-width: 300px) 100vw, 300px" />](https://www.teske.net.br/lucas/wp-content/uploads/2014/10/parallella.jpg)
 

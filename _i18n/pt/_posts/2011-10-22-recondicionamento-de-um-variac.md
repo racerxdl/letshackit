@@ -1,13 +1,28 @@
 ---
 id: 13
 title: Recondicionamento de um Variac
-date: 2011-10-22T12:50:43-03:00
+date: 2011-10-22 12:50:43-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=46
 permalink: /2011/10/recondicionamento-de-um-variac/
 categories:
-  - Sem categoria
+- Hardware
+- Hardware Hacking
+tags:
+- Variac
+- Autotransformador
+- Eletrônica
+- Manutenção
+- Recondicionamento
+- Hardware
+- Transformador
+- Aparelhos Elétricos
+- Variável
+- Soldagem
+description: Veja o recondicionamento de um variac. O equipamento pegou fogo e foi
+  arrumado na gambiarra. Testado e funcionando.
+enriched: true
 ---
 Como alguns sabem, meu variac pegou fogo (
 

@@ -1,35 +1,43 @@
 ---
 id: 38
 title: GOES GRB First Light!
-date: 2017-10-15T12:27:04-03:00
+date: 2017-10-15 12:27:04-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=348
 permalink: /2017/10/goes-grb-first-light/
 image: /wp-content/uploads/2017/10/36965004104_888abc985b_z-624x374.jpg
 categories:
-  - English
-  - Reverse Engineering
-  - Satellite
-  - SDR
+- Satellite
+- Software Defined Radio
+- Hardware Hacking
 tags:
-  - CCSDS
-  - GIMP
-  - GOES
-  - GOES16
-  - GRB
-  - JPEG2000
-  - NetCDF
-  - NOAA
-  - NWS
-  - Open Satellite Project
-  - OpenSatelliteProject
-  - OSP
-  - RocketChat
-  - Satellite
-  - SDR
-  - Septum Feed
-  - SZIP
+- CCSDS
+- GIMP
+- GOES
+- GOES16
+- GRB
+- JPEG2000
+- NetCDF
+- NOAA
+- NWS
+- Open Satellite Project
+- OpenSatelliteProject
+- OSP
+- RocketChat
+- Satellite
+- SDR
+- Septum Feed
+- SZIP
+- GOES-16
+- GRB Downlink
+- DVB-S2
+- Satellite Reception
+- Circular Polarization
+description: Learn to receive GOES-16 GRB downlink signals using DVB-S2 and SDR. This
+  guide covers dish sizes, circular polarization, and Open Satellite Project ingestion
+  tools.
+enriched: true
 ---
 
 When the GOES-16 was first announced I got interested in their GRB Downlink (although the first try was at HRIT downlink). Basically GRB is a replacement for the old PDR downlink in GOES 13/14/15 generation, which gives few advantages over the old link:

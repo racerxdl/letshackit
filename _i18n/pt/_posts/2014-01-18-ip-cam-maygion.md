@@ -1,13 +1,31 @@
 ---
 id: 15
-title: 'IP Cam &#8211; MayGion'
-date: 2014-01-18T20:42:45-03:00
+title: IP Cam &#8211; MayGion
+date: 2014-01-18 20:42:45-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=58
 permalink: /2014/01/ip-cam-maygion/
 categories:
-  - Sem categoria
+- Camera
+- Hardware Hacking
+- Reverse Engineering
+tags:
+- QuadCopter
+- IP Camera
+- MIPS
+- Stepper Motors
+- USB
+- UVC
+- Sonix
+- Linux
+- Engenharia Reversa
+- Firmware
+- Hardware Hacking
+- Microcontrolador
+description: Montando um QuadCopter? Descubra como hackear a câmera IP MayGion. Análise
+  de hardware, processador MIPS e uso de USB UVC no Linux.
+enriched: true
 ---
 Bom, estou montando um QuadCopter e sai procurando cameras para colocar nele.
 

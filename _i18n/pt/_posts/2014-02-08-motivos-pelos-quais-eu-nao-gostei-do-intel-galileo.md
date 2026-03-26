@@ -1,13 +1,31 @@
 ---
 id: 16
 title: Motivos pelos quais eu não gostei do Intel Galileo
-date: 2014-02-08T20:57:35-03:00
+date: 2014-02-08 20:57:35-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=60
 permalink: /2014/02/motivos-pelos-quais-eu-nao-gostei-do-intel-galileo/
 categories:
-  - Sem categoria
+- Arduino
+- Hardware
+- Linux
+tags:
+- Intel Galileo
+- Raspberry Pi
+- Quark
+- GPIO
+- I2C
+- Linux
+- BSP
+- x86
+- Arduino IDE
+- Embedded Systems
+- Hardware Review
+- Microcontroller
+description: O autor critica o Intel Galileo por problemas de GPIO (I2C), falta de
+  GPU e dificuldades com o Linux e BSP. Veja a análise completa.
+enriched: true
 ---
 ![image](https://31.media.tumblr.com/4e74c437f3037fbd3ae0905530ca57a8/tumblr_inline_n0pcy2WDDv1rvy8i7.jpg)
 

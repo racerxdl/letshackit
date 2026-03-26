@@ -1,30 +1,35 @@
 ---
 title: Introdução a FPGA
-date: 2020-10-11T23:59:00-03:00
+date: 2020-10-11 23:59:00-03:00
 author: Lucas Teske
 layout: post
 image: /assets/FPGA.jpg
 redirect_from:
-  - /2020/06/introducao-a-fpga
-
+- /2020/06/introducao-a-fpga
 categories:
-  - Portugues
-  - Hacking
-  - FPGA
-  - Hardware
-  - Eletrônica
-  - Verilog
-
+- FPGA
+- Hardware
+- Programming
 tags:
-  - Hacking
-  - FPGA
-  - ICEWolf
-  - IceStick
-  - ECP5
-  - Lattice
-  - Hardware
-  - Eletrônica
-  - Verilog
+- Hacking
+- FPGA
+- ICEWolf
+- IceStick
+- ECP5
+- Lattice
+- Hardware
+- Eletrônica
+- Verilog
+- Field Programmable Gate Array
+- Lógica Digital
+- Portas Lógicas
+- Multiplexador
+- Programação de Hardware
+- Circuitos Digitais
+- Tutorial
+description: Aprenda o que é um FPGA e como funciona a lógica digital. Entenda portas
+  lógicas e multiplexadores neste guia de introdução.
+enriched: true
 ---
 
 Esta é a primeira parte do guia de programação para FPGAs! Este guia irá virar eventualmente um `verilog4noobs` para qualquer pessoa que quiser iniciar na área de programação de hardware possa ter um jeito fácil de conseguir! Iremos começar a explicar o que é um FPGA e como ele funciona.

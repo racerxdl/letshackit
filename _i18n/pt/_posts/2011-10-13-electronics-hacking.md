@@ -1,13 +1,31 @@
 ---
 id: 9
 title: Electronics Hacking
-date: 2011-10-13T15:16:52-03:00
+date: 2011-10-13 15:16:52-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=34
 permalink: /2011/10/electronics-hacking/
 categories:
-  - Sem categoria
+- Hardware Hacking
+- Camera
+- FPGA
+tags:
+- CMOS sensor
+- FPGA
+- VGA
+- Bayer filter
+- Image processing
+- Surveillance camera
+- 3.3V
+- Sub-pixel
+- Raw data
+- Electronics
+- Datasheet
+- PCB
+description: 'Hackeando eletrônica: solderando um sensor CMOS VGA para uso em FPGA.
+  Saiba mais sobre filtros Bayer e processamento de imagem.'
+enriched: true
 ---
 Bom, decidi postar hacks de eletrônica aqui também. Até por que são mais frequentes que os meus hacks. Ai vai umas fotos de um sensor CMOS que soldei numa placa pra facilitar, e verei um dia de brincar com ela:
 

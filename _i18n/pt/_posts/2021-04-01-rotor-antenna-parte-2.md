@@ -1,25 +1,39 @@
 ---
-title: 'Rotor de Antena - Parte 2'
-date: 2021-04-01T02:23:00-03:00
+title: Rotor de Antena - Parte 2
+date: 2021-04-01 02:23:00-03:00
 author: Lucas Teske
 layout: post
 image: /assets/posts/tracker-mount-2/assembled-elevation-shaft.jpg
 categories:
-  - Reverse Engineering
-  - Satellite
-  - SDR
+- Hardware
+- Satellite
+- Hardware Hacking
 tags:
-  - Airspy
-  - EMWIN
-  - GOES
-  - Hearsat
-  - LRIT
-  - RE
-  - Reverse Engineering
-  - Sat
-  - Satellite
-  - SDR
-
+- Airspy
+- EMWIN
+- GOES
+- Hearsat
+- LRIT
+- RE
+- Reverse Engineering
+- Sat
+- Satellite
+- SDR
+- Rotor de Antena
+- Tracker
+- Satélite
+- Impressão 3D
+- Freecad
+- NEMA 17
+- TMC2209
+- ESP32
+- Closed-loop
+- Redução
+- Azimute
+- Elevação
+description: Parte 2 do projeto de rotor de antena. Modificações mecânicas, seleção
+  de motores e testes de precisão com ESP32 e TMC2209.
+enriched: true
 ---
 
 Continuando o projeto do tracker, consegui alguns progressos significativos. Assim como o Demilson (PY2UEP) tinha cortado os motores originais, fiz o mesmo. O motor do azimute estava bem enferrujado e acabei estragando uma de suas bobinas (queria reaproveitar o fio), mas no fim o eixo saiu.

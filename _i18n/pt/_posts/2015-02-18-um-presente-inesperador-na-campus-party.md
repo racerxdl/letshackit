@@ -1,34 +1,46 @@
 ---
 id: 18
 title: Um presente inesperado na Campus Party!
-date: 2015-02-18T17:40:39-03:00
+date: 2015-02-18 17:40:39-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=92
 permalink: /2015/02/um-presente-inesperado-na-campus-party/
 image: /wp-content/uploads/2015/04/tumblr_inline_njxos3euZM1rvy8i7.jpg
 categories:
-  - Sem categoria
+- Arduino
+- Hardware
+- Hardware Hacking
 tags:
-  - apm
-  - arduino
-  - ARM
-  - atom
-  - drone
-  - dualcore
-  - edison
-  - galileo
-  - gift
-  - intel
-  - internet das coisas
-  - internet of things
-  - iot
-  - multiwii
-  - mwc
-  - pixhawk
-  - presente
-  - quadricoptero
-  - x86
+- apm
+- arduino
+- ARM
+- atom
+- drone
+- dualcore
+- edison
+- galileo
+- gift
+- intel
+- internet das coisas
+- internet of things
+- iot
+- multiwii
+- mwc
+- pixhawk
+- presente
+- quadricoptero
+- x86
+- Intel Edison
+- Wearables
+- Dual-Core
+- WiFi
+- Bluetooth
+- SIMD
+- IMU
+description: Review do kit de desenvolvimento Intel Edison. Descubra as especificações
+  do processador Atom Dual-Core, WiFi e Bluetooth para projetos IoT.
+enriched: true
 ---
 Como a maioria sabe, todos os anos eu vou para o evento anual **Campus Party**. Apesar de eu achar que ele está decaindo a cada ano que se passa, ainda há muito o que se aproveitar lá além de rever os amigos da internet nesta oportunidade anual.
 

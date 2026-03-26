@@ -1,13 +1,29 @@
 ---
 id: 6
 title: Função Javascript para Multiplos e Submultiplos
-date: 2011-10-08T05:50:12-03:00
+date: 2011-10-08 05:50:12-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=30
 permalink: /2011/10/funcao-javascript-para-multiplos-e-submultiplos/
 categories:
-  - Sem categoria
+- Programming
+tags:
+- Javascript
+- Submultiplos
+- Multiplos
+- Prefixos SI
+- Mili
+- Micro
+- Nano
+- Pico
+- Função
+- Arredondamento
+- Unidades
+- Física
+description: Função Javascript para múltiplos e submúltiplos. Converta valores para
+  mili, micro, nano e pico automaticamente com este código prático.
+enriched: true
 ---
 Bom, estava montando uma outra calculadora aqui para a [EnergyLabs Brasil](http://www.energylabs.com.br), e quis fazer algo mais legalzinho. Fiz uma função em javascript que concatena o valor com o submúltiplo, e já faz as multiplicações necessárias além de arrendondar para duas casas decimais.
 

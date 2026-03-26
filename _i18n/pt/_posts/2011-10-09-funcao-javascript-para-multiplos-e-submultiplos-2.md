@@ -1,13 +1,29 @@
 ---
 id: 7
 title: Função Javascript para Múltiplos e Submúltiplos
-date: 2011-10-09T19:24:31-03:00
+date: 2011-10-09 19:24:31-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=32
 permalink: /2011/10/funcao-javascript-para-multiplos-e-submultiplos-2/
 categories:
-  - Sem categoria
+- Programming
+- Hardware
+tags:
+- Javascript
+- Função
+- Múltiplos
+- Submúltiplos
+- Notação
+- Arredondamento
+- Array
+- HTML
+- Código
+- Métrica
+- Prefixos
+description: Função Javascript completa para converter valores em múltiplos e submúltiplos,
+  retornando array com valor e unidade arredondada.
+enriched: true
 ---
 Bom, vocês devem ter visto meu tópico anterior sobre [Função Javascript para Submúltiplos](http://letshackit.energylabs.com.br/post/11195814648/funcao-javascript-para-submultiplos) e eu resolvi fazer uma função mais completa. Agora abrangendo mais submúltiplos e também abrangendo múltiplos. O conceito é o mesmo do anterior, gerar o valor com múltiplo ou submúltiplo e arredondar para duas casas decimais apenas. A função fica assim:
 

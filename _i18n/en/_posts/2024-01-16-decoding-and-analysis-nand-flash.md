@@ -1,23 +1,37 @@
 ---
-title: 'NAND Flash Memory Analysis and Decoding - Unveiling ECC Scattering in Unknown Devices'
-date: 2024-01-16T20:48:00-03:00
+title: NAND Flash Memory Analysis and Decoding - Unveiling ECC Scattering in Unknown
+  Devices
+date: 2024-01-16 20:48:00-03:00
 author: Lucas Teske
 layout: post
 image: /assets/posts/analise-e-decodificacao-flash/flash-cell-programmed.svg
 categories:
-  - Reverse Engineering
-  - Satellite
-  - SDR
+- Hardware
+- Hardware Hacking
+- Reverse Engineering
 tags:
-  - Flash
-  - PAX
-  - Hardware Hacking
-  - RE
-  - Reverse Engineering
-  - NAND
-  - PAX
-  - RT809H
-
+- Flash
+- PAX
+- Hardware Hacking
+- RE
+- Reverse Engineering
+- NAND
+- PAX
+- RT809H
+- NAND Flash
+- ECC
+- binwalk
+- Flash Memory Analysis
+- Embedded Systems
+- BGA63
+- Linux Kernel
+- uImage
+- RAMDisk
+- Payment Terminal
+description: Aprenda a analisar memórias NAND Flash, entender a arquitetura de blocos
+  e usar binwalk para decodificar dados. Identifique algoritmos de correção de erro
+  (ECC) em dispositivos.
+enriched: true
 ---
 
 

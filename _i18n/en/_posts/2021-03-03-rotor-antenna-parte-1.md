@@ -1,27 +1,38 @@
 ---
-title: 'Antenna Rotor - Part 1'
-date: 2021-03-03T20:57:00-03:00
+title: Antenna Rotor - Part 1
+date: 2021-03-03 20:57:00-03:00
 author: Lucas Teske
 layout: post
 image: /assets/posts/tracker-mount/head.jpg
 categories:
-  - English
-  - Reverse Engineering
-  - Satellite
-  - SDR
+- Hardware Hacking
+- Satellite
+- Automation
 tags:
-  - Airspy
-  - EMWIN
-  - English
-  - GOES
-  - Hearsat
-  - LRIT
-  - RE
-  - Reverse Engineering
-  - Sat
-  - Satellite
-  - SDR
-
+- Airspy
+- EMWIN
+- English
+- GOES
+- Hearsat
+- LRIT
+- RE
+- Reverse Engineering
+- Sat
+- Satellite
+- SDR
+- Pelco PT175-24P
+- Antenna Rotor
+- Stepper Motor
+- Satellite Tracking
+- Low Orbit Satellites
+- Open-loop
+- Azimuth
+- Elevation
+- 24V AC Motors
+- Variable Frequency Driver
+description: Transforme um rotor Pelco PT175-24P em um rastreador de satélites. Veja
+  como substituir os motores AC por passo a passo neste tutorial.
+enriched: true
 ---
 
 A few years ago I bought a Pelco Câmera Rotor, model PT175-24P. This rotor is made for carrying a camera with up to 8kg, and contains two biphase reversable motors internally. My idea was (and is) to put a satellite dish coupled, and control its movement to track satellites. Then I could use it to receive Low Orbit Satellites.

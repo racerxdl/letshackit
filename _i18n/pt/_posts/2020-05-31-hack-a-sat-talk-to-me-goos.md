@@ -1,28 +1,36 @@
 ---
 id: 46
 title: Hack a Sat - Talk to me, Goose
-date: 2020-05-31T19:02:00-03:00
+date: 2020-05-31 19:02:00-03:00
 author: Lucas Teske
 layout: post
 guid: https://medium.com/@lucasteske/hack-a-sat-talk-to-me-goose-531aac28783
 permalink: /2020/05/hack-a-sat-talk-to-me-goose/
 image: /assets/posts/medium/1_b23VUAe-7ZvnQF4MIZO73A.png
 categories:
-  - English
-  - Hacking
-  - Linux
-  - CTF
-  - SDR
-
+- Satellite
+- Hacking
+- Hardware Hacking
 tags:
-  - Camera
-  - Hacking
-  - CTF
-  - Hackasat
-  - CTF Writeup
-  - Satellite
-  - XTCE
-
+- Camera
+- Hacking
+- CTF
+- Hackasat
+- CTF Writeup
+- Satellite
+- XTCE
+- Software Defined Radio
+- SDR
+- Ham Radio
+- Radio Frequency
+- Communication
+- Hardware Hacking
+- Space
+- Electronics
+- RF
+description: Learn to hack a satellite and talk to space hardware. A practical guide
+  to SDR and RF communication techniques.
+enriched: true
 ---
 
 {% capture link1 %}{{ site.baseurl_root }}{{ page.url}}{% endcapture %}

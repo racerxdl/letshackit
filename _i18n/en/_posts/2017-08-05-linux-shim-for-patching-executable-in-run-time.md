@@ -1,21 +1,33 @@
 ---
 id: 37
 title: Linux shim for Patching executable in run-time
-date: 2017-08-05T12:00:00-03:00
+date: 2017-08-05 12:00:00-03:00
 author: Lucas Teske
 layout: post
 guid: https://medium.com/@lucasteske/linux-shim-for-patching-executable-in-run-time-9cdcd773ed98
 permalink: /2017/08/linux-shim-for-patching-executable-in-run-time/
 categories:
-  - English
-  - Reverse Engineering
-  - Hacking
+- Linux
+- Programming
+- Hacking
 tags:
-  - Hacking
-  - Linux
-  - C
-  - Programming
-  - Shim
+- Hacking
+- Linux
+- C
+- Programming
+- Shim
+- LD_PRELOAD
+- dlsym
+- Shared Library
+- API Interception
+- Runtime Patching
+- Binary Patching
+- C Programming
+- Dynamic Linking
+- Library Shim
+description: 'Master Linux shimming: intercept API calls and patch executables at
+  runtime using LD_PRELOAD and dlsym techniques.'
+enriched: true
 ---
 
 # Linux shim for Patching executable in run-time

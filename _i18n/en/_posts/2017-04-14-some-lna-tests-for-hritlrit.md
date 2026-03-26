@@ -1,29 +1,41 @@
 ---
 id: 36
 title: Some LNA tests for HRIT/LRIT
-date: 2017-04-14T00:24:25-03:00
+date: 2017-04-14 00:24:25-03:00
 author: Lucas Teske
 layout: post
 guid: http://www.teske.net.br/lucas/?p=330
 permalink: /2017/04/some-lna-tests-for-hritlrit/
 image: /wp-content/uploads/2017/04/20170413_133029-624x351.jpg
 categories:
-  - English
-  - Satellite
-  - SDR
+- Hardware
+- Satellite
+- Software Defined Radio
 tags:
-  - Airspy
-  - Antenna
-  - GOES
-  - Hearsat
-  - HRIT
-  - LRIT
-  - NOAA
-  - RTL SDR
-  - RTLSDR
-  - Satellite
-  - SDR
-  - Software Defined Radio
+- Airspy
+- Antenna
+- GOES
+- Hearsat
+- HRIT
+- LRIT
+- NOAA
+- RTL SDR
+- RTLSDR
+- Satellite
+- SDR
+- Software Defined Radio
+- LNA
+- Low Noise Amplifier
+- L Band
+- 1.7GHz
+- GQRX
+- SPF5189
+- LNA4ALL
+- Satellite Reception
+- RF Amplifier
+description: Benchmarks for LNA4ALL vs SPF5189 on L Band. Testing HRIT/LRIT satellite
+  reception with Airspy R2.
+enriched: true
 ---
 So I was talking with @luigi on [OSP RocketChat](https://osp.teske.net.br/) and he noticed that one of the LNA&#8217;s I suggested along with the LNA4ALL (the SPF5189) got a comment on ebay saying that it doesn&#8217;t work on L Band.
 
