@@ -218,16 +218,16 @@ table.truth .tv { color: #00ff41; font-weight: bold; }
 
 .alignleft {
   display: block;
-  float: left;
-  margin: 0 1rem 1rem 0;
-  max-width: 50%;
+  float: none;
+  margin: 0 auto 1rem;
+  max-width: 100%;
 }
 
 .alignright {
   display: block;
-  float: right;
-  margin: 0 0 1rem 1rem;
-  max-width: 50%;
+  float: none;
+  margin: 0 auto 1rem;
+  max-width: 100%;
 }
 
 .alignnone {
