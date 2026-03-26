@@ -17,7 +17,7 @@ layout: default
   <h1 class="post-title">{{ page_title }}</h1>
   <div class="post-info">
     {% if page.image %}
-      <img src="{{ page.image }}"/>
+      <img src="{{ page.image }}" alt="{{ page.title }}" loading="lazy"/>
     {% endif %}
     <span>{% t global.written-by %}</span>
     {% if page.author %}

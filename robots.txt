@@ -4,7 +4,6 @@
 User-agent: *
 Allow: /
 Disallow: /wp-content/
-Disallow: /assets/
 Crawl-delay: 1
 
 Sitemap: {{ site.url }}/sitemap_index.xml

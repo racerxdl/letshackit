@@ -108,7 +108,7 @@ JSON object with exactly these three keys:
 3. "description": A single SEO meta description string, 120-160 characters, \
 suitable for a <meta name="description"> tag.
 
-Return ONLY a valid JSON object — no markdown fences, no explanation.
+Return ONLY a valid JSON object — no markdown fences, no explanation. Return in the same language as the article.
 
 Article title: {title}
 
@@ -214,6 +214,19 @@ def main():
     print(f"  tags       : {data['tags']}")
     print(f"  description: {data['description']}")
     print()
+
+    # Merge tags: combine existing + AI-generated, deduplicate (case-insensitive), preserve order
+    existing_tags = fm.get("tags") or []
+    if isinstance(existing_tags, str):
+        existing_tags = [t.strip() for t in existing_tags.split(",")]
+    seen = {t.lower() for t in existing_tags}
+    merged_tags = list(existing_tags)
+    for tag in data["tags"]:
+        if tag.lower() not in seen:
+            merged_tags.append(tag)
+            seen.add(tag.lower())
+    data["tags"] = merged_tags
+    print(f"  merged tags: {merged_tags}")
 
     # Apply to front matter
     fm["categories"] = data["categories"]
