@@ -6,7 +6,7 @@
       "category" : "",
       "tags"     : "Flash, PAX, Hardware Hacking, RE, Reverse Engineering, D177, D188, Minizinha, Moderninha, Smart, Sunmi, TecToy, Transire, Megahunt, MH1903, Air105, LuatOS",
       "date"     : "September 05, 2025",
-      "excerpt"  : "Disclaimer Todos os procedimentos descritos aqui foram feitos com material disponível publicamente - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos. As máquinas de pagamento..."
+      "excerpt"  : "DisclaimerTodos os procedimentos descritos aqui foram feitos com material disponível publicamente - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos.As máquinas de pagamento com cartão..."
     } ,
   
     {
@@ -24,7 +24,7 @@
       "category" : "",
       "tags"     : "Flash, PAX, Hardware Hacking, RE, Reverse Engineering, NAND, PAX, RT809H",
       "date"     : "January 16, 2024",
-      "excerpt"  : "Explorando memórias NAND Quando em posse de um dispositivo a qual se deseja conhecer sobre, nem sempre é trivial o acesso ao conteúdo da memória flash. Devido a natureza das memórias NAND, é aplicado para todo conteúdo um algoritmo de correção de erros que pode causar uma ofuscação não intencional..."
+      "excerpt"  : "Explorando memórias NANDQuando em posse de um dispositivo a qual se deseja conhecer sobre, nem sempre é trivial o acesso ao conteúdo da memória flash. Devido a natureza das memórias NAND, é aplicado para todo conteúdo um algoritmo de correção de erros que pode causar uma ofuscação não intencional do..."
     } ,
   
     {
@@ -42,7 +42,7 @@
       "category" : "",
       "tags"     : "Airspy, EMWIN, GOES, Hearsat, LRIT, RE, Reverse Engineering, Sat, Satellite, SDR",
       "date"     : "April 01, 2021",
-      "excerpt"  : "Continuando o projeto do tracker, consegui alguns progressos significativos. Assim como o Demilson (PY2UEP) tinha cortado os motores originais, fiz o mesmo. O motor do azimute estava bem enferrujado e acabei estragando uma de suas bobinas (queria reaproveitar o fio), mas no fim o eixo saiu. Após o eixo removido,..."
+      "excerpt"  : "Continuando o projeto do tracker, consegui alguns progressos significativos. Assim como o Demilson (PY2UEP) tinha cortado os motores originais, fiz o mesmo. O motor do azimute estava bem enferrujado e acabei estragando uma de suas bobinas (queria reaproveitar o fio), mas no fim o eixo saiu.Após o eixo removido, quebrei..."
     } ,
   
     {
@@ -60,7 +60,7 @@
       "category" : "",
       "tags"     : "Hacking, FPGA, ICEWolf, IceStick, ECP5, Lattice, Hardware, Eletrônica, Verilog",
       "date"     : "October 12, 2020",
-      "excerpt"  : "Esta é a primeira parte do guia de programação para FPGAs! Este guia irá virar eventualmente um verilog4noobs para qualquer pessoa que quiser iniciar na área de programação de hardware possa ter um jeito fácil de conseguir! Iremos começar a explicar o que é um FPGA e como ele funciona...."
+      "excerpt"  : "Esta é a primeira parte do guia de programação para FPGAs! Este guia irá virar eventualmente um verilog4noobs para qualquer pessoa que quiser iniciar na área de programação de hardware possa ter um jeito fácil de conseguir! Iremos começar a explicar o que é um FPGA e como ele funciona.Para..."
     } ,
   
     {
@@ -69,7 +69,7 @@
       "category" : "",
       "tags"     : "Hacking, FPGA, ICEWolf, IceStick, ECP5, Lattice, ESP32, Colorlight",
       "date"     : "June 14, 2020",
-      "excerpt"  : "Hackeando um ESP32 num FPGA No ano passado eu vi um cara russo que viu que essa placa barata (US$15) tinha um FPGA da Lattice ECP5, o qual é compatível com as toolchains opensource para síntese. Ele estava rodando um RISC-V dentro e enviando a saída serial pela rede usando..."
+      "excerpt"  : "Hackeando um ESP32 num FPGANo ano passado eu vi um cara russo que viu que essa placa barata (US$15) tinha um FPGA da Lattice ECP5, o qual é compatível com as toolchains opensource para síntese. Ele estava rodando um RISC-V dentro e enviando a saída serial pela rede usando uma..."
     } ,
   
     {
@@ -78,9 +78,7 @@
       "category" : "",
       "tags"     : "Camera, Hacking, CTF, Hackasat, CTF Writeup, Satellite, XTCE",
       "date"     : "May 31, 2020",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -89,9 +87,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "Camera, Hacking, CTF, Hackasat, CTF Writeup, Satellite, SDR, GNU Radio, Radio",
       "date"     : "May 30, 2020",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -100,9 +96,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "Camera, Hacking, CTF, Hackasat, CTF Writeup, Satellite, XTCE",
       "date"     : "May 30, 2020",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -111,9 +105,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "Camera, Hacking, Home Assistant, Arduino, ESP8266, ESP32, ESPHome",
       "date"     : "December 30, 2019",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -122,9 +114,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "Camera, Hacking, Home Assistant, Arduino, ESP8266, ESP32, ESPHome",
       "date"     : "December 29, 2019",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -133,9 +123,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "Camera, Hacking, SDR, Ubuntu, GSM, BTS, Osmocom, Sysmocom",
       "date"     : "December 21, 2019",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -144,9 +132,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "Camera, Hacking, English",
       "date"     : "October 25, 2019",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -155,9 +141,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "Camera, Hacking, English",
       "date"     : "June 16, 2019",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -166,9 +150,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "CCSDS, GIMP, GOES, GOES16, GRB, JPEG2000, NetCDF, NOAA, NWS, Open Satellite Project, OpenSatelliteProject, OSP, RocketChat, Satellite, SDR, Septum Feed, SZIP",
       "date"     : "October 15, 2017",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -177,9 +159,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "Hacking, Linux, C, Programming, Shim",
       "date"     : "August 05, 2017",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -188,9 +168,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "Airspy, Antenna, GOES, Hearsat, HRIT, LRIT, NOAA, RTL SDR, RTLSDR, Satellite, SDR, Software Defined Radio",
       "date"     : "April 14, 2017",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -199,9 +177,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "Airspy, EMWIN, English, False Color, GOES, GOES 16, Hearsat, HRIT, LRIT, NOAA, Open Satellite Project, OSP, Reverse Engineering, RTL SDR, Sat, Satellite, SDR, Software Defined Radio",
       "date"     : "April 02, 2017",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -210,9 +186,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "Airspy, Antenna, Automatic Gain Control, CMI, EMWIN, English, GRC, Hearsat, HRIT, Linux, LRIT, NetCDF, NOAA, SDR, Ubuntu",
       "date"     : "March 25, 2017",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -221,9 +195,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "Airspy, Convolutional Code, Convolutional Encoding, EMWIN, English, GNU Radio, Gnuradio, GOES, GOES 16, GOES-R, GRC, HackRF, HRIT, LRIT, NOAA, Osmocom, RE, Reed Solomon, Root Raised Cosine Filter, Satellite, SDR",
       "date"     : "January 25, 2017",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -232,9 +204,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "2.2m Prime Focus, Airspy, Antenna, Dish, Embrasat, English, Gnuradio, GOES, GOES 13, GOES 16, GOES-R, GQRX, HackRF, Hearsat, Linux, LRIT, Open Satellite Project, OSP, Prime Focus, RTLSDR, Satellite, SDR, Waveguide, Waveguide Feed",
       "date"     : "December 16, 2016",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -243,9 +213,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "",
       "date"     : "November 28, 2016",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -254,9 +222,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "9A4QV, Adam, AGC, Antenna, APT, English, Filter, GQRX, HackRF, Linux, LNA4ALL, QFH, qspectrumanalyzer, RFSim99, RTL SDR, RTLSDR, Satellite, Satellites, SDR, Software Defined Radio, Ubuntu, Weather Satellites, WXSat",
       "date"     : "November 13, 2016",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -265,9 +231,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "AGC, Airspy, Automatic Gain Control, Bug, Compile, Convolutional Code, Convolutional Encoding, EMWIN, English, Full Disk, GNU Radio, Gnuradio, GOES, GRC, Hearsat, LRIT, Osmocom, RE, Reed Solomon, Reverse Engineering, Root Raised Cosine Filter, RRC Filter, RS, Sat, Satellite, SDR, Statistics, Viterbi",
       "date"     : "November 07, 2016",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -276,9 +240,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "AGC, Airspy, Automatic Gain Control, Bug, Compile, Convolutional Code, Convolutional Encoding, EMWIN, English, GNU Radio, Gnuradio, GOES, GRC, Hearsat, LRIT, Osmocom, RE, Reed Solomon, Reverse Engineering, Root Raised Cosine Filter, RRC Filter, RS, Sat, Satellite, SDR, Statistics, Viterbi",
       "date"     : "November 06, 2016",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -287,9 +249,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "AGC, Airspy, Automatic Gain Control, Bug, Compile, Convolutional Code, Convolutional Encoding, EMWIN, English, GNU Radio, Gnuradio, GOES, GRC, Hearsat, LRIT, Osmocom, RE, Reed Solomon, Reverse Engineering, Root Raised Cosine Filter, RRC Filter, RS, Sat, Satellite, SDR, Statistics, Viterbi",
       "date"     : "November 02, 2016",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -298,9 +258,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "AGC, Airspy, Automatic Gain Control, Bug, Compile, EMWIN, English, GNU Radio, Gnuradio, GOES, GRC, Hearsat, LRIT, Osmocom, RE, Reverse Engineering, Root Raised Cosine Filter, RRC Filter, Sat, Satellite, SDR",
       "date"     : "October 31, 2016",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -309,9 +267,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "Airspy, EMWIN, English, GOES, Hearsat, LRIT, RE, Reverse Engineering, Sat, Satellite, SDR",
       "date"     : "October 18, 2016",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -320,9 +276,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "Adam, FM, FM Trap, FM TV Diplexer, HackRF, LNA4ALL, RTLSDR, SDR",
       "date"     : "July 22, 2016",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -331,9 +285,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "Band Pass, Band Stop, Diplexer, Filter, FM, FM TV Diplexer, High Pass, Linux, Low Pass, qspectrumanalyzer, RTL SDR, RTLSDR, SDR, TV",
       "date"     : "March 24, 2016",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -342,9 +294,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "137MHz, 2m Band, Amplifier, Antenna, APT, Decimation, GQRX, intel, Intel Edison, Le Maker Guitar, LeMaker, Linux, LNA, Low Noise Amplifier, NOAA, QFH, RTLSDR, SDR, Signal, Signals, Ubuntu",
       "date"     : "February 05, 2016",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -353,9 +303,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "ARM, Chalk-Elec, LCD TouchScreen, Le Maker Guitar, LeMaker, Linux, Open Hardware, Open Source, OpenHardware, OpenSource, QFH, Receiver, RTL SDR, Satellite, SDR, Software Defined Radio, Ubuntu, Weather, Weather Satellite Receiver",
       "date"     : "February 02, 2016",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -364,9 +312,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "APT, Images, Linux, NOAA, RTL SDR, Satellite, SDR, SDR Sharp, Windows",
       "date"     : "January 25, 2016",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -375,9 +321,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "ADSB, Airplane, Antenna, edison, FM, GNU Radio, intel, Intel Edison, NOAA, Radio, Realtek, RTL2832U, RTLSDR, SDR, Software, Software Defined Radio, VHF",
       "date"     : "January 16, 2016",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -386,7 +330,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "apm, arduino, ARM, atom, drone, dualcore, edison, galileo, gift, intel, internet das coisas, internet of things, iot, multiwii, mwc, pixhawk, presente, quadricoptero, x86",
       "date"     : "February 18, 2015",
-      "excerpt"  : "Como a maioria sabe, todos os anos eu vou para o evento anual Campus Party. Apesar de eu achar que ele está decaindo a cada ano que se passa, ainda há muito o que se aproveitar lá além de rever os amigos da internet nesta oportunidade anual. Este ano fui..."
+      "excerpt"  : "Como a maioria sabe, todos os anos eu vou para o evento anual Campus Party. Apesar de eu achar que ele está decaindo a cada ano que se passa, ainda há muito o que se aproveitar lá além de rever os amigos da internet nesta oportunidade anual.Este ano fui também..."
     } ,
   
     {
@@ -395,9 +339,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "ARM, Bootleneck, Epiphany, Manycore, Multithreading, Parallella, Performance, Power, x86",
       "date"     : "October 01, 2014",
-      "excerpt"  : "
-Somente disponível em Inglês
-"
+      "excerpt"  : "Somente disponível em Inglês"
     } ,
   
     {
@@ -415,7 +357,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "",
       "date"     : "January 18, 2014",
-      "excerpt"  : "Bom, estou montando um QuadCopter e sai procurando cameras para colocar nele. Na minha lista de opções coloquei 3 câmeras IP: 1) MayGion IP cam (comprada na Dealextreme, 640×480) 2) DSC-930L (D-LINK 640×480) 3) DSC-2130 (D-LINK 1280×800) Comecei a desmontar a MayGion pra ver como ela era. Ai vai umas..."
+      "excerpt"  : "Bom, estou montando um QuadCopter e sai procurando cameras para colocar nele.Na minha lista de opções coloquei 3 câmeras IP:1) MayGion IP cam (comprada na Dealextreme, 640×480)2) DSC-930L (D-LINK 640×480)3) DSC-2130 (D-LINK 1280×800)Comecei a desmontar a MayGion pra ver como ela era. Ai vai umas fotosEssa é a placa principal...."
     } ,
   
     {
@@ -424,7 +366,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "",
       "date"     : "October 30, 2011",
-      "excerpt"  : "O Caio Alarcon me notificou de algumas coisas sobre minha função de múltiplos e submúltiplos, por exemplo, o tratamento de números negativos. Resolvi então revisar e otimizar a função em C. O Resultado está abaixo: #include &amp;lt;stdio.h&amp;gt; #include &amp;lt;math.h&amp;gt; char toNotationUnit(double value,float *out) { double val; char notacoes[] = {&#39;y&#39;,&#39;z&#39;,&#39;a&#39;,&#39;f&#39;,&#39;p&#39;,&#39;n&#39;,&#39;u&#39;,&#39;m&#39;,&#39; &#39;, &#39;k&#39;,&#39;M&#39;,&#39;G&#39;,&#39;T&#39;,&#39;P&#39;,&#39;E&#39;,&#39;Z&#39;,&#39;Y&#39;}; int counter=8; char..."
+      "excerpt"  : "O Caio Alarcon me notificou de algumas coisas sobre minha função de múltiplos e submúltiplos, por exemplo, o tratamento de números negativos. Resolvi então revisar e otimizar a função em C. O Resultado está abaixo:#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;math.h&amp;gt;char toNotationUnit(double value,float *out) { double val; char notacoes[] = {&#39;y&#39;,&#39;z&#39;,&#39;a&#39;,&#39;f&#39;,&#39;p&#39;,&#39;n&#39;,&#39;u&#39;,&#39;m&#39;,&#39; &#39;, &#39;k&#39;,&#39;M&#39;,&#39;G&#39;,&#39;T&#39;,&#39;P&#39;,&#39;E&#39;,&#39;Z&#39;,&#39;Y&#39;}; int counter=8; char unit; val =..."
     } ,
   
     {
@@ -433,18 +375,7 @@ Somente disponível em Inglês
       "category" : "",
       "tags"     : "",
       "date"     : "October 22, 2011",
-      "excerpt"  : "Como alguns sabem, meu variac pegou fogo (
-
-), e o meu outro queimou na semana da GV. Então precisei arrumar um pelo menos para poder usado aqui. Ai estão as fotos 😀
-
-Foi testado e está funcionando corretamente agora. Foi arrumado na gambiarra, mas ta arrumado.
-
-
-
- 
-
-         
-"
+      "excerpt"  : "Como alguns sabem, meu variac pegou fogo (), e o meu outro queimou na semana da GV. Então precisei arrumar um pelo menos para poder usado aqui. Ai estão as fotos 😀Foi testado e está funcionando corretamente agora. Foi arrumado na gambiarra, mas ta arrumado.          "
     } ,
   
     {
@@ -453,7 +384,7 @@ Foi testado e está funcionando corretamente agora. Foi arrumado na gambiarra, m
       "category" : "",
       "tags"     : "",
       "date"     : "October 16, 2011",
-      "excerpt"  : "Neste tópico colocarei apenas como é a interface do interruptor descrito anteriormente. Para um interruptor monofônico, ligamos o Enable em Vcc e ignoramos o BUSY. Para polifônicos, colocamos o Enable do primeiro no Vcc, e nos seguintes ligamos no BUSY do anterior. Nas saídas fazemos uma operação OR, e as entradas MIDI são ligadas todas..."
+      "excerpt"  : "Neste tópico colocarei apenas como é a interface do interruptor descrito anteriormente.Para um interruptor monofônico, ligamos o Enable em Vcc e ignoramos o BUSY. Para polifônicos, colocamos o Enable do primeiro no Vcc, e nos seguintes ligamos no BUSY do anterior. Nas saídas fazemos uma operação OR, e as entradas MIDI são ligadas todas juntas.O..."
     } ,
   
     {
@@ -462,7 +393,7 @@ Foi testado e está funcionando corretamente agora. Foi arrumado na gambiarra, m
       "category" : "",
       "tags"     : "",
       "date"     : "October 16, 2011",
-      "excerpt"  : "– Introdução Bom, muitos sabem que eu fiz um Interruptor MIDI (ou sintetizador como preferir) com um FPGA. Porém poucos tem acesso a um FPGA principalmente para fazer algo tão *simples*, então resolvi fazer um com PIC 16F628A. No começo queria fazer com um PIC menor, mas os menores não..."
+      "excerpt"  : "– IntroduçãoBom, muitos sabem que eu fiz um Interruptor MIDI (ou sintetizador como preferir) com um FPGA. Porém poucos tem acesso a um FPGA principalmente para fazer algo tão *simples*, então resolvi fazer um com PIC 16F628A.No começo queria fazer com um PIC menor, mas os menores não tem Receptor..."
     } ,
   
     {
@@ -471,7 +402,7 @@ Foi testado e está funcionando corretamente agora. Foi arrumado na gambiarra, m
       "category" : "",
       "tags"     : "",
       "date"     : "October 13, 2011",
-      "excerpt"  : "Há muito tempo atrás pedi amostras de uma memória magnética da Everspin para fazer testes aqui, porém depois me deparei com o problema de que ela é 3.3V. De qualquer maneira agora tenho um FPGA para brincar com ela. O modelo de amostra é a MR2A16AYS35, uma MRAM de 1M de..."
+      "excerpt"  : "Há muito tempo atrás pedi amostras de uma memória magnética da Everspin para fazer testes aqui, porém depois me deparei com o problema de que ela é 3.3V.De qualquer maneira agora tenho um FPGA para brincar com ela.O modelo de amostra é a MR2A16AYS35, uma MRAM de 1M de endereço e..."
     } ,
   
     {
@@ -489,7 +420,7 @@ Foi testado e está funcionando corretamente agora. Foi arrumado na gambiarra, m
       "category" : "",
       "tags"     : "",
       "date"     : "October 13, 2011",
-      "excerpt"  : "Bom, decidi postar hacks de eletrônica aqui também. Até por que são mais frequentes que os meus hacks. Ai vai umas fotos de um sensor CMOS que soldei numa placa pra facilitar, e verei um dia de brincar com ela: É um Sensor CMOS VGA Colorido, que roda em 3.3V. A sua..."
+      "excerpt"  : "Bom, decidi postar hacks de eletrônica aqui também. Até por que são mais frequentes que os meus hacks. Ai vai umas fotos de um sensor CMOS que soldei numa placa pra facilitar, e verei um dia de brincar com ela:É um Sensor CMOS VGA Colorido, que roda em 3.3V. A sua interface..."
     } ,
   
     {
@@ -507,7 +438,7 @@ Foi testado e está funcionando corretamente agora. Foi arrumado na gambiarra, m
       "category" : "",
       "tags"     : "",
       "date"     : "October 08, 2011",
-      "excerpt"  : "Bom, estava montando uma outra calculadora aqui para a EnergyLabs Brasil, e quis fazer algo mais legalzinho. Fiz uma função em javascript que concatena o valor com o submúltiplo, e já faz as multiplicações necessárias além de arrendondar para duas casas decimais. Não entendeu? Bom vou exemplificar. Em física se usa..."
+      "excerpt"  : "Bom, estava montando uma outra calculadora aqui para a EnergyLabs Brasil, e quis fazer algo mais legalzinho. Fiz uma função em javascript que concatena o valor com o submúltiplo, e já faz as multiplicações necessárias além de arrendondar para duas casas decimais.Não entendeu? Bom vou exemplificar.Em física se usa muito múltiplos e submúltiplos para..."
     } ,
   
     {
@@ -525,7 +456,7 @@ Foi testado e está funcionando corretamente agora. Foi arrumado na gambiarra, m
       "category" : "",
       "tags"     : "",
       "date"     : "September 07, 2011",
-      "excerpt"  : "No post anterior mostrei como enviar um Tweet com Python. Agora mostrarei com o PHP. Repita os mesmos passos de criação das Keys ditas no post anterior e anote todas elas. Para o PHP usamos uma biblioteca chamada tmhOAuth, que pode ser conseguida aqui: https://github.com/themattharris/tmhOAuth Baixe apenas o arquivo tmhOAuth.php..."
+      "excerpt"  : "No post anterior mostrei como enviar um Tweet com Python. Agora mostrarei com o PHP.Repita os mesmos passos de criação das Keys ditas no post anterior e anote todas elas.Para o PHP usamos uma biblioteca chamada tmhOAuth, que pode ser conseguida aqui:https://github.com/themattharris/tmhOAuthBaixe apenas o arquivo tmhOAuth.php que é o que..."
     } ,
   
     {
@@ -534,7 +465,7 @@ Foi testado e está funcionando corretamente agora. Foi arrumado na gambiarra, m
       "category" : "",
       "tags"     : "",
       "date"     : "September 07, 2011",
-      "excerpt"  : "[Migrado do LetsHack It no Tumblr] Bom, como estou sem ideias para novos hacks, vou mostrar a vocês um jeito simples de enviar um Tweet com o Python. Existem vários meios de autenticação para o Twitter (ou existiam), o principal é o OAuth. Outro ponto é que existem várias bibliotecas..."
+      "excerpt"  : "[Migrado do LetsHack It no Tumblr]Bom, como estou sem ideias para novos hacks, vou mostrar a vocês um jeito simples de enviar um Tweet com o Python.Existem vários meios de autenticação para o Twitter (ou existiam), o principal é o OAuth. Outro ponto é que existem várias bibliotecas para o..."
     } ,
   
     {
@@ -543,10 +474,7 @@ Foi testado e está funcionando corretamente agora. Foi arrumado na gambiarra, m
       "category" : "",
       "tags"     : "",
       "date"     : "September 07, 2011",
-      "excerpt"  : "Para passar um pouco o tempo, um hack antigo meu de como fazer um apontador laser vermelho que queima com um Gravador de DVD…
-
-[embedyt]https://www.youtube.com/watch?v=mEzq2PaFvXY[/embedyt]
-"
+      "excerpt"  : "Para passar um pouco o tempo, um hack antigo meu de como fazer um apontador laser vermelho que queima com um Gravador de DVD…[embedyt]https://www.youtube.com/watch?v=mEzq2PaFvXY[/embedyt]"
     } ,
   
     {
@@ -555,7 +483,7 @@ Foi testado e está funcionando corretamente agora. Foi arrumado na gambiarra, m
       "category" : "",
       "tags"     : "",
       "date"     : "September 06, 2011",
-      "excerpt"  : "[Migrado do LetsHackIt] Hmm, vamos brincar um pouco com Robô Ed? É aquele Robô Ed que está no site do Ministério de Minas de Energia do Brasil… Não sabe qual? Olhe aqui: http://www.ed.conpet.gov.br/br/converse.php – Mas não vamos brincar de conversar não! Vamos fazer algo mais legal, vamos ver o que da pra..."
+      "excerpt"  : "[Migrado do LetsHackIt]Hmm, vamos brincar um pouco com Robô Ed? É aquele Robô Ed que está no site do Ministério de Minas de Energia do Brasil… Não sabe qual? Olhe aqui: http://www.ed.conpet.gov.br/br/converse.php – Mas não vamos brincar de conversar não! Vamos fazer algo mais legal, vamos ver o que da pra fazer!Vamos..."
     } 
   
 ]

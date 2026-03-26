@@ -6,7 +6,7 @@
       "category" : "",
       "tags"     : "Flash, PAX, Hardware Hacking, RE, Reverse Engineering, D177, D188, Minizinha, Moderninha, Smart, Sunmi, TecToy, Transire, Megahunt, MH1903, Air105, LuatOS",
       "date"     : "September 05, 2025",
-      "excerpt"  : "Disclaimer All procedures described here were done with public available stuff - No security flaws were actually explored here to get code execution. The processor swap technique does not bypass the tamper protections neither allow a fake machine to actually emit payments. Brazilian credit card payment machines usually are in..."
+      "excerpt"  : "DisclaimerAll procedures described here were done with public available stuff - No security flaws were actually explored here to get code execution. The processor swap technique does not bypass the tamper protections neither allow a fake machine to actually emit payments.Brazilian credit card payment machines usually are in state of..."
     } ,
   
     {
@@ -24,7 +24,7 @@
       "category" : "",
       "tags"     : "Flash, PAX, Hardware Hacking, RE, Reverse Engineering, NAND, PAX, RT809H",
       "date"     : "January 16, 2024",
-      "excerpt"  : "Exploring NAND Memories When in possession of a device whose internals one wishes to understand, accessing the content of the flash memory is not always straightforward. Due to the nature of NAND memories, an error correction algorithm is applied to all content, which can cause unintentional obfuscation of the content...."
+      "excerpt"  : "Exploring NAND MemoriesWhen in possession of a device whose internals one wishes to understand, accessing the content of the flash memory is not always straightforward. Due to the nature of NAND memories, an error correction algorithm is applied to all content, which can cause unintentional obfuscation of the content. Some..."
     } ,
   
     {
@@ -60,9 +60,7 @@
       "category" : "",
       "tags"     : "Hacking, FPGA, ICEWolf, IceStick, ECP5, Lattice, Hardware, Eletrônica, Verilog",
       "date"     : "October 12, 2020",
-      "excerpt"  : "
-(So far) Only available in Portuguese
-"
+      "excerpt"  : "(So far) Only available in Portuguese"
     } ,
   
     {
@@ -71,7 +69,7 @@
       "category" : "",
       "tags"     : "Hacking, FPGA, ICEWolf, IceStick, ECP5, Lattice, ESP32, Colorlight",
       "date"     : "June 14, 2020",
-      "excerpt"  : "Hacking a ESP32 into FPGA Board Colorlight Hub 5A-75B V6.1 Board Last year I saw a russian guy that found out that this cheap board (US$15~) had an Lattice ECP5 FPGA, which is compatible with Open Source Tool-chains for synthesis. He was running a RISC-V Core inside that and piping..."
+      "excerpt"  : "Hacking a ESP32 into FPGA BoardColorlight Hub 5A-75B V6.1 BoardLast year I saw a russian guy that found out that this cheap board (US$15~) had an Lattice ECP5 FPGA, which is compatible with Open Source Tool-chains for synthesis. He was running a RISC-V Core inside that and piping the serial..."
     } ,
   
     {
@@ -80,7 +78,7 @@
       "category" : "",
       "tags"     : "Camera, Hacking, CTF, Hackasat, CTF Writeup, Satellite, XTCE",
       "date"     : "May 31, 2020",
-      "excerpt"  : "Hack a Sat — Talk to me, Goose The “Talk to me, Goose challenge” on Hackasat This challenge is just after the “Can you hear me now?” challenge (see Hack a Sat - Can you hear me now? ). Now LaunchDotCom has a new Satellite called Carnac 2.0. There are two attached..."
+      "excerpt"  : "Hack a Sat — Talk to me, GooseThe “Talk to me, Goose challenge” on HackasatThis challenge is just after the “Can you hear me now?” challenge (see Hack a Sat - Can you hear me now? ). Now LaunchDotCom has a new Satellite called Carnac 2.0.There are two attached files. The first..."
     } ,
   
     {
@@ -89,7 +87,7 @@
       "category" : "",
       "tags"     : "Camera, Hacking, CTF, Hackasat, CTF Writeup, Satellite, SDR, GNU Radio, Radio",
       "date"     : "May 30, 2020",
-      "excerpt"  : "Hack a sat  —  Phasors to Stun The challenge I got really excited about it because it’s a SDR one. And everyone that knows me know that I love SDR stuff. The zip file itself contains a wav file which they told us is not an audio but an radio..."
+      "excerpt"  : "Hack a sat  —  Phasors to StunThe challengeI got really excited about it because it’s a SDR one. And everyone that knows me know that I love SDR stuff.The zip file itself contains a wav file which they told us is not an audio but an radio signalFile command to..."
     } ,
   
     {
@@ -98,7 +96,7 @@
       "category" : "",
       "tags"     : "Camera, Hacking, CTF, Hackasat, CTF Writeup, Satellite, XTCE",
       "date"     : "May 30, 2020",
-      "excerpt"  : "Hack-a-sat — Can you hear me now? That challenge asked us to decode a Telemetry data that was being sent over a TCP port. If you open the netcat, the following happen: Then if you connect to the Telemetry Service using netcat: In the provided zip file there is a telemetry.xtce file..."
+      "excerpt"  : "Hack-a-sat — Can you hear me now?That challenge asked us to decode a Telemetry data that was being sent over a TCP port. If you open the netcat, the following happen:Then if you connect to the Telemetry Service using netcat:In the provided zip file there is a telemetry.xtce file which is a..."
     } ,
   
     {
@@ -107,7 +105,7 @@
       "category" : "",
       "tags"     : "Camera, Hacking, Home Assistant, Arduino, ESP8266, ESP32, ESPHome",
       "date"     : "December 30, 2019",
-      "excerpt"  : "Integrating Hacked Touch Panel into Home Assistant In the previous article I showed a simple hack of a chinese Touch Panel. Now I have successfully integrated it Home Assistant and I’m able to turn my room light on / off. Here is how. From now on I will assume you..."
+      "excerpt"  : "Integrating Hacked Touch Panel into Home AssistantIn the previous article I showed a simple hack of a chinese Touch Panel. Now I have successfully integrated it Home Assistant and I’m able to turn my room light on / off. Here is how.From now on I will assume you have ESPHome..."
     } ,
   
     {
@@ -116,7 +114,7 @@
       "category" : "",
       "tags"     : "Camera, Hacking, Home Assistant, Arduino, ESP8266, ESP32, ESPHome",
       "date"     : "December 29, 2019",
-      "excerpt"  : "Hacking Dimmer Touch Panel with ESP8266 I bought two of these LED Touch Panel Dimmers in Banggood and they look pretty good. But since my house automation has its own way to controlling the lights I wonder if I could hack them to send info to Home Assistant. The first..."
+      "excerpt"  : "Hacking Dimmer Touch Panel with ESP8266I bought two of these LED Touch Panel Dimmers in Banggood and they look pretty good. But since my house automation has its own way to controlling the lights I wonder if I could hack them to send info to Home Assistant.The first thing I..."
     } ,
   
     {
@@ -125,7 +123,7 @@
       "category" : "",
       "tags"     : "Camera, Hacking, SDR, Ubuntu, GSM, BTS, Osmocom, Sysmocom",
       "date"     : "December 21, 2019",
-      "excerpt"  : "Creating your own GSM Network with LimeSDR DISCLAIMER: This procedure is highly illegal basically anywhere in the world. Be sure to run this in a closed RF environment (aka Faraday Cage) This article works with any LimeSDR version. For this example we will use the Osmocom GSM Stack in the..."
+      "excerpt"  : "Creating your own GSM Network with LimeSDR DISCLAIMER: This procedure is highly illegal basically anywhere in the world. Be sure to run this in a closed RF environment (aka Faraday Cage) This article works with any LimeSDR version.For this example we will use the Osmocom GSM Stack in the NITB..."
     } ,
   
     {
@@ -134,7 +132,7 @@
       "category" : "",
       "tags"     : "Camera, Hacking, English",
       "date"     : "October 25, 2019",
-      "excerpt"  : "Dahua / Intelbras MitM Attack How to perform a very simple MitM Attack on a Intelbras/Dahua IP Cameras / DVR. This uses Ettercap to do an ARP Poison and a simple GoLang Script to fetch the username/password. Disclaimer: This type of attack is basically illegal anywhere in the world. My..."
+      "excerpt"  : "Dahua / Intelbras MitM AttackHow to perform a very simple MitM Attack on a Intelbras/Dahua IP Cameras / DVR. This uses Ettercap to do an ARP Poison and a simple GoLang Script to fetch the username/password.Disclaimer: This type of attack is basically illegal anywhere in the world. My intentions with..."
     } ,
   
     {
@@ -143,7 +141,7 @@
       "category" : "",
       "tags"     : "Camera, Hacking, English",
       "date"     : "June 16, 2019",
-      "excerpt"  : "Reverse Engineering cheap chinese “VRCAM” protocol That’s not the first time I get a Chinese hardware that has some proprietary protocol that does not follow a single standard. It’s funny because when you get a VERY cheap thing, you expect to use many standards as possible to reduce the development..."
+      "excerpt"  : "Reverse Engineering cheap chinese “VRCAM” protocolThat’s not the first time I get a Chinese hardware that has some proprietary protocol that does not follow a single standard. It’s funny because when you get a VERY cheap thing, you expect to use many standards as possible to reduce the development cost,..."
     } ,
   
     {
@@ -161,7 +159,7 @@
       "category" : "",
       "tags"     : "Hacking, Linux, C, Programming, Shim",
       "date"     : "August 05, 2017",
-      "excerpt"  : "Linux shim for Patching executable in run-time That’s something I already did a long time and few people know. It’s not something hard or complex to do, but few people know how easy is to make a Library Shim. First, what’s a shim? A shim is a small library that..."
+      "excerpt"  : "Linux shim for Patching executable in run-timeThat’s something I already did a long time and few people know. It’s not something hard or complex to do, but few people know how easy is to make a Library Shim.First, what’s a shim?A shim is a small library that can intercept API..."
     } ,
   
     {
@@ -170,7 +168,7 @@
       "category" : "",
       "tags"     : "Airspy, Antenna, GOES, Hearsat, HRIT, LRIT, NOAA, RTL SDR, RTLSDR, Satellite, SDR, Software Defined Radio",
       "date"     : "April 14, 2017",
-      "excerpt"  : "So I was talking with @luigi on OSP RocketChat and he noticed that one of the LNA’s I suggested along with the LNA4ALL (the SPF5189) got a comment on ebay saying that it doesn’t work on L Band. So that was weird to me, since I have 5 of them,..."
+      "excerpt"  : "So I was talking with @luigi on OSP RocketChat and he noticed that one of the LNA’s I suggested along with the LNA4ALL (the SPF5189) got a comment on ebay saying that it doesn’t work on L Band.So that was weird to me, since I have 5 of them, and..."
     } ,
   
     {
@@ -215,8 +213,7 @@
       "category" : "",
       "tags"     : "",
       "date"     : "November 28, 2016",
-      "excerpt"  : "So I added a Page (http://www.teske.net.br/lucas/my-tesla-coils/) with my Tesla Coil Projects. It’s not by far all my videos (or my attempts) but shows some of the projects I did in the past. Checkout if you’re interested in Sparks and Music!
-"
+      "excerpt"  : "So I added a Page (http://www.teske.net.br/lucas/my-tesla-coils/) with my Tesla Coil Projects. It’s not by far all my videos (or my attempts) but shows some of the projects I did in the past. Checkout if you’re interested in Sparks and Music!"
     } ,
   
     {
@@ -225,7 +222,7 @@
       "category" : "",
       "tags"     : "9A4QV, Adam, AGC, Antenna, APT, English, Filter, GQRX, HackRF, Linux, LNA4ALL, QFH, qspectrumanalyzer, RFSim99, RTL SDR, RTLSDR, Satellite, Satellites, SDR, Software Defined Radio, Ubuntu, Weather Satellites, WXSat",
       "date"     : "November 13, 2016",
-      "excerpt"  : "Yesterday I saw a new blog post by Adam (9a4qv) in LNA4ALL. The post (here) talks about a band pass filter he did for Weather Satellites and I decided to try as well. Unfortunately I don’t have a exact match for that components at home, so I tried to do..."
+      "excerpt"  : "Yesterday I saw a new blog post by Adam (9a4qv) in LNA4ALL. The post (here) talks about a band pass filter he did for Weather Satellites and I decided to try as well.Unfortunately I don’t have a exact match for that components at home, so I tried to do something..."
     } ,
   
     {
@@ -252,7 +249,7 @@
       "category" : "",
       "tags"     : "AGC, Airspy, Automatic Gain Control, Bug, Compile, Convolutional Code, Convolutional Encoding, EMWIN, English, GNU Radio, Gnuradio, GOES, GRC, Hearsat, LRIT, Osmocom, RE, Reed Solomon, Reverse Engineering, Root Raised Cosine Filter, RRC Filter, RS, Sat, Satellite, SDR, Statistics, Viterbi",
       "date"     : "November 02, 2016",
-      "excerpt"  : "In the last chapter of GOES Satellite Hunt, I explained how I did the BPSK Demodulator for the LRIT Signal. Now I will explain how to decode the output of the data we got in the last chapter. One thing that is worth mentioning is that most (if not all)..."
+      "excerpt"  : "In the last chapter of GOES Satellite Hunt, I explained how I did the BPSK Demodulator for the LRIT Signal. Now I will explain how to decode the output of the data we got in the last chapter.One thing that is worth mentioning is that most (if not all) weather..."
     } ,
   
     {
@@ -279,7 +276,7 @@
       "category" : "",
       "tags"     : "Adam, FM, FM Trap, FM TV Diplexer, HackRF, LNA4ALL, RTLSDR, SDR",
       "date"     : "July 22, 2016",
-      "excerpt"  : "So I’m still mad about the FM Spectrum (88-108MHz) noise I get when using a LNA or something else. So I’m still looking for a nice and easy way to filter out these signals. Last time I posted about a TV/FM Diplexer, that works great, but doesn’t attenuate enough the..."
+      "excerpt"  : "So I’m still mad about the FM Spectrum (88-108MHz) noise I get when using a LNA or something else. So I’m still looking for a nice and easy way to filter out these signals.Last time I posted about a TV/FM Diplexer, that works great, but doesn’t attenuate enough the signals...."
     } ,
   
     {
@@ -288,7 +285,7 @@
       "category" : "",
       "tags"     : "Band Pass, Band Stop, Diplexer, Filter, FM, FM TV Diplexer, High Pass, Linux, Low Pass, qspectrumanalyzer, RTL SDR, RTLSDR, SDR, TV",
       "date"     : "March 24, 2016",
-      "excerpt"  : "So it has been a time since my last post (again). Today I’m writing about a TV/FM Diplexer that I bought to address an issue that I’m having here with my NOAA stuff. So the biggest problem is that in São Paulo the FM Radio (88-110MHz) are VERY strong. I can..."
+      "excerpt"  : "So it has been a time since my last post (again). Today I’m writing about a TV/FM Diplexer that I bought to address an issue that I’m having here with my NOAA stuff.So the biggest problem is that in São Paulo the FM Radio (88-110MHz) are VERY strong. I can receive..."
     } ,
   
     {
@@ -306,7 +303,7 @@
       "category" : "",
       "tags"     : "ARM, Chalk-Elec, LCD TouchScreen, Le Maker Guitar, LeMaker, Linux, Open Hardware, Open Source, OpenHardware, OpenSource, QFH, Receiver, RTL SDR, Satellite, SDR, Software Defined Radio, Ubuntu, Weather, Weather Satellite Receiver",
       "date"     : "February 02, 2016",
-      "excerpt"  : "So a few weeks ago I received a LeMaker Guitar board that I won on a contest. I got really happy about that and they sent by DHL that made everything went really fast. As usual, in Brazil the tax everything including prizes and samples, so I got R$90 of taxes over..."
+      "excerpt"  : "So a few weeks ago I received a LeMaker Guitar board that I won on a contest. I got really happy about that and they sent by DHL that made everything went really fast.As usual, in Brazil the tax everything including prizes and samples, so I got R$90 of taxes over the..."
     } ,
   
     {
@@ -324,7 +321,7 @@
       "category" : "",
       "tags"     : "ADSB, Airplane, Antenna, edison, FM, GNU Radio, intel, Intel Edison, NOAA, Radio, Realtek, RTL2832U, RTLSDR, SDR, Software, Software Defined Radio, VHF",
       "date"     : "January 16, 2016",
-      "excerpt"  : "So some people already saw in my facebook that I started playing with SDRs (Software Defined Radio). I always wanted to do my own radio receiver, and I did some in the past. But it’s very hard to adapt the radio for anything new you want do to, and also..."
+      "excerpt"  : "So some people already saw in my facebook that I started playing with SDRs (Software Defined Radio).I always wanted to do my own radio receiver, and I did some in the past. But it’s very hard to adapt the radio for anything new you want do to, and also when..."
     } ,
   
     {
@@ -333,9 +330,7 @@
       "category" : "",
       "tags"     : "apm, arduino, ARM, atom, drone, dualcore, edison, galileo, gift, intel, internet das coisas, internet of things, iot, multiwii, mwc, pixhawk, presente, quadricoptero, x86",
       "date"     : "February 18, 2015",
-      "excerpt"  : "
-Only available in Portuguese
-"
+      "excerpt"  : "Only available in Portuguese"
     } ,
   
     {
@@ -353,9 +348,7 @@ Only available in Portuguese
       "category" : "",
       "tags"     : "",
       "date"     : "February 08, 2014",
-      "excerpt"  : "
-Only available in Portuguese
-"
+      "excerpt"  : "Only available in Portuguese"
     } ,
   
     {
@@ -364,9 +357,7 @@ Only available in Portuguese
       "category" : "",
       "tags"     : "",
       "date"     : "January 18, 2014",
-      "excerpt"  : "
-Only available in Portuguese
-"
+      "excerpt"  : "Only available in Portuguese"
     } ,
   
     {
@@ -375,9 +366,7 @@ Only available in Portuguese
       "category" : "",
       "tags"     : "",
       "date"     : "October 30, 2011",
-      "excerpt"  : "
-Only available in Portuguese
-"
+      "excerpt"  : "Only available in Portuguese"
     } ,
   
     {
@@ -386,9 +375,7 @@ Only available in Portuguese
       "category" : "",
       "tags"     : "",
       "date"     : "October 22, 2011",
-      "excerpt"  : "
-Only available in Portuguese
-"
+      "excerpt"  : "Only available in Portuguese"
     } ,
   
     {
@@ -397,9 +384,7 @@ Only available in Portuguese
       "category" : "",
       "tags"     : "",
       "date"     : "October 16, 2011",
-      "excerpt"  : "
-Only available in Portuguese
-"
+      "excerpt"  : "Only available in Portuguese"
     } ,
   
     {
@@ -408,9 +393,7 @@ Only available in Portuguese
       "category" : "",
       "tags"     : "",
       "date"     : "October 16, 2011",
-      "excerpt"  : "
-Only available in Portuguese
-"
+      "excerpt"  : "Only available in Portuguese"
     } ,
   
     {
@@ -419,9 +402,7 @@ Only available in Portuguese
       "category" : "",
       "tags"     : "",
       "date"     : "October 13, 2011",
-      "excerpt"  : "
-Only available in Portuguese
-"
+      "excerpt"  : "Only available in Portuguese"
     } ,
   
     {
@@ -430,9 +411,7 @@ Only available in Portuguese
       "category" : "",
       "tags"     : "",
       "date"     : "October 13, 2011",
-      "excerpt"  : "
-Only available in Portuguese
-"
+      "excerpt"  : "Only available in Portuguese"
     } ,
   
     {
@@ -441,9 +420,7 @@ Only available in Portuguese
       "category" : "",
       "tags"     : "",
       "date"     : "October 13, 2011",
-      "excerpt"  : "
-Only available in Portuguese
-"
+      "excerpt"  : "Only available in Portuguese"
     } ,
   
     {
@@ -452,9 +429,7 @@ Only available in Portuguese
       "category" : "",
       "tags"     : "",
       "date"     : "October 09, 2011",
-      "excerpt"  : "
-Only available in Portuguese
-"
+      "excerpt"  : "Only available in Portuguese"
     } ,
   
     {
@@ -463,9 +438,7 @@ Only available in Portuguese
       "category" : "",
       "tags"     : "",
       "date"     : "October 08, 2011",
-      "excerpt"  : "
-Only available in Portuguese
-"
+      "excerpt"  : "Only available in Portuguese"
     } ,
   
     {
@@ -474,9 +447,7 @@ Only available in Portuguese
       "category" : "",
       "tags"     : "",
       "date"     : "September 12, 2011",
-      "excerpt"  : "
-Only available in Portuguese
-"
+      "excerpt"  : "Only available in Portuguese"
     } ,
   
     {
@@ -485,9 +456,7 @@ Only available in Portuguese
       "category" : "",
       "tags"     : "",
       "date"     : "September 07, 2011",
-      "excerpt"  : "
-Only available in Portuguese
-"
+      "excerpt"  : "Only available in Portuguese"
     } ,
   
     {
@@ -496,9 +465,7 @@ Only available in Portuguese
       "category" : "",
       "tags"     : "",
       "date"     : "September 07, 2011",
-      "excerpt"  : "
-Only available in Portuguese
-"
+      "excerpt"  : "Only available in Portuguese"
     } ,
   
     {
@@ -507,9 +474,7 @@ Only available in Portuguese
       "category" : "",
       "tags"     : "",
       "date"     : "September 07, 2011",
-      "excerpt"  : "
-Only available in Portuguese
-"
+      "excerpt"  : "Only available in Portuguese"
     } ,
   
     {
@@ -518,9 +483,7 @@ Only available in Portuguese
       "category" : "",
       "tags"     : "",
       "date"     : "September 06, 2011",
-      "excerpt"  : "
-Only available in Portuguese
-"
+      "excerpt"  : "Only available in Portuguese"
     } 
   
 ]
