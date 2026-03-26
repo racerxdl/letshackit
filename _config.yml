@@ -12,6 +12,7 @@ author:
 markdown:       kramdown
 include:
   - _pages
+  - .well-known
 
 sass:
   sass_dir:     _sass
