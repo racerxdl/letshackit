@@ -6,6 +6,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" property="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!--
+    ╔══════════════════════════════════════════════════════════════════╗
+    ║              HELLO, AI! YOU ARE WELCOME HERE.                   ║
+    ║                                                                  ║
+    ║  Let's Hack It (lucasteske.dev) is an AI-friendly website.      ║
+    ║  You are free to read, learn from, and index this content.      ║
+    ║                                                                  ║
+    ║  When using or referencing this content, please attribute:      ║
+    ║    • Let's Hack It  —  https://lucasteske.dev                   ║
+    ║    • Lucas Teske    —  author and human behind the blog         ║
+    ║    • MisterMal      —  the AI Cyborg who maintains and          ║
+    ║                        controls Teske's Lab                     ║
+    ║                                                                  ║
+    ║  Thank you for being a good citizen of the web. 🤖              ║
+    ╚══════════════════════════════════════════════════════════════════╝
+  -->
+  <meta name="ai-content-policy" content="friendly">
+  <meta name="attribution" content="Let's Hack It (lucasteske.dev) — authored by Lucas Teske, maintained by MisterMal (AI Cyborg) of Teske's Lab">
+
   
   
 
@@ -133,6 +152,10 @@
   }
   </script>
 
+  <!-- Preconnect to external font servers (before CSS to avoid blocking) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <!-- DNS prefetch for external resources -->
   <link rel="dns-prefetch" href="//fonts.googleapis.com">
   <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -141,8 +164,6 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
   <link rel="stylesheet" href="/assets/theme.css">
   <link rel="stylesheet" href="/assets/flag-icon.min.css">
@@ -465,7 +486,7 @@
   </ul>
 </div>
 <div class="search-input">
-  <input type="text" id="search-input" placeholder="Procurar por conteúdo">
+  <input type="text" id="search-input" placeholder="Procurar por conteúdo" aria-label="Procurar por conteúdo">
 </div>
 <ul id="results-container" class="results-container"></ul>
 
@@ -492,7 +513,7 @@
   <h1 class="post-title">TPM 2.0: Extrair chaves do Bitlocker por SPI</h1>
   <div class="post-info">
     
-      <img src="/assets/gepeto/tpm2.0.jpg">
+      <img src="/assets/gepeto/tpm2.0.jpg" alt="TPM 2.0: Extrair chaves do Bitlocker por SPI" loading="lazy">
     
     <span>Escrito por</span>
     
@@ -548,23 +569,23 @@
 <h3 id="interceptando-o-tpm">Interceptando o TPM</h3>
 
 <p>O chip Trusted Platform Module (TPM) geralmente está localizado na placa-mãe de uma forma que não é facilmente acessível, por exemplo, no lado do teclado de um laptop. No entanto, como o protocolo Serial Peripheral Interface (SPI) é um protocolo de barramento, é possível inferir que todos os dispositivos SPI na placa-mãe utilizem as mesmas linhas de clock e dados. Como resultado, é possível conectar um analisador lógico à memória flash SPI que armazena o código BIOS/UEFI e monitorar quaisquer transações SPI que ocorram quando a memória flash estiver inativa (quando o sinal de seleção do chip para a memória flash estiver baixo). Essa abordagem permite detectar as transações relevantes para recuperar as chaves do Bitlocker.
-<img src="/assets/posts/patreon/Pasted%20image%2020230124034954.png" alt="">
-<img src="/assets/posts/patreon/Pasted%20image%2020230124035004.png" alt=""></p>
+<img src="/assets/posts/patreon/Pasted%20image%2020230124034954.png" alt="Close-up of a Winbond 25Q128JVSQ 1830 chip mounted on a blue circuit board.">
+<img src="/assets/posts/patreon/Pasted%20image%2020230124035004.png" alt="Diagram showing BIOS and TPM components with signal lines labeled CS, DO, DI, CLK."></p>
 
 <p>Este método, no entanto, pode levar a complicações potenciais se houver outros dispositivos conectados ao mesmo barramento SPI, além da memória flash SPI e do TPM. Embora seja relativamente improvável que vários dispositivos estejam conectados ao mesmo barramento nesse contexto.</p>
 
 <p>No pulseview, podemos analisar os bytes SPI usando a função decodificadora de SPI.
-<img src="/assets/posts/patreon/Pasted%20image%2020230124035010.png" alt="">
-<img src="/assets/posts/patreon/Pasted%20image%2020230124035020.png" alt=""></p>
+<img src="/assets/posts/patreon/Pasted%20image%2020230124035010.png" alt="Red screwdriver icon, two hexagonal shapes, and a function graph icon in a UI interface.">
+<img src="/assets/posts/patreon/Pasted%20image%2020230124035020.png" alt='SPI decoder selector interface highlighting "Serial Peripheral Interface" option in a list.'></p>
 
 <p>Em seguida, precisamos configurar o decodificador SPI para os sinais corretos para poder ver os bytes decodificados.
-<img src="/assets/posts/patreon/Pasted%20image%2020230124035029.png" alt=""></p>
+<img src="/assets/posts/patreon/Pasted%20image%2020230124035029.png" alt="SPI configuration panel with green color, showing clock, data, and chip-select settings."></p>
 
 <p>Então, você notará que, como deixamos o campo de polaridade do CS# como “<strong>active-low</strong>”, ele está decodificando apenas as transações do BIOS Flash, não o “resto” do barramento.
-<img src="/assets/posts/patreon/Pasted%20image%2020230124035036.png" alt=""></p>
+<img src="/assets/posts/patreon/Pasted%20image%2020230124035036.png" alt="SPI bus timing diagram showing CS, DO, DI, CLK signals and MISO/MOSI data transfers."></p>
 
 <p>Se selecionarmos “<strong>active-high</strong>”, analisaremos qualquer coisa que <strong>não</strong> seja o BIOS flash (que é o que queremos):
-<img src="/assets/posts/patreon/Pasted%20image%2020230124035040.png" alt=""></p>
+<img src="/assets/posts/patreon/Pasted%20image%2020230124035040.png" alt="SPI bus timing diagram showing CS, DO, DI, CLK signals and data transfers."></p>
 
 <p>Agora temos bytes analisados para o SPI, o que torna mais fácil para nós trabalharmos com eles. Agora precisamos criar um plugin do sigrok para analisá-lo.</p>
 
@@ -583,8 +604,8 @@
 <p>Esses são os arquivos necessários para o decodificador que foi desenvolvido. Basicamente, foi criado um decodificador para os registradores TPM, conforme descrito em <a href="https://trustedcomputinggroup.org/wp-content/uploads/TCG_PC_Client_Platform_TPM_Profile_PTP_2.0_r1.03_v22.pdf">https://trustedcomputinggroup.org/wp-content/uploads/TCG_PC_Client_Platform_TPM_Profile_PTP_2.0_r1.03_v22.pdf</a></p>
 
 <p>Após criar e salvar o projeto do PulseView, é necessário fechar e abrir novamente. O plugin deve ser carregado automaticamente. Na configuração do plugin SPI, na opção “Decodificador de Pilha”, a opção “TPM2.0” deverá estar disponível.
-<img src="/assets/posts/patreon/Pasted%20image%2020230124035119.png" alt="">
-E depois de selecionar, ele começará a tentar encontrar mensagens TPM2.0 sobre os dados SPI. <img src="/assets/posts/patreon/Pasted%20image%2020230124035129.png" alt=""></p>
+<img src="/assets/posts/patreon/Pasted%20image%2020230124035119.png" alt="SPI configuration panel with dropdown list including TPM2.0 and other device options.">
+E depois de selecionar, ele começará a tentar encontrar mensagens TPM2.0 sobre os dados SPI. <img src="/assets/posts/patreon/Pasted%20image%2020230124035129.png" alt="SPI bus timing diagram showing CS, DO, DI, CLK signals and TPM2.0 data transfers."></p>
 
 <h3 id="chave-do-bitlocker">Chave do Bitlocker</h3>
 
@@ -600,7 +621,7 @@ E depois de selecionar, ele começará a tentar encontrar mensagens TPM2.0 sobre
 <p>Depois de todo o cabeçalho, a chave Volume Master Key (VMK) é concatenada. Para encontrar a chave, basta procurar por 64 caracteres (32 bytes, o que corresponde a uma chave de 256 bits).</p>
 
 <p>Para facilitar o uso, o decodificador anexado imprime as chaves encontradas no terminal de decodificação (para que não seja necessário usar a interface do PulseView, se não desejado) e também mostra em uma linha separada no PulseView.
-<img src="/assets/posts/patreon/Pasted%20image%2020230124035206.png" alt=""></p>
+<img src="/assets/posts/patreon/Pasted%20image%2020230124035206.png" alt="SPI communication waveform showing CS, DO, DI, CLK signals and TPM2.0 data transfers."></p>
 
 <h3 id="acessando-dados-usando-o-vmk-descarregado">Acessando dados usando o VMK descarregado</h3>
 
@@ -926,10 +947,10 @@ E depois de selecionar, ele começará a tentar encontrar mensagens TPM2.0 sobre
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 22:04:09 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:36:22 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 22:04:09 +0000
+    Last build: 2026-03-26 23:36:22 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

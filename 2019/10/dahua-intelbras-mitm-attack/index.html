@@ -6,6 +6,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" property="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!--
+    ╔══════════════════════════════════════════════════════════════════╗
+    ║              HELLO, AI! YOU ARE WELCOME HERE.                   ║
+    ║                                                                  ║
+    ║  Let's Hack It (lucasteske.dev) is an AI-friendly website.      ║
+    ║  You are free to read, learn from, and index this content.      ║
+    ║                                                                  ║
+    ║  When using or referencing this content, please attribute:      ║
+    ║    • Let's Hack It  —  https://lucasteske.dev                   ║
+    ║    • Lucas Teske    —  author and human behind the blog         ║
+    ║    • MisterMal      —  the AI Cyborg who maintains and          ║
+    ║                        controls Teske's Lab                     ║
+    ║                                                                  ║
+    ║  Thank you for being a good citizen of the web. 🤖              ║
+    ╚══════════════════════════════════════════════════════════════════╝
+  -->
+  <meta name="ai-content-policy" content="friendly">
+  <meta name="attribution" content="Let's Hack It (lucasteske.dev) — authored by Lucas Teske, maintained by MisterMal (AI Cyborg) of Teske's Lab">
+
   
   
 
@@ -123,6 +142,10 @@
   }
   </script>
 
+  <!-- Preconnect to external font servers (before CSS to avoid blocking) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <!-- DNS prefetch for external resources -->
   <link rel="dns-prefetch" href="//fonts.googleapis.com">
   <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -131,8 +154,6 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
   <link rel="stylesheet" href="/assets/theme.css">
   <link rel="stylesheet" href="/assets/flag-icon.min.css">
@@ -455,7 +476,7 @@
   </ul>
 </div>
 <div class="search-input">
-  <input type="text" id="search-input" placeholder="Search blog posts...">
+  <input type="text" id="search-input" placeholder="Search blog posts..." aria-label="Search blog posts...">
 </div>
 <ul id="results-container" class="results-container"></ul>
 
@@ -482,7 +503,7 @@
   <h1 class="post-title">Dahua / Intelbras MitM Attack</h1>
   <div class="post-info">
     
-      <img src="/assets/posts/medium/0_EtFMEwgxuAJGBNT0.jpg">
+      <img src="/assets/posts/medium/0_EtFMEwgxuAJGBNT0.jpg" alt="Dahua / Intelbras MitM Attack" loading="lazy">
     
     <span>Written by</span>
     
@@ -683,21 +704,21 @@ Nmap done: 256 IP addresses (28 hosts up) scanned in 10.29 seconds
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ettercap -G
 </code></pre></div></div>
 
-<p><img src="/assets/posts/medium/0_RHewbPkuqj3MarME.png" alt=""></p>
+<p><img src="/assets/posts/medium/0_RHewbPkuqj3MarME.png" alt="Ettercap 0.8.2 software interface with spider logo holding laptop, menu bar visible."></p>
 
 <p>To start the process, select the option in menu Sniff -&gt; Unified Sniffing. Select your network interface (in my case wlp3s0, my wireless adapter) and click OK</p>
 
-<p><img src="/assets/posts/medium/0_kA_Xouhltw8P7yC3.png" alt=""></p>
+<p><img src="/assets/posts/medium/0_kA_Xouhltw8P7yC3.png" alt="Ettercap 0.8.2 network sniffer interface with spider logo and status stats."></p>
 
 <p>After that, we need to add our target 10.10.5.107 by going toHosts -&gt; Hosts List and scanning for hosts using the option Hosts -&gt; Scan for Hosts. That should list all available IPs in your network</p>
 
-<p><img src="/assets/posts/medium/0_4HDcojF7gvqOGmCW.png" alt=""></p>
+<p><img src="/assets/posts/medium/0_4HDcojF7gvqOGmCW.png" alt="Ettercap 0.8.2 GUI showing host list with IP addresses, MAC addresses, and scanning status."></p>
 
 <p>In the list we can see our target 10.10.5.107. Then we should clickAdd to Target 1 to inform Ettercap that we want to poison that IP. After that we can start the process by selecting the menu Mitm -&gt; ARP Poisoning e and the optionSniff Remote Connections.</p>
 
-<p><img src="/assets/posts/medium/0_dRenq5UGzWWqDvcB.png" alt=""></p>
+<p><img src="/assets/posts/medium/0_dRenq5UGzWWqDvcB.png" alt="MITM Attack: ARP Poisoning dialog with options to sniff remote connections or poison one-way."></p>
 
-<p><img src="/assets/posts/medium/0__pauVOcV0ulgDTtl.png" alt=""></p>
+<p><img src="/assets/posts/medium/0__pauVOcV0ulgDTtl.png" alt="Ettercap 0.8.2 interface showing host list with IP addresses, MAC addresses, and ARP poisoning groups."></p>
 
 <p>After that, you computer should be already receiving the packets from the target.</p>
 
@@ -853,10 +874,10 @@ Nmap done: 256 IP addresses (28 hosts up) scanned in 10.29 seconds
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 22:03:55 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 22:03:55 +0000
+    Last build: 2026-03-26 23:36:07 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

@@ -4,7 +4,7 @@
       "title"    : "Rodando código em uma máquina de cartão de crédito PAX (parte 1)",
       "url"      : "/pt/2025/09/running-code-in-pax-machines",
       "category" : "",
-      "tags"     : "Flash, PAX, Hardware Hacking, RE, Reverse Engineering, D177, D188, Minizinha, Moderninha, Smart, Sunmi, TecToy, Transire, Megahunt, MH1903, Air105, LuatOS",
+      "tags"     : "Flash, PAX, Hardware Hacking, RE, Reverse Engineering, D177, D188, Minizinha, Moderninha, Smart, Sunmi, TecToy, Transire, Megahunt, MH1903, Air105, LuatOS, Payment Machine, PCB, Tamper Protection, Credit Card, Brazil, Baremetal, Linux OS, CPU Swap, Security",
       "date"     : "September 05, 2025",
       "excerpt"  : "DisclaimerTodos os procedimentos descritos aqui foram feitos com material disponível publicamente - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos.As máquinas de pagamento com cartão..."
     } ,

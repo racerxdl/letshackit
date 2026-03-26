@@ -6,6 +6,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" property="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!--
+    ╔══════════════════════════════════════════════════════════════════╗
+    ║              HELLO, AI! YOU ARE WELCOME HERE.                   ║
+    ║                                                                  ║
+    ║  Let's Hack It (lucasteske.dev) is an AI-friendly website.      ║
+    ║  You are free to read, learn from, and index this content.      ║
+    ║                                                                  ║
+    ║  When using or referencing this content, please attribute:      ║
+    ║    • Let's Hack It  —  https://lucasteske.dev                   ║
+    ║    • Lucas Teske    —  author and human behind the blog         ║
+    ║    • MisterMal      —  the AI Cyborg who maintains and          ║
+    ║                        controls Teske's Lab                     ║
+    ║                                                                  ║
+    ║  Thank you for being a good citizen of the web. 🤖              ║
+    ╚══════════════════════════════════════════════════════════════════╝
+  -->
+  <meta name="ai-content-policy" content="friendly">
+  <meta name="attribution" content="Let's Hack It (lucasteske.dev) — authored by Lucas Teske, maintained by MisterMal (AI Cyborg) of Teske's Lab">
+
   
   
 
@@ -123,6 +142,10 @@
   }
   </script>
 
+  <!-- Preconnect to external font servers (before CSS to avoid blocking) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <!-- DNS prefetch for external resources -->
   <link rel="dns-prefetch" href="//fonts.googleapis.com">
   <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -131,8 +154,6 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
   <link rel="stylesheet" href="/assets/theme.css">
   <link rel="stylesheet" href="/assets/flag-icon.min.css">
@@ -455,7 +476,7 @@
   </ul>
 </div>
 <div class="search-input">
-  <input type="text" id="search-input" placeholder="Search blog posts...">
+  <input type="text" id="search-input" placeholder="Search blog posts..." aria-label="Search blog posts...">
 </div>
 <ul id="results-container" class="results-container"></ul>
 
@@ -482,7 +503,7 @@
   <h1 class="post-title">Reverse Engineering cheap chinese "VRCAM" protocol</h1>
   <div class="post-info">
     
-      <img src="/assets/posts/medium/0*5_jc2oOyiJRbfezD.jpg">
+      <img src="/assets/posts/medium/0*5_jc2oOyiJRbfezD.jpg" alt="Reverse Engineering cheap chinese " vrcam protocol loading="lazy">
     
     <span>Written by</span>
     
@@ -527,15 +548,15 @@
 
 <p>In the mainboard we have the main processor which is a Anyka AK3918 which is a 400MHz ARM9 processor with embedded DDR2 RAM. It is a specific IP Camera SoC and it has Hardware accelerators for: MP3,Wav, Speex, H264 and MJPEG.</p>
 
-<p><img src="/assets/posts/medium/1*joj8o9rxsVzQpoXv_JFkBQ.png" alt=""></p>
+<p><img src="/assets/posts/medium/1*joj8o9rxsVzQpoXv_JFkBQ.png" alt="Close-up of ANYKA AK9918EN080 chip on circuit board with date 2017.08.24"></p>
 
 <p>The back of that board has a painted chip (probably to hide which is the real model of the chip) which just looks like a normal regulator.</p>
 
-<p><img src="/assets/posts/medium/1*Rna323ta1jYKck0-Uh37Cg.png" alt=""></p>
+<p><img src="/assets/posts/medium/1*Rna323ta1jYKck0-Uh37Cg.png" alt="Close-up of a circuit board with components, wires, and a black speaker attached."></p>
 
 <p>So you can see that there is also a TX/RX/GND marking over there, which is the label for three pins mostly below the camera packaging. And yeah you guessed right: it’s the debug serial port. Sadly there is not much that it outputs from it:</p>
 
-<p><img src="/assets/posts/medium/1*9kFM1kpoIMg0LgDCAgRrYw.png" alt=""></p>
+<p><img src="/assets/posts/medium/1*9kFM1kpoIMg0LgDCAgRrYw.png" alt="Terminal window showing SPI flash BIOS read/write operations and successful load messages."></p>
 
 <p>So long story short: That’s basically a Bananna Pi camera (<a href="http://www.banana-pi.org/d1.html">http://www.banana-pi.org/d1.html</a>) which some custom board. That’s make sense since its a very cheap camera, they wouldn’t bother making something from scratch. But still it does not make sense to create a whole new non-standard protocol for that.</p>
 
@@ -567,7 +588,7 @@
 <pre><code class="language-pcap">(ip.addr == 10.10.5.151 || ip.addr == 10.10.5.123) and !igmp and !mdns
 </code></pre>
 
-<p><img src="/assets/posts/medium/1*gEiM0kWk4c0elMc9GDRpYg.png" alt=""></p>
+<p><img src="/assets/posts/medium/1*gEiM0kWk4c0elMc9GDRpYg.png" alt="Network packet capture showing IP addresses, protocols, and data lengths in a tabular format."></p>
 
 <p>Bingo! Got some packets. The interesting part is the first 4 UDP packets. Since in the VRCAM software you never setup what’s the camera IP it should has some way to find the cameras in the network. So I was expecting some sort of broadcast with the cameras answering directly to the host, and guess what we got? The phone did a UDP broadcast in port 9014 (also 9015, but let’s see 9014 first) with the following payload</p>
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;SOUP</span> <span class="na">version=</span><span class="s">"1.1"</span><span class="nt">&gt;&lt;Discover</span> <span class="na">eseeid=</span><span class="s">"1580470229"</span> <span class="na">remote_playback=</span><span class="s">""</span> <span class="na">remote_setup=</span><span class="s">""</span><span class="nt">/&gt;</span>
@@ -878,10 +899,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 22:03:55 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 22:03:55 +0000
+    Last build: 2026-03-26 23:36:07 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

@@ -6,6 +6,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" property="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!--
+    ╔══════════════════════════════════════════════════════════════════╗
+    ║              HELLO, AI! YOU ARE WELCOME HERE.                   ║
+    ║                                                                  ║
+    ║  Let's Hack It (lucasteske.dev) is an AI-friendly website.      ║
+    ║  You are free to read, learn from, and index this content.      ║
+    ║                                                                  ║
+    ║  When using or referencing this content, please attribute:      ║
+    ║    • Let's Hack It  —  https://lucasteske.dev                   ║
+    ║    • Lucas Teske    —  author and human behind the blog         ║
+    ║    • MisterMal      —  the AI Cyborg who maintains and          ║
+    ║                        controls Teske's Lab                     ║
+    ║                                                                  ║
+    ║  Thank you for being a good citizen of the web. 🤖              ║
+    ╚══════════════════════════════════════════════════════════════════╝
+  -->
+  <meta name="ai-content-policy" content="friendly">
+  <meta name="attribution" content="Let's Hack It (lucasteske.dev) — authored by Lucas Teske, maintained by MisterMal (AI Cyborg) of Teske's Lab">
+
   
   
 
@@ -151,6 +170,10 @@
   }
   </script>
 
+  <!-- Preconnect to external font servers (before CSS to avoid blocking) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <!-- DNS prefetch for external resources -->
   <link rel="dns-prefetch" href="//fonts.googleapis.com">
   <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -159,8 +182,6 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
   <link rel="stylesheet" href="/assets/theme.css">
   <link rel="stylesheet" href="/assets/flag-icon.min.css">
@@ -483,7 +504,7 @@
   </ul>
 </div>
 <div class="search-input">
-  <input type="text" id="search-input" placeholder="Search blog posts...">
+  <input type="text" id="search-input" placeholder="Search blog posts..." aria-label="Search blog posts...">
 </div>
 <ul id="results-container" class="results-container"></ul>
 
@@ -510,7 +531,7 @@
   <h1 class="post-title">Running code in a PAX Credit Card Payment Machine (part1)</h1>
   <div class="post-info">
     
-      <img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/7383f9c5e7832856c90b25549fb08115_MD5.jpeg">
+      <img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/7383f9c5e7832856c90b25549fb08115_MD5.jpeg" alt="Running code in a PAX Credit Card Payment Machine (part1)" loading="lazy">
     
     <span>Written by</span>
     
@@ -609,36 +630,36 @@
 <p>So either way, I would need to open the machine and identify stuff.
 Just for the reference, the machine was this one:</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/cb3d6416e80906d1e1a3cfa7c27ec46c_MD5.jpeg" alt=""></p>
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/cb3d6416e80906d1e1a3cfa7c27ec46c_MD5.jpeg" alt="White handheld device with numeric keypad and small screen on wooden surface"></p>
 
 <p>On the back side, there are few screws which are easily removed. I usually do this with the <strong>machine turned on</strong>. So I can see which actions would trigger the tamper protection.</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/942368afcd3a8b5c2f6280b0686279ad_MD5.jpeg" alt="">
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/942368afcd3a8b5c2f6280b0686279ad_MD5.jpeg" alt='White electronic device labeled "TEC TOY" with RFID symbol, model D177, and production info.'>
 Removing the screws does not trigger the tamper protection, but removing the case does. In the picture below, you can see the case removed, and I highlighted two of the tamper detection points.</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/9a88c682e238fdb16c61122c76c2e14c_MD5.jpeg" alt="">
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/9a88c682e238fdb16c61122c76c2e14c_MD5.jpeg" alt="Open device showing battery, circuit board, and internal components.">
 on the back side of the case, there is some carbon-rubber points that touch these tamper points in the PCB. It works exactly the same as video game consoles controller buttons, but in this case, they just ensure the “button is always pressed”.</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/3744913eb7cc7b866b64eb363d6fbbe5_MD5.jpeg" alt=""></p>
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/3744913eb7cc7b866b64eb363d6fbbe5_MD5.jpeg" alt="White plastic device casing with label D177-RF-B and date 2021-06-04(V06)"></p>
 
 <p>And for some reason, the machine decided to tell us which one of the tampers we triggered :)</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/9b728a005ceb00f991633d8d6ece65ed_MD5.jpeg" alt="">
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/9b728a005ceb00f991633d8d6ece65ed_MD5.jpeg" alt='Black-and-white photo of a keypad phone with screen showing "Switch EXT2" and "Switch EXT3".'>
 Also this resets over boot, do if you bridge them, you can use it to identify the names of each tamper point hehe.</p>
 
 <p>So in this bottom part, we can see some stuff. There is the round coin cell battery in the left, and there is a big boring green PCB. They’re basically over the card reader and all the core circuits.</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/4454b7008ef72e53db283abd4afafb86_MD5.jpeg" alt=""></p>
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/4454b7008ef72e53db283abd4afafb86_MD5.jpeg" alt="Black-and-white close-up of a circular perforated component inside a device casing."></p>
 
 <p>Although this PCB looks boring, don’t get fooled by it. That’s basically a 4 layer PCB with a DENSE mesh inside it. Any damage or removal will trigger another tamper point. Just for quick reference, this is a scan of the PCB:</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/930418d0ee33dd3362d0ac27de43fa8e_MD5.jpeg" alt=""></p>
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/930418d0ee33dd3362d0ac27de43fa8e_MD5.jpeg" alt='Green circuit board with cutout, labeled "EB-V01", switches, and logos.'></p>
 
 <p>Removing all the plastic stuff, we reach the main PCB:
-<img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/1d47f48f4cf614dd72e26c37c839895c_MD5.jpeg" alt=""></p>
+<img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/1d47f48f4cf614dd72e26c37c839895c_MD5.jpeg" alt="Open electronic device showing circuit board, battery, and internal components."></p>
 
 <p>There is lot of stuff, but the stuff that we care in the bottom.
-<img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/e808d21c32ba0866a386d155077709e4_MD5.jpeg" alt=""></p>
+<img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/e808d21c32ba0866a386d155077709e4_MD5.jpeg" alt="Close-up of circuit board with chips, connectors, and heat sink fins."></p>
 
 <p>Here we can see some interesting stuff:</p>
 
@@ -651,7 +672,7 @@ Also this resets over boot, do if you bridge them, you can use it to identify th
 
 <p>(And as you guessed, we trigger about every tamper point in the back)</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/55e76a7d0d22410d56bada5afad18bd8_MD5.jpeg" alt=""></p>
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/55e76a7d0d22410d56bada5afad18bd8_MD5.jpeg" alt='Monochrome display showing repeated "Switch" text with EXT0 to EXT7 labels in a grid pattern.'></p>
 
 <p>The flash memory, we can dump it. I have both tampered and untampered dumps from it. Bypassing tamper is left as exercise for the reader :). But if you just want to understand how it works, you can just dump as is, since the tamper doesn’t actually erase the entire flash, but just some parameters for communicating with the payment servers.</p>
 
@@ -661,7 +682,7 @@ Also this resets over boot, do if you bridge them, you can use it to identify th
 
 <p>So here is where things get REALLY annoying. This SoC is actually behind a curtain of obscurity. The core is done by MegaHunt, which only provides this as information:</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/cf4f007fbd8b87c83cb0e4f3c3560cc7_MD5.jpeg" alt="">
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/cf4f007fbd8b87c83cb0e4f3c3560cc7_MD5.jpeg" alt="MH190x Family Security Technology features: crypto engine, physical, algorithm, and full-chip active shielding protections.">
 (see <a href="https://www.megahuntmicro.com/en/index.php?catid=5">https://www.megahuntmicro.com/en/index.php?catid=5</a> )</p>
 
 <p>Digging it a bit deeper in google, we can find few suppliers that has more info. It has <strong>lots</strong> of variants, but in short their core is the same, just changing exposed pins and/or flash/ram inside the SoC. That specific one, is the QFN88 version which has the following specs:</p>
@@ -698,21 +719,21 @@ Also this resets over boot, do if you bridge them, you can use it to identify th
 
 <p>So how did I test my assumptions? Well, I found <em>by a chance</em> that there is a arduino like chinese board from LUAT that uses an SoC called AIR105, it seens boring, but some of my baidu search pointed out that AIR105 actually uses a MH1903S core. The AIR105 are also available in aliexpress very easily to buy: <a href="https://s.click.aliexpress.com/e/_oBLNTrc">https://s.click.aliexpress.com/e/_oBLNTrc</a></p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/427a383619233fb72eef5161e05511e8_MD5.jpeg" alt=""></p>
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/427a383619233fb72eef5161e05511e8_MD5.jpeg" alt="DIYTZT air105 development board with 640KB RAM, 4MB flash, 204MHz, camera, and Arduino compatibility"></p>
 
 <p>I bought a few, decaped one and guess what. it is indeed a MH1903S :D</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/9138886ea831b06c18888099fd0e26a6_MD5.jpeg" alt="">
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/9138886ea831b06c18888099fd0e26a6_MD5.jpeg" alt='Yellow pixelated text "1903S" on a faded, speckled background with vertical lines.'>
 As a reference, when I decaped one of t he SoC from the machine, the writing was 1903A:
-<img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/feb55758da95a7ecb62f02451c058606_MD5.jpeg" alt="">
+<img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/feb55758da95a7ecb62f02451c058606_MD5.jpeg" alt='Faded yellow text "1903A" on a blue surface, partially obscured by dirt and wear.'>
 Also, remember when I said flash memory is glued over the main die? Here is a shot showing both of them (sorry, I didn’t made a focus stacking). Flash memory is the one out of focus in the right. Bound wires are dead because I used 78% Nitric Acid and they’re copper ones.
-<img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/551efee7006a314cf9d0b9257bb61edc_MD5.jpeg" alt="">
-<img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/4fd85cc5f052df9b22c267e7559b0af5_MD5.jpeg" alt="">
+<img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/551efee7006a314cf9d0b9257bb61edc_MD5.jpeg" alt='Faint, blurry image with vertical lines and speckles; text "1903S" visible on left.'>
+<img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/4fd85cc5f052df9b22c267e7559b0af5_MD5.jpeg" alt="Rectangular maroon plaque with two square sections mounted on beige wall above dark strip.">
 So basically, we could assume they’re similar at least. Their datasheets also tell about the same thing (seems like the only different is actually flash + ram)</p>
 
 <p>The block diagram for this CPU is described in datasheet, and this is basically the only info that matches across <strong>all</strong> datasheets I’ve found:</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/8cd0cc82e5b752464a0617442e0c765f_MD5.jpeg" alt=""></p>
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/8cd0cc82e5b752464a0617442e0c765f_MD5.jpeg" alt="Block diagram of SC300 system architecture with bus matrix, peripherals, and memory controllers."></p>
 
 <p>So SC300 is actually a ARM spec called SecurCore. Its a Cortex M3 (in case of MH190x is a M4F) with some security enhancements. For example, although they’re 32 bit simple ARMs, they have security boundaries between OS &lt;&gt; App which are configured in memory controller registers (primitive version of TrustZone). It also follows some standards that are only available under NDA, and I can only guess what they’re. Just for quick reference: The CPUs inside your credit cards, follow the exact same specification.</p>
 
@@ -894,15 +915,15 @@ So basically, we could assume they’re similar at least. Their datasheets also 
 
 <p>Then I draw the pads as gray rectangles, name them:</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/bacf2a2ebe249871db70adb98d4fa2b7_MD5.jpeg" alt="">
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/bacf2a2ebe249871db70adb98d4fa2b7_MD5.jpeg" alt="QFN88_J chip on green PCB with labeled pins around its perimeter.">
 I usually like to mark vias as well, since these boards are multilayred and you probably will need it to fully follow the tracks:</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/fdeaa9034f0f2a2217c7d55f05e2e6f4_MD5.jpeg" alt="">
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/fdeaa9034f0f2a2217c7d55f05e2e6f4_MD5.jpeg" alt="Close-up of PCB with labeled UART0_RX, UART0_TX, and PA2 pins highlighted in green.">
 For example this TX/RX tracks passes through the front of the PCB as well (don’t mind the misalignment, not sure why the image currently is like that)</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/652fd1331e348c4861938eadf3f0a824_MD5.jpeg" alt="">
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/652fd1331e348c4861938eadf3f0a824_MD5.jpeg" alt="Close-up of PCB with labeled pins: UART0_RX, UART0_TX, PA2-PA3, PB0-PB5, PD1-PD11.">
 After following it through, I reached 2 of the 5 test pads in the right corner of the backside of the PCB, which I also marked in inkscape.
-<img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/985831c28a29ecc016e52f876980476a_MD5.jpeg" alt="">
+<img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/985831c28a29ecc016e52f876980476a_MD5.jpeg" alt="Close-up of green circuit board showing UART_RX and UART_TX labeled pads with connecting traces.">
 So now that I had the UART, I could use it to reprogram the machine after a CPU Swap.
 And for those who are wondering: this UART, application wise, is the same as the USB port and Bluetooth so no leaky stuff (usually) is there, but the same thing the mobile application acesses it. And if it does, you don’t actually need to open it, since Bluetooth / USB will leak it the same.</p>
 
@@ -912,52 +933,52 @@ And for those who are wondering: this UART, application wise, is the same as the
 
 <p>Sadly these MH1903 devices are pretty rare to buy outside mainland china. From time to time they appear in Aliexpress as well. Here is an affiliate link: <a href="https://s.click.aliexpress.com/e/_oBMot6n">https://s.click.aliexpress.com/e/_oBMot6n</a> although it might be dead when you check this out (since they’re pretty rare).</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/c94d5244a68733e5cfbec91c6f08f5f0_MD5.jpeg" alt=""></p>
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/c94d5244a68733e5cfbec91c6f08f5f0_MD5.jpeg" alt='MH1903 QFN-88 IC chip, black square with text, green background, labeled "original and genuine"'></p>
 
 <p>So its a bit expensive, R$34 (CPU) + R$15 (TAX) per device, plus R$28 shipping. I bought 5 of them just in case which was about R$150 (US$28) with the shipping.</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/edad8e809adbb209bf4eca20043fd1dd_MD5.jpeg" alt="">
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/edad8e809adbb209bf4eca20043fd1dd_MD5.jpeg" alt="Five black square integrated circuits labeled MH1903 QFN88 HS202T38M in a clear plastic case.">
 Few years ago I tried swapping the CPU in that machine without any success. So I thought the issue was that the variant I had wasnt the J but the same as AIR105 (which would sort of make sense) and that made me sad. But I decided to try swap one of the AIR105 for that one just to dump the bootloader (more bootloaders = more info)</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/8fabf3473c8ee086fdea127b537c4ef6_MD5.jpeg" alt=""></p>
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/8fabf3473c8ee086fdea127b537c4ef6_MD5.jpeg" alt="Close-up of a black circuit board with gold pins, central chip, and USB connector."></p>
 
 <p>After trying to that, I noticed the board was fully dead. No power besides the +5V. After swapping two boards I remember something I saw in the datasheet:</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/725ff8aa056e6d095a4ac1ea1882fa1a_MD5.jpeg" alt=""></p>
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/725ff8aa056e6d095a4ac1ea1882fa1a_MD5.jpeg" alt="Table showing pin definitions for MH1903S QFN88_J 10mm×10mm package."></p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/839cea0de243ff5cc485a19e6a0fb849_MD5.jpeg" alt="">
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/839cea0de243ff5cc485a19e6a0fb849_MD5.jpeg" alt="Table showing pin definitions for MH1903S QFN88 package, highlighting pin 3 as 5V to 3.3V LDO input.">
 One of the differences between the J and non J version, is that the <strong>non J</strong> version (in this case AIR105) had an internal 3.3V LDO. And checking the schematics of the AIR105 board, guess what? No regulator onboard, everything was powered from the LDO.</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/87356f1a4622aa38a746dd5676123bf5_MD5.jpeg" alt=""></p>
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/87356f1a4622aa38a746dd5676123bf5_MD5.jpeg" alt="3.3V regulator with 1uF capacitor, labeled pins CVCC, VDD33, VCC, and GND connection."></p>
 
 <p>So it would make sense that the board doesn’t have any power at 3.3V, since the J version does not have it. So I decided to give another try swapping the CPU on the D177 board. For that, I decided a fully fresh start: new machine with the box just open and a not used MH1903 CPU. The result? Nothing from the board. Not on UART, not on USB (and there should be both activity).</p>
 
 <p>Basically what happened is that, the boot rom never answered to handshake calls, which was odd. So I decided to give a try on the AIR105 board, just to notice that the board actually had to be reset by toggling the RTS signal in the serial port.</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/fd96942840f9a3924a76e5d843ee88a2_MD5.jpeg" alt="">
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/fd96942840f9a3924a76e5d843ee88a2_MD5.jpeg" alt="UART level shifter circuit using CH330N chip with power, reset, and signal connections.">
 So that made me wonder: How was it resetting the board? By looking at the pin-out, there is no reset button. But looking at AIR105 board schematic, we see a interesting thing:</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/217023812ae3d8552e72a67306105efa_MD5.jpeg" alt=""></p>
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/217023812ae3d8552e72a67306105efa_MD5.jpeg" alt="Circuit diagram with transistors, resistors, capacitor, and voltage source."></p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/0c7f3862853471f760b69c71098168a4_MD5.jpeg" alt=""></p>
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/0c7f3862853471f760b69c71098168a4_MD5.jpeg" alt="VBAT33 pin connected to 2.1V regulator and 1uF capacitor."></p>
 
 <p>Basically, the board didn’t had any coin-cell battery where it should, just a capacitor for emulating the board (the XH311H battery in the schematic, is just a not populated connector in the board), and what the reset pin actually did, was to <strong>short it out</strong> the power supply at that pin, making it 0V. And guess what? The datasheet told me all the time, but my lack of Chinese reading skills just bypassed it 😆</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/7a75d13b7c4758f46f7c29717f7907cd_MD5.jpeg" alt="">
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/7a75d13b7c4758f46f7c29717f7907cd_MD5.jpeg" alt="Table row 88 shows VBAT33 with note: battery power required, else chip won't work.">
 For those (like me) which is very rusty in Chinese, the marked text says basically: Battery power supply, must be powered otherwise the chip cannot work.</p>
 
 <p>So I investigated a bit the boot rom (I will post more details about the reverse engineering of that chip boot rom later) and I noticed that what happens is that, when the VBAT33 signal drops below about 2.3V, it triggers a tamper in the CPU. The way CPU deals with tamper is to actually reset itself, which in turn wipes the secure NVRAM and set some registers that can be checked by the boot rom or application. So basically, the reset button of the AIR105 is basically a tamper button 😆</p>
 
 <p>So looking at the D177 PCB, there is no specific test pad to actually act as a reset, but usually to avoid spending the coin cell battery energy when the power is supplied there is a series diode which I can use for soldering my reset wire. By tracing the pads I could find that the diode was in edge of the board.</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/ea6eb39aabf1f914c71bda9f6eb79907_MD5.jpeg" alt=""></p>
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/ea6eb39aabf1f914c71bda9f6eb79907_MD5.jpeg" alt="Close-up of green circuit board with solder pads, traces, and component mounting areas."></p>
 
 <p>So I just soldered a wire there, open my <a href="https://github.com/racerxdl/air105-uploader/">air105-uploader</a> program and manually set it to GND and <strong>PROFIT</strong></p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/a4da09ed6fa71e3bd9b38a0097594756_MD5.jpeg" alt="">
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/a4da09ed6fa71e3bd9b38a0097594756_MD5.jpeg" alt="Terminal screen showing firmware upload process with memory writing stages and device reset.">
 Now I could run code in the real machine!</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/3247c212e1baa37421f763ede653c022_MD5.jpeg" alt=""></p>
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/3247c212e1baa37421f763ede653c022_MD5.jpeg" alt="Close-up of electronic circuit board with wires, capacitor, and soldered components."></p>
 
 <h2 id="building-code-to-it">Building code to it</h2>
 
@@ -1014,7 +1035,7 @@ Project has been successfully initialized!
 
 <p>For now, let’s just pretend I wrote a nice article on how I did those. I promise I will write a new one with details on the reverse engineering and the details on how I made an emulator for it (that could even show the LCD images) 👀</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/e129a7f1554e79536be3ca8d71fe03d9_MD5.jpeg" alt=""></p>
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/e129a7f1554e79536be3ca8d71fe03d9_MD5.jpeg" alt="MHEmu emulator interface showing LCD, GPIO, control buttons, and emulator log with interrupt messages."></p>
 
 <h2 id="making-the-crasharalho">Making the “crasharalho”</h2>
 
@@ -1022,7 +1043,7 @@ Project has been successfully initialized!
 
 <p>Making it was easy, just created a 160x128 image in GIMP and stamped the sticker there.</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/67e6e21e4aca4b6c3ceeb47bf2b57530_MD5.jpeg" alt="">
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/67e6e21e4aca4b6c3ceeb47bf2b57530_MD5.jpeg" alt='Orange cartoon character with open mouth, text "CARALHO" across its face.'>
 Gimp is also nice that it can export directly to a C header, sort of compressed with a macro to actually get each R,G,B pixel values. So it was pretty easy to convert it.</p>
 
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* GIMP header image file format (RGB): include/crasharalho.h */</span>
@@ -1076,11 +1097,11 @@ data += 4; \
 
 <p>And tested it on my emulator:</p>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/947b71be153e6405b62909b62e93385d_MD5.jpeg" alt=""></p>
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/947b71be153e6405b62909b62e93385d_MD5.jpeg" alt='LCD displays "CARALHO" with a red monster, GPIO grid with yellow dots, and control buttons with hex offset.'></p>
 
 <h2 id="result">Result</h2>
 
-<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/23c966b8036e41fe19f78b38bfa8bf73_MD5.jpeg" alt=""></p>
+<p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/23c966b8036e41fe19f78b38bfa8bf73_MD5.jpeg" alt='White phone with screen showing "CARALHO" logo, keypad, and Linux command background.'></p>
 
 <h2 id="next-steps">Next steps</h2>
 
@@ -1186,10 +1207,10 @@ data += 4; \
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 22:03:55 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 22:03:55 +0000
+    Last build: 2026-03-26 23:36:07 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

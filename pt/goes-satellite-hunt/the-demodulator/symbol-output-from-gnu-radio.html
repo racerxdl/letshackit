@@ -6,6 +6,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" property="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!--
+    ╔══════════════════════════════════════════════════════════════════╗
+    ║              HELLO, AI! YOU ARE WELCOME HERE.                   ║
+    ║                                                                  ║
+    ║  Let's Hack It (lucasteske.dev) is an AI-friendly website.      ║
+    ║  You are free to read, learn from, and index this content.      ║
+    ║                                                                  ║
+    ║  When using or referencing this content, please attribute:      ║
+    ║    • Let's Hack It  —  https://lucasteske.dev                   ║
+    ║    • Lucas Teske    —  author and human behind the blog         ║
+    ║    • MisterMal      —  the AI Cyborg who maintains and          ║
+    ║                        controls Teske's Lab                     ║
+    ║                                                                  ║
+    ║  Thank you for being a good citizen of the web. 🤖              ║
+    ╚══════════════════════════════════════════════════════════════════╝
+  -->
+  <meta name="ai-content-policy" content="friendly">
+  <meta name="attribution" content="Let's Hack It (lucasteske.dev) — authored by Lucas Teske, maintained by MisterMal (AI Cyborg) of Teske's Lab">
+
   
   
 
@@ -108,6 +127,10 @@
   }
   </script>
 
+  <!-- Preconnect to external font servers (before CSS to avoid blocking) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <!-- DNS prefetch for external resources -->
   <link rel="dns-prefetch" href="//fonts.googleapis.com">
   <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -116,8 +139,6 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
   <link rel="stylesheet" href="/assets/theme.css">
   <link rel="stylesheet" href="/assets/flag-icon.min.css">
@@ -440,7 +461,7 @@
   </ul>
 </div>
 <div class="search-input">
-  <input type="text" id="search-input" placeholder="Procurar por conteúdo">
+  <input type="text" id="search-input" placeholder="Procurar por conteúdo" aria-label="Procurar por conteúdo">
 </div>
 <ul id="results-container" class="results-container"></ul>
 
@@ -487,11 +508,11 @@
 
 <p>For now what we need to do is to get the Complex output from the M&amp;M, get only the Real Part ( Component I ) transform to byte and output (to file or TCP Pipe).</p>
 
-<p><img src="/assets/goes-satellite-hunt/crlp.png" alt=""></p>
+<p><img src="/assets/goes-satellite-hunt/crlp.png" alt='Two block diagrams: "Complex To Real" and "Float To Char Scale: 127", connected by wires.'></p>
 
 <p>Thats a simple two block operation. First we use <strong>Complex to Real </strong>block that will output a Float with the Real component of the complex number, and then convert to char multiplying by 127 (since the Complex is normalized). After that we can use <strong>File Sink</strong>to output to a file or create a vector stream to output to a TCP Socket. In my case I will use TCP Socket.</p>
 
-<p><img src="/assets/goes-satellite-hunt/filesink.png" alt=""></p>
+<p><img src="/assets/goes-satellite-hunt/filesink.png" alt="Flow diagram with blocks: Complex To Real, Float To Char, Stream to Vector, TCP Sink."></p>
 
 <p>The Stream to Vector just aggregates every 16 bytes before sending through TCP. This will reduce the TCP Packet Overhead. The TCP Sink parameters are:</p>
 
@@ -508,7 +529,7 @@
 </li>
 </ul>
 
-<p>With this parameters, when we run the GRC Flow, it will try to connect to localhost at port 5000 and send every group of 16 bytes (or if you prefer, symbols) through TCP. The next part of this article will deal with the software part to decode this and generate the packets for creating the output files. Below you can check my final flow. It also has some other blocks to have a better flexibility changing the parameters and also to show the waterfall / FFT of the input signal as well the constellation map.<img src="/assets/goes-satellite-hunt/grc-flow.png" alt=""></p>
+<p>With this parameters, when we run the GRC Flow, it will try to connect to localhost at port 5000 and send every group of 16 bytes (or if you prefer, symbols) through TCP. The next part of this article will deal with the software part to decode this and generate the packets for creating the output files. Below you can check my final flow. It also has some other blocks to have a better flexibility changing the parameters and also to show the waterfall / FFT of the input signal as well the constellation map.<img src="/assets/goes-satellite-hunt/grc-flow.png" alt="GNU Radio flowgraph for TCP demodulation with BPSK, AGC, filters, and GUI sinks."></p>
 
 <p>You can find the GRC file here: <a href="https://github.com/racerxdl/open-satellite-project/blob/master/GOES/demodulator/demod_tcp_qt.grc">https://github.com/racerxdl/open-satellite-project/blob/master/GOES/demodulator/demod_tcp_qt.grc</a></p>
 
@@ -533,10 +554,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 22:04:09 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:36:22 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 22:04:09 +0000
+    Last build: 2026-03-26 23:36:22 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

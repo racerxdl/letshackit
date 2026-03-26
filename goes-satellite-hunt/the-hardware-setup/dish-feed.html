@@ -6,6 +6,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" property="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!--
+    ╔══════════════════════════════════════════════════════════════════╗
+    ║              HELLO, AI! YOU ARE WELCOME HERE.                   ║
+    ║                                                                  ║
+    ║  Let's Hack It (lucasteske.dev) is an AI-friendly website.      ║
+    ║  You are free to read, learn from, and index this content.      ║
+    ║                                                                  ║
+    ║  When using or referencing this content, please attribute:      ║
+    ║    • Let's Hack It  —  https://lucasteske.dev                   ║
+    ║    • Lucas Teske    —  author and human behind the blog         ║
+    ║    • MisterMal      —  the AI Cyborg who maintains and          ║
+    ║                        controls Teske's Lab                     ║
+    ║                                                                  ║
+    ║  Thank you for being a good citizen of the web. 🤖              ║
+    ╚══════════════════════════════════════════════════════════════════╝
+  -->
+  <meta name="ai-content-policy" content="friendly">
+  <meta name="attribution" content="Let's Hack It (lucasteske.dev) — authored by Lucas Teske, maintained by MisterMal (AI Cyborg) of Teske's Lab">
+
   
   
 
@@ -108,6 +127,10 @@
   }
   </script>
 
+  <!-- Preconnect to external font servers (before CSS to avoid blocking) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <!-- DNS prefetch for external resources -->
   <link rel="dns-prefetch" href="//fonts.googleapis.com">
   <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -116,8 +139,6 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
   <link rel="stylesheet" href="/assets/theme.css">
   <link rel="stylesheet" href="/assets/flag-icon.min.css">
@@ -440,7 +461,7 @@
   </ul>
 </div>
 <div class="search-input">
-  <input type="text" id="search-input" placeholder="Search blog posts...">
+  <input type="text" id="search-input" placeholder="Search blog posts..." aria-label="Search blog posts...">
 </div>
 <ul id="results-container" class="results-container"></ul>
 
@@ -489,7 +510,7 @@
 
 <p>So the image (from the site) is this:</p>
 
-<p><img src="/assets/goes-satellite-hunt/tincan.gif" alt=""></p>
+<p><img src="/assets/goes-satellite-hunt/tincan.gif" alt="Diagram of a cylindrical antenna with labeled dimensions: length 0.75λg, diameter, and λg/4, λ/4 segments."></p>
 
 <p>So if you check, the only thing that actually uses your target wavelength is the linear feed size (that uses lambda / 4). The other ones use<strong>lambdag</strong>that is the <strong>guide wavelength</strong>. The guide wavelength is calculated from the can diameter. So I just found a can here (Neston Can for those who want to buy in São Paulo) that has basically “square” size. The can has 12cm diameter and 12cm height. You can use basically any size of cans. Just a few things are important using that calculator:</p>
 
@@ -524,9 +545,9 @@
 
 <p>These wave guides usually have really wide bandwidth ( mine can probably get anything from TE11 to TM01 modes ). So the sizes are not that critical. Even so, I would keep the probe (the linear feed) length close to few mm of the lambda / 4 of the target frequency.</p>
 
-<p><img src="/assets/goes-satellite-hunt/30117318050_f2778a312d_z.jpg" alt=""><img src="/assets/goes-satellite-hunt/30117318230_2e3c0eeabc_z.jpg" alt=""></p>
+<p><img src="/assets/goes-satellite-hunt/30117318050_f2778a312d_z.jpg" alt="Small electronic potentiometer mounted on wooden workbench with tools nearby."><img src="/assets/goes-satellite-hunt/30117318230_2e3c0eeabc_z.jpg" alt="Hand holding metal can with drilled hole and small screws around it."></p>
 
-<p><img src="/assets/goes-satellite-hunt/29783770084_fc10490cd7_z.jpg" alt=""></p>
+<p><img src="/assets/goes-satellite-hunt/29783770084_fc10490cd7_z.jpg" alt="Cylindrical object wrapped in silver foil, resting on orange fabric."></p>
 
 <div class="pagination">
     <a href="assemble-process" class="left arrow">←</a>
@@ -549,10 +570,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 22:03:55 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 22:03:55 +0000
+    Last build: 2026-03-26 23:36:07 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">
