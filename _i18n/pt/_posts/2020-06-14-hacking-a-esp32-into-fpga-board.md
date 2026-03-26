@@ -43,15 +43,15 @@ Eu não precisei fazer engenharia reversa na placa pois já tinham feito: [https
 
 Como dá pra ver, os headers JTAG são de fácil acesso e todos os pinos estão mapeados. Excelente!
 
-Depois de alguns minutos brincando com o ghdl-yosis-blink eu consegui fazer funcionar na minha placa. Porém ele ainda estava rodando na RAM do FPGA e eu queria gravar na memória flash. Então eu comecei a procurar pela internet alguma ferramente que conseguisse converter o bitstream para programar a memória flash. Depois de testar muitas ferramentas, eu achei uma simples que faz o trabalho: [https://github.com/f32c/tools/tree/master/ujprog](https://github.com/f32c/tools/tree/master/ujprog)
+Depois de alguns minutos brincando com o ghdl-yosis-blink eu consegui fazer funcionar na minha placa. Porém ele ainda estava rodando na RAM do FPGA e eu queria gravar na memória flash. Então eu comecei a procurar pela internet alguma ferramenta que conseguisse converter o bitstream para programar a memória flash. Depois de testar muitas ferramentas, eu achei uma simples que faz o trabalho: [https://github.com/f32c/tools/tree/master/ujprog](https://github.com/f32c/tools/tree/master/ujprog)
 
-Só era nescessário rodar:
+Só era necessário rodar:
 
 ```bash
 ujprog -d -j flash -s vhdl_blink-flash.svf vhdl_blink.bit
 ```
 
-E o arquivo gerado vhdl_blink-flash.svf estava persistindo o bitstream na memoria flash.
+E o arquivo gerado vhdl_blink-flash.svf estava persistindo o bitstream na memória flash.
 
 <center>
   <blockquote class="twitter-tweet"><p lang="en" dir="ltr">After few days I managed to write thr SPI Flash using FT232H. Full <a href="https://twitter.com/hashtag/opensource?src=hash&amp;ref_src=twsrc%5Etfw">#opensource</a> stuff to program that board. Also only US$15. <a href="https://t.co/RujsOGwH1D">pic.twitter.com/RujsOGwH1D</a></p>&mdash; Cybernetic Lover (@lucasteske) <a href="https://twitter.com/lucasteske/status/1268616857583419393?ref_src=twsrc%5Etfw">June 4, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>

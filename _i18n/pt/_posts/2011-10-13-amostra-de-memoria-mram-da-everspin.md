@@ -9,7 +9,7 @@ permalink: /2011/10/amostra-de-memoria-mram-da-everspin/
 categories:
   - Sem categoria
 ---
-A muito tempo atrás pedi amostras de uma memória magnética da **[Everspin](http://www.everspin.com/)** para fazer testes aqui, porém depois me deparei com o problema de que ela é 3.3V.
+Há muito tempo atrás pedi amostras de uma memória magnética da **[Everspin](http://www.everspin.com/)** para fazer testes aqui, porém depois me deparei com o problema de que ela é 3.3V.
 
 De qualquer maneira agora tenho um FPGA para brincar com ela.
 

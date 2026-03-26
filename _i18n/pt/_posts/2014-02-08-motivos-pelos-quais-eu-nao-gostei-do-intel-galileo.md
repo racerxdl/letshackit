@@ -17,9 +17,9 @@ Consegui minha placa Intel Galileo na semana da Campus Party. Peguei ela mais po
 
 Eu sempre tive a ideia de que a Intel só faz \*porcaria\* nos seus produtos. Antes que venham falar \*fanboy da AMD\* o meu ponto contra a Intel é o x86, o que me coloca contra a AMD também. Há também o aspecto contra na questão das GPUs, porém não vou entrar em detalhes sobre isso agora.
 
-De qualquer maneira eu já não esperava muita coisa. Já esperava vacilos tensos da Intel. Porém eu tive várias supresas (poucas boas, e muitas ruins) ao usar o Intel Galileo.
+De qualquer maneira eu já não esperava muita coisa. Já esperava vacilos tensos da Intel. Porém eu tive várias surpresas (poucas boas, e muitas ruins) ao usar o Intel Galileo.
 
-Vou começar falando de quando abri a caixa. A caixa é bem bonita, e a placa, devo admitir, que também é. Olhando a placa fiquei vasculhando por conectores, e para minha supresa: Não existe HDMI. É pois é. E o \*poderoso\* Processador Quark não tem nem GPU internamente. No começo até pensei : Bom, ele tem Mini PCIe, poderiamos colocar uma GPU. &#8211; Porém, não existem GPU Mini PCIe por ai.
+Vou começar falando de quando abri a caixa. A caixa é bem bonita, e a placa, devo admitir, que também é. Olhando a placa fiquei vasculhando por conectores, e para minha surpresa: Não existe HDMI. É pois é. E o \*poderoso\* Processador Quark não tem nem GPU internamente. No começo até pensei : Bom, ele tem Mini PCIe, poderiamos colocar uma GPU. &#8211; Porém, não existem GPU Mini PCIe por ai.
 
 > Ok, decepção um marcada. Embora já esperada.
 

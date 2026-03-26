@@ -10,7 +10,7 @@ PS: As datas são de quando os vídeos foram enviados e não quando foram gravad
   <iframe width="560" height="315" src="https://www.youtube.com/embed/vFWoArNIBew" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </center>
 
-Essa foi minha ultima bobina de tesla. Uma pequena SSTC controlada por dois IRFP250N, um driver de GDT feito na protoboard ( POIS É ). Ela foi desenhada para ser portátil para que eu pudesse leva-la a qualquer lugar para mostrar para as pessoas. Ela usa o mesmo interruptor musical que a ZARC.
+Essa foi minha última bobina de tesla. Uma pequena SSTC controlada por dois IRFP250N, um driver de GDT feito na protoboard ( POIS É ). Ela foi desenhada para ser portátil para que eu pudesse levá-la a qualquer lugar para mostrar para as pessoas. Ela usa o mesmo interruptor musical que a ZARC.
 
 <hr/>
 
@@ -20,7 +20,7 @@ Essa foi minha ultima bobina de tesla. Uma pequena SSTC controlada por dois IRFP
   <iframe width="560" height="315" src="https://www.youtube.com/embed/poqmtvrZDk0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </center>
 
-Este é um circuito que eu desenhei. É basicamente uma SSTC com retificação em meia-onda sem driver. Existe um transformador de corrente no secundário para injetar a energia diretamente nos gates dos mosfets e chavea-los. Eu nunca otimizei este circuito mas ele funciona.
+Este é um circuito que eu desenhei. É basicamente uma SSTC com retificação em meia-onda sem driver. Existe um transformador de corrente no secundário para injetar a energia diretamente nos gates dos mosfets e chaveá-los. Eu nunca otimizei este circuito mas ele funciona.
 
 <img src="https://i.imgur.com/Th0JOug.png" />
 
@@ -110,7 +110,7 @@ Uma SSTC rodando em CW e 1.5MHz com uma Fullbridge de IRF740 (sim, eu sei. 1.5MH
   <iframe width="560" height="315" src="https://www.youtube.com/embed/FZI4-mv9B-w" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </center>
 
-Mesma bobina secundária do que todas as minhas SSTC médias (e minha primeira DRSSTC). Mas um topload diferente e moduação com áudio.
+Mesma bobina secundária do que todas as minhas SSTC médias (e minha primeira DRSSTC). Mas um topload diferente e modulação com áudio.
 
 <hr/>
 
@@ -148,6 +148,6 @@ Uma SGTC movida a flyback. O Flyback usava um driver Mazzilli ZVS com 2 IRFP250N
   <iframe width="560" height="315" src="https://www.youtube.com/embed/VxdQy4QUH6Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </center>
 
-Essa foi minha ultima DRSSTC mas em seus estagios iniciais. Ela estava gerando quase 50cm de raios. Agora está usando IGBTs IRG4PC50U com diodos ultra-rápidos conectados reversamente para segurar os picos reversos de tensão.
+Essa foi minha última DRSSTC mas em seus estágios iniciais. Ela estava gerando quase 50cm de raios. Agora está usando IGBTs IRG4PC50U com diodos ultra-rápidos conectados reversamente para segurar os picos reversos de tensão.
 
 <hr/>

@@ -58,7 +58,7 @@ A ideia principal do Edison é ser um hardware **stackable**. Isso significa que
 
 ![image](https://31.media.tumblr.com/43db77adb12a9d8ec307f2eef6e92fc8/tumblr_inline_njxpnwLIMn1rvy8i7.jpg) </figure> 
 
-Vendo a placa por cima, ela é **completamente** diferente do Intel Galileo. Nitidamente o foco não é competir com um Arduíno e não diretamente com um Raspberry PI. O Intel Edison foi feito para sistemas de _Internet of Things_, um conceito que surgiu a pouco tempo sobre &#8220;conectar todas as coisas a internet&#8221;. Além disso a ideia é facilitar a construção de gadges **wearables** (vestíveis). Por isso, o Edison não tem GPU (como um raspberry tem) porém tem Wireless N e Bluetooth 4.0 LE, permitindo interações sem fio.<figure>
+Vendo a placa por cima, ela é **completamente** diferente do Intel Galileo. Nitidamente o foco não é competir com um Arduíno e não diretamente com um Raspberry PI. O Intel Edison foi feito para sistemas de _Internet of Things_, um conceito que surgiu a pouco tempo sobre &#8220;conectar todas as coisas a internet&#8221;. Além disso a ideia é facilitar a construção de gadgets **wearables** (vestíveis). Por isso, o Edison não tem GPU (como um raspberry tem) porém tem Wireless N e Bluetooth 4.0 LE, permitindo interações sem fio.<figure>
 
 ![image](https://31.media.tumblr.com/c9c212165ede6e502d6fd5b8285a2326/tumblr_inline_njxpthBQqj1rvy8i7.jpg) </figure> 
 

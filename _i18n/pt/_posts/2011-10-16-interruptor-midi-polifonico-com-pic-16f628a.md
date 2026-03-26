@@ -15,7 +15,7 @@ Bom, muitos sabem que eu fiz um Interruptor MIDI (ou sintetizador como preferir)
 
 No começo queria fazer com um PIC menor, mas os menores não tem Receptor Serial via **_hardware_**, então ficaria mais complicado implementar. Outro ponto, é que o preço dos PIC&#8217;s menores são praticamente os mesmos, então era só uma questão de espaço mesmo. Usando um PIC maior, fica mais espaço livre para futuras modificações caso seja necessário.
 
-O PIC 16F628A tem 2KB de memoria flash, 224 Bytes de RAM, 128 Bytes de EEPROM, um Comparador, 3 Timers, e um Receptor Serial Universal. Está no pacote DIP de 18 Pinos, e ele tem 2 portas de 8 bits (dependendo da configuração, a porta A pode \*perder\* 3 bits.
+O PIC 16F628A tem 2KB de memória flash, 224 Bytes de RAM, 128 Bytes de EEPROM, um Comparador, 3 Timers, e um Receptor Serial Universal. Está no pacote DIP de 18 Pinos, e ele tem 2 portas de 8 bits (dependendo da configuração, a porta A pode \*perder\* 3 bits.
 
 Datasheet dele: <http://ww1.microchip.com/downloads/en/DeviceDoc/40044F.pdf>
 

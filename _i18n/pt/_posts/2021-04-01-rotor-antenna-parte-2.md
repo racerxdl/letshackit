@@ -38,7 +38,7 @@ Já para o motor da elevação, fiz um corte lateral no motor bem em uma marca c
 ![Tampa + Redutor](/assets/posts/tracker-mount-2/elevation-shaft-support-with-reduction.jpg)*Tampa + Redutor*
 ![Peças do motor](/assets/posts/tracker-mount-2/elevation-motor-parts2.jpg)*Peças do Motor*
 
-Para a elevação, foi nescessário cortar o do motor original e fazer um "vinco" na lateral dele para encaixar melhor na peça que seria impressa em 3D. Para fazer isso, coloquei o eixo original entre duas madeiras (por sugestão do meu pai) e efetuamos o corte do eixo. Para os vincos, usamos a esmerilhadeira.
+Para a elevação, foi necessário cortar o do motor original e fazer um "vinco" na lateral dele para encaixar melhor na peça que seria impressa em 3D. Para fazer isso, coloquei o eixo original entre duas madeiras (por sugestão do meu pai) e efetuamos o corte do eixo. Para os vincos, usamos a esmerilhadeira.
 
 ![Eixo cortado no meio de duas madeiras](/assets/posts/tracker-mount-2/elevation-shaft-cut.jpg)*Eixo cortado no meio de duas madeiras*
 ![Eixo cortado na tampa do motor](/assets/posts/tracker-mount-2/elevation-shaft-support-with-shaft.jpg)*Eixo cortado na tampa do motor*
@@ -76,7 +76,7 @@ E também funcionando!
 
 ![](https://www.youtube.com/watch?v=-4U-ofHaF0E)
 
-Após tudo funcionando, fiz os testes para saber a resolução final e redução de ambos eixos. Para isso usei este codigo para o ESP32 controlar o TMC2209 e o meu celular preso ao eixo da elevação para medições de angulo. 
+Após tudo funcionando, fiz os testes para saber a resolução final e redução de ambos eixos. Para isso usei este código para o ESP32 controlar o TMC2209 e o meu celular preso ao eixo da elevação para medições de ângulo. 
 
 ```cpp
 #include <TMCStepper.h>

@@ -42,7 +42,7 @@ Se você estiver compartilhando / comentando sobre este artigo, por favor coloqu
 
 Este artigo está meio incompleto. Ainda vou publicar a engenharia reversa do boot rom e como criei um emulador para mapear melhor o que os firmwares fazem. Aqui eu apenas menciono brevemente que fiz um emulador e acho que isso merece seu próprio artigo. Vou atualizar esta nota inicial quando eles forem publicados.
 
-Eu quero agradecer ao [Gutem](https://www.linkedin.com/in/gutem/) e ao [Penegui](https://www.instagram.com/penegui) por uma revisão técnica rapida do conteúdo do artigo, e a Pag, a qual deu uma resposta super rápida e amigável quando enviei este artigo a eles. Uma pequena linha do tempo de como rolou o processo está no fim da pagina.
+Eu quero agradecer ao [Gutem](https://www.linkedin.com/in/gutem/) e ao [Penegui](https://www.instagram.com/penegui) por uma revisão técnica rápida do conteúdo do artigo, e a Pag, a qual deu uma resposta super rápida e amigável quando enviei este artigo a eles. Uma pequena linha do tempo de como rolou o processo está no fim da página.
 
 ## Máquinas de pagamento com cartão de crédito
 
@@ -74,7 +74,7 @@ Geralmente quando estou fazendo engenharia reversa em hardwares considerados seg
 2. Vou usar para **tentar** bypassar todas proteções (caso seja meu objetivo)
 3. Vou manter como está, para poder ter um modelo de referência para os estudos.
 
-Nesse cenário especifico, eu apenas queria rodar DOOM nela. Por que, se compute, ela precisa de DOOM.
+Nesse cenário específico, eu apenas queria rodar DOOM nela. Por que, se compute, ela precisa de DOOM.
 
 Baseado nas minhas experiencias anteriores fazendo engenharia reversa nestas maquinas, eu já sabia o que esperar. Este artigo é apenas um resumo do caminho (dado que levei alguns anos pra chegar ao estado atual) que me lembro que segui. Então o que eu estava esperando era basicamente isso:
 
@@ -86,7 +86,7 @@ Baseado nas minhas experiencias anteriores fazendo engenharia reversa nestas maq
     5. Criptografia de Código
 2. Muita frustração
 
-Eu podia seguir dois caminhos: exploitar o código que roda, ou trocar a CPU. Para exploitar, eu teria que achar uma falha de segurança que permitisse execução de código via Bluetooth, SmartCard, NFC ou USB, dado que estas são as únicas interfaces disponíveis. Para isso, eu teria que ter todo código, e como vocês vão ver mais pra frente, para está maquina em especifico, isso não era exatamente possível.
+Eu podia seguir dois caminhos: exploitar o código que roda, ou trocar a CPU. Para exploitar, eu teria que achar uma falha de segurança que permitisse execução de código via Bluetooth, SmartCard, NFC ou USB, dado que estas são as únicas interfaces disponíveis. Para isso, eu teria que ter todo código, e como vocês vão ver mais pra frente, para esta máquina em específico, isso não era exatamente possível.
 
 Segundo jeito era basicamente ver qual CPU estava na placa, comprar uma nova e trocar. O problema mesmo, é achar a CPU pra vender.
 
@@ -160,7 +160,7 @@ Indo um pouco mais a fundo no google, a gente consegue achar algumas informaçõ
 * USB: 1
 * Serial: 4
 
-Como vocês podem ver, essa versão tem uma memória flash inteira, o que é uma pena pra mim. Ainda estou montando meu equipamento para inspeções diretas no chip. Eu já fiz alguns decaps, e a memória flash não está embutida no mesmo silício, mas apenas colada em cima do chip principal e ligada através de fios. Eu ouvi alguns amigos da industria de semicondutores dizer, que a razão disso é que o processo de fabricação entre memórias flash e CPUs diferente um pouco e é difícil unificar ambos. Por isso, geralmente é preferível faze-los separados (especialmente caso precise de uma densidade muito alta).
+Como vocês podem ver, essa versão tem uma memória flash inteira, o que é uma pena pra mim. Ainda estou montando meu equipamento para inspeções diretas no chip. Eu já fiz alguns decaps, e a memória flash não está embutida no mesmo silício, mas apenas colada em cima do chip principal e ligada através de fios. Eu ouvi alguns amigos da indústria de semicondutores dizer, que a razão disso é que o processo de fabricação entre memórias flash e CPUs diferente um pouco e é difícil unificar ambos. Por isso, geralmente é preferível fazê-los separados (especialmente caso precise de uma densidade muito alta).
 
 Uma coisa pra se notar, as versões BGA do SoC não tem memória flash embutida, então elas são obrigadas a carregar de uma flash externa. Spoiler: A D188 tem duas memórias flash na placa :)
 
@@ -315,7 +315,7 @@ Pra aqueles (como eu) que estão enferrujados no Chines, o texto acima basicamen
 
 Então eu investiguei um pouco mais a bootrom (ainda vou postar detalhes da engenharia reversa da bootrom desse chip) e notei que o que acontece é: Quando o VBAT33 cai para baixo de 2.3V, ele aciona um tamper na CPU. O jeito que a CPU lida com esse tamper, é basicamente se resetar, o que apaga a NVRAM e seta alguns registradores que podem ser lidos pela bootrom ou pela aplicação. Então basicamente, o botão de reset do AIR105 é um botão de tamper 😆
 
-Olhando na PCB da D177, não há nenhum testpad especifico para atuar como reset, mas geralmente para evitar que a bateria seja usada quando existe energia externa, colocam um diodo em série com ela a maneira de isolar ela. Posso soldar um fio nesse diodo para usar como reset. Seguindo os traços na PCB, achei um diodo na borda da placa.
+Olhando na PCB da D177, não há nenhum testpad específico para atuar como reset, mas geralmente para evitar que a bateria seja usada quando existe energia externa, colocam um diodo em série com ela a maneira de isolar ela. Posso soldar um fio nesse diodo para usar como reset. Seguindo os traços na PCB, achei um diodo na borda da placa.
 
 ![](/assets/Running code in a PAX Credit Card Payment Machine/ea6eb39aabf1f914c71bda9f6eb79907_MD5.jpeg)
 

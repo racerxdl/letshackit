@@ -21,11 +21,11 @@ tags:
 ---
 
 
-## Explorando memorias NAND
+## Explorando memórias NAND
 
-Quando em posse de um dispositivo a qual se deseja conhecer sobre, nem sempre é trivial o acesso ao conteúdo da memória _flash_. Devido a natureza das memórias NAND, é aplicado para todo conteúdo um algorítimo de correção de erros que pode causar uma ofuscação não  intencional do conteúdo. Alguns fabricantes de processadores que controlam diretamente memórias do tipo NAND ou programadores de _software_ "protegido" optam por customizar o jeito que estes algorítimos funcionam.
+Quando em posse de um dispositivo a qual se deseja conhecer sobre, nem sempre é trivial o acesso ao conteúdo da memória _flash_. Devido a natureza das memórias NAND, é aplicado para todo conteúdo um algoritmo de correção de erros que pode causar uma ofuscação não  intencional do conteúdo. Alguns fabricantes de processadores que controlam diretamente memórias do tipo NAND ou programadores de _software_ "protegido" optam por customizar o jeito que estes algoritmos funcionam.
 
-Neste artigo veremos como a estrutura básica de uma memória _flash_, por que a correção de erro existe e como identificar a dispersão do algorítimo de correção de erro usado.
+Neste artigo veremos como a estrutura básica de uma memória _flash_, por que a correção de erro existe e como identificar a dispersão do algoritmo de correção de erro usado.
 
 # Memórias Flash
 
@@ -51,7 +51,7 @@ Para ler a informação armazenada, uma tensão é aplicada ao Control Gate. Se 
 ![Estado programado de uma célula NAND](/assets/posts/analise-e-decodificacao-flash/flash-cell-programmed.svg)
 *Célula NAND no estado "gravado"*
 
-Finalmente, a configuração elétronica — seja sua ausência ou presença — determina se a célula está representando um bit "0" ou "1". A imagem subsequente mostra uma célula no estado "apagado", caracterizado pela livre circulação de elétrons entre os terminais.
+Finalmente, a configuração elétrica — seja sua ausência ou presença — determina se a célula está representando um bit "0" ou "1". A imagem subsequente mostra uma célula no estado "apagado", caracterizado pela livre circulação de elétrons entre os terminais.
 
 ![Estado apagado de uma célula NAND](/assets/posts/analise-e-decodificacao-flash/flash-cell-erased.svg)
 *Célula NAND no estado "apagado"*

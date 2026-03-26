@@ -157,7 +157,7 @@ As operações lógicas realizadas pelas portas lógicas descritas seguem a segu
 </div>
 <BR/>
 
-Porém você nunca sabe especificamente qual porta irá usar em qual posição do FPGA. Por essa dúvida, seria nescessário cada `bloco` do FPGA conter todos os tipos básicos de portas lógicas para que na hora de ligar, pudesse escolher a porta correta. Isso tornaria o chip ineficiente pois de N portas que um bloco teria, você apenas usaria uma.
+Porém você nunca sabe especificamente qual porta irá usar em qual posição do FPGA. Por essa dúvida, seria necessário cada `bloco` do FPGA conter todos os tipos básicos de portas lógicas para que na hora de ligar, pudesse escolher a porta correta. Isso tornaria o chip ineficiente pois de N portas que um bloco teria, você apenas usaria uma.
 
 Felizmente o FPGA não usa portas lógicas na sua maneira primitiva. Ao invés disso ele usa uma "porta programável" feita com um circuito lógico chamado **multiplexador**.
 
@@ -513,13 +513,13 @@ Existe outro processo de geração que usam linguagens de mais alto nível (por 
 
 No processo de compilação, ou melhor dizendo, sintetização (que é o termo adequado pra esse processo) um código escrito em HDL se torna uma netlist que será usada para construção do que será o código que ficará na memória do FPGA. Neste processo as entradas e saídas da netlist tem nomes simbólicos que apontam para alguma entrada/saída do chip. A netlist é agnóstica a esses nomes e eles só representaram algo significativo para os processos finais da síntese.
 
-Neste passo são feitas várias otimizações do circuito lógico para que haja o mínimo possível de nós na netlist. Algumas dessas otimizações podem ser feitas assumindo algum FPGA especifico (pelo tamanho de sua LUT). Após a netlist pronta, as ferramentas deverão "achar um jeito de encaixar" o netlist no FPGA alvo. Este passo é chamado Place & Route (Colocar e Rotear)
+Neste passo são feitas várias otimizações do circuito lógico para que haja o mínimo possível de nós na netlist. Algumas dessas otimizações podem ser feitas assumindo algum FPGA específico (pelo tamanho de sua LUT). Após a netlist pronta, as ferramentas deverão "achar um jeito de encaixar" o netlist no FPGA alvo. Este passo é chamado Place & Route (Colocar e Rotear)
 
 # Place & Route
 
 O processo de place & route é muito similar a quando um engenheiro desenha uma placa de circuito impresso. Você coloca os componentes na placa e liga os fios entre eles. Dependendo do circuito isto pode ser fácil ou difícil. Imagine que quanto mais espaço da placa seus componentes ocupar, mais difícil é de achar um caminho para todas suas trilhas. O mesmo ocorre com o FPGA.
 
-Este passo é **sempre** especifico do FPGA de destino, onde parâmetro como linhas globais de clock, tamanho de LUT e posição de LUT são levadas em conta. Além disso, algumas ferramentas permitem colocar restrições nos parâmetro de delay, clock mínimo e tensão elétrica para as rotas. Com todas essas informações, o programa de Place & Route irá tentar achar uma configuração válida para aquele FPGA.
+Este passo é **sempre** específico do FPGA de destino, onde parâmetro como linhas globais de clock, tamanho de LUT e posição de LUT são levadas em conta. Além disso, algumas ferramentas permitem colocar restrições nos parâmetro de delay, clock mínimo e tensão elétrica para as rotas. Com todas essas informações, o programa de Place & Route irá tentar achar uma configuração válida para aquele FPGA.
 
 Dependendo da complexidade do projeto, o tempo pode ser desde alguns segundos até alguns dias. Além disso pode também não ser possível rotear o seu código no FPGA destino, mesmo que este não ocupe o FPGA inteiro!
 
