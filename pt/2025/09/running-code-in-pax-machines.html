@@ -21,40 +21,94 @@
 
   <!-- Global -->
   <link rel="canonical" href="https://lucasteske.dev/pt/2025/09/running-code-in-pax-machines">
-  <meta name="generator" property="generator" content="Jekyll v4.4.1">
-  <meta name="author" property="author" content="Lucas Teske">
-  <meta name="description" property="description" content="Disclaimer Todos os procedimentos descritos aqui foram feitos com material disponível publicamente - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos. As máquinas de pagamento...">
+  <meta name="generator" content="Jekyll v4.4.1">
+  <meta name="author" content="Lucas Teske">
+  <meta name="description" content="Disclaimer Todos os procedimentos descritos aqui foram feitos com material disponível publicamente - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos. As máquinas de pagamento...">
   
   <meta name="keywords" content="Flash, PAX, Hardware Hacking, RE, Reverse Engineering, D177, D188, Minizinha, Moderninha, Smart, Sunmi, TecToy, Transire, Megahunt, MH1903, Air105, LuatOS">
   
+
+  <!-- Pagination -->
+  
+  <link rel="prev" href="https://lucasteske.dev/2024/01/tpm-2-extraindo-chaves-bitlocker">
+  
+
+  <!-- Hreflang (multilingual) -->
+  
+  
+  <link rel="alternate" hreflang="en" href="https://lucasteske.dev/2025/09/running-code-in-pax-machines">
+  <link rel="alternate" hreflang="pt" href="https://lucasteske.dev/pt/2025/09/running-code-in-pax-machines">
+  <link rel="alternate" hreflang="x-default" href="https://lucasteske.dev/2025/09/running-code-in-pax-machines">
+
   <!-- Open Graph -->
-  <meta name="og:locale" property="og:locale" content="pt">
-  <meta name="og:type" property="og:type" content="article">
-  <meta name="og:title" property="og:title" content="Rodando código em uma máquina de cartão de crédito PAX (parte 1) | Lets Hack It">
-  <meta name="og:url" property="og:url" content="https://lucasteske.dev/pt/2025/09/running-code-in-pax-machines">
-  <meta name="og:image" property="og:image" content="https://lucasteske.dev/assets/Running code in a PAX Credit Card Payment Machine/7383f9c5e7832856c90b25549fb08115_MD5.jpeg">
-  <meta name="og:site_name" property="og:site_name" content="Lets Hack It">
-  <meta name="og:description" property="og:description" content="Disclaimer Todos os procedimentos descritos aqui foram feitos com material disponível publicamente - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos. As máquinas de pagamento...">
+  <meta property="og:locale" content="pt">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Rodando código em uma máquina de cartão de crédito PAX (parte 1) | Lets Hack It">
+  <meta property="og:url" content="https://lucasteske.dev/pt/2025/09/running-code-in-pax-machines">
+  <meta property="og:site_name" content="Lets Hack It">
+  <meta property="og:description" content="Disclaimer Todos os procedimentos descritos aqui foram feitos com material disponível publicamente - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos. As máquinas de pagamento...">
+  <meta property="og:image" content="https://lucasteske.dev/assets/Running code in a PAX Credit Card Payment Machine/7383f9c5e7832856c90b25549fb08115_MD5.jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
 
   <!-- Article -->
-  <meta name="article:author" property="article:author" content="https://www.facebook.com/teskeslab">
-  <meta name="article:publisher" property="article:publisher" content="https://www.facebook.com/teskeslab">
-  <meta name="article:published_time" property="article:published_time" content="2025-09-05T16:30:00-03:00">
+  
+  <meta property="article:author" content="https://www.facebook.com/teskeslab">
+  <meta property="article:publisher" content="https://www.facebook.com/teskeslab">
+  <meta property="article:published_time" content="2025-09-05T19:30:00+00:00">
+  <meta property="article:modified_time" content="2025-09-05T19:30:00+00:00">
+  
+  
+  <meta property="article:tag" content="Flash">
+  
+  <meta property="article:tag" content="PAX">
+  
+  <meta property="article:tag" content="Hardware Hacking">
+  
+  <meta property="article:tag" content="RE">
+  
+  <meta property="article:tag" content="Reverse Engineering">
+  
+  <meta property="article:tag" content="D177">
+  
+  <meta property="article:tag" content="D188">
+  
+  <meta property="article:tag" content="Minizinha">
+  
+  <meta property="article:tag" content="Moderninha">
+  
+  <meta property="article:tag" content="Smart">
+  
+  <meta property="article:tag" content="Sunmi">
+  
+  <meta property="article:tag" content="TecToy">
+  
+  <meta property="article:tag" content="Transire">
+  
+  <meta property="article:tag" content="Megahunt">
+  
+  <meta property="article:tag" content="MH1903">
+  
+  <meta property="article:tag" content="Air105">
+  
+  <meta property="article:tag" content="LuatOS">
+  
+  
 
   <!-- Facebook -->
-  <meta name="fb:admins" property="fb:admins" content="1234">
-  <meta name="fb:app_id" property="fb:app_id" content="1209208119176770">
+  <meta property="fb:app_id" content="1209208119176770">
 
   <!-- Twitter -->
-  <meta name="twitter:card" property="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" property="twitter:title" content="Rodando código em uma máquina de cartão de crédito PAX (parte 1) | Lets Hack It">
-  <meta name="twitter:site" property="twitter:site" content="@lucasteske">
-  <meta name="twitter:creator" property="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" property="twitter:description" content="Disclaimer Todos os procedimentos descritos aqui foram feitos com material disponível publicamente - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos. As máquinas de pagamento...">
-  <meta name="twitter:image" property="twitter:image" content="https://lucasteske.dev/assets/Running code in a PAX Credit Card Payment Machine/7383f9c5e7832856c90b25549fb08115_MD5.jpeg">
-  <meta name="twitter:image:alt" property="twitter:image:alt" content="Disclaimer Todos os procedimentos descritos aqui foram feitos com material disponível publicamente - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos. As máquinas de pagamento...">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Rodando código em uma máquina de cartão de crédito PAX (parte 1) | Lets Hack It">
+  <meta name="twitter:site" content="@lucasteske">
+  <meta name="twitter:creator" content="@lucasteske">
+  <meta name="twitter:description" content="Disclaimer Todos os procedimentos descritos aqui foram feitos com material disponível publicamente - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos. As máquinas de pagamento...">
+  <meta name="twitter:image" content="https://lucasteske.dev/assets/Running code in a PAX Credit Card Payment Machine/7383f9c5e7832856c90b25549fb08115_MD5.jpeg">
+  <meta name="twitter:image:alt" content="Disclaimer Todos os procedimentos descritos aqui foram feitos com material disponível publicamente - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos. As máquinas de pagamento...">
 
-  <!-- JSON LD -->
+  <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -62,14 +116,17 @@
     "url": "https://lucasteske.dev/pt/2025/09/running-code-in-pax-machines",
     "name": "Rodando código em uma máquina de cartão de crédito PAX (parte 1) | Lets Hack It",
     "headline": "Rodando código em uma máquina de cartão de crédito PAX (parte 1) | Lets Hack It",
-    "keywords": "Flash,PAX,Hardware Hacking,RE,Reverse Engineering,D177,D188,Minizinha,Moderninha,Smart,Sunmi,TecToy,Transire,Megahunt,MH1903,Air105,LuatOS",
+    "keywords": ["Flash","PAX","Hardware Hacking","RE","Reverse Engineering","D177","D188","Minizinha","Moderninha","Smart","Sunmi","TecToy","Transire","Megahunt","MH1903","Air105","LuatOS"],
+    "inLanguage": "pt",
     "description": "Disclaimer Todos os procedimentos descritos aqui foram feitos com material disponível publicamente - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos. As máquinas de pagamento...",
     "articleBody": "Disclaimer Todos os procedimentos descritos aqui foram feitos com material disponível publicamente - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos. As máquinas de pagamento com cartão de crédito no Brasil geralmente estão no estado da arte em relação às medidas de segurança. Lembro-me uma vez que um funcionário da Elavon me disse que o Brasil recebeu todos os primeiros lançamentos de máquinas e sistemas de pagamento. Quando perguntei por que, ele disse: as fraudes no Brasil são sofisticadas o suficiente, que se o sistema for seguro o suficiente para o Brasil, funciona em qualquer lugar do mundo. No futuro, farei um artigo sobre as medidas de segurança que tanto a MegaHunt, quanto a PAX e as empresas brasileiras implementam em suas máquinas para evitar que os sistemas sejam adulterados. Se você estiver compartilhando / comentando sobre este artigo, por favor coloque o mesmo aviso de isenção de responsabilidade lá. Não me importo de usar as informações aqui para fazer novos artigos, mas o Brasil sofre muito com fake news (especialmente envolvendo hardware de segurança...",
-    "datePublished": "2025-09-05 16:30:00 -0300",
-    "dateModified": "2025-09-05 16:30:00 -0300",
+    "datePublished": "2025-09-05 19:30:00 +0000",
+    "dateModified": "2025-09-05 19:30:00 +0000",
     "author": {
       "@type": "Person",
+      "@id": "https://lucasteske.dev",
       "name": "Lucas Teske",
+      "url": "https://lucasteske.dev",
       "email": "letshackit@nvx.li"
     },
     "publisher": {
@@ -80,7 +137,7 @@
         "@type": "ImageObject",
         "width": 32,
         "height": 32,
-        "url": "https://lucasteske.dev/icon/favicon.ico"
+        "url": "https://lucasteske.dev/assets/favicon-32x32.png"
       }
     },
     "mainEntityOfPage": {
@@ -94,9 +151,17 @@
   }
   </script>
 
+  <!-- DNS prefetch for external resources -->
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
+  <link rel="dns-prefetch" href="//static.cloudflareinsights.com">
+  <link rel="dns-prefetch" href="//www.googletagmanager.com">
+
   <!-- CSS -->
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
   <link rel="stylesheet" href="/assets/theme.css">
   <link rel="stylesheet" href="/assets/flag-icon.min.css">
 
@@ -109,7 +174,7 @@
   <link rel="shortcut icon" href="/assets/favicon.ico">
   <meta name="msapplication-TileColor" property="msapplication-TileColor" content="#da532c">
   <meta name="msapplication-config" property="msapplication-config" content="/assets/browserconfig.xml">
-  <meta name="theme-color" property="theme-color" content="#ffffff">
+  <meta name="theme-color" property="theme-color" content="#020202">
 
   <!-- Custom Scripts -->
   <script async src="/assets/syntaxhighlighter.min.js"></script>
@@ -133,25 +198,24 @@
 </head>
 
   <body>
-    <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&amp;version=v4.0&amp;appId=1209208119176770&amp;autoLogAppEvents=1"></script>
-    <div class="like-box">
-      <div class="fb-like" data-href="https://lucasteske.dev/pt/2025/09/running-code-in-pax-machines" data-width="" data-layout="box_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
-    </div>
     <a href="https://github.com/racerxdl/letshackit" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#70B7FD; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
     <main class="site">
       
-<br>
-<img src="/assets/cropped-logo.png" style="margin-left: auto; margin-right: auto;">
-<ul class="language-bar">
-  
-  
-  <a class="link-pt flag-icon flag-icon-us" href="/2025/09/running-code-in-pax-machines"></a>
-  <a class="link-en flag-icon flag-icon-br" href="/pt/2025/09/running-code-in-pax-machines"></a>
-</ul>
-<nav class="nav">
-  <div class="nav-container" style="height: 50px">
-    <ul class="navul">
+<nav class="nav-header">
+  <div class="nav-header-inner">
+    <a class="nav-brand" href="/pt/">
+      <img src="/assets/cropped-logo.png" alt="Logo">
+    </a>
+    <div style="display:flex;align-items:center;gap:0.5rem;">
+      <ul class="language-bar">
+        
+        
+        <li><a class="link-pt flag-icon flag-icon-us" href="/2025/09/running-code-in-pax-machines" aria-label="English"></a></li>
+        <li><a class="link-en flag-icon flag-icon-br" href="/pt/2025/09/running-code-in-pax-machines" aria-label="Português"></a></li>
+      </ul>
+      <button class="nav-hamburger" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    </div>
+    <ul class="navul" id="nav-menu">
       <li><a href="/pt/">Home</a></li>
     
       <li><a href="/pt/donate">Doação</a></li>
@@ -165,6 +229,7 @@
     </ul>
   </div>
 </nav>
+
 <div class="social-icon">
   <ul>
     <li class="btn-a btn-svg btn-twitch">
@@ -203,7 +268,6 @@
         @racerxdl
       </a>
     </li>
-<br>
     <li class="btn-a btn-svg btn-youtube">
       <a href="https://www.youtube.com/c/TeskesLab">
         <svg role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><title>YouTube icon</title>
@@ -254,7 +318,6 @@
         racerxdl
       </a>
     </li>
-<br>
     <li class="btn-a btn-svg btn-telegram">
       <a href="https://t.me/hardwareHackingBrasil">
         <svg role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><title>Telegram icon</title>
@@ -285,9 +348,22 @@
   </ul>
 </div>
 <div class="search-input">
-  <input type="text" id="search-input" style="margin: 0 auto;" placeholder="Procurar por conteúdo">
+  <input type="text" id="search-input" placeholder="Procurar por conteúdo">
 </div>
 <ul id="results-container" class="results-container"></ul>
+
+<script>
+  (function() {
+    var toggle = document.getElementById('nav-toggle');
+    var menu   = document.getElementById('nav-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        var open = menu.classList.toggle('nav-open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    }
+  })();
+</script>
 
       
 
@@ -309,7 +385,7 @@
 
     
       <br>
-      <span>em </span><time datetime="2025-09-05 16:30:00 -0300">
+      <span>em </span><time datetime="2025-09-05 19:30:00 +0000">
   5
   
   Setembro
@@ -334,7 +410,7 @@
 
 <p>Este artigo está meio incompleto. Ainda vou publicar a engenharia reversa do boot rom e como criei um emulador para mapear melhor o que os firmwares fazem. Aqui eu apenas menciono brevemente que fiz um emulador e acho que isso merece seu próprio artigo. Vou atualizar esta nota inicial quando eles forem publicados.</p>
 
-<p>Eu quero agradecer ao <a href="https://www.linkedin.com/in/gutem/">Gutem</a> e ao <a href="https://www.instagram.com/penegui">Penegui</a> por uma revisão técnica rapida do conteúdo do artigo, e a Pag, a qual deu uma resposta super rápida e amigável quando enviei este artigo a eles. Uma pequena linha do tempo de como rolou o processo está no fim da pagina.</p>
+<p>Eu quero agradecer ao <a href="https://www.linkedin.com/in/gutem/">Gutem</a> e ao <a href="https://www.instagram.com/penegui">Penegui</a> por uma revisão técnica rápida do conteúdo do artigo, e a Pag, a qual deu uma resposta super rápida e amigável quando enviei este artigo a eles. Uma pequena linha do tempo de como rolou o processo está no fim da página.</p>
 
 <h2 id="máquinas-de-pagamento-com-cartão-de-crédito">Máquinas de pagamento com cartão de crédito</h2>
 
@@ -370,7 +446,7 @@
   <li>Vou manter como está, para poder ter um modelo de referência para os estudos.</li>
 </ol>
 
-<p>Nesse cenário especifico, eu apenas queria rodar DOOM nela. Por que, se compute, ela precisa de DOOM.</p>
+<p>Nesse cenário específico, eu apenas queria rodar DOOM nela. Por que, se compute, ela precisa de DOOM.</p>
 
 <p>Baseado nas minhas experiencias anteriores fazendo engenharia reversa nestas maquinas, eu já sabia o que esperar. Este artigo é apenas um resumo do caminho (dado que levei alguns anos pra chegar ao estado atual) que me lembro que segui. Então o que eu estava esperando era basicamente isso:</p>
 
@@ -387,7 +463,7 @@
   <li>Muita frustração</li>
 </ol>
 
-<p>Eu podia seguir dois caminhos: exploitar o código que roda, ou trocar a CPU. Para exploitar, eu teria que achar uma falha de segurança que permitisse execução de código via Bluetooth, SmartCard, NFC ou USB, dado que estas são as únicas interfaces disponíveis. Para isso, eu teria que ter todo código, e como vocês vão ver mais pra frente, para está maquina em especifico, isso não era exatamente possível.</p>
+<p>Eu podia seguir dois caminhos: exploitar o código que roda, ou trocar a CPU. Para exploitar, eu teria que achar uma falha de segurança que permitisse execução de código via Bluetooth, SmartCard, NFC ou USB, dado que estas são as únicas interfaces disponíveis. Para isso, eu teria que ter todo código, e como vocês vão ver mais pra frente, para esta máquina em específico, isso não era exatamente possível.</p>
 
 <p>Segundo jeito era basicamente ver qual CPU estava na placa, comprar uma nova e trocar. O problema mesmo, é achar a CPU pra vender.</p>
 
@@ -465,7 +541,7 @@
   <li>Serial: 4</li>
 </ul>
 
-<p>Como vocês podem ver, essa versão tem uma memória flash inteira, o que é uma pena pra mim. Ainda estou montando meu equipamento para inspeções diretas no chip. Eu já fiz alguns decaps, e a memória flash não está embutida no mesmo silício, mas apenas colada em cima do chip principal e ligada através de fios. Eu ouvi alguns amigos da industria de semicondutores dizer, que a razão disso é que o processo de fabricação entre memórias flash e CPUs diferente um pouco e é difícil unificar ambos. Por isso, geralmente é preferível faze-los separados (especialmente caso precise de uma densidade muito alta).</p>
+<p>Como vocês podem ver, essa versão tem uma memória flash inteira, o que é uma pena pra mim. Ainda estou montando meu equipamento para inspeções diretas no chip. Eu já fiz alguns decaps, e a memória flash não está embutida no mesmo silício, mas apenas colada em cima do chip principal e ligada através de fios. Eu ouvi alguns amigos da indústria de semicondutores dizer, que a razão disso é que o processo de fabricação entre memórias flash e CPUs diferente um pouco e é difícil unificar ambos. Por isso, geralmente é preferível fazê-los separados (especialmente caso precise de uma densidade muito alta).</p>
 
 <p>Uma coisa pra se notar, as versões BGA do SoC não tem memória flash embutida, então elas são obrigadas a carregar de uma flash externa. Spoiler: A D188 tem duas memórias flash na placa :)</p>
 
@@ -749,7 +825,7 @@ Pra aqueles (como eu) que estão enferrujados no Chines, o texto acima basicamen
 
 <p>Então eu investiguei um pouco mais a bootrom (ainda vou postar detalhes da engenharia reversa da bootrom desse chip) e notei que o que acontece é: Quando o VBAT33 cai para baixo de 2.3V, ele aciona um tamper na CPU. O jeito que a CPU lida com esse tamper, é basicamente se resetar, o que apaga a NVRAM e seta alguns registradores que podem ser lidos pela bootrom ou pela aplicação. Então basicamente, o botão de reset do AIR105 é um botão de tamper 😆</p>
 
-<p>Olhando na PCB da D177, não há nenhum testpad especifico para atuar como reset, mas geralmente para evitar que a bateria seja usada quando existe energia externa, colocam um diodo em série com ela a maneira de isolar ela. Posso soldar um fio nesse diodo para usar como reset. Seguindo os traços na PCB, achei um diodo na borda da placa.</p>
+<p>Olhando na PCB da D177, não há nenhum testpad específico para atuar como reset, mas geralmente para evitar que a bateria seja usada quando existe energia externa, colocam um diodo em série com ela a maneira de isolar ela. Posso soldar um fio nesse diodo para usar como reset. Seguindo os traços na PCB, achei um diodo na borda da placa.</p>
 
 <p><img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/ea6eb39aabf1f914c71bda9f6eb79907_MD5.jpeg" alt=""></p>
 
@@ -942,9 +1018,6 @@ data += 4; \
 
 
   <hr>
-<div class="fb-comments" data-href="https://lucasteske.dev/pt/2025/09/running-code-in-pax-machines" data-width="100%" data-numposts="5"></div>
-
-<hr>
 <div class="sharebuttons">
   <ul>
     <li>
@@ -993,10 +1066,10 @@ data += 4; \
 
     <footer>
   <span>
-    © <time datetime="2025-09-07 14:47:29 -0300">2025</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 18:39:18 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2025-09-07 14:47:29 -0300
+    Last build: 2026-03-26 18:39:18 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">
@@ -1008,7 +1081,7 @@ data += 4; \
     searchInput: document.getElementById('search-input'),
     resultsContainer: document.getElementById('results-container'),
     json: '/search.json',
-    searchResultTemplate: '<li><a href="https://lucasteske.dev{url}">{date} - {title}</a></li>'
+    searchResultTemplate: '<li><a href="https://lucasteske.dev{url}">{date} - <strong>{title}</strong></a></li>'
   })
 </script>
 

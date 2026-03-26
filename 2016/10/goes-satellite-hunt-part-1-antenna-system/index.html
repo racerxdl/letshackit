@@ -21,40 +21,82 @@
 
   <!-- Global -->
   <link rel="canonical" href="https://lucasteske.dev/2016/10/goes-satellite-hunt-part-1-antenna-system/">
-  <meta name="generator" property="generator" content="Jekyll v4.4.1">
-  <meta name="author" property="author" content="Lucas Teske">
-  <meta name="description" property="description" content="So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that’s reachable in São Paulo) with a good SNR (enough to decode) and them make all the toolkit to demodulate, decode and output the images and other data...">
+  <meta name="generator" content="Jekyll v4.4.1">
+  <meta name="author" content="Lucas Teske">
+  <meta name="description" content="So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that’s reachable in São Paulo) with a good SNR (enough to decode) and then make all the tools to demodulate, decode and output the images and other data...">
   
   <meta name="keywords" content="Airspy, EMWIN, English, GOES, Hearsat, LRIT, RE, Reverse Engineering, Sat, Satellite, SDR">
   
+
+  <!-- Pagination -->
+  
+  <link rel="prev" href="https://lucasteske.dev/2016/07/new-way-to-measure-filters-and-my-new-filter/">
+  <link rel="next" href="https://lucasteske.dev/2016/10/goes-satellite-hunt-part-2-demodulator/">
+
+  <!-- Hreflang (multilingual) -->
+  
+  
+  <link rel="alternate" hreflang="en" href="https://lucasteske.dev/2016/10/goes-satellite-hunt-part-1-antenna-system/">
+  <link rel="alternate" hreflang="pt" href="https://lucasteske.dev/pt/2016/10/goes-satellite-hunt-part-1-antenna-system/">
+  <link rel="alternate" hreflang="x-default" href="https://lucasteske.dev/2016/10/goes-satellite-hunt-part-1-antenna-system/">
+
   <!-- Open Graph -->
-  <meta name="og:locale" property="og:locale" content="en">
-  <meta name="og:type" property="og:type" content="article">
-  <meta name="og:title" property="og:title" content="GOES Satellite Hunt (Part 1 – Antenna System) | Lets Hack It">
-  <meta name="og:url" property="og:url" content="https://lucasteske.dev/2016/10/goes-satellite-hunt-part-1-antenna-system/">
-  <meta name="og:image" property="og:image" content="https://lucasteske.dev/wp-content/uploads/2016/10/Sem-título.png">
-  <meta name="og:site_name" property="og:site_name" content="Lets Hack It">
-  <meta name="og:description" property="og:description" content="So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that’s reachable in São Paulo) with a good SNR (enough to decode) and them make all the toolkit to demodulate, decode and output the images and other data...">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="GOES Satellite Hunt (Part 1 – Antenna System) | Lets Hack It">
+  <meta property="og:url" content="https://lucasteske.dev/2016/10/goes-satellite-hunt-part-1-antenna-system/">
+  <meta property="og:site_name" content="Lets Hack It">
+  <meta property="og:description" content="So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that’s reachable in São Paulo) with a good SNR (enough to decode) and then make all the tools to demodulate, decode and output the images and other data...">
+  <meta property="og:image" content="https://lucasteske.dev/wp-content/uploads/2016/10/Sem-título.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
 
   <!-- Article -->
-  <meta name="article:author" property="article:author" content="https://www.facebook.com/teskeslab">
-  <meta name="article:publisher" property="article:publisher" content="https://www.facebook.com/teskeslab">
-  <meta name="article:published_time" property="article:published_time" content="2016-10-18T20:24:40-02:00">
+  
+  <meta property="article:author" content="https://www.facebook.com/teskeslab">
+  <meta property="article:publisher" content="https://www.facebook.com/teskeslab">
+  <meta property="article:published_time" content="2016-10-18T22:24:40+00:00">
+  <meta property="article:modified_time" content="2016-10-18T22:24:40+00:00">
+  
+  
+  <meta property="article:tag" content="Airspy">
+  
+  <meta property="article:tag" content="EMWIN">
+  
+  <meta property="article:tag" content="English">
+  
+  <meta property="article:tag" content="GOES">
+  
+  <meta property="article:tag" content="Hearsat">
+  
+  <meta property="article:tag" content="LRIT">
+  
+  <meta property="article:tag" content="RE">
+  
+  <meta property="article:tag" content="Reverse Engineering">
+  
+  <meta property="article:tag" content="Sat">
+  
+  <meta property="article:tag" content="Satellite">
+  
+  <meta property="article:tag" content="SDR">
+  
+  
 
   <!-- Facebook -->
-  <meta name="fb:admins" property="fb:admins" content="1234">
-  <meta name="fb:app_id" property="fb:app_id" content="1209208119176770">
+  <meta property="fb:app_id" content="1209208119176770">
 
   <!-- Twitter -->
-  <meta name="twitter:card" property="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" property="twitter:title" content="GOES Satellite Hunt (Part 1 – Antenna System) | Lets Hack It">
-  <meta name="twitter:site" property="twitter:site" content="@lucasteske">
-  <meta name="twitter:creator" property="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" property="twitter:description" content="So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that’s reachable in São Paulo) with a good SNR (enough to decode) and them make all the toolkit to demodulate, decode and output the images and other data...">
-  <meta name="twitter:image" property="twitter:image" content="https://lucasteske.dev/wp-content/uploads/2016/10/Sem-título.png">
-  <meta name="twitter:image:alt" property="twitter:image:alt" content="So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that’s reachable in São Paulo) with a good SNR (enough to decode) and them make all the toolkit to demodulate, decode and output the images and other data...">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GOES Satellite Hunt (Part 1 – Antenna System) | Lets Hack It">
+  <meta name="twitter:site" content="@lucasteske">
+  <meta name="twitter:creator" content="@lucasteske">
+  <meta name="twitter:description" content="So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that’s reachable in São Paulo) with a good SNR (enough to decode) and then make all the tools to demodulate, decode and output the images and other data...">
+  <meta name="twitter:image" content="https://lucasteske.dev/wp-content/uploads/2016/10/Sem-título.png">
+  <meta name="twitter:image:alt" content="So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that’s reachable in São Paulo) with a good SNR (enough to decode) and then make all the tools to demodulate, decode and output the images and other data...">
 
-  <!-- JSON LD -->
+  <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -62,14 +104,17 @@
     "url": "https://lucasteske.dev/2016/10/goes-satellite-hunt-part-1-antenna-system/",
     "name": "GOES Satellite Hunt (Part 1 &#8211; Antenna System) | Lets Hack It",
     "headline": "GOES Satellite Hunt (Part 1 &#8211; Antenna System) | Lets Hack It",
-    "keywords": "Airspy,EMWIN,English,GOES,Hearsat,LRIT,RE,Reverse Engineering,Sat,Satellite,SDR",
-    "description": "So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that’s reachable in São Paulo) with a good SNR (enough to decode) and them make all the toolkit to demodulate, decode and output the images and other data...",
-    "articleBody": "So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that’s reachable in São Paulo) with a good SNR (enough to decode) and them make all the toolkit to demodulate, decode and output the images and other data they send. I wanted a high-res image, and the L-Band transmissions usually provide that (GOES for example is 1km/px with whole earth sphere in frame. A 10000 x 10000 pixels image) So I choose GOES over other Weather Satellites mainly because GOES is a Geostationary Satellite. That means its position never change. That was needed for me, because L Band usually needs a relatively big dish to capture the signal, and if the satellite is moving, the antenna needs to track it. That means: Alt-Az tracker (or something else) that will be most likely more expensive than the whole capture system (at least in Brazil). Since GOES does not move, I could just point my dish and forget about it. It would always capture the signal. So first things first. What dish should I get? I found some people in twitter ( More specific @USASatcom and @uhf_satcom and just for...",
-    "datePublished": "2016-10-18 20:24:40 -0200",
-    "dateModified": "2016-10-18 20:24:40 -0200",
+    "keywords": ["Airspy","EMWIN","English","GOES","Hearsat","LRIT","RE","Reverse Engineering","Sat","Satellite","SDR"],
+    "inLanguage": "en",
+    "description": "So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that’s reachable in São Paulo) with a good SNR (enough to decode) and then make all the tools to demodulate, decode and output the images and other data...",
+    "articleBody": "So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that’s reachable in São Paulo) with a good SNR (enough to decode) and then make all the tools to demodulate, decode and output the images and other data they send. I wanted a high-res image, and the L-Band transmissions usually provide that (GOES for example is 1km/px with whole earth sphere in frame. A 10000 x 10000 pixels image) So I choose GOES over other Weather Satellites mainly because GOES is a Geostationary Satellite. That means its position never change. That was needed for me, because L Band usually needs a relatively big dish to capture the signal, and if the satellite is moving, the antenna needs to track it. That means: Alt-Az tracker (or something else) that will be most likely more expensive than the whole capture system (at least in Brazil). Since GOES does not move, I could just point my dish and forget about it. It would always capture the signal. So first things first. What dish should I get? I found some people in twitter ( More specific @USASatcom and @uhf_satcom and just for...",
+    "datePublished": "2016-10-18 22:24:40 +0000",
+    "dateModified": "2016-10-18 22:24:40 +0000",
     "author": {
       "@type": "Person",
+      "@id": "https://lucasteske.dev",
       "name": "Lucas Teske",
+      "url": "https://lucasteske.dev",
       "email": "letshackit@nvx.li"
     },
     "publisher": {
@@ -80,7 +125,7 @@
         "@type": "ImageObject",
         "width": 32,
         "height": 32,
-        "url": "https://lucasteske.dev/icon/favicon.ico"
+        "url": "https://lucasteske.dev/assets/favicon-32x32.png"
       }
     },
     "mainEntityOfPage": {
@@ -94,9 +139,17 @@
   }
   </script>
 
+  <!-- DNS prefetch for external resources -->
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
+  <link rel="dns-prefetch" href="//static.cloudflareinsights.com">
+  <link rel="dns-prefetch" href="//www.googletagmanager.com">
+
   <!-- CSS -->
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
   <link rel="stylesheet" href="/assets/theme.css">
   <link rel="stylesheet" href="/assets/flag-icon.min.css">
 
@@ -109,7 +162,7 @@
   <link rel="shortcut icon" href="/assets/favicon.ico">
   <meta name="msapplication-TileColor" property="msapplication-TileColor" content="#da532c">
   <meta name="msapplication-config" property="msapplication-config" content="/assets/browserconfig.xml">
-  <meta name="theme-color" property="theme-color" content="#ffffff">
+  <meta name="theme-color" property="theme-color" content="#020202">
 
   <!-- Custom Scripts -->
   <script async src="/assets/syntaxhighlighter.min.js"></script>
@@ -133,25 +186,24 @@
 </head>
 
   <body>
-    <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&amp;version=v4.0&amp;appId=1209208119176770&amp;autoLogAppEvents=1"></script>
-    <div class="like-box">
-      <div class="fb-like" data-href="https://lucasteske.dev/2016/10/goes-satellite-hunt-part-1-antenna-system/" data-width="" data-layout="box_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
-    </div>
     <a href="https://github.com/racerxdl/letshackit" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#70B7FD; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
     <main class="site">
       
-<br>
-<img src="/assets/cropped-logo.png" style="margin-left: auto; margin-right: auto;">
-<ul class="language-bar">
-  
-  
-  <a class="link-pt flag-icon flag-icon-us" href="/2016/10/goes-satellite-hunt-part-1-antenna-system/"></a>
-  <a class="link-en flag-icon flag-icon-br" href="/pt/2016/10/goes-satellite-hunt-part-1-antenna-system/"></a>
-</ul>
-<nav class="nav">
-  <div class="nav-container" style="height: 50px">
-    <ul class="navul">
+<nav class="nav-header">
+  <div class="nav-header-inner">
+    <a class="nav-brand" href="/">
+      <img src="/assets/cropped-logo.png" alt="Logo">
+    </a>
+    <div style="display:flex;align-items:center;gap:0.5rem;">
+      <ul class="language-bar">
+        
+        
+        <li><a class="link-pt flag-icon flag-icon-us" href="/2016/10/goes-satellite-hunt-part-1-antenna-system/" aria-label="English"></a></li>
+        <li><a class="link-en flag-icon flag-icon-br" href="/pt/2016/10/goes-satellite-hunt-part-1-antenna-system/" aria-label="Português"></a></li>
+      </ul>
+      <button class="nav-hamburger" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    </div>
+    <ul class="navul" id="nav-menu">
       <li><a href="/">Home</a></li>
     
       <li><a href="/donate">Donate</a></li>
@@ -165,6 +217,7 @@
     </ul>
   </div>
 </nav>
+
 <div class="social-icon">
   <ul>
     <li class="btn-a btn-svg btn-twitch">
@@ -203,7 +256,6 @@
         @racerxdl
       </a>
     </li>
-<br>
     <li class="btn-a btn-svg btn-youtube">
       <a href="https://www.youtube.com/c/TeskesLab">
         <svg role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><title>YouTube icon</title>
@@ -254,7 +306,6 @@
         racerxdl
       </a>
     </li>
-<br>
     <li class="btn-a btn-svg btn-telegram">
       <a href="https://t.me/hardwareHackingBrasil">
         <svg role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><title>Telegram icon</title>
@@ -285,9 +336,22 @@
   </ul>
 </div>
 <div class="search-input">
-  <input type="text" id="search-input" style="margin: 0 auto;" placeholder="Search blog posts...">
+  <input type="text" id="search-input" placeholder="Search blog posts...">
 </div>
 <ul id="results-container" class="results-container"></ul>
+
+<script>
+  (function() {
+    var toggle = document.getElementById('nav-toggle');
+    var menu   = document.getElementById('nav-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        var open = menu.classList.toggle('nav-open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    }
+  })();
+</script>
 
       
 
@@ -309,7 +373,7 @@
 
     
       <br>
-      <span>on </span><time datetime="2016-10-18 20:24:40 -0200">
+      <span>on </span><time datetime="2016-10-18 22:24:40 +0000">
   18
   
   October
@@ -320,7 +384,7 @@
 
   <div class="post-line"></div>
 
-  <p>So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that’s reachable in São Paulo) with a good SNR (enough to decode) and them make all the toolkit to demodulate, decode and output the images and other data they send. I wanted a high-res image, and the L-Band transmissions usually provide that (GOES for example is 1km/px with whole earth sphere in frame. A 10000 x 10000 pixels image)</p>
+  <p>So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that’s reachable in São Paulo) with a good SNR (enough to decode) and then make all the tools to demodulate, decode and output the images and other data they send. I wanted a high-res image, and the L-Band transmissions usually provide that (GOES for example is 1km/px with whole earth sphere in frame. A 10000 x 10000 pixels image)</p>
 
 <p>So I choose GOES over other Weather Satellites mainly because GOES is a <strong>Geostationary</strong> Satellite. That means its position never change. That was needed for me, because L Band usually needs a relatively big dish to capture the signal, and if the satellite is moving, the antenna needs to track it. That means: Alt-Az tracker (or something else) that will be most likely more expensive than the whole capture system (at least in Brazil). Since GOES does not move, I could just point my dish and forget about it. It would always capture the signal.</p>
 
@@ -338,13 +402,13 @@
   </p>
 </div>
 
-<p>And then I found the IRC Channel called #hearsat in server StarChat ( irc.starchat.net ). So a lot of people actually helped me by giving me the information I need to take a decision over which dish antenna should I buy. They were suggesting a 1.2m offset dish (same time of the Sky, Claro, and some other TV dishes, but bigger) for receiving GOES. Sadly I couldn’t find a offset dish bigger than 90 cm here. So someone suggested that I need at least 1.5m prime focus (the “old” type of TV dishes) that should have equivalent surface area than a 1.2m offset dish. So I went to Santa Efigenia Street (people from São Paulo will recognize) and went to <a href="http://satimagem.com.br/">Sat Imagem Store</a>. Since my father and I was already friends with a seller, I asked what dishes they had to sell and said that I want something around 1.5m. He said that he has a 1.9m dish to sell.</p>
+<p>And then I found the IRC Channel called #hearsat in server StarChat ( irc.starchat.net ). So a lot of people actually helped me by giving me the information I need to take a decision over which dish antenna should I buy. They were suggesting a 1.2m offset dish (same type as the Sky, Claro, and some other TV dishes, but bigger) for receiving GOES. Sadly I couldn’t find a offset dish bigger than 90 cm here. So someone suggested that I need at least 1.5m prime focus (the “old” type of TV dishes) that should have equivalent surface area than a 1.2m offset dish. So I went to Santa Efigenia Street (people from São Paulo will recognize) and went to <a href="http://satimagem.com.br/">Sat Imagem Store</a>. Since my father and I were already friends with a seller, I asked what dishes they had to sell and said that I want something around 1.5m. He said that he has a 1.9m dish to sell.</p>
 
 <p>So I bought the dish, costed about R$200 (that’s about US$60) and also some cables and adapters.  So since I was very excited to get things working, I asked my father’s help to assemble the antenna. I arrived home about 5 PM so it was very late to assemble the antenna. So I let it for the day after.</p>
 
 <h1 id="assemble-process">Assemble Process</h1>
 
-<p>So the assemble process was sort of straightforward. It was not easy to do, but even without a manual (that did not came) you should be able to figure out what piece goes where. We were in 4 persons, we started just after lunch (about 1PM) and took us about 6 – 7 hours to get it assembled. LOL</p>
+<p>So the assemble process was sort of straightforward. It was not easy to do, but even without a manual (that did not come) you should be able to figure out what piece goes where. We were in 4 persons, we started just after lunch (about 1PM) and took us about 6 – 7 hours to get it assembled. LOL</p>
 
 <p><a title="20160825_173157" href="https://www.flickr.com/photos/energylabs/30117193780/in/album-72157674018535342/" data-flickr-embed="true"><img class="aligncenter" src="https://c5.staticflickr.com/6/5648/30117193780_c128f0ac0c_n.jpg" alt="20160825_173157" width="320" height="180"></a></p>
 
@@ -362,7 +426,7 @@
 
 <p>Dish Feed (The actual receiver)</p>
 
-<p>So I did several tries for like one month and half. The guys in #hearsat and me was struggling to find what was the reason that I couldn’t get the signal. I have all pictures of my failed feeds here: <a href="https://www.flickr.com/photos/energylabs/albums/72157675387388535">https://www.flickr.com/photos/energylabs/albums/72157675387388535</a>. I will not detail each one of the assembles of these feeds because it didn’t work. So for historical reasons as well the reason why they didn’t work is because of the illumination angle of the Helical Coils. Usually the Helix Feeds have a very narrow beam width (and high gain), this causes to only some portion of the dish to be actually used by the feed. I only discovered that when I drawed my dish in FreeCad and did some auxiliary lines to show the angles. Then I noticed that something was REALLY wrong: Only like 60cm of my dish was actually illuminated, and from this 60cm only 40cm was actually visible by the dish (we need to discount the dead center). This is the drawing I did. So mybit from hearsat suggested me a Wave Guide Feed. For those that used to hack wireless systems, this is known as CanAntenna or Cantenna. Its very simple to do and I found this calculator to get things better:</p>
+<p>So I did several tries for like one month and half. The guys in #hearsat and I were struggling to find what was the reason that I couldn’t get the signal. I have all pictures of my failed feeds here: <a href="https://www.flickr.com/photos/energylabs/albums/72157675387388535">https://www.flickr.com/photos/energylabs/albums/72157675387388535</a>. I will not detail each one of the assembles of these feeds because it didn’t work. So for historical reasons as well the reason why they didn’t work is because of the illumination angle of the Helical Coils. Usually the Helix Feeds have a very narrow beam width (and high gain), this causes to only some portion of the dish to be actually used by the feed. I only discovered that when I drew my dish in FreeCad and did some auxiliary lines to show the angles. Then I noticed that something was REALLY wrong: Only like 60cm of my dish was actually illuminated, and from this 60cm only 40cm was actually visible by the dish (we need to discount the dead center). This is the drawing I did. So mybit from hearsat suggested me a Wave Guide Feed. For those that used to hack wireless systems, this is known as CanAntenna or Cantenna. It’s very simple to do and I found this calculator to get things better:</p>
 
 <p><a href="http://www.changpuak.ch/electronics/cantenna.php">http://www.changpuak.ch/electronics/cantenna.php</a></p>
 
@@ -398,7 +462,7 @@ Wavelength λ/4 [mm] <strong>44.325</strong></p>
 
 <h1 id="the-lna-and-filter">The LNA and Filter</h1>
 
-<p>So in my failure setups I was having a REALLY huge noise from the GSM Band at 1800MHz. That was: even without any LNA I could get like 10dB of GSM signal. So mybit suggested me to use some filtering to wipe out this signal. So I bought some Lorch Filters (recommeded and sold by him) that has a center frequency of 1675MHz and 150MHz bandwidth (so from 1600 to 1750 MHz).</p>
+<p>So in my failure setups I was having a REALLY huge noise from the GSM Band at 1800MHz. That was: even without any LNA I could get like 10dB of GSM signal. So mybit suggested me to use some filtering to wipe out this signal. So I bought some Lorch Filters (recommended and sold by him) that has a center frequency of 1675MHz and 150MHz bandwidth (so from 1600 to 1750 MHz).</p>
 
 <p><a title="Lorch Filter" href="https://www.flickr.com/photos/energylabs/30414447265/in/album-72157674205924170/" data-flickr-embed="true"><img class="aligncenter" src="https://c2.staticflickr.com/6/5813/30414447265_b5267bc07a_n.jpg" alt="Lorch Filter" width="320" height="180"></a><br>
 I also bought 3 LNA4ALL (one with connectors, two without) to use in this and other projects.</p>
@@ -414,7 +478,7 @@ So if you want to build this as well, I strongly suggest to buy some LNA4ALL fro
 
 <p><a title="20160930_234628" href="https://www.flickr.com/photos/energylabs/30328137581/in/album-72157674205924170/" data-flickr-embed="true"><img class="aligncenter" src="https://c6.staticflickr.com/6/5608/30328137581_895896ba9e_n.jpg" alt="20160930_234628" width="320" height="180"></a></p>
 
-<p>And that it!</p>
+<p>And that’s it!</p>
 
 <h1 id="positioning-the-antenna">Positioning the Antenna</h1>
 
@@ -422,11 +486,11 @@ So if you want to build this as well, I strongly suggest to buy some LNA4ALL fro
 
 <p>So in the past it would been tough to position an antenna, but today we have cellphones to help everything. One application I use in Android is <a href="https://play.google.com/store/apps/details?id=com.agi.android.augmentedreality">Satellite AR</a>. Another good one is <a href="https://play.google.com/store/apps/details?id=ftl.satellitedishpointer.sdp">Pointer Antena</a>.</p>
 
-<p>Satellite AR has a preset list of Satellites (including GOES), and Pointer Antena allows you to fill with the coordinates of the satellite. Both are good and enough for positioning, just be carefull that your compass needs to be calibrated.</p>
+<p>Satellite AR has a preset list of Satellites (including GOES), and Pointer Antena allows you to fill with the coordinates of the satellite. Both are good and enough for positioning, just be careful that your compass needs to be calibrated.</p>
 
-<p>Another solution would be use <a href="http://gpredict.oz9aec.net/">GPredict</a> or <a href="http://www.stoff.pl/">Orbitron</a> to get the Elevation (The inclination in relation to ground) and Azimuth (the bearing in relation to North) angles  and position manually. I noticed that for my dish there is a working band of about 4 degrees of Azimuth and Elevation that the signal doesn’t change. I would recommend get your laptop / cellphone and hookup to the feed and check where you get the best signal.</p>
+<p>Another solution would be use <a href="http://gpredict.oz9aec.net/">GPredict</a> or <a href="http://www.stoff.pl/">Orbitron</a> to get the Elevation (The inclination in relation to ground) and Azimuth (the bearing in relation to North) angles  and position manually. I noticed that for my dish there is a working band of about 4 degrees of Azimuth and Elevation that the signal doesn’t change. I would recommend getting your laptop / cellphone and hookup to the feed and check where you get the best signal.</p>
 
-<p>Other two things that you need to care is related to the feed itself. Since we have a linear polarized feed, the rotation of the feed matters in relation to the satellite. This is less critical and I found that even 15 degrees rotation doesn’t change a lot the signal. Other thing is the focal point of the dish. You need to adjust the feed distance from the base of the dish to also get the best signal. Mine has the probe (the linear feed inside the can) in the focal point (so the can opening is far ahead). After all, you should get something like this (got with airspy, 10MHz bandwidth):</p>
+<p>Two other things that you need to care is related to the feed itself. Since we have a linear polarized feed, the rotation of the feed matters in relation to the satellite. This is less critical and I found that even 15 degrees rotation doesn’t change a lot the signal. Other thing is the focal point of the dish. You need to adjust the feed distance from the base of the dish to also get the best signal. Mine has the probe (the linear feed inside the can) in the focal point (so the can opening is far ahead). After all, you should get something like this (got with airspy, 10MHz bandwidth):</p>
 
 <p><img class="aligncenter" src="https://i.imgur.com/Xkb8JvM.png" width="1367" height="982"></p>
 
@@ -442,9 +506,6 @@ So if you want to build this as well, I strongly suggest to buy some LNA4ALL fro
 
 
   <hr>
-<div class="fb-comments" data-href="https://lucasteske.dev/2016/10/goes-satellite-hunt-part-1-antenna-system/" data-width="100%" data-numposts="5"></div>
-
-<hr>
 <div class="sharebuttons">
   <ul>
     <li>
@@ -495,10 +556,10 @@ So if you want to build this as well, I strongly suggest to buy some LNA4ALL fro
 
     <footer>
   <span>
-    © <time datetime="2025-09-07 14:47:25 -0300">2025</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 18:39:09 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2025-09-07 14:47:25 -0300
+    Last build: 2026-03-26 18:39:09 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">
@@ -510,7 +571,7 @@ So if you want to build this as well, I strongly suggest to buy some LNA4ALL fro
     searchInput: document.getElementById('search-input'),
     resultsContainer: document.getElementById('results-container'),
     json: '/search.json',
-    searchResultTemplate: '<li><a href="https://lucasteske.dev{url}">{date} - {title}</a></li>'
+    searchResultTemplate: '<li><a href="https://lucasteske.dev{url}">{date} - <strong>{title}</strong></a></li>'
   })
 </script>
 

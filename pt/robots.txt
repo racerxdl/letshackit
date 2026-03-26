@@ -1,2 +1,7 @@
 User-agent: *
+Allow: /
+Disallow: /wp-content/
+Disallow: /assets/
+Crawl-delay: 1
+
 Sitemap: https://lucasteske.dev/sitemap_index.xml
