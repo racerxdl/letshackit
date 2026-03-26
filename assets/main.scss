@@ -212,6 +212,7 @@ table.truth .tv { color: #00ff41; font-weight: bold; }
 
 /* ─── Transparent-background images ─────────────────────────────────────── */
 /* Wrap images in the same glass style so transparent-BG assets are legible. */
+.post img,
 .post-content img,
 article img {
   background: rgba(200, 240, 200, 0.08);
