@@ -29,8 +29,8 @@ jobs:
         rm Gemfile.lock
         git checkout gh-pages
         cp -Rv ../site_temp/* .
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
+        git config --local user.email "teskeslab@lucasteske.dev"
+        git config --local user.name "MisterMaluco"
         git commit -a -m "Site updated at `date`"
     - name: Push changes
       uses: ad-m/github-push-action@master
