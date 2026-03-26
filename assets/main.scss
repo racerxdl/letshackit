@@ -185,7 +185,35 @@ table.truth .tv { color: #00ff41; font-weight: bold; }
 
 .latex svg { max-width: 100%; }
 
-/* ─── WaveDrom waveforms ─────────────────────────────────────────────────── */
+/* ─── WordPress legacy caption divs (.wp-caption) ───────────────────────── */
+/* Old WP exports embed <div class="wp-caption" style="width: Xpx"> — override
+   the inline width so images are responsive and centered on the dark theme.  */
+.wp-caption {
+  max-width: 100% !important;
+  width: auto !important;
+  margin: 0 auto 1rem !important;
+  text-align: center;
+}
+
+.wp-caption img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.wp-caption-text {
+  color: #4a9a4a;
+  font-size: 0.85em;
+  margin-top: 0.3rem;
+  font-style: italic;
+}
+
+/* WordPress alignment helpers */
+.aligncenter { display: block; margin: 0 auto 1rem; }
+.alignleft   { float: left;  margin: 0 1rem 1rem 0; }
+.alignright  { float: right; margin: 0 0 1rem 1rem; }
+.alignnone   { display: block; margin: 0 0 1rem; }
 /* Waveforms use black strokes on transparent background; give them a bright
    glass frame so the signals are readable on the dark cyberpunk theme.      */
 .wavedrom {
