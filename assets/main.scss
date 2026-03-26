@@ -5,15 +5,60 @@
 @use 'tale';
 
 body {
-  background-image: url("/assets/bg1.jpg");
-  background-position: left top;
-  background-size: auto;
-  background-repeat: repeat;
+  background-color: #040306;
+  background-image:
+    radial-gradient(ellipse 70% 45% at 15% 20%,  rgba(0, 110,  30, 0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 55% 40% at 85% 80%,  rgba(0,  50, 110, 0.16) 0%, transparent 70%),
+    radial-gradient(ellipse 45% 50% at 68% 18%,  rgba(30,  0,   80, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 38% at 28% 78%,  rgba(0,  80,  50, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 35% 30% at 50% 50%,  rgba(0,  30,   0, 0.25) 0%, transparent 60%);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
   background-attachment: fixed;
+}
+
+/* ── Matrix rain background ───────────────────────────────────────────────── */
+.matrix-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+  overflow: hidden;
+}
+
+.matrix-col {
+  position: absolute;
+  left: var(--left);
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  white-space: nowrap;
+  font-family: 'Courier New', Courier, monospace, 'Microsoft YaHei', 'PingFang SC', sans-serif;
+  font-weight: bold;
+  color: var(--color);
+  font-size: max(var(--size), 1vw);
+  opacity: var(--opacity);
+  filter: blur(var(--blur));
+  animation: matrix-fall var(--duration) linear infinite;
+  animation-delay: var(--delay);
+}
+
+@keyframes matrix-fall {
+  0%   { top: -150vh; }
+  100% { top:  150vh; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .matrix-col { animation: none; top: 20vh; }
 }
 
 // Legacy .site wrapper — keep it transparent, no white card
 body .site {
+  position: relative;
+  z-index: 1;
   background-color: transparent;
   box-shadow: none;
   -webkit-box-shadow: none;
