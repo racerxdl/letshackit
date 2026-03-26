@@ -14,65 +14,66 @@ permalink: /biggateboy/microcode
 
 <style>
 table {
-  table-layout: fixed ;
+  table-layout: fixed;
   border-spacing: 0 0;
-  width: 100% ;
+  width: 100%;
 }
 
-
 td {
-  background: #F0F0F0;
+  background: rgba(0, 30, 0, 0.75);
+  color: #b8ffb8;
   padding-left: 10px;
   padding-right: 10px;
-  font-family:CMSSBX10;
+  font-family: CMSSBX10;
   font-size: 1em;
 }
 
 .table-head-style {
-  background: #c0c0c0;
-  color: black;
+  background: rgba(0, 60, 0, 0.9);
+  color: #00ff41;
   font-weight: bold;
   font-size: 1.2em;
+  border-bottom: 1px solid rgba(0, 255, 65, 0.5);
 }
 .table-ref {
-  color:#006600;
+  color: #00ff41;
   font-weight: bold;
 }
 .x-style {
-  background:#4CB5F5;
-  color:white;
+  background: rgba(0, 80, 140, 0.6);
+  color: #b9e0ff;
 }
 .y-style {
-  background:#484848;
-  color:white;
+  background: rgba(50, 50, 50, 0.7);
+  color: #cccccc;
 }
 .z-style {
-  background:#6AB187;
-  color:white;
+  background: rgba(0, 80, 50, 0.6);
+  color: #a8e6c8;
 }
 .table-note {
-  color: gray;
+  color: #4a9a4a;
 }
 .op-undefined {
-  color: red;
+  color: #ff4444;
 }
 .op {
-  color: #CC9900;
+  color: #ffcc00;
 }
 .u16 {
-  color: #3399FF;
+  color: #66aaff;
 }
 .u8 {
-  color: #3366FF;
+  color: #5588ff;
 }
 .s8 {
-  color: #66CCFF;
+  color: #88ddff;
 }
 .reg {
-  color: #AAAA77;
+  color: #cccc88;
 }
 .const {
-  color: #996633;
+  color: #cc9955;
 }
 </style>
 
