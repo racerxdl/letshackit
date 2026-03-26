@@ -42,22 +42,22 @@ except ImportError:
 # Predefined categories (derived from all articles in the blog)
 # ---------------------------------------------------------------------------
 PREDEFINED_CATEGORIES = [
+    "Arduino",
+    "Automation",
     "CTF",
     "Camera",
-    "ESP32",
-    "ESPHome",
     "FPGA",
     "Hacking",
     "Hardware",
+    "Programming",
     "Hardware Hacking",
     "Home Assistant",
     "LimeSDR",
     "Linux",
     "Payment Machines",
     "Reverse Engineering",
-    "SDR",
-    "Satellite",
-    "Verilog",
+    "Software Defined Radio",
+    "Satellite"
 ]
 
 DEFAULT_MODEL = "z-ai/glm-4.7-flash"
@@ -184,6 +184,7 @@ def main():
     parser.add_argument("--model", default=DEFAULT_MODEL, help=f"OpenRouter model (default: {DEFAULT_MODEL})")
     parser.add_argument("--api-key", help="OpenRouter API key (default: $OPENROUTER_API_KEY)")
     parser.add_argument("--dry-run", action="store_true", help="Print changes without writing to file")
+    parser.add_argument("--force", action="store_true", help="Re-enrich even if article is already marked enriched: true")
     args = parser.parse_args()
 
     api_key = args.api_key or os.environ.get("OPENROUTER_API_KEY")
@@ -204,6 +205,10 @@ def main():
     print(f"Title   : {title}")
     print(f"Model   : {args.model}")
     print()
+
+    if fm.get("enriched") and not args.force:
+        print("Skipping: already enriched (use --force to re-enrich).")
+        return
 
     prompt = build_prompt(title, body)
     print("Calling OpenRouter...", flush=True)
@@ -232,6 +237,7 @@ def main():
     fm["categories"] = data["categories"]
     fm["tags"] = data["tags"]
     fm["description"] = data["description"]
+    fm["enriched"] = True
 
     new_content = dump_front_matter(fm, body)
 
