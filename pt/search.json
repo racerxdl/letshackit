@@ -4,7 +4,7 @@
       "title"    : "Rodando código em uma máquina de cartão de crédito PAX (parte 1)",
       "url"      : "/pt/2025/09/running-code-in-pax-machines",
       "category" : "",
-      "tags"     : "Flash, PAX, Hardware Hacking, RE, Reverse Engineering, D177, D188, Minizinha, Moderninha, Smart, Sunmi, TecToy, Transire, Megahunt, MH1903, Air105, LuatOS, Payment Machine, PCB, Tamper Protection, Credit Card, Brazil, Baremetal, Linux OS, CPU Swap, Security",
+      "tags"     : "Flash, PAX, Hardware Hacking, RE, Reverse Engineering, D177, D188, Minizinha, Moderninha, Smart, Sunmi, TecToy, Transire, Megahunt, MH1903, Air105, LuatOS, Payment Machine, PCB, Tamper Protection, Credit Card, Brazil, Baremetal, Linux OS, CPU Swap, Security, Credit Card Machine, Payment Terminal, ARM, Embedded Systems, Payment Gateway, Payment Fraud",
       "date"     : "September 05, 2025",
       "excerpt"  : "DisclaimerTodos os procedimentos descritos aqui foram feitos com material disponível publicamente - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos.As máquinas de pagamento com cartão..."
     } ,
@@ -13,7 +13,7 @@
       "title"    : "TPM 2.0: Extrair chaves do Bitlocker por SPI",
       "url"      : "/pt/2024/01/tpm-2-extraindo-chaves-bitlocker",
       "category" : "",
-      "tags"     : "Flash, PAX, Hardware Hacking, RE, Reverse Engineering, NAND, PAX, RT809H",
+      "tags"     : "Flash, PAX, Hardware Hacking, RE, Reverse Engineering, NAND, PAX, RT809H, TPM 2.0, BitLocker, SPI, Hardware Security, Bus Sniffing, Cryptography, AES256-XTS, VMK, Sigrok, PulseView, Logic Analyzer, TCG",
       "date"     : "January 16, 2024",
       "excerpt"  : "O TPM 2.0, também conhecido como Trusted Platform Module 2.0, é um recurso de segurança de hardware que está incorporado em muitos computadores modernos. Sua finalidade é proporcionar uma maneira segura de armazenar chaves criptográficas e outros dados sensíveis, tais como senhas e certificados digitais, visando proteger contra diversas ameaças..."
     } ,
@@ -22,7 +22,7 @@
       "title"    : "Análise e Decodificação de Memória Flash NAND - Revelando a Dispersão ECC em Dispositivos Desconhecidos",
       "url"      : "/pt/2024/01/analise-e-decodificacao-de-memoria-flash",
       "category" : "",
-      "tags"     : "Flash, PAX, Hardware Hacking, RE, Reverse Engineering, NAND, PAX, RT809H",
+      "tags"     : "Flash, PAX, Hardware Hacking, RE, Reverse Engineering, NAND, PAX, RT809H, NAND Flash, Memória Flash, ECC, Binwalk, Análise de Memória, BGA, Máquina de Cartão, ARM, Linux Kernel",
       "date"     : "January 16, 2024",
       "excerpt"  : "Explorando memórias NANDQuando em posse de um dispositivo a qual se deseja conhecer sobre, nem sempre é trivial o acesso ao conteúdo da memória flash. Devido a natureza das memórias NAND, é aplicado para todo conteúdo um algoritmo de correção de erros que pode causar uma ofuscação não intencional do..."
     } ,
@@ -31,7 +31,7 @@
       "title"    : "STM32F0x Protected Firmware Dumper",
       "url"      : "/pt/2024/01/stm32f0x-protected-firmware-dumper",
       "category" : "",
-      "tags"     : "Protected Firmware, Hardware Hacking, RE, Reverse Engineering, STM32, Patreon, MCU",
+      "tags"     : "Protected Firmware, Hardware Hacking, RE, Reverse Engineering, STM32, Patreon, MCU, STM32F0x, Firmware Dumping, Read-Out Protection, SWD, OpenOCD, Raspberry Pi Pico, HASP, C Programming, Microcontroller, Security",
       "date"     : "January 16, 2024",
       "excerpt"  : "No processo do meu hobby de hackear hardware, encontrei um clone chinês de um dongle HASP HL equipado com um processador STM32F042G6U6. Minha intenção era cloná-lo, e durante minha exploração, descobri quatro pinos da interface de depuração SWD localizados na parte inferior da PCB. Soldei um conector de 4 pinos..."
     } ,
@@ -40,7 +40,7 @@
       "title"    : "Rotor de Antena - Parte 2",
       "url"      : "/pt/2021/04/rotor-antenna-parte-2",
       "category" : "",
-      "tags"     : "Airspy, EMWIN, GOES, Hearsat, LRIT, RE, Reverse Engineering, Sat, Satellite, SDR",
+      "tags"     : "Airspy, EMWIN, GOES, Hearsat, LRIT, RE, Reverse Engineering, Sat, Satellite, SDR, Rotor de Antena, Tracker, Satélite, Impressão 3D, Freecad, NEMA 17, TMC2209, ESP32, Closed-loop, Redução, Azimute, Elevação",
       "date"     : "April 01, 2021",
       "excerpt"  : "Continuando o projeto do tracker, consegui alguns progressos significativos. Assim como o Demilson (PY2UEP) tinha cortado os motores originais, fiz o mesmo. O motor do azimute estava bem enferrujado e acabei estragando uma de suas bobinas (queria reaproveitar o fio), mas no fim o eixo saiu.Após o eixo removido, quebrei..."
     } ,
@@ -49,7 +49,7 @@
       "title"    : "Rotor de Antena - Parte 1",
       "url"      : "/pt/2021/03/rotor-antenna-parte-1",
       "category" : "",
-      "tags"     : "Airspy, EMWIN, GOES, Hearsat, LRIT, RE, Reverse Engineering, Sat, Satellite, SDR",
+      "tags"     : "Airspy, EMWIN, GOES, Hearsat, LRIT, RE, Reverse Engineering, Sat, Satellite, SDR, Rotor de antena, Motor de passo, Tracking satélite, Pelco, Eletrônica, Hardware, Antena parabólica, Modificação de hardware, Baixa órbita, Controle de posição",
       "date"     : "March 03, 2021",
       "excerpt"  : "Há uns anos eu comprei um rotor para câmera da Pelco, modelo PT175-24P. Esse rotor é feito para carregar uma câmera com lente de até 8kg, e contém dois motores bifásicos reversíveis internamente. Minha ideia era (e é) colocar uma parabólica acoplada, e controlar seu movimento para rastrear satélites. Assim..."
     } ,
@@ -58,7 +58,7 @@
       "title"    : "Introdução a FPGA",
       "url"      : "/pt/2020/10/introducao-a-fpga",
       "category" : "",
-      "tags"     : "Hacking, FPGA, ICEWolf, IceStick, ECP5, Lattice, Hardware, Eletrônica, Verilog",
+      "tags"     : "Hacking, FPGA, ICEWolf, IceStick, ECP5, Lattice, Hardware, Eletrônica, Verilog, Field Programmable Gate Array, Lógica Digital, Portas Lógicas, Multiplexador, Programação de Hardware, Circuitos Digitais, Tutorial",
       "date"     : "October 12, 2020",
       "excerpt"  : "Esta é a primeira parte do guia de programação para FPGAs! Este guia irá virar eventualmente um verilog4noobs para qualquer pessoa que quiser iniciar na área de programação de hardware possa ter um jeito fácil de conseguir! Iremos começar a explicar o que é um FPGA e como ele funciona.Para..."
     } ,
@@ -67,7 +67,7 @@
       "title"    : "Hackeando um ESP32 num FPGA",
       "url"      : "/pt/2020/06/hacking-a-esp32-into-fpga-board",
       "category" : "",
-      "tags"     : "Hacking, FPGA, ICEWolf, IceStick, ECP5, Lattice, ESP32, Colorlight",
+      "tags"     : "Hacking, FPGA, ICEWolf, IceStick, ECP5, Lattice, ESP32, Colorlight, Lattice ECP5, JTAG, OpenOCD, Remote Bitbang, Hardware Hacking, Soldering, RISC-V, VHDL, Bitstream, Serial",
       "date"     : "June 14, 2020",
       "excerpt"  : "Hackeando um ESP32 num FPGANo ano passado eu vi um cara russo que viu que essa placa barata (US$15) tinha um FPGA da Lattice ECP5, o qual é compatível com as toolchains opensource para síntese. Ele estava rodando um RISC-V dentro e enviando a saída serial pela rede usando uma..."
     } ,
@@ -76,7 +76,7 @@
       "title"    : "Hack a Sat - Talk to me, Goose",
       "url"      : "/pt/2020/05/hack-a-sat-talk-to-me-goose/",
       "category" : "",
-      "tags"     : "Camera, Hacking, CTF, Hackasat, CTF Writeup, Satellite, XTCE",
+      "tags"     : "Camera, Hacking, CTF, Hackasat, CTF Writeup, Satellite, XTCE, Software Defined Radio, SDR, Ham Radio, Radio Frequency, Communication, Hardware Hacking, Space, Electronics, RF",
       "date"     : "May 31, 2020",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -85,7 +85,7 @@
       "title"    : "Hack a Sat - Phasors to Stun",
       "url"      : "/pt/2020/05/hack-a-sat-phasors-to-stun/",
       "category" : "",
-      "tags"     : "Camera, Hacking, CTF, Hackasat, CTF Writeup, Satellite, SDR, GNU Radio, Radio",
+      "tags"     : "Camera, Hacking, CTF, Hackasat, CTF Writeup, Satellite, SDR, GNU Radio, Radio, Jamming, RF, Signal Processing, GPS, GNSS, Software Defined Radio, Phasors, Interference",
       "date"     : "May 30, 2020",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -94,7 +94,7 @@
       "title"    : "Hack a Sat - Can you hear me now?",
       "url"      : "/pt/2020/05/hack-a-sat-can-you-hear-me-now/",
       "category" : "",
-      "tags"     : "Camera, Hacking, CTF, Hackasat, CTF Writeup, Satellite, XTCE",
+      "tags"     : "Camera, Hacking, CTF, Hackasat, CTF Writeup, Satellite, XTCE, SDR, Radio, RF, Hardware, Communication, Space, Electronics, Jamming, Reception, Telemetry",
       "date"     : "May 30, 2020",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -103,7 +103,7 @@
       "title"    : "Integrating Hacked Touch Panel into Home Assistant",
       "url"      : "/pt/2019/12/integrating-hacked-touch-panel-into-home-assistant/",
       "category" : "",
-      "tags"     : "Camera, Hacking, Home Assistant, Arduino, ESP8266, ESP32, ESPHome",
+      "tags"     : "Camera, Hacking, Home Assistant, Arduino, ESP8266, ESP32, ESPHome, Touch Panel, Hardware Hacking, Reverse Engineering, DIY, Integration, Industrial, Smart Home, Home Automation, Automation",
       "date"     : "December 30, 2019",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -112,7 +112,7 @@
       "title"    : "Hacking Dimmer Touch Panel with ESP8266",
       "url"      : "/pt/2019/12/hacking-dimmer-touch-panel-with-esp8266/",
       "category" : "",
-      "tags"     : "Camera, Hacking, Home Assistant, Arduino, ESP8266, ESP32, ESPHome",
+      "tags"     : "Camera, Hacking, Home Assistant, Arduino, ESP8266, ESP32, ESPHome, Dimmer, Touch Panel, Reverse Engineering, Smart Home, IoT, ESP8266 NodeMCU, Hardware Hacking, Home Automation",
       "date"     : "December 29, 2019",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -121,7 +121,7 @@
       "title"    : "Creating your own GSM Network with LimeSDR",
       "url"      : "/pt/2019/12/creating-your-own-gsm-network-with-limesdr/",
       "category" : "",
-      "tags"     : "Camera, Hacking, SDR, Ubuntu, GSM, BTS, Osmocom, Sysmocom",
+      "tags"     : "Camera, Hacking, SDR, Ubuntu, GSM, BTS, Osmocom, Sysmocom, LimeSDR, Software Defined Radio, Wireless, GSM Network, Telecommunications, Radio Frequency, Open Source, GSM Base Station, 2G, Hardware Hacking",
       "date"     : "December 21, 2019",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -130,7 +130,7 @@
       "title"    : "Dahua / Intelbras MitM Attack",
       "url"      : "/pt/2019/10/dahua-intelbras-mitm-attack/",
       "category" : "",
-      "tags"     : "Camera, Hacking, English",
+      "tags"     : "Camera, Hacking, English, Dahua, Intelbras, MitM, Man-in-the-Middle, IP Camera, Security, Vulnerability, IoT, Network Security, Exploit",
       "date"     : "October 25, 2019",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -139,7 +139,7 @@
       "title"    : "Reverse Engineering cheap chinese &quot;VRCAM&quot; protocol",
       "url"      : "/pt/2019/06/reverse-engineering-cheap-chinese-vrcam-protocol/",
       "category" : "",
-      "tags"     : "Camera, Hacking, English",
+      "tags"     : "Camera, Hacking, English, Reverse Engineering, VRCAM, Protocol, Hardware Hacking, Security, IoT, Packet Analysis, Microcontroller, Firmware",
       "date"     : "June 16, 2019",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -148,7 +148,7 @@
       "title"    : "GOES GRB First Light!",
       "url"      : "/pt/2017/10/goes-grb-first-light/",
       "category" : "",
-      "tags"     : "CCSDS, GIMP, GOES, GOES16, GRB, JPEG2000, NetCDF, NOAA, NWS, Open Satellite Project, OpenSatelliteProject, OSP, RocketChat, Satellite, SDR, Septum Feed, SZIP",
+      "tags"     : "CCSDS, GIMP, GOES, GOES16, GRB, JPEG2000, NetCDF, NOAA, NWS, Open Satellite Project, OpenSatelliteProject, OSP, RocketChat, Satellite, SDR, Septum Feed, SZIP, Raios-Gamma, Satélite, Software Definido por Radio, Radioastronomia, First Light, Receptor, Telemetria, Meteorologia Espacial",
       "date"     : "October 15, 2017",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -157,7 +157,7 @@
       "title"    : "Linux shim for Patching executable in run-time",
       "url"      : "/pt/2017/08/linux-shim-for-patching-executable-in-run-time/",
       "category" : "",
-      "tags"     : "Hacking, Linux, C, Programming, Shim",
+      "tags"     : "Hacking, Linux, C, Programming, Shim, Binary Patching, Runtime, Dynamic Patching, ELF, Memory Injection, Shellcode, System Programming, Code Modification, Low-level, Binary Analysis, Linux Kernel",
       "date"     : "August 05, 2017",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -166,7 +166,7 @@
       "title"    : "Some LNA tests for HRIT/LRIT",
       "url"      : "/pt/2017/04/some-lna-tests-for-hritlrit/",
       "category" : "",
-      "tags"     : "Airspy, Antenna, GOES, Hearsat, HRIT, LRIT, NOAA, RTL SDR, RTLSDR, Satellite, SDR, Software Defined Radio",
+      "tags"     : "Airspy, Antenna, GOES, Hearsat, HRIT, LRIT, NOAA, RTL SDR, RTLSDR, Satellite, SDR, Software Defined Radio, LNA, RF, Amplifier, Signal Processing",
       "date"     : "April 14, 2017",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -175,7 +175,7 @@
       "title"    : "GOES 16 Test Week Results",
       "url"      : "/pt/2017/04/goes-16-test-week-results/",
       "category" : "",
-      "tags"     : "Airspy, EMWIN, English, False Color, GOES, GOES 16, Hearsat, HRIT, LRIT, NOAA, Open Satellite Project, OSP, Reverse Engineering, RTL SDR, Sat, Satellite, SDR, Software Defined Radio",
+      "tags"     : "Airspy, EMWIN, English, False Color, GOES, GOES 16, Hearsat, HRIT, LRIT, NOAA, Open Satellite Project, OSP, Reverse Engineering, RTL SDR, Sat, Satellite, SDR, Software Defined Radio, GOES-16, weather satellite, geostationary, satellite imagery, weather forecasting, space technology, remote sensing, meteorology, test results",
       "date"     : "April 02, 2017",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -184,7 +184,7 @@
       "title"    : "GOES 16 Test Week",
       "url"      : "/pt/2017/03/goes-16-test-week/",
       "category" : "",
-      "tags"     : "Airspy, Antenna, Automatic Gain Control, CMI, EMWIN, English, GRC, Hearsat, HRIT, Linux, LRIT, NetCDF, NOAA, SDR, Ubuntu",
+      "tags"     : "Airspy, Antenna, Automatic Gain Control, CMI, EMWIN, English, GRC, Hearsat, HRIT, Linux, LRIT, NetCDF, NOAA, SDR, Ubuntu, GOES-16, Geostationary, Weather Satellite, RF, Space, Satellite Communication, Downlink, Test Week",
       "date"     : "March 25, 2017",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -193,7 +193,7 @@
       "title"    : "GOES 16 in the house!",
       "url"      : "/pt/2017/01/goes-16-in-the-house/",
       "category" : "",
-      "tags"     : "Airspy, Convolutional Code, Convolutional Encoding, EMWIN, English, GNU Radio, Gnuradio, GOES, GOES 16, GOES-R, GRC, HackRF, HRIT, LRIT, NOAA, Osmocom, RE, Reed Solomon, Root Raised Cosine Filter, Satellite, SDR",
+      "tags"     : "Airspy, Convolutional Code, Convolutional Encoding, EMWIN, English, GNU Radio, Gnuradio, GOES, GOES 16, GOES-R, GRC, HackRF, HRIT, LRIT, NOAA, Osmocom, RE, Reed Solomon, Root Raised Cosine Filter, Satellite, SDR, GOES-16, Geostationary, Weather Satellite, Software Defined Radio, L-Band, Satellite Reception, Weather Data, RF",
       "date"     : "January 25, 2017",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -220,7 +220,7 @@
       "title"    : "137MHz Bandpass filter for NOAA / Meteor Satellites",
       "url"      : "/pt/2016/11/137mhz-bandpass-filter-for-noaa-meteor-satellites/",
       "category" : "",
-      "tags"     : "9A4QV, Adam, AGC, Antenna, APT, English, Filter, GQRX, HackRF, Linux, LNA4ALL, QFH, qspectrumanalyzer, RFSim99, RTL SDR, RTLSDR, Satellite, Satellites, SDR, Software Defined Radio, Ubuntu, Weather Satellites, WXSat",
+      "tags"     : "9A4QV, Adam, AGC, Antenna, APT, English, Filter, GQRX, HackRF, Linux, LNA4ALL, QFH, qspectrumanalyzer, RFSim99, RTL SDR, RTLSDR, Satellite, Satellites, SDR, Software Defined Radio, Ubuntu, Weather Satellites, WXSat, 137MHz, Bandpass filter, NOAA satellites, Meteor satellites, RF filter, Satellite reception, Ham radio, DIY electronics",
       "date"     : "November 13, 2016",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -229,7 +229,7 @@
       "title"    : "GOES Satellite Hunt (Part 5 – File Assembler)",
       "url"      : "/pt/2016/11/goes-satellite-hunt-part-5-file-assembler/",
       "category" : "",
-      "tags"     : "AGC, Airspy, Automatic Gain Control, Bug, Compile, Convolutional Code, Convolutional Encoding, EMWIN, English, Full Disk, GNU Radio, Gnuradio, GOES, GRC, Hearsat, LRIT, Osmocom, RE, Reed Solomon, Reverse Engineering, Root Raised Cosine Filter, RRC Filter, RS, Sat, Satellite, SDR, Statistics, Viterbi",
+      "tags"     : "AGC, Airspy, Automatic Gain Control, Bug, Compile, Convolutional Code, Convolutional Encoding, EMWIN, English, Full Disk, GNU Radio, Gnuradio, GOES, GRC, Hearsat, LRIT, Osmocom, RE, Reed Solomon, Reverse Engineering, Root Raised Cosine Filter, RRC Filter, RS, Sat, Satellite, SDR, Statistics, Viterbi, Software Defined Radio, File Assembler, Data Processing, RF, Weather Satellite, Receiver, Python, Linux",
       "date"     : "November 07, 2016",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -238,7 +238,7 @@
       "title"    : "GOES Satellite Hunt (Part 4 – Packet Demuxer)",
       "url"      : "/pt/2016/11/goes-satellite-hunt-part-4-packet-demuxer/",
       "category" : "",
-      "tags"     : "AGC, Airspy, Automatic Gain Control, Bug, Compile, Convolutional Code, Convolutional Encoding, EMWIN, English, GNU Radio, Gnuradio, GOES, GRC, Hearsat, LRIT, Osmocom, RE, Reed Solomon, Reverse Engineering, Root Raised Cosine Filter, RRC Filter, RS, Sat, Satellite, SDR, Statistics, Viterbi",
+      "tags"     : "AGC, Airspy, Automatic Gain Control, Bug, Compile, Convolutional Code, Convolutional Encoding, EMWIN, English, GNU Radio, Gnuradio, GOES, GRC, Hearsat, LRIT, Osmocom, RE, Reed Solomon, Reverse Engineering, Root Raised Cosine Filter, RRC Filter, RS, Sat, Satellite, SDR, Statistics, Viterbi, Packet Demuxer, Weather Satellite, RF, Satellite Tracking, Protocol Analysis, GOES-R",
       "date"     : "November 06, 2016",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -247,7 +247,7 @@
       "title"    : "GOES Satellite Hunt (Part 3 – Frame Decoder)",
       "url"      : "/pt/2016/11/goes-satellite-hunt-part-3-frame-decoder/",
       "category" : "",
-      "tags"     : "AGC, Airspy, Automatic Gain Control, Bug, Compile, Convolutional Code, Convolutional Encoding, EMWIN, English, GNU Radio, Gnuradio, GOES, GRC, Hearsat, LRIT, Osmocom, RE, Reed Solomon, Reverse Engineering, Root Raised Cosine Filter, RRC Filter, RS, Sat, Satellite, SDR, Statistics, Viterbi",
+      "tags"     : "AGC, Airspy, Automatic Gain Control, Bug, Compile, Convolutional Code, Convolutional Encoding, EMWIN, English, GNU Radio, Gnuradio, GOES, GRC, Hearsat, LRIT, Osmocom, RE, Reed Solomon, Reverse Engineering, Root Raised Cosine Filter, RRC Filter, RS, Sat, Satellite, SDR, Statistics, Viterbi, Frame Decoder, Software Defined Radio, Ham Radio, RF, Telemetry, Space, Signal Processing",
       "date"     : "November 02, 2016",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -256,7 +256,7 @@
       "title"    : "GOES Satellite Hunt (Part 2 – Demodulator)",
       "url"      : "/pt/2016/10/goes-satellite-hunt-part-2-demodulator/",
       "category" : "",
-      "tags"     : "AGC, Airspy, Automatic Gain Control, Bug, Compile, EMWIN, English, GNU Radio, Gnuradio, GOES, GRC, Hearsat, LRIT, Osmocom, RE, Reverse Engineering, Root Raised Cosine Filter, RRC Filter, Sat, Satellite, SDR",
+      "tags"     : "AGC, Airspy, Automatic Gain Control, Bug, Compile, EMWIN, English, GNU Radio, Gnuradio, GOES, GRC, Hearsat, LRIT, Osmocom, RE, Reverse Engineering, Root Raised Cosine Filter, RRC Filter, Sat, Satellite, SDR, Demodulator, Software Defined Radio, RF, Weather Satellite, Signal Processing, Ham Radio, Decoder",
       "date"     : "October 31, 2016",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -265,7 +265,7 @@
       "title"    : "GOES Satellite Hunt (Part 1 &amp;#8211; Antenna System)",
       "url"      : "/pt/2016/10/goes-satellite-hunt-part-1-antenna-system/",
       "category" : "",
-      "tags"     : "Airspy, EMWIN, English, GOES, Hearsat, LRIT, RE, Reverse Engineering, Sat, Satellite, SDR",
+      "tags"     : "Airspy, EMWIN, English, GOES, Hearsat, LRIT, RE, Reverse Engineering, Sat, Satellite, SDR, Antenna, RF, Ham Radio, Weather Satellite, Yagi, Parabolic, Space, Tracking",
       "date"     : "October 18, 2016",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -274,7 +274,7 @@
       "title"    : "New way to measure filters and my new filter",
       "url"      : "/pt/2016/07/new-way-to-measure-filters-and-my-new-filter/",
       "category" : "",
-      "tags"     : "Adam, FM, FM Trap, FM TV Diplexer, HackRF, LNA4ALL, RTLSDR, SDR",
+      "tags"     : "Adam, FM, FM Trap, FM TV Diplexer, HackRF, LNA4ALL, RTLSDR, SDR, osciloscópio, analisador de espectro, medição de filtros, processamento de sinal, design de filtros, equipamentos de teste, eletrônica RF",
       "date"     : "July 22, 2016",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -292,7 +292,7 @@
       "title"    : "Recording NOAA APT Signals with GQRX and RTL-SDR on Linux",
       "url"      : "/pt/2016/02/recording-noaa-apt-signals-with-gqrx-and-rtl-sdr-on-linux/",
       "category" : "",
-      "tags"     : "137MHz, 2m Band, Amplifier, Antenna, APT, Decimation, GQRX, intel, Intel Edison, Le Maker Guitar, LeMaker, Linux, LNA, Low Noise Amplifier, NOAA, QFH, RTLSDR, SDR, Signal, Signals, Ubuntu",
+      "tags"     : "137MHz, 2m Band, Amplifier, Antenna, APT, Decimation, GQRX, intel, Intel Edison, Le Maker Guitar, LeMaker, Linux, LNA, Low Noise Amplifier, NOAA, QFH, RTLSDR, SDR, Signal, Signals, Ubuntu, RTL-SDR, Software Defined Radio, Weather Satellite, Signal Processing, Ham Radio, Radio Astronomy",
       "date"     : "February 05, 2016",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -301,7 +301,7 @@
       "title"    : "LeMaker Guitar Review",
       "url"      : "/pt/2016/02/lemaker-guitar-review/",
       "category" : "",
-      "tags"     : "ARM, Chalk-Elec, LCD TouchScreen, Le Maker Guitar, LeMaker, Linux, Open Hardware, Open Source, OpenHardware, OpenSource, QFH, Receiver, RTL SDR, Satellite, SDR, Software Defined Radio, Ubuntu, Weather, Weather Satellite Receiver",
+      "tags"     : "ARM, Chalk-Elec, LCD TouchScreen, Le Maker Guitar, LeMaker, Linux, Open Hardware, Open Source, OpenHardware, OpenSource, QFH, Receiver, RTL SDR, Satellite, SDR, Software Defined Radio, Ubuntu, Weather, Weather Satellite Receiver, LeMaker Guitar, Single Board Computer, Allwinner H3, Audio, DIY, Embedded Systems, Music Production, Hardware Hacking, Raspberry Pi Alternative",
       "date"     : "February 02, 2016",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -319,7 +319,7 @@
       "title"    : "Play with SDR and Intel Edison!",
       "url"      : "/pt/2016/01/play-with-sdr-and-intel-edison/",
       "category" : "",
-      "tags"     : "ADSB, Airplane, Antenna, edison, FM, GNU Radio, intel, Intel Edison, NOAA, Radio, Realtek, RTL2832U, RTLSDR, SDR, Software, Software Defined Radio, VHF",
+      "tags"     : "ADSB, Airplane, Antenna, edison, FM, GNU Radio, intel, Intel Edison, NOAA, Radio, Realtek, RTL2832U, RTLSDR, SDR, Software, Software Defined Radio, VHF, Microcontroller, IoT, Electronics, Hardware, Wireless, Frequencies",
       "date"     : "January 16, 2016",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -328,7 +328,7 @@
       "title"    : "Um presente inesperado na Campus Party!",
       "url"      : "/pt/2015/02/um-presente-inesperado-na-campus-party/",
       "category" : "",
-      "tags"     : "apm, arduino, ARM, atom, drone, dualcore, edison, galileo, gift, intel, internet das coisas, internet of things, iot, multiwii, mwc, pixhawk, presente, quadricoptero, x86",
+      "tags"     : "apm, arduino, ARM, atom, drone, dualcore, edison, galileo, gift, intel, internet das coisas, internet of things, iot, multiwii, mwc, pixhawk, presente, quadricoptero, x86, Intel Edison, Wearables, Dual-Core, WiFi, Bluetooth, SIMD, IMU",
       "date"     : "February 18, 2015",
       "excerpt"  : "Como a maioria sabe, todos os anos eu vou para o evento anual Campus Party. Apesar de eu achar que ele está decaindo a cada ano que se passa, ainda há muito o que se aproveitar lá além de rever os amigos da internet nesta oportunidade anual.Este ano fui também..."
     } ,
@@ -337,7 +337,7 @@
       "title"    : "The Parallella Board and HyperSignal",
       "url"      : "/pt/2014/10/the-parallella-board-and-hypersignal/",
       "category" : "",
-      "tags"     : "ARM, Bootleneck, Epiphany, Manycore, Multithreading, Parallella, Performance, Power, x86",
+      "tags"     : "ARM, Bootleneck, Epiphany, Manycore, Multithreading, Parallella, Performance, Power, x86, HyperSignal, Multicore, Signal Processing, Parallel Computing, Embedded Systems, Low Power, Open Source Hardware",
       "date"     : "October 01, 2014",
       "excerpt"  : "Somente disponível em Inglês"
     } ,
@@ -346,7 +346,7 @@
       "title"    : "Motivos pelos quais eu não gostei do Intel Galileo",
       "url"      : "/pt/2014/02/motivos-pelos-quais-eu-nao-gostei-do-intel-galileo/",
       "category" : "",
-      "tags"     : "",
+      "tags"     : "Intel Galileo, Raspberry Pi, Quark, GPIO, I2C, Linux, BSP, x86, Arduino IDE, Embedded Systems, Hardware Review, Microcontroller",
       "date"     : "February 08, 2014",
       "excerpt"  : "Consegui minha placa Intel Galileo na semana da Campus Party. Peguei ela mais por curiosidade. A minha real intenção sobre ela seria comparar o processador dela ao Raspberry Pi. O Raspberry Pi como muitos sabem usa um processador bem ultrapassado. Os seus 700MHz já não significam muita coisa. Porém ele..."
     } ,
@@ -355,7 +355,7 @@
       "title"    : "IP Cam &amp;#8211; MayGion",
       "url"      : "/pt/2014/01/ip-cam-maygion/",
       "category" : "",
-      "tags"     : "",
+      "tags"     : "QuadCopter, IP Camera, MIPS, Stepper Motors, USB, UVC, Sonix, Linux, Engenharia Reversa, Firmware, Hardware Hacking, Microcontrolador",
       "date"     : "January 18, 2014",
       "excerpt"  : "Bom, estou montando um QuadCopter e sai procurando cameras para colocar nele.Na minha lista de opções coloquei 3 câmeras IP:1) MayGion IP cam (comprada na Dealextreme, 640×480)2) DSC-930L (D-LINK 640×480)3) DSC-2130 (D-LINK 1280×800)Comecei a desmontar a MayGion pra ver como ela era. Ai vai umas fotosEssa é a placa principal...."
     } ,
@@ -364,7 +364,7 @@
       "title"    : "Função C para múltiplos e submúltiplos (REVISADO)",
       "url"      : "/pt/2011/10/funcao-c-para-multiplos-e-submultiplos-revisado/",
       "category" : "",
-      "tags"     : "",
+      "tags"     : "C programming, function, notation, SI units, multiples, submultiples, floating point, rounding, optimization, code snippet",
       "date"     : "October 30, 2011",
       "excerpt"  : "O Caio Alarcon me notificou de algumas coisas sobre minha função de múltiplos e submúltiplos, por exemplo, o tratamento de números negativos. Resolvi então revisar e otimizar a função em C. O Resultado está abaixo:#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;math.h&amp;gt;char toNotationUnit(double value,float *out) { double val; char notacoes[] = {&#39;y&#39;,&#39;z&#39;,&#39;a&#39;,&#39;f&#39;,&#39;p&#39;,&#39;n&#39;,&#39;u&#39;,&#39;m&#39;,&#39; &#39;, &#39;k&#39;,&#39;M&#39;,&#39;G&#39;,&#39;T&#39;,&#39;P&#39;,&#39;E&#39;,&#39;Z&#39;,&#39;Y&#39;}; int counter=8; char unit; val =..."
     } ,
@@ -373,7 +373,7 @@
       "title"    : "Recondicionamento de um Variac",
       "url"      : "/pt/2011/10/recondicionamento-de-um-variac/",
       "category" : "",
-      "tags"     : "",
+      "tags"     : "Variac, Autotransformador, Eletrônica, Manutenção, Recondicionamento, Hardware, Transformador, Aparelhos Elétricos, Variável, Soldagem",
       "date"     : "October 22, 2011",
       "excerpt"  : "Como alguns sabem, meu variac pegou fogo (), e o meu outro queimou na semana da GV. Então precisei arrumar um pelo menos para poder usado aqui. Ai estão as fotos 😀Foi testado e está funcionando corretamente agora. Foi arrumado na gambiarra, mas ta arrumado.          "
     } ,
@@ -382,7 +382,7 @@
       "title"    : "Interruptor MIDI Polifônico com PIC 16F628A (Interface)",
       "url"      : "/pt/2011/10/interruptor-midi-polifonico-com-pic-16f628a-interface/",
       "category" : "",
-      "tags"     : "",
+      "tags"     : "PIC 16F628A, MIDI, Interface, Polifônico, Microcontrolador, Cascata, Hardware, Interruptor, Energia Labs, Uzzors2k",
       "date"     : "October 16, 2011",
       "excerpt"  : "Neste tópico colocarei apenas como é a interface do interruptor descrito anteriormente.Para um interruptor monofônico, ligamos o Enable em Vcc e ignoramos o BUSY. Para polifônicos, colocamos o Enable do primeiro no Vcc, e nos seguintes ligamos no BUSY do anterior. Nas saídas fazemos uma operação OR, e as entradas MIDI são ligadas todas juntas.O..."
     } ,
@@ -391,7 +391,7 @@
       "title"    : "Interruptor MIDI Polifônico com PIC 16F628A",
       "url"      : "/pt/2011/10/interruptor-midi-polifonico-com-pic-16f628a/",
       "category" : "",
-      "tags"     : "",
+      "tags"     : "PIC 16F628A, MIDI, Microcontrolador, UART, Timer, Protocolo MIDI, CCS C, Eletrônica, Interruptor, Baud Rate, Frequência, Hardware",
       "date"     : "October 16, 2011",
       "excerpt"  : "– IntroduçãoBom, muitos sabem que eu fiz um Interruptor MIDI (ou sintetizador como preferir) com um FPGA. Porém poucos tem acesso a um FPGA principalmente para fazer algo tão *simples*, então resolvi fazer um com PIC 16F628A.No começo queria fazer com um PIC menor, mas os menores não tem Receptor..."
     } ,
@@ -400,7 +400,7 @@
       "title"    : "Amostra de Memória MRAM da Everspin",
       "url"      : "/pt/2011/10/amostra-de-memoria-mram-da-everspin/",
       "category" : "",
-      "tags"     : "",
+      "tags"     : "MRAM, Everspin, MR2A16AYS35, Non-volatile memory, SRAM, FPGA, Boot-instantâneo, Hardware Hacking, Interface, Memória RAM",
       "date"     : "October 13, 2011",
       "excerpt"  : "Há muito tempo atrás pedi amostras de uma memória magnética da Everspin para fazer testes aqui, porém depois me deparei com o problema de que ela é 3.3V.De qualquer maneira agora tenho um FPGA para brincar com ela.O modelo de amostra é a MR2A16AYS35, uma MRAM de 1M de endereço e..."
     } ,
@@ -409,7 +409,7 @@
       "title"    : "Fonte 3v3 do FPGA",
       "url"      : "/pt/2011/10/fonte-3v3-do-fpga/",
       "category" : "",
-      "tags"     : "",
+      "tags"     : "FPGA, Xilinx, Spartan 3A, Regulador, Fonte 3.3V, QFN, SMD, Soldagem, Manutenção, Eletrônica",
       "date"     : "October 13, 2011",
       "excerpt"  : "Bom, alguns talvez lembrem que um pouco antes do Flisol de Salto uma das minhas placas de Desenvolvimento Xilinx Spartan 3A Evaluation Kit parou de funcionar. Descobri que era o regulador de 3.3V da placa que havia queimado (bom, eu meti em curto várias vezes sem querer, apesar de ele..."
     } ,
@@ -418,7 +418,7 @@
       "title"    : "Electronics Hacking",
       "url"      : "/pt/2011/10/electronics-hacking/",
       "category" : "",
-      "tags"     : "",
+      "tags"     : "CMOS sensor, FPGA, VGA, Bayer filter, Image processing, Surveillance camera, 3.3V, Sub-pixel, Raw data, Electronics, Datasheet, PCB",
       "date"     : "October 13, 2011",
       "excerpt"  : "Bom, decidi postar hacks de eletrônica aqui também. Até por que são mais frequentes que os meus hacks. Ai vai umas fotos de um sensor CMOS que soldei numa placa pra facilitar, e verei um dia de brincar com ela:É um Sensor CMOS VGA Colorido, que roda em 3.3V. A sua interface..."
     } ,
@@ -427,7 +427,7 @@
       "title"    : "Função Javascript para Múltiplos e Submúltiplos",
       "url"      : "/pt/2011/10/funcao-javascript-para-multiplos-e-submultiplos-2/",
       "category" : "",
-      "tags"     : "",
+      "tags"     : "Javascript, Função, Múltiplos, Submúltiplos, Notação, Arredondamento, Array, HTML, Código, Métrica, Prefixos",
       "date"     : "October 09, 2011",
       "excerpt"  : "Bom, vocês devem ter visto meu tópico anterior sobre Função Javascript para Submúltiplos e eu resolvi fazer uma função mais completa. Agora abrangendo mais submúltiplos e também abrangendo múltiplos. O conceito é o mesmo do anterior, gerar o valor com múltiplo ou submúltiplo e arredondar para duas casas decimais apenas. A..."
     } ,
@@ -436,7 +436,7 @@
       "title"    : "Função Javascript para Multiplos e Submultiplos",
       "url"      : "/pt/2011/10/funcao-javascript-para-multiplos-e-submultiplos/",
       "category" : "",
-      "tags"     : "",
+      "tags"     : "Javascript, Submultiplos, Multiplos, Prefixos SI, Mili, Micro, Nano, Pico, Função, Arredondamento, Unidades, Física",
       "date"     : "October 08, 2011",
       "excerpt"  : "Bom, estava montando uma outra calculadora aqui para a EnergyLabs Brasil, e quis fazer algo mais legalzinho. Fiz uma função em javascript que concatena o valor com o submúltiplo, e já faz as multiplicações necessárias além de arrendondar para duas casas decimais.Não entendeu? Bom vou exemplificar.Em física se usa muito múltiplos e submúltiplos para..."
     } ,
@@ -445,7 +445,7 @@
       "title"    : "Desenhando com Canvas do HTML5",
       "url"      : "/pt/2011/09/desenhando-com-canvas-do-html5/",
       "category" : "",
-      "tags"     : "",
+      "tags"     : "HTML5, Canvas, JavaScript, Web Graphics, 2D Drawing, Context 2D, Sine Wave, Cartesian Coordinates, Pixel Manipulation, Web Development",
       "date"     : "September 12, 2011",
       "excerpt"  : "[ Migrado do LetsHack It ] Alguns de vocês podem ter visto que tive alguns pequenos projetos usando o Canvas do HTML5 na EnergyLabs Brasil. Abaixo alguns projetos que fazem uso do Canvas: Curva do Transístor Gerador de Ondas Harmônicas Gerador de Fundo Animado Porém nunca expliquei a ninguém como..."
     } ,
@@ -454,7 +454,7 @@
       "title"    : "Enviando Tweet com PHP",
       "url"      : "/pt/2011/09/enviando-tweet-com-php/",
       "category" : "",
-      "tags"     : "",
+      "tags"     : "PHP, Twitter API, OAuth, tmhOAuth, Social Media, Web Development",
       "date"     : "September 07, 2011",
       "excerpt"  : "No post anterior mostrei como enviar um Tweet com Python. Agora mostrarei com o PHP.Repita os mesmos passos de criação das Keys ditas no post anterior e anote todas elas.Para o PHP usamos uma biblioteca chamada tmhOAuth, que pode ser conseguida aqui:https://github.com/themattharris/tmhOAuthBaixe apenas o arquivo tmhOAuth.php que é o que..."
     } ,
@@ -463,7 +463,7 @@
       "title"    : "Enviando Tweet com Python",
       "url"      : "/pt/2011/09/enviando-tweet-com-python/",
       "category" : "",
-      "tags"     : "",
+      "tags"     : "Python, Twitter API, Tweepy, OAuth, Automação, Scripting, API Twitter, Twitter Developer, Python Script, Twitter Automation",
       "date"     : "September 07, 2011",
       "excerpt"  : "[Migrado do LetsHack It no Tumblr]Bom, como estou sem ideias para novos hacks, vou mostrar a vocês um jeito simples de enviar um Tweet com o Python.Existem vários meios de autenticação para o Twitter (ou existiam), o principal é o OAuth. Outro ponto é que existem várias bibliotecas para o..."
     } ,
@@ -472,7 +472,7 @@
       "title"    : "Apontador com Laser Vermelho de DVD",
       "url"      : "/pt/2011/09/15/",
       "category" : "",
-      "tags"     : "",
+      "tags"     : "Laser diode, DVD burner, Laser pointer, Hardware hacking, DIY, High power laser, Electronics, Laser project, Burner, Red laser",
       "date"     : "September 07, 2011",
       "excerpt"  : "Para passar um pouco o tempo, um hack antigo meu de como fazer um apontador laser vermelho que queima com um Gravador de DVD…[embedyt]https://www.youtube.com/watch?v=mEzq2PaFvXY[/embedyt]"
     } ,
@@ -481,7 +481,7 @@
       "title"    : "Ed Poliglota",
       "url"      : "/pt/2011/09/ed-poliglota/",
       "category" : "",
-      "tags"     : "",
+      "tags"     : "Python, Reverse Engineering, Web Scraping, Google Translate API, Chatbot, Bot Gateway, mod_perl, CGI, Source Code Analysis, HTTP Request",
       "date"     : "September 06, 2011",
       "excerpt"  : "[Migrado do LetsHackIt]Hmm, vamos brincar um pouco com Robô Ed? É aquele Robô Ed que está no site do Ministério de Minas de Energia do Brasil… Não sabe qual? Olhe aqui: http://www.ed.conpet.gov.br/br/converse.php – Mas não vamos brincar de conversar não! Vamos fazer algo mais legal, vamos ver o que da pra fazer!Vamos..."
     } 

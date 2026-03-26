@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2016/10/goes-satellite-hunt-part-1-antenna-system/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that’s reachable in São Paulo) with a good SNR (enough to decode) and then make all the tools to demodulate, decode and output the images and other data...">
+  <meta name="description" content="Build a GOES satellite antenna system for high-res weather images. Learn about prime focus dishes, Cantenna feeds, and waveguide modes in this DIY guide.">
   
-  <meta name="keywords" content="Airspy, EMWIN, English, GOES, Hearsat, LRIT, RE, Reverse Engineering, Sat, Satellite, SDR">
+  <meta name="keywords" content="Airspy, EMWIN, English, GOES, Hearsat, LRIT, RE, Reverse Engineering, Sat, Satellite, SDR, Geostationary Satellite, L-Band, Cantenna, Waveguide, TE11, TM01, Prime Focus, SNR, RF Engineering, Satellite Reception">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="GOES Satellite Hunt (Part 1 – Antenna System) | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2016/10/goes-satellite-hunt-part-1-antenna-system/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that’s reachable in São Paulo) with a good SNR (enough to decode) and then make all the tools to demodulate, decode and output the images and other data...">
+  <meta property="og:description" content="Build a GOES satellite antenna system for high-res weather images. Learn about prime focus dishes, Cantenna feeds, and waveguide modes in this DIY guide.">
   <meta property="og:image" content="https://lucasteske.dev/wp-content/uploads/2016/10/Sem-título.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -101,6 +101,26 @@
   
   <meta property="article:tag" content="SDR">
   
+  <meta property="article:tag" content="Geostationary Satellite">
+  
+  <meta property="article:tag" content="L-Band">
+  
+  <meta property="article:tag" content="Cantenna">
+  
+  <meta property="article:tag" content="Waveguide">
+  
+  <meta property="article:tag" content="TE11">
+  
+  <meta property="article:tag" content="TM01">
+  
+  <meta property="article:tag" content="Prime Focus">
+  
+  <meta property="article:tag" content="SNR">
+  
+  <meta property="article:tag" content="RF Engineering">
+  
+  <meta property="article:tag" content="Satellite Reception">
+  
   
 
   <!-- Facebook -->
@@ -111,9 +131,9 @@
   <meta name="twitter:title" content="GOES Satellite Hunt (Part 1 – Antenna System) | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that’s reachable in São Paulo) with a good SNR (enough to decode) and then make all the tools to demodulate, decode and output the images and other data...">
+  <meta name="twitter:description" content="Build a GOES satellite antenna system for high-res weather images. Learn about prime focus dishes, Cantenna feeds, and waveguide modes in this DIY guide.">
   <meta name="twitter:image" content="https://lucasteske.dev/wp-content/uploads/2016/10/Sem-título.png">
-  <meta name="twitter:image:alt" content="So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that’s reachable in São Paulo) with a good SNR (enough to decode) and then make all the tools to demodulate, decode and output the images and other data...">
+  <meta name="twitter:image:alt" content="Build a GOES satellite antenna system for high-res weather images. Learn about prime focus dishes, Cantenna feeds, and waveguide modes in this DIY guide.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -123,9 +143,9 @@
     "url": "https://lucasteske.dev/2016/10/goes-satellite-hunt-part-1-antenna-system/",
     "name": "GOES Satellite Hunt (Part 1 &#8211; Antenna System) | Lets Hack It",
     "headline": "GOES Satellite Hunt (Part 1 &#8211; Antenna System) | Lets Hack It",
-    "keywords": ["Airspy","EMWIN","English","GOES","Hearsat","LRIT","RE","Reverse Engineering","Sat","Satellite","SDR"],
+    "keywords": ["Airspy","EMWIN","English","GOES","Hearsat","LRIT","RE","Reverse Engineering","Sat","Satellite","SDR","Geostationary Satellite","L-Band","Cantenna","Waveguide","TE11","TM01","Prime Focus","SNR","RF Engineering","Satellite Reception"],
     "inLanguage": "en",
-    "description": "So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that’s reachable in São Paulo) with a good SNR (enough to decode) and then make all the tools to demodulate, decode and output the images and other data...",
+    "description": "Build a GOES satellite antenna system for high-res weather images. Learn about prime focus dishes, Cantenna feeds, and waveguide modes in this DIY guide.",
     "articleBody": "So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that’s reachable in São Paulo) with a good SNR (enough to decode) and then make all the tools to demodulate, decode and output the images and other data they send. I wanted a high-res image, and the L-Band transmissions usually provide that (GOES for example is 1km/px with whole earth sphere in frame. A 10000 x 10000 pixels image) So I choose GOES over other Weather Satellites mainly because GOES is a Geostationary Satellite. That means its position never change. That was needed for me, because L Band usually needs a relatively big dish to capture the signal, and if the satellite is moving, the antenna needs to track it. That means: Alt-Az tracker (or something else) that will be most likely more expensive than the whole capture system (at least in Brazil). Since GOES does not move, I could just point my dish and forget about it. It would always capture the signal. So first things first. What dish should I get? I found some people in twitter ( More specific @USASatcom and @uhf_satcom and just for...",
     "datePublished": "2016-10-18 22:24:40 +0000",
     "dateModified": "2016-10-18 22:24:40 +0000",
@@ -712,10 +732,10 @@ So if you want to build this as well, I strongly suggest to buy some LNA4ALL fro
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

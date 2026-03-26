@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2021/04/rotor-antenna-parte-2">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="Continuing the tracker project, I managed to make some significant progress. As Demilson (PY2UEP) had cut the original motors, I did the same. The azimuth motor was too rusted and I eventually destroyed one of the coils (which I wanted to salvage the wire), but in the end the shaft...">
+  <meta name="description" content="Build a satellite tracking antenna rotor. This guide covers modifying motors, 3D printing parts, and using ESP32 with TMC2209 drivers.">
   
-  <meta name="keywords" content="Airspy, EMWIN, English, GOES, Hearsat, LRIT, RE, Reverse Engineering, Sat, Satellite, SDR">
+  <meta name="keywords" content="Airspy, EMWIN, English, GOES, Hearsat, LRIT, RE, Reverse Engineering, Sat, Satellite, SDR, Antenna Rotor, Satellite Tracking, ESP32, TMC2209, NEMA17, 3D Printing, FreeCAD, Closed-loop Motor, Stepper Motor, Tracker Project">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Antenna Rotor - Part 2 | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2021/04/rotor-antenna-parte-2">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="Continuing the tracker project, I managed to make some significant progress. As Demilson (PY2UEP) had cut the original motors, I did the same. The azimuth motor was too rusted and I eventually destroyed one of the coils (which I wanted to salvage the wire), but in the end the shaft...">
+  <meta property="og:description" content="Build a satellite tracking antenna rotor. This guide covers modifying motors, 3D printing parts, and using ESP32 with TMC2209 drivers.">
   <meta property="og:image" content="https://lucasteske.dev/assets/posts/tracker-mount-2/assembled-elevation-shaft.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -101,6 +101,26 @@
   
   <meta property="article:tag" content="SDR">
   
+  <meta property="article:tag" content="Antenna Rotor">
+  
+  <meta property="article:tag" content="Satellite Tracking">
+  
+  <meta property="article:tag" content="ESP32">
+  
+  <meta property="article:tag" content="TMC2209">
+  
+  <meta property="article:tag" content="NEMA17">
+  
+  <meta property="article:tag" content="3D Printing">
+  
+  <meta property="article:tag" content="FreeCAD">
+  
+  <meta property="article:tag" content="Closed-loop Motor">
+  
+  <meta property="article:tag" content="Stepper Motor">
+  
+  <meta property="article:tag" content="Tracker Project">
+  
   
 
   <!-- Facebook -->
@@ -111,9 +131,9 @@
   <meta name="twitter:title" content="Antenna Rotor - Part 2 | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="Continuing the tracker project, I managed to make some significant progress. As Demilson (PY2UEP) had cut the original motors, I did the same. The azimuth motor was too rusted and I eventually destroyed one of the coils (which I wanted to salvage the wire), but in the end the shaft...">
+  <meta name="twitter:description" content="Build a satellite tracking antenna rotor. This guide covers modifying motors, 3D printing parts, and using ESP32 with TMC2209 drivers.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/posts/tracker-mount-2/assembled-elevation-shaft.jpg">
-  <meta name="twitter:image:alt" content="Continuing the tracker project, I managed to make some significant progress. As Demilson (PY2UEP) had cut the original motors, I did the same. The azimuth motor was too rusted and I eventually destroyed one of the coils (which I wanted to salvage the wire), but in the end the shaft...">
+  <meta name="twitter:image:alt" content="Build a satellite tracking antenna rotor. This guide covers modifying motors, 3D printing parts, and using ESP32 with TMC2209 drivers.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -123,9 +143,9 @@
     "url": "https://lucasteske.dev/2021/04/rotor-antenna-parte-2",
     "name": "Antenna Rotor - Part 2 | Lets Hack It",
     "headline": "Antenna Rotor - Part 2 | Lets Hack It",
-    "keywords": ["Airspy","EMWIN","English","GOES","Hearsat","LRIT","RE","Reverse Engineering","Sat","Satellite","SDR"],
+    "keywords": ["Airspy","EMWIN","English","GOES","Hearsat","LRIT","RE","Reverse Engineering","Sat","Satellite","SDR","Antenna Rotor","Satellite Tracking","ESP32","TMC2209","NEMA17","3D Printing","FreeCAD","Closed-loop Motor","Stepper Motor","Tracker Project"],
     "inLanguage": "en",
-    "description": "Continuing the tracker project, I managed to make some significant progress. As Demilson (PY2UEP) had cut the original motors, I did the same. The azimuth motor was too rusted and I eventually destroyed one of the coils (which I wanted to salvage the wire), but in the end the shaft...",
+    "description": "Build a satellite tracking antenna rotor. This guide covers modifying motors, 3D printing parts, and using ESP32 with TMC2209 drivers.",
     "articleBody": "Continuing the tracker project, I managed to make some significant progress. As Demilson (PY2UEP) had cut the original motors, I did the same. The azimuth motor was too rusted and I eventually destroyed one of the coils (which I wanted to salvage the wire), but in the end the shaft went out. After removing the shaft, I broke the magnet with a hammer until there was any piece left. That way, the only thing that would be left there is the shaft and the hexagon magnet support. Motor shaft showing the hexagon support For the elevation motor, I made a cut in a circular mark around the exit of the shaft. That way I could use the same support for coupling with the reduction gears. “lid” of the elevation motor after cut Lid + Reduction Gears Motor Pieces For the shaft, it was nescessary to reduce its size and made a bevel so I could fit it better in a 3D Printed part. To do so, I use two plywood pieces to hold the shaft while me and my father cut it. For the bevel, we used a grinder. Plywood and cut shaft Cut shaft on motor head With that,...",
     "datePublished": "2021-04-01 05:23:00 +0000",
     "dateModified": "2021-04-01 05:23:00 +0000",
@@ -741,10 +761,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

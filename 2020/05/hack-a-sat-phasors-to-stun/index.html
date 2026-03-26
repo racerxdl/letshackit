@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2020/05/hack-a-sat-phasors-to-stun/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="Hack a sat  —  Phasors to Stun The challenge I got really excited about it because it’s a SDR one. And everyone that knows me know that I love SDR stuff. The zip file itself contains a wav file which they told us is not an audio but an radio...">
+  <meta name="description" content="Learn to hack a satellite CTF challenge using SDR and GNU Radio. Decode 2-FSK signals from WAV files to find the hidden flag.">
   
-  <meta name="keywords" content="Camera, Hacking, CTF, Hackasat, CTF Writeup, Satellite, SDR, GNU Radio, Radio">
+  <meta name="keywords" content="Camera, Hacking, CTF, Hackasat, CTF Writeup, Satellite, SDR, GNU Radio, Radio, FSK, Signal Processing, Clock Recovery, WAV, Binary Slicer, Bitstream, Demodulation">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Hack a Sat - Phasors to Stun | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2020/05/hack-a-sat-phasors-to-stun/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="Hack a sat  —  Phasors to Stun The challenge I got really excited about it because it’s a SDR one. And everyone that knows me know that I love SDR stuff. The zip file itself contains a wav file which they told us is not an audio but an radio...">
+  <meta property="og:description" content="Learn to hack a satellite CTF challenge using SDR and GNU Radio. Decode 2-FSK signals from WAV files to find the hidden flag.">
   <meta property="og:image" content="https://lucasteske.dev/assets/posts/medium/1_R1n7vaNfInOP6BCFXkjv1Q.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -97,6 +97,20 @@
   
   <meta property="article:tag" content="Radio">
   
+  <meta property="article:tag" content="FSK">
+  
+  <meta property="article:tag" content="Signal Processing">
+  
+  <meta property="article:tag" content="Clock Recovery">
+  
+  <meta property="article:tag" content="WAV">
+  
+  <meta property="article:tag" content="Binary Slicer">
+  
+  <meta property="article:tag" content="Bitstream">
+  
+  <meta property="article:tag" content="Demodulation">
+  
   
 
   <!-- Facebook -->
@@ -107,9 +121,9 @@
   <meta name="twitter:title" content="Hack a Sat - Phasors to Stun | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="Hack a sat  —  Phasors to Stun The challenge I got really excited about it because it’s a SDR one. And everyone that knows me know that I love SDR stuff. The zip file itself contains a wav file which they told us is not an audio but an radio...">
+  <meta name="twitter:description" content="Learn to hack a satellite CTF challenge using SDR and GNU Radio. Decode 2-FSK signals from WAV files to find the hidden flag.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/posts/medium/1_R1n7vaNfInOP6BCFXkjv1Q.png">
-  <meta name="twitter:image:alt" content="Hack a sat  —  Phasors to Stun The challenge I got really excited about it because it’s a SDR one. And everyone that knows me know that I love SDR stuff. The zip file itself contains a wav file which they told us is not an audio but an radio...">
+  <meta name="twitter:image:alt" content="Learn to hack a satellite CTF challenge using SDR and GNU Radio. Decode 2-FSK signals from WAV files to find the hidden flag.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -119,9 +133,9 @@
     "url": "https://lucasteske.dev/2020/05/hack-a-sat-phasors-to-stun/",
     "name": "Hack a Sat - Phasors to Stun | Lets Hack It",
     "headline": "Hack a Sat - Phasors to Stun | Lets Hack It",
-    "keywords": ["Camera","Hacking","CTF","Hackasat","CTF Writeup","Satellite","SDR","GNU Radio","Radio"],
+    "keywords": ["Camera","Hacking","CTF","Hackasat","CTF Writeup","Satellite","SDR","GNU Radio","Radio","FSK","Signal Processing","Clock Recovery","WAV","Binary Slicer","Bitstream","Demodulation"],
     "inLanguage": "en",
-    "description": "Hack a sat  —  Phasors to Stun The challenge I got really excited about it because it’s a SDR one. And everyone that knows me know that I love SDR stuff. The zip file itself contains a wav file which they told us is not an audio but an radio...",
+    "description": "Learn to hack a satellite CTF challenge using SDR and GNU Radio. Decode 2-FSK signals from WAV files to find the hidden flag.",
     "articleBody": "Hack a sat  —  Phasors to Stun The challenge I got really excited about it because it’s a SDR one. And everyone that knows me know that I love SDR stuff. The zip file itself contains a wav file which they told us is not an audio but an radio signal File command to show what the wave file is If we open in audacity we will see a very interesting pattern: Audacity view of the wave file That looks like a 2-FSK demodulated file (see https://en.wikipedia.org/wiki/Frequency-shift_keying). When you demodulate a 2-FSK I/Q from correctly from a Radio, it will convert the frequency to voltage leading to a pattern like the one saw. I said 2-FSK besides other ones, because there is clearly almost only three values there: 1, 0 and -1. The 0 is usually the transistion, and in a 2-FSK 1 and -1 represents the bits itself. We can use GNU Radio to transform that in a bitstream, but before we need to know the baud rate (or bit rate). That can be done manually in the audacity itself. Just find two peaks that are closer to each other than other any other. That’s probably the minimum period...",
     "datePublished": "2020-05-30 16:15:00 +0000",
     "dateModified": "2020-05-30 16:15:00 +0000",
@@ -712,10 +726,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

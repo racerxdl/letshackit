@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2017/08/linux-shim-for-patching-executable-in-run-time/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="Linux shim for Patching executable in run-time That’s something I already did a long time and few people know. It’s not something hard or complex to do, but few people know how easy is to make a Library Shim. First, what’s a shim? A shim is a small library that...">
+  <meta name="description" content="Master Linux shimming: intercept API calls and patch executables at runtime using LD_PRELOAD and dlsym techniques.">
   
-  <meta name="keywords" content="Hacking, Linux, C, Programming, Shim">
+  <meta name="keywords" content="Hacking, Linux, C, Programming, Shim, LD_PRELOAD, dlsym, Shared Library, API Interception, Runtime Patching, Binary Patching, C Programming, Dynamic Linking, Library Shim">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Linux shim for Patching executable in run-time | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2017/08/linux-shim-for-patching-executable-in-run-time/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="Linux shim for Patching executable in run-time That’s something I already did a long time and few people know. It’s not something hard or complex to do, but few people know how easy is to make a Library Shim. First, what’s a shim? A shim is a small library that...">
+  <meta property="og:description" content="Master Linux shimming: intercept API calls and patch executables at runtime using LD_PRELOAD and dlsym techniques.">
   <meta property="og:image" content="https://lucasteske.dev/assets/cropped-logo.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -89,6 +89,24 @@
   
   <meta property="article:tag" content="Shim">
   
+  <meta property="article:tag" content="LD_PRELOAD">
+  
+  <meta property="article:tag" content="dlsym">
+  
+  <meta property="article:tag" content="Shared Library">
+  
+  <meta property="article:tag" content="API Interception">
+  
+  <meta property="article:tag" content="Runtime Patching">
+  
+  <meta property="article:tag" content="Binary Patching">
+  
+  <meta property="article:tag" content="C Programming">
+  
+  <meta property="article:tag" content="Dynamic Linking">
+  
+  <meta property="article:tag" content="Library Shim">
+  
   
 
   <!-- Facebook -->
@@ -99,9 +117,9 @@
   <meta name="twitter:title" content="Linux shim for Patching executable in run-time | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="Linux shim for Patching executable in run-time That’s something I already did a long time and few people know. It’s not something hard or complex to do, but few people know how easy is to make a Library Shim. First, what’s a shim? A shim is a small library that...">
+  <meta name="twitter:description" content="Master Linux shimming: intercept API calls and patch executables at runtime using LD_PRELOAD and dlsym techniques.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/cropped-logo.png">
-  <meta name="twitter:image:alt" content="Linux shim for Patching executable in run-time That’s something I already did a long time and few people know. It’s not something hard or complex to do, but few people know how easy is to make a Library Shim. First, what’s a shim? A shim is a small library that...">
+  <meta name="twitter:image:alt" content="Master Linux shimming: intercept API calls and patch executables at runtime using LD_PRELOAD and dlsym techniques.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -111,9 +129,9 @@
     "url": "https://lucasteske.dev/2017/08/linux-shim-for-patching-executable-in-run-time/",
     "name": "Linux shim for Patching executable in run-time | Lets Hack It",
     "headline": "Linux shim for Patching executable in run-time | Lets Hack It",
-    "keywords": ["Hacking","Linux","C","Programming","Shim"],
+    "keywords": ["Hacking","Linux","C","Programming","Shim","LD_PRELOAD","dlsym","Shared Library","API Interception","Runtime Patching","Binary Patching","C Programming","Dynamic Linking","Library Shim"],
     "inLanguage": "en",
-    "description": "Linux shim for Patching executable in run-time That’s something I already did a long time and few people know. It’s not something hard or complex to do, but few people know how easy is to make a Library Shim. First, what’s a shim? A shim is a small library that...",
+    "description": "Master Linux shimming: intercept API calls and patch executables at runtime using LD_PRELOAD and dlsym techniques.",
     "articleBody": "Linux shim for Patching executable in run-time That’s something I already did a long time and few people know. It’s not something hard or complex to do, but few people know how easy is to make a Library Shim. First, what’s a shim? A shim is a small library that can intercept API calls transparently for a specific program / library. Basically it’s a proxy library that can transparently intercept some API calls to either change the content, monitor the data or just making a API translation. That has its variants over all Operating Systems (Linux, Mac OSX, Windows) but I will talk mainly about Linux here (which is the OS I use). Creating our executable What’s our target? We will create an example executable that print some info in the screen an opens a file to write some content. Then we will make a shim to monitor (like a debugger) those calls. In the second part we will do some run-time executable patching. Our first example executable Let’s do some C Code and make an executable that prints some stuff, opens a file, write stuff and closes it. We can do something like this: #include &lt;stdio.h&gt; #include &lt;string.h&gt; char...",
     "datePublished": "2017-08-05 15:00:00 +0000",
     "dateModified": "2017-08-05 15:00:00 +0000",
@@ -1010,10 +1028,10 @@ MI NO LIK U FIL, MI UPEN HUE.TXT
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

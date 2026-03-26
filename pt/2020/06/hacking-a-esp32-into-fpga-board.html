@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/pt/2020/06/hacking-a-esp32-into-fpga-board">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="Hackeando um ESP32 num FPGA No ano passado eu vi um cara russo que viu que essa placa barata (US$15) tinha um FPGA da Lattice ECP5, o qual é compatível com as toolchains opensource para síntese. Ele estava rodando um RISC-V dentro e enviando a saída serial pela rede usando...">
+  <meta name="description" content="Aprenda a conectar um ESP32 a uma placa FPGA via JTAG e usar OpenOCD. Tutorial completo de hardware hacking.">
   
-  <meta name="keywords" content="Hacking, FPGA, ICEWolf, IceStick, ECP5, Lattice, ESP32, Colorlight">
+  <meta name="keywords" content="Hacking, FPGA, ICEWolf, IceStick, ECP5, Lattice, ESP32, Colorlight, Lattice ECP5, JTAG, OpenOCD, Remote Bitbang, Hardware Hacking, Soldering, RISC-V, VHDL, Bitstream, Serial">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Hackeando um ESP32 num FPGA | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/pt/2020/06/hacking-a-esp32-into-fpga-board">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="Hackeando um ESP32 num FPGA No ano passado eu vi um cara russo que viu que essa placa barata (US$15) tinha um FPGA da Lattice ECP5, o qual é compatível com as toolchains opensource para síntese. Ele estava rodando um RISC-V dentro e enviando a saída serial pela rede usando...">
+  <meta property="og:description" content="Aprenda a conectar um ESP32 a uma placa FPGA via JTAG e usar OpenOCD. Tutorial completo de hardware hacking.">
   <meta property="og:image" content="https://lucasteske.dev/assets/posts/medium/1_ALnLx9L06FSciqeEV5OCuQ.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -95,6 +95,26 @@
   
   <meta property="article:tag" content="Colorlight">
   
+  <meta property="article:tag" content="Lattice ECP5">
+  
+  <meta property="article:tag" content="JTAG">
+  
+  <meta property="article:tag" content="OpenOCD">
+  
+  <meta property="article:tag" content="Remote Bitbang">
+  
+  <meta property="article:tag" content="Hardware Hacking">
+  
+  <meta property="article:tag" content="Soldering">
+  
+  <meta property="article:tag" content="RISC-V">
+  
+  <meta property="article:tag" content="VHDL">
+  
+  <meta property="article:tag" content="Bitstream">
+  
+  <meta property="article:tag" content="Serial">
+  
   
 
   <!-- Facebook -->
@@ -105,9 +125,9 @@
   <meta name="twitter:title" content="Hackeando um ESP32 num FPGA | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="Hackeando um ESP32 num FPGA No ano passado eu vi um cara russo que viu que essa placa barata (US$15) tinha um FPGA da Lattice ECP5, o qual é compatível com as toolchains opensource para síntese. Ele estava rodando um RISC-V dentro e enviando a saída serial pela rede usando...">
+  <meta name="twitter:description" content="Aprenda a conectar um ESP32 a uma placa FPGA via JTAG e usar OpenOCD. Tutorial completo de hardware hacking.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/posts/medium/1_ALnLx9L06FSciqeEV5OCuQ.png">
-  <meta name="twitter:image:alt" content="Hackeando um ESP32 num FPGA No ano passado eu vi um cara russo que viu que essa placa barata (US$15) tinha um FPGA da Lattice ECP5, o qual é compatível com as toolchains opensource para síntese. Ele estava rodando um RISC-V dentro e enviando a saída serial pela rede usando...">
+  <meta name="twitter:image:alt" content="Aprenda a conectar um ESP32 a uma placa FPGA via JTAG e usar OpenOCD. Tutorial completo de hardware hacking.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -117,9 +137,9 @@
     "url": "https://lucasteske.dev/pt/2020/06/hacking-a-esp32-into-fpga-board",
     "name": "Hackeando um ESP32 num FPGA | Lets Hack It",
     "headline": "Hackeando um ESP32 num FPGA | Lets Hack It",
-    "keywords": ["Hacking","FPGA","ICEWolf","IceStick","ECP5","Lattice","ESP32","Colorlight"],
+    "keywords": ["Hacking","FPGA","ICEWolf","IceStick","ECP5","Lattice","ESP32","Colorlight","Lattice ECP5","JTAG","OpenOCD","Remote Bitbang","Hardware Hacking","Soldering","RISC-V","VHDL","Bitstream","Serial"],
     "inLanguage": "pt",
-    "description": "Hackeando um ESP32 num FPGA No ano passado eu vi um cara russo que viu que essa placa barata (US$15) tinha um FPGA da Lattice ECP5, o qual é compatível com as toolchains opensource para síntese. Ele estava rodando um RISC-V dentro e enviando a saída serial pela rede usando...",
+    "description": "Aprenda a conectar um ESP32 a uma placa FPGA via JTAG e usar OpenOCD. Tutorial completo de hardware hacking.",
     "articleBody": "Hackeando um ESP32 num FPGA No ano passado eu vi um cara russo que viu que essa placa barata (US$15) tinha um FPGA da Lattice ECP5, o qual é compatível com as toolchains opensource para síntese. Ele estava rodando um RISC-V dentro e enviando a saída serial pela rede usando uma das portas de rede. Eu queria conseguir uma e começar a brincar. Essas placas são relativamente baratas (mais ou menos US$15) e tem um FPGA da Lattice ( LFE5U-25F-6BG381C ), 4MB DRAM, duas portas gigabit e vários level shifters. Isso é bom por que: É uma placa barata pelas especificações Você pode usar uma toolchain opensource Tem MUITOS level-shifter para 5V e eles são bi-direcionais. Eu decidi tentar comprar uma do Aliexpress, mas por causa da pandemia do COVID-19, o pacote está super atrasado (ele ainda não chegou, mesmo 3 meses depois de ter pedido). Por sorte eu achei no Mercado Livre para vender por um preço razoável (R$220). Quando chegou, eu tentei rodar o clássico Hello World para Hardware: O Led Blink. Para isso eu usei este projeto para testar: https://github.com/antonblanchard/ghdl-yosys-blink Eu fiz um fork e adicionei as configurações da placa e também a configuração para usar um...",
     "datePublished": "2020-06-14 19:17:00 +0000",
     "dateModified": "2020-06-14 19:17:00 +0000",
@@ -846,10 +866,10 @@ Which basically keeps sending Hello World through the serial port forever.</p>
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:22 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:51:12 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:22 +0000
+    Last build: 2026-03-26 23:51:12 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/pt/2011/10/amostra-de-memoria-mram-da-everspin/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="Há muito tempo atrás pedi amostras de uma memória magnética da Everspin para fazer testes aqui, porém depois me deparei com o problema de que ela é 3.3V. De qualquer maneira agora tenho um FPGA para brincar com ela. O modelo de amostra é a MR2A16AYS35, uma MRAM de 1M de...">
+  <meta name="description" content="Testando a memória MRAM da Everspin no FPGA. Saiba como essa tecnologia não volátil promete revolucionar o boot instantâneo dos computadores.">
   
-  <meta name="keywords" content="">
+  <meta name="keywords" content="MRAM, Everspin, MR2A16AYS35, Non-volatile memory, SRAM, FPGA, Boot-instantâneo, Hardware Hacking, Interface, Memória RAM">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Amostra de Memória MRAM da Everspin | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/pt/2011/10/amostra-de-memoria-mram-da-everspin/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="Há muito tempo atrás pedi amostras de uma memória magnética da Everspin para fazer testes aqui, porém depois me deparei com o problema de que ela é 3.3V. De qualquer maneira agora tenho um FPGA para brincar com ela. O modelo de amostra é a MR2A16AYS35, uma MRAM de 1M de...">
+  <meta property="og:description" content="Testando a memória MRAM da Everspin no FPGA. Saiba como essa tecnologia não volátil promete revolucionar o boot instantâneo dos computadores.">
   <meta property="og:image" content="https://lucasteske.dev/assets/cropped-logo.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -79,6 +79,26 @@
   <meta property="article:modified_time" content="2011-10-13T19:42:09+00:00">
   
   
+  <meta property="article:tag" content="MRAM">
+  
+  <meta property="article:tag" content="Everspin">
+  
+  <meta property="article:tag" content="MR2A16AYS35">
+  
+  <meta property="article:tag" content="Non-volatile memory">
+  
+  <meta property="article:tag" content="SRAM">
+  
+  <meta property="article:tag" content="FPGA">
+  
+  <meta property="article:tag" content="Boot-instantâneo">
+  
+  <meta property="article:tag" content="Hardware Hacking">
+  
+  <meta property="article:tag" content="Interface">
+  
+  <meta property="article:tag" content="Memória RAM">
+  
   
 
   <!-- Facebook -->
@@ -89,9 +109,9 @@
   <meta name="twitter:title" content="Amostra de Memória MRAM da Everspin | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="Há muito tempo atrás pedi amostras de uma memória magnética da Everspin para fazer testes aqui, porém depois me deparei com o problema de que ela é 3.3V. De qualquer maneira agora tenho um FPGA para brincar com ela. O modelo de amostra é a MR2A16AYS35, uma MRAM de 1M de...">
+  <meta name="twitter:description" content="Testando a memória MRAM da Everspin no FPGA. Saiba como essa tecnologia não volátil promete revolucionar o boot instantâneo dos computadores.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/cropped-logo.png">
-  <meta name="twitter:image:alt" content="Há muito tempo atrás pedi amostras de uma memória magnética da Everspin para fazer testes aqui, porém depois me deparei com o problema de que ela é 3.3V. De qualquer maneira agora tenho um FPGA para brincar com ela. O modelo de amostra é a MR2A16AYS35, uma MRAM de 1M de...">
+  <meta name="twitter:image:alt" content="Testando a memória MRAM da Everspin no FPGA. Saiba como essa tecnologia não volátil promete revolucionar o boot instantâneo dos computadores.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -101,9 +121,9 @@
     "url": "https://lucasteske.dev/pt/2011/10/amostra-de-memoria-mram-da-everspin/",
     "name": "Amostra de Memória MRAM da Everspin | Lets Hack It",
     "headline": "Amostra de Memória MRAM da Everspin | Lets Hack It",
-    "keywords": [],
+    "keywords": ["MRAM","Everspin","MR2A16AYS35","Non-volatile memory","SRAM","FPGA","Boot-instantâneo","Hardware Hacking","Interface","Memória RAM"],
     "inLanguage": "pt",
-    "description": "Há muito tempo atrás pedi amostras de uma memória magnética da Everspin para fazer testes aqui, porém depois me deparei com o problema de que ela é 3.3V. De qualquer maneira agora tenho um FPGA para brincar com ela. O modelo de amostra é a MR2A16AYS35, uma MRAM de 1M de...",
+    "description": "Testando a memória MRAM da Everspin no FPGA. Saiba como essa tecnologia não volátil promete revolucionar o boot instantâneo dos computadores.",
     "articleBody": "Há muito tempo atrás pedi amostras de uma memória magnética da Everspin para fazer testes aqui, porém depois me deparei com o problema de que ela é 3.3V. De qualquer maneira agora tenho um FPGA para brincar com ela. O modelo de amostra é a MR2A16AYS35, uma MRAM de 1M de endereço e 16 Bits de “palavra”, totalizando 16Mbit ou 2 Mbytes. MRAM é um acrônimo para Magneto-resistive Random Access Memory, que é uma memória RAM não-volátil (não perde os dados quando se desliga). Ela é considerada a chave para o futuro da computação, principalmente portátil. Com ela vem o conceito de “boot-instantâneo” onde seu computador ao apertar o botão de ligar, estará já pronto para uso. O por que disso? É bem simples na realidade. Os armazenamentos não-volateis (por exemplo cartões de memória, HD’s, pendrives) são muito lentos para se trabalhar diretamente neles, e devido a isso se usa a Memória RAM, que é muito mais rápida, porém perde seu conteúdo ao se remover a energia. E até pior no caso das atuais DDR que são baseadas na DRAM, onde seu conteúdo precisa ser “refrescado” de tempos em tempos (a memória precisa de um pulso pra recarregar os valores 1 dentro dela, se...",
     "datePublished": "2011-10-13 19:42:09 +0000",
     "dateModified": "2011-10-13 19:42:09 +0000",
@@ -594,10 +614,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:22 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:51:12 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:22 +0000
+    Last build: 2026-03-26 23:51:12 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

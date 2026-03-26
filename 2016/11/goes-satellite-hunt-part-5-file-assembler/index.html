@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2016/11/goes-satellite-hunt-part-5-file-assembler/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="In the last chapter of my GOES Satellite Hunt, I explained how to obtain the packets. In this part I will explain how to aggregate and decompress the packets to generate the LRIT files.  This part will be somewhat quick, because most of the hard stuff was already done in...">
+  <meta name="description" content="Learn to assemble GOES satellite LRIT files. This guide covers packet aggregation, header parsing, and decompressing modified RICE data.">
   
-  <meta name="keywords" content="AGC, Airspy, Automatic Gain Control, Bug, Compile, Convolutional Code, Convolutional Encoding, EMWIN, English, Full Disk, GNU Radio, Gnuradio, GOES, GRC, Hearsat, LRIT, Osmocom, RE, Reed Solomon, Reverse Engineering, Root Raised Cosine Filter, RRC Filter, RS, Sat, Satellite, SDR, Statistics, Viterbi">
+  <meta name="keywords" content="AGC, Airspy, Automatic Gain Control, Bug, Compile, Convolutional Code, Convolutional Encoding, EMWIN, English, Full Disk, GNU Radio, Gnuradio, GOES, GRC, Hearsat, LRIT, Osmocom, RE, Reed Solomon, Reverse Engineering, Root Raised Cosine Filter, RRC Filter, RS, Sat, Satellite, SDR, Statistics, Viterbi, RICE compression, Python, Packet aggregation, Header parsing, NOAA, GCC ABI, Decompression, Software Defined Radio, File Assembler">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="GOES Satellite Hunt (Part 5 – File Assembler) | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2016/11/goes-satellite-hunt-part-5-file-assembler/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="In the last chapter of my GOES Satellite Hunt, I explained how to obtain the packets. In this part I will explain how to aggregate and decompress the packets to generate the LRIT files.  This part will be somewhat quick, because most of the hard stuff was already done in...">
+  <meta property="og:description" content="Learn to assemble GOES satellite LRIT files. This guide covers packet aggregation, header parsing, and decompressing modified RICE data.">
   <meta property="og:image" content="https://lucasteske.dev/wp-content/uploads/2016/11/3Zz7gvgh-624x568.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -135,6 +135,24 @@
   
   <meta property="article:tag" content="Viterbi">
   
+  <meta property="article:tag" content="RICE compression">
+  
+  <meta property="article:tag" content="Python">
+  
+  <meta property="article:tag" content="Packet aggregation">
+  
+  <meta property="article:tag" content="Header parsing">
+  
+  <meta property="article:tag" content="NOAA">
+  
+  <meta property="article:tag" content="GCC ABI">
+  
+  <meta property="article:tag" content="Decompression">
+  
+  <meta property="article:tag" content="Software Defined Radio">
+  
+  <meta property="article:tag" content="File Assembler">
+  
   
 
   <!-- Facebook -->
@@ -145,9 +163,9 @@
   <meta name="twitter:title" content="GOES Satellite Hunt (Part 5 – File Assembler) | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="In the last chapter of my GOES Satellite Hunt, I explained how to obtain the packets. In this part I will explain how to aggregate and decompress the packets to generate the LRIT files.  This part will be somewhat quick, because most of the hard stuff was already done in...">
+  <meta name="twitter:description" content="Learn to assemble GOES satellite LRIT files. This guide covers packet aggregation, header parsing, and decompressing modified RICE data.">
   <meta name="twitter:image" content="https://lucasteske.dev/wp-content/uploads/2016/11/3Zz7gvgh-624x568.jpg">
-  <meta name="twitter:image:alt" content="In the last chapter of my GOES Satellite Hunt, I explained how to obtain the packets. In this part I will explain how to aggregate and decompress the packets to generate the LRIT files.  This part will be somewhat quick, because most of the hard stuff was already done in...">
+  <meta name="twitter:image:alt" content="Learn to assemble GOES satellite LRIT files. This guide covers packet aggregation, header parsing, and decompressing modified RICE data.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -157,9 +175,9 @@
     "url": "https://lucasteske.dev/2016/11/goes-satellite-hunt-part-5-file-assembler/",
     "name": "GOES Satellite Hunt (Part 5 – File Assembler) | Lets Hack It",
     "headline": "GOES Satellite Hunt (Part 5 – File Assembler) | Lets Hack It",
-    "keywords": ["AGC","Airspy","Automatic Gain Control","Bug","Compile","Convolutional Code","Convolutional Encoding","EMWIN","English","Full Disk","GNU Radio","Gnuradio","GOES","GRC","Hearsat","LRIT","Osmocom","RE","Reed Solomon","Reverse Engineering","Root Raised Cosine Filter","RRC Filter","RS","Sat","Satellite","SDR","Statistics","Viterbi"],
+    "keywords": ["AGC","Airspy","Automatic Gain Control","Bug","Compile","Convolutional Code","Convolutional Encoding","EMWIN","English","Full Disk","GNU Radio","Gnuradio","GOES","GRC","Hearsat","LRIT","Osmocom","RE","Reed Solomon","Reverse Engineering","Root Raised Cosine Filter","RRC Filter","RS","Sat","Satellite","SDR","Statistics","Viterbi","RICE compression","Python","Packet aggregation","Header parsing","NOAA","GCC ABI","Decompression","Software Defined Radio","File Assembler"],
     "inLanguage": "en",
-    "description": "In the last chapter of my GOES Satellite Hunt, I explained how to obtain the packets. In this part I will explain how to aggregate and decompress the packets to generate the LRIT files.  This part will be somewhat quick, because most of the hard stuff was already done in...",
+    "description": "Learn to assemble GOES satellite LRIT files. This guide covers packet aggregation, header parsing, and decompressing modified RICE data.",
     "articleBody": "In the last chapter of my GOES Satellite Hunt, I explained how to obtain the packets. In this part I will explain how to aggregate and decompress the packets to generate the LRIT files.  This part will be somewhat quick, because most of the hard stuff was already done in the last part. Sadly the decompression algorithm is a modified RICE algorithm, and the Linux version of the library provided by NOAA cannot be used anymore because of incompatibilities between GCC ABIs ( The NOAA library has been compiled with GCC 2). Until I reverse engineer and create a open version of the decompression algorithm, I will use the  workaround I will explain here. In the packets before we have a flag called continuation flag that will specify if the packet is a start,  continuation or end packet. It will also say if the packet itself is a single file. Usually the file header is entire contained on the first packet. One of the things we need to do is aggregate the start, continuation and end packets into a single file. This is easy since the when a start packet appears inside a channel with the same APID, the entire file will be transmitted...",
     "datePublished": "2016-11-07 23:58:57 +0000",
     "dateModified": "2016-11-07 23:58:57 +0000",
@@ -916,10 +934,10 @@ facility phone number: 301-817-3880.<br>
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2019/12/creating-your-own-gsm-network-with-limesdr/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="Creating your own GSM Network with LimeSDR DISCLAIMER: This procedure is highly illegal basically anywhere in the world. Be sure to run this in a closed RF environment (aka Faraday Cage) This article works with any LimeSDR version. For this example we will use the Osmocom GSM Stack in the...">
+  <meta name="description" content="Build a private GSM network with LimeSDR. Learn to install Osmocom, configure OpenBSC, and set up a Network in a Box.">
   
-  <meta name="keywords" content="Camera, Hacking, SDR, Ubuntu, GSM, BTS, Osmocom, Sysmocom">
+  <meta name="keywords" content="Camera, Hacking, SDR, Ubuntu, GSM, BTS, Osmocom, Sysmocom, LimeSDR, OpenBSC, NITB, Base Transceiver Station, Linux, RF, Faraday Cage, Network in a Box">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Creating your own GSM Network with LimeSDR | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2019/12/creating-your-own-gsm-network-with-limesdr/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="Creating your own GSM Network with LimeSDR DISCLAIMER: This procedure is highly illegal basically anywhere in the world. Be sure to run this in a closed RF environment (aka Faraday Cage) This article works with any LimeSDR version. For this example we will use the Osmocom GSM Stack in the...">
+  <meta property="og:description" content="Build a private GSM network with LimeSDR. Learn to install Osmocom, configure OpenBSC, and set up a Network in a Box.">
   <meta property="og:image" content="https://lucasteske.dev/assets/posts/medium/1_KbNtmYsmaCMVJinWnJdhFg.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -95,6 +95,22 @@
   
   <meta property="article:tag" content="Sysmocom">
   
+  <meta property="article:tag" content="LimeSDR">
+  
+  <meta property="article:tag" content="OpenBSC">
+  
+  <meta property="article:tag" content="NITB">
+  
+  <meta property="article:tag" content="Base Transceiver Station">
+  
+  <meta property="article:tag" content="Linux">
+  
+  <meta property="article:tag" content="RF">
+  
+  <meta property="article:tag" content="Faraday Cage">
+  
+  <meta property="article:tag" content="Network in a Box">
+  
   
 
   <!-- Facebook -->
@@ -105,9 +121,9 @@
   <meta name="twitter:title" content="Creating your own GSM Network with LimeSDR | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="Creating your own GSM Network with LimeSDR DISCLAIMER: This procedure is highly illegal basically anywhere in the world. Be sure to run this in a closed RF environment (aka Faraday Cage) This article works with any LimeSDR version. For this example we will use the Osmocom GSM Stack in the...">
+  <meta name="twitter:description" content="Build a private GSM network with LimeSDR. Learn to install Osmocom, configure OpenBSC, and set up a Network in a Box.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/posts/medium/1_KbNtmYsmaCMVJinWnJdhFg.png">
-  <meta name="twitter:image:alt" content="Creating your own GSM Network with LimeSDR DISCLAIMER: This procedure is highly illegal basically anywhere in the world. Be sure to run this in a closed RF environment (aka Faraday Cage) This article works with any LimeSDR version. For this example we will use the Osmocom GSM Stack in the...">
+  <meta name="twitter:image:alt" content="Build a private GSM network with LimeSDR. Learn to install Osmocom, configure OpenBSC, and set up a Network in a Box.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -117,9 +133,9 @@
     "url": "https://lucasteske.dev/2019/12/creating-your-own-gsm-network-with-limesdr/",
     "name": "Creating your own GSM Network with LimeSDR | Lets Hack It",
     "headline": "Creating your own GSM Network with LimeSDR | Lets Hack It",
-    "keywords": ["Camera","Hacking","SDR","Ubuntu","GSM","BTS","Osmocom","Sysmocom"],
+    "keywords": ["Camera","Hacking","SDR","Ubuntu","GSM","BTS","Osmocom","Sysmocom","LimeSDR","OpenBSC","NITB","Base Transceiver Station","Linux","RF","Faraday Cage","Network in a Box"],
     "inLanguage": "en",
-    "description": "Creating your own GSM Network with LimeSDR DISCLAIMER: This procedure is highly illegal basically anywhere in the world. Be sure to run this in a closed RF environment (aka Faraday Cage) This article works with any LimeSDR version. For this example we will use the Osmocom GSM Stack in the...",
+    "description": "Build a private GSM network with LimeSDR. Learn to install Osmocom, configure OpenBSC, and set up a Network in a Box.",
     "articleBody": "Creating your own GSM Network with LimeSDR DISCLAIMER: This procedure is highly illegal basically anywhere in the world. Be sure to run this in a closed RF environment (aka Faraday Cage) This article works with any LimeSDR version. For this example we will use the Osmocom GSM Stack in the NITB (Network in the box) mode. In this mode the phones connected to you BTS will be able to call each other and send SMS messages. There is also the Interconnect mode in which the BSC (Base Station Controller) connects to a ISDN or IPBX (for example Asterisk) to manage the connected phones. You can check the different modes here: https://osmocom.org/projects/openbsc/wiki/OpenBSC#Configurations-Modes For this article I will be using a Ubuntu 18.04 LTS as operating system since there are pre-compiled packages from LimeMicro that helps a lot. It should run in any linux distribution provided that it has the required packages and / or you compile the missing ones. I might make a tutorial later about how to install from the source code but for now I will stick to the pre-compiled packages. Installing the required packages The first thing we need to do is to install all required packages. LimeMicro...",
     "datePublished": "2019-12-21 17:48:00 +0000",
     "dateModified": "2019-12-21 17:48:00 +0000",
@@ -1035,10 +1051,10 @@ trx
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

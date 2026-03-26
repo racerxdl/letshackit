@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/pt/2024/01/analise-e-decodificacao-de-memoria-flash">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="Explorando memórias NAND Quando em posse de um dispositivo a qual se deseja conhecer sobre, nem sempre é trivial o acesso ao conteúdo da memória flash. Devido a natureza das memórias NAND, é aplicado para todo conteúdo um algoritmo de correção de erros que pode causar uma ofuscação não intencional...">
+  <meta name="description" content="Aprenda a analisar memórias NAND Flash e decodificar dados usando binwalk. Entenda a arquitetura ECC e realize hardware hacking em dispositivos como máquinas de cartão.">
   
-  <meta name="keywords" content="Flash, PAX, Hardware Hacking, RE, Reverse Engineering, NAND, PAX, RT809H">
+  <meta name="keywords" content="Flash, PAX, Hardware Hacking, RE, Reverse Engineering, NAND, PAX, RT809H, NAND Flash, Memória Flash, ECC, Binwalk, Análise de Memória, BGA, Máquina de Cartão, ARM, Linux Kernel">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Análise e Decodificação de Memória Flash NAND - Revelando a Dispersão ECC em Dispositivos Desconhecidos | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/pt/2024/01/analise-e-decodificacao-de-memoria-flash">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="Explorando memórias NAND Quando em posse de um dispositivo a qual se deseja conhecer sobre, nem sempre é trivial o acesso ao conteúdo da memória flash. Devido a natureza das memórias NAND, é aplicado para todo conteúdo um algoritmo de correção de erros que pode causar uma ofuscação não intencional...">
+  <meta property="og:description" content="Aprenda a analisar memórias NAND Flash e decodificar dados usando binwalk. Entenda a arquitetura ECC e realize hardware hacking em dispositivos como máquinas de cartão.">
   <meta property="og:image" content="https://lucasteske.dev/assets/posts/analise-e-decodificacao-flash/flash-cell-programmed.svg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -95,6 +95,24 @@
   
   <meta property="article:tag" content="RT809H">
   
+  <meta property="article:tag" content="NAND Flash">
+  
+  <meta property="article:tag" content="Memória Flash">
+  
+  <meta property="article:tag" content="ECC">
+  
+  <meta property="article:tag" content="Binwalk">
+  
+  <meta property="article:tag" content="Análise de Memória">
+  
+  <meta property="article:tag" content="BGA">
+  
+  <meta property="article:tag" content="Máquina de Cartão">
+  
+  <meta property="article:tag" content="ARM">
+  
+  <meta property="article:tag" content="Linux Kernel">
+  
   
 
   <!-- Facebook -->
@@ -105,9 +123,9 @@
   <meta name="twitter:title" content="Análise e Decodificação de Memória Flash NAND - Revelando a Dispersão ECC em Dispositivos Desconhecidos | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="Explorando memórias NAND Quando em posse de um dispositivo a qual se deseja conhecer sobre, nem sempre é trivial o acesso ao conteúdo da memória flash. Devido a natureza das memórias NAND, é aplicado para todo conteúdo um algoritmo de correção de erros que pode causar uma ofuscação não intencional...">
+  <meta name="twitter:description" content="Aprenda a analisar memórias NAND Flash e decodificar dados usando binwalk. Entenda a arquitetura ECC e realize hardware hacking em dispositivos como máquinas de cartão.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/posts/analise-e-decodificacao-flash/flash-cell-programmed.svg">
-  <meta name="twitter:image:alt" content="Explorando memórias NAND Quando em posse de um dispositivo a qual se deseja conhecer sobre, nem sempre é trivial o acesso ao conteúdo da memória flash. Devido a natureza das memórias NAND, é aplicado para todo conteúdo um algoritmo de correção de erros que pode causar uma ofuscação não intencional...">
+  <meta name="twitter:image:alt" content="Aprenda a analisar memórias NAND Flash e decodificar dados usando binwalk. Entenda a arquitetura ECC e realize hardware hacking em dispositivos como máquinas de cartão.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -117,9 +135,9 @@
     "url": "https://lucasteske.dev/pt/2024/01/analise-e-decodificacao-de-memoria-flash",
     "name": "Análise e Decodificação de Memória Flash NAND - Revelando a Dispersão ECC em Dispositivos Desconhecidos | Lets Hack It",
     "headline": "Análise e Decodificação de Memória Flash NAND - Revelando a Dispersão ECC em Dispositivos Desconhecidos | Lets Hack It",
-    "keywords": ["Flash","PAX","Hardware Hacking","RE","Reverse Engineering","NAND","PAX","RT809H"],
+    "keywords": ["Flash","PAX","Hardware Hacking","RE","Reverse Engineering","NAND","PAX","RT809H","NAND Flash","Memória Flash","ECC","Binwalk","Análise de Memória","BGA","Máquina de Cartão","ARM","Linux Kernel"],
     "inLanguage": "pt",
-    "description": "Explorando memórias NAND Quando em posse de um dispositivo a qual se deseja conhecer sobre, nem sempre é trivial o acesso ao conteúdo da memória flash. Devido a natureza das memórias NAND, é aplicado para todo conteúdo um algoritmo de correção de erros que pode causar uma ofuscação não intencional...",
+    "description": "Aprenda a analisar memórias NAND Flash e decodificar dados usando binwalk. Entenda a arquitetura ECC e realize hardware hacking em dispositivos como máquinas de cartão.",
     "articleBody": "Explorando memórias NAND Quando em posse de um dispositivo a qual se deseja conhecer sobre, nem sempre é trivial o acesso ao conteúdo da memória flash. Devido a natureza das memórias NAND, é aplicado para todo conteúdo um algoritmo de correção de erros que pode causar uma ofuscação não intencional do conteúdo. Alguns fabricantes de processadores que controlam diretamente memórias do tipo NAND ou programadores de software “protegido” optam por customizar o jeito que estes algoritmos funcionam. Neste artigo veremos como a estrutura básica de uma memória flash, por que a correção de erro existe e como identificar a dispersão do algoritmo de correção de erro usado. Memórias Flash As memórias flash têm se destacado como a espinha dorsal do armazenamento digital na era contemporânea. Presentes em dispositivos tão variados quanto SSDs, pen drives e cartões SD, estas memórias trazem uma combinação irresistível de rapidez, durabilidade e capacidade de retenção de dados mesmo na ausência de energia. Historicamente, antes da ascensão das memórias flash, os principais dispositivos de armazenamento eram baseados em mídias magnéticas, como discos rígidos e disquetes, ou em memórias do tipo EPROM (Erasable Programmable Read Only Memory). Enquanto as mídias magnéticas possuíam partes móveis e eram mais...",
     "datePublished": "2024-01-16 23:48:00 +0000",
     "dateModified": "2024-01-16 23:48:00 +0000",
@@ -818,10 +836,10 @@ DECIMAL       HEXADECIMAL     DESCRIPTION
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:22 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:51:12 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:22 +0000
+    Last build: 2026-03-26 23:51:12 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

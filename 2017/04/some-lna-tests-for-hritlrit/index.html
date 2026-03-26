@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2017/04/some-lna-tests-for-hritlrit/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="So I was talking with @luigi on OSP RocketChat and he noticed that one of the LNA’s I suggested along with the LNA4ALL (the SPF5189) got a comment on ebay saying that it doesn’t work on L Band. So that was weird to me, since I have 5 of them,...">
+  <meta name="description" content="Benchmarks for LNA4ALL vs SPF5189 on L Band. Testing HRIT/LRIT satellite reception with Airspy R2.">
   
-  <meta name="keywords" content="Airspy, Antenna, GOES, Hearsat, HRIT, LRIT, NOAA, RTL SDR, RTLSDR, Satellite, SDR, Software Defined Radio">
+  <meta name="keywords" content="Airspy, Antenna, GOES, Hearsat, HRIT, LRIT, NOAA, RTL SDR, RTLSDR, Satellite, SDR, Software Defined Radio, LNA, Low Noise Amplifier, L Band, 1.7GHz, GQRX, SPF5189, LNA4ALL, Satellite Reception, RF Amplifier">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Some LNA tests for HRIT/LRIT | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2017/04/some-lna-tests-for-hritlrit/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="So I was talking with @luigi on OSP RocketChat and he noticed that one of the LNA’s I suggested along with the LNA4ALL (the SPF5189) got a comment on ebay saying that it doesn’t work on L Band. So that was weird to me, since I have 5 of them,...">
+  <meta property="og:description" content="Benchmarks for LNA4ALL vs SPF5189 on L Band. Testing HRIT/LRIT satellite reception with Airspy R2.">
   <meta property="og:image" content="https://lucasteske.dev/wp-content/uploads/2017/04/20170413_133029-624x351.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -103,6 +103,24 @@
   
   <meta property="article:tag" content="Software Defined Radio">
   
+  <meta property="article:tag" content="LNA">
+  
+  <meta property="article:tag" content="Low Noise Amplifier">
+  
+  <meta property="article:tag" content="L Band">
+  
+  <meta property="article:tag" content="1.7GHz">
+  
+  <meta property="article:tag" content="GQRX">
+  
+  <meta property="article:tag" content="SPF5189">
+  
+  <meta property="article:tag" content="LNA4ALL">
+  
+  <meta property="article:tag" content="Satellite Reception">
+  
+  <meta property="article:tag" content="RF Amplifier">
+  
   
 
   <!-- Facebook -->
@@ -113,9 +131,9 @@
   <meta name="twitter:title" content="Some LNA tests for HRIT/LRIT | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="So I was talking with @luigi on OSP RocketChat and he noticed that one of the LNA’s I suggested along with the LNA4ALL (the SPF5189) got a comment on ebay saying that it doesn’t work on L Band. So that was weird to me, since I have 5 of them,...">
+  <meta name="twitter:description" content="Benchmarks for LNA4ALL vs SPF5189 on L Band. Testing HRIT/LRIT satellite reception with Airspy R2.">
   <meta name="twitter:image" content="https://lucasteske.dev/wp-content/uploads/2017/04/20170413_133029-624x351.jpg">
-  <meta name="twitter:image:alt" content="So I was talking with @luigi on OSP RocketChat and he noticed that one of the LNA’s I suggested along with the LNA4ALL (the SPF5189) got a comment on ebay saying that it doesn’t work on L Band. So that was weird to me, since I have 5 of them,...">
+  <meta name="twitter:image:alt" content="Benchmarks for LNA4ALL vs SPF5189 on L Band. Testing HRIT/LRIT satellite reception with Airspy R2.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -125,9 +143,9 @@
     "url": "https://lucasteske.dev/2017/04/some-lna-tests-for-hritlrit/",
     "name": "Some LNA tests for HRIT/LRIT | Lets Hack It",
     "headline": "Some LNA tests for HRIT/LRIT | Lets Hack It",
-    "keywords": ["Airspy","Antenna","GOES","Hearsat","HRIT","LRIT","NOAA","RTL SDR","RTLSDR","Satellite","SDR","Software Defined Radio"],
+    "keywords": ["Airspy","Antenna","GOES","Hearsat","HRIT","LRIT","NOAA","RTL SDR","RTLSDR","Satellite","SDR","Software Defined Radio","LNA","Low Noise Amplifier","L Band","1.7GHz","GQRX","SPF5189","LNA4ALL","Satellite Reception","RF Amplifier"],
     "inLanguage": "en",
-    "description": "So I was talking with @luigi on OSP RocketChat and he noticed that one of the LNA’s I suggested along with the LNA4ALL (the SPF5189) got a comment on ebay saying that it doesn’t work on L Band. So that was weird to me, since I have 5 of them,...",
+    "description": "Benchmarks for LNA4ALL vs SPF5189 on L Band. Testing HRIT/LRIT satellite reception with Airspy R2.",
     "articleBody": "So I was talking with @luigi on OSP RocketChat and he noticed that one of the LNA’s I suggested along with the LNA4ALL (the SPF5189) got a comment on ebay saying that it doesn’t work on L Band. So that was weird to me, since I have 5 of them, and one currently in use with my GOES setup. So I decided to do a small and crude benchmark for L Band comparing no LNA with LNA4ALL and SPF5189. So the test I wanted to do was pretty simple: check how the LNAs was effective over LRIT/HRIT band (L Band at 1.7GHz). Both LNA4ALL and SPF5189 works better for lower frequencies (like said by jlxsolutionsinc, VHF/UHF) but they also perform (according to datasheet) really well on L Band. So I made a very simple setup here. Since I already had a very good HRIT signal (1694.1MHz, about 1MHz BW, 10dB SNR) I decided to get a 24dB Attenuator to try to reduce the signal and simulate a low signal environment. Not sure if that’s the ideal test, but it would give a good estimate of how it would work. So there would be three scenarios: Airspy R2 directly on the...",
     "datePublished": "2017-04-14 03:24:25 +0000",
     "dateModified": "2017-04-14 03:24:25 +0000",
@@ -674,10 +692,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

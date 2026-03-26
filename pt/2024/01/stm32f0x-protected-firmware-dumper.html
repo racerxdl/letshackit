@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/pt/2024/01/stm32f0x-protected-firmware-dumper">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="No processo do meu hobby de hackear hardware, encontrei um clone chinês de um dongle HASP HL equipado com um processador STM32F042G6U6. Minha intenção era cloná-lo, e durante minha exploração, descobri quatro pinos da interface de depuração SWD localizados na parte inferior da PCB. Soldei um conector de 4 pinos...">
+  <meta name="description" content="Como dumper firmware STM32F0x protegido com Raspberry Pi Pico. Bypass da RDP e código C para extração de memória flash.">
   
-  <meta name="keywords" content="Protected Firmware, Hardware Hacking, RE, Reverse Engineering, STM32, Patreon, MCU">
+  <meta name="keywords" content="Protected Firmware, Hardware Hacking, RE, Reverse Engineering, STM32, Patreon, MCU, STM32F0x, Firmware Dumping, Read-Out Protection, SWD, OpenOCD, Raspberry Pi Pico, HASP, C Programming, Microcontroller, Security">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="STM32F0x Protected Firmware Dumper | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/pt/2024/01/stm32f0x-protected-firmware-dumper">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="No processo do meu hobby de hackear hardware, encontrei um clone chinês de um dongle HASP HL equipado com um processador STM32F042G6U6. Minha intenção era cloná-lo, e durante minha exploração, descobri quatro pinos da interface de depuração SWD localizados na parte inferior da PCB. Soldei um conector de 4 pinos...">
+  <meta property="og:description" content="Como dumper firmware STM32F0x protegido com Raspberry Pi Pico. Bypass da RDP e código C para extração de memória flash.">
   <meta property="og:image" content="https://lucasteske.dev/assets/posts/patreon/Pasted image 20230124035811.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -93,6 +93,26 @@
   
   <meta property="article:tag" content="MCU">
   
+  <meta property="article:tag" content="STM32F0x">
+  
+  <meta property="article:tag" content="Firmware Dumping">
+  
+  <meta property="article:tag" content="Read-Out Protection">
+  
+  <meta property="article:tag" content="SWD">
+  
+  <meta property="article:tag" content="OpenOCD">
+  
+  <meta property="article:tag" content="Raspberry Pi Pico">
+  
+  <meta property="article:tag" content="HASP">
+  
+  <meta property="article:tag" content="C Programming">
+  
+  <meta property="article:tag" content="Microcontroller">
+  
+  <meta property="article:tag" content="Security">
+  
   
 
   <!-- Facebook -->
@@ -103,9 +123,9 @@
   <meta name="twitter:title" content="STM32F0x Protected Firmware Dumper | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="No processo do meu hobby de hackear hardware, encontrei um clone chinês de um dongle HASP HL equipado com um processador STM32F042G6U6. Minha intenção era cloná-lo, e durante minha exploração, descobri quatro pinos da interface de depuração SWD localizados na parte inferior da PCB. Soldei um conector de 4 pinos...">
+  <meta name="twitter:description" content="Como dumper firmware STM32F0x protegido com Raspberry Pi Pico. Bypass da RDP e código C para extração de memória flash.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/posts/patreon/Pasted image 20230124035811.png">
-  <meta name="twitter:image:alt" content="No processo do meu hobby de hackear hardware, encontrei um clone chinês de um dongle HASP HL equipado com um processador STM32F042G6U6. Minha intenção era cloná-lo, e durante minha exploração, descobri quatro pinos da interface de depuração SWD localizados na parte inferior da PCB. Soldei um conector de 4 pinos...">
+  <meta name="twitter:image:alt" content="Como dumper firmware STM32F0x protegido com Raspberry Pi Pico. Bypass da RDP e código C para extração de memória flash.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -115,9 +135,9 @@
     "url": "https://lucasteske.dev/pt/2024/01/stm32f0x-protected-firmware-dumper",
     "name": "STM32F0x Protected Firmware Dumper | Lets Hack It",
     "headline": "STM32F0x Protected Firmware Dumper | Lets Hack It",
-    "keywords": ["Protected Firmware","Hardware Hacking","RE","Reverse Engineering","STM32","Patreon","MCU"],
+    "keywords": ["Protected Firmware","Hardware Hacking","RE","Reverse Engineering","STM32","Patreon","MCU","STM32F0x","Firmware Dumping","Read-Out Protection","SWD","OpenOCD","Raspberry Pi Pico","HASP","C Programming","Microcontroller","Security"],
     "inLanguage": "pt",
-    "description": "No processo do meu hobby de hackear hardware, encontrei um clone chinês de um dongle HASP HL equipado com um processador STM32F042G6U6. Minha intenção era cloná-lo, e durante minha exploração, descobri quatro pinos da interface de depuração SWD localizados na parte inferior da PCB. Soldei um conector de 4 pinos...",
+    "description": "Como dumper firmware STM32F0x protegido com Raspberry Pi Pico. Bypass da RDP e código C para extração de memória flash.",
     "articleBody": "No processo do meu hobby de hackear hardware, encontrei um clone chinês de um dongle HASP HL equipado com um processador STM32F042G6U6. Minha intenção era cloná-lo, e durante minha exploração, descobri quatro pinos da interface de depuração SWD localizados na parte inferior da PCB. Soldei um conector de 4 pinos nesses pinos para facilitar o acesso. Utilizando meu Segger J-Link como uma sonda de depuração, embora qualquer adaptador JTAG deva ser suficiente, eu o combinei com o OpenOCD. Dado que o chipset é reconhecido pelo OpenOCD, eu criei um script para extrair todos os dados possíveis, condicionados à habilitação. adapter driver jlink transport select swd adapter_khz 4000 source [find target/stm32f0x.cfg] init dap info reset halt flash read_bank 0 firmwareF1.bin 0 0x8000 reset shutdown Mas, encontrei um obstáculo - a proteção RDP (Read-Out Protection) do dispositivo estava ativada, mesmo com o SWD ativo. Sem problemas, pensei, e tentei contornar isso com injeção de falha de tensão. No entanto, o gerador de clock interno no dispositivo tornou a interferência no clock inviável. Após algumas horas sem progresso, ficou claro que eu precisava de um novo plano. Minha busca por alternativas me levou a um artigo abrangente detalhando três metodologias para extrair memória...",
     "datePublished": "2024-01-16 05:23:00 +0000",
     "dateModified": "2024-01-16 05:23:00 +0000",
@@ -1163,10 +1183,10 @@ shutdown
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:22 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:51:12 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:22 +0000
+    Last build: 2026-03-26 23:51:12 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

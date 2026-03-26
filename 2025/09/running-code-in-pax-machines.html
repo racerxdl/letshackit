@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2025/09/running-code-in-pax-machines">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="Disclaimer All procedures described here were done with public available stuff - No security flaws were actually explored here to get code execution. The processor swap technique does not bypass the tamper protections neither allow a fake machine to actually emit payments. Brazilian credit card payment machines usually are in...">
+  <meta name="description" content="Explore reverse engineering a PAX credit card payment machine to run code via processor swap and bypass tamper protection.">
   
-  <meta name="keywords" content="Flash, PAX, Hardware Hacking, RE, Reverse Engineering, D177, D188, Minizinha, Moderninha, Smart, Sunmi, TecToy, Transire, Megahunt, MH1903, Air105, LuatOS">
+  <meta name="keywords" content="Flash, PAX, Hardware Hacking, RE, Reverse Engineering, D177, D188, Minizinha, Moderninha, Smart, Sunmi, TecToy, Transire, Megahunt, MH1903, Air105, LuatOS, Credit Card Payment Machine, Tamper Protection, Processor Swap, Boot ROM, Firmware, Payment Terminal, PAX D177, Brazil, DOOM">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Running code in a PAX Credit Card Payment Machine (part1) | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2025/09/running-code-in-pax-machines">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="Disclaimer All procedures described here were done with public available stuff - No security flaws were actually explored here to get code execution. The processor swap technique does not bypass the tamper protections neither allow a fake machine to actually emit payments. Brazilian credit card payment machines usually are in...">
+  <meta property="og:description" content="Explore reverse engineering a PAX credit card payment machine to run code via processor swap and bypass tamper protection.">
   <meta property="og:image" content="https://lucasteske.dev/assets/Running code in a PAX Credit Card Payment Machine/7383f9c5e7832856c90b25549fb08115_MD5.jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -113,6 +113,24 @@
   
   <meta property="article:tag" content="LuatOS">
   
+  <meta property="article:tag" content="Credit Card Payment Machine">
+  
+  <meta property="article:tag" content="Tamper Protection">
+  
+  <meta property="article:tag" content="Processor Swap">
+  
+  <meta property="article:tag" content="Boot ROM">
+  
+  <meta property="article:tag" content="Firmware">
+  
+  <meta property="article:tag" content="Payment Terminal">
+  
+  <meta property="article:tag" content="PAX D177">
+  
+  <meta property="article:tag" content="Brazil">
+  
+  <meta property="article:tag" content="DOOM">
+  
   
 
   <!-- Facebook -->
@@ -123,9 +141,9 @@
   <meta name="twitter:title" content="Running code in a PAX Credit Card Payment Machine (part1) | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="Disclaimer All procedures described here were done with public available stuff - No security flaws were actually explored here to get code execution. The processor swap technique does not bypass the tamper protections neither allow a fake machine to actually emit payments. Brazilian credit card payment machines usually are in...">
+  <meta name="twitter:description" content="Explore reverse engineering a PAX credit card payment machine to run code via processor swap and bypass tamper protection.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/Running code in a PAX Credit Card Payment Machine/7383f9c5e7832856c90b25549fb08115_MD5.jpeg">
-  <meta name="twitter:image:alt" content="Disclaimer All procedures described here were done with public available stuff - No security flaws were actually explored here to get code execution. The processor swap technique does not bypass the tamper protections neither allow a fake machine to actually emit payments. Brazilian credit card payment machines usually are in...">
+  <meta name="twitter:image:alt" content="Explore reverse engineering a PAX credit card payment machine to run code via processor swap and bypass tamper protection.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -135,9 +153,9 @@
     "url": "https://lucasteske.dev/2025/09/running-code-in-pax-machines",
     "name": "Running code in a PAX Credit Card Payment Machine (part1) | Lets Hack It",
     "headline": "Running code in a PAX Credit Card Payment Machine (part1) | Lets Hack It",
-    "keywords": ["Flash","PAX","Hardware Hacking","RE","Reverse Engineering","D177","D188","Minizinha","Moderninha","Smart","Sunmi","TecToy","Transire","Megahunt","MH1903","Air105","LuatOS"],
+    "keywords": ["Flash","PAX","Hardware Hacking","RE","Reverse Engineering","D177","D188","Minizinha","Moderninha","Smart","Sunmi","TecToy","Transire","Megahunt","MH1903","Air105","LuatOS","Credit Card Payment Machine","Tamper Protection","Processor Swap","Boot ROM","Firmware","Payment Terminal","PAX D177","Brazil","DOOM"],
     "inLanguage": "en",
-    "description": "Disclaimer All procedures described here were done with public available stuff - No security flaws were actually explored here to get code execution. The processor swap technique does not bypass the tamper protections neither allow a fake machine to actually emit payments. Brazilian credit card payment machines usually are in...",
+    "description": "Explore reverse engineering a PAX credit card payment machine to run code via processor swap and bypass tamper protection.",
     "articleBody": "Disclaimer All procedures described here were done with public available stuff - No security flaws were actually explored here to get code execution. The processor swap technique does not bypass the tamper protections neither allow a fake machine to actually emit payments. Brazilian credit card payment machines usually are in state of the art regarding security measures. I remember once a Elavon employee told me that Brazil got all the first releases of payment machines and systems. When asked why, he said: frauds in Brazil are sophisticated enough, that if the system is secure enough to Brazil, it works for anywhere in the world. In the future, I will make an article about the security measures that both, MegaHunt, PAX and Brazilian companies implement in their machines to avoid systems to be tampered with. If you’re sharing / commenting over this article, please put the same disclaimer there. I don’t mind using information here to make new articles, but Brazil suffers a lot with fake news (specially involving security hardware made here) and someone can think that makes it possible to hack their credit cards or accounts (you know, people lacking the knowledge to actually understand whats involved). Head Notes...",
     "datePublished": "2025-09-05 19:30:00 +0000",
     "dateModified": "2025-09-05 19:30:00 +0000",
@@ -1207,10 +1225,10 @@ data += 4; \
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

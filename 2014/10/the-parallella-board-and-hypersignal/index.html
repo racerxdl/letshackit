@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2014/10/the-parallella-board-and-hypersignal/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="I&amp;#8217;ve got my Parallella board a few months ago (at Campus Party Brazil of 2014 to be exact). I&amp;#8217;ve already studyied the Epiphany Processor ManyCore Architecture before, and I was excited to get one of those boards at my hand. The first thing I imagine to do, is a Matrix...">
+  <meta name="description" content="Discover how the Parallella board accelerates the HyperSignal Matrix Upscaler using Epiphany ManyCore Architecture instead of a power-hungry i7.">
   
-  <meta name="keywords" content="ARM, Bootleneck, Epiphany, Manycore, Multithreading, Parallella, Performance, Power, x86">
+  <meta name="keywords" content="ARM, Bootleneck, Epiphany, Manycore, Multithreading, Parallella, Performance, Power, x86, Epiphany Processor, ManyCore Architecture, Matrix Upscaler, Bilinear Interpolation, Bicosine Interpolation, HyperSignal, Google Maps Tiles, Embedded Systems, Parallel Computing, Python, C++, Interpolation, Bilinear, Bicosine, Campus Party">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="The Parallella Board and HyperSignal | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2014/10/the-parallella-board-and-hypersignal/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="I&amp;#8217;ve got my Parallella board a few months ago (at Campus Party Brazil of 2014 to be exact). I&amp;#8217;ve already studyied the Epiphany Processor ManyCore Architecture before, and I was excited to get one of those boards at my hand. The first thing I imagine to do, is a Matrix...">
+  <meta property="og:description" content="Discover how the Parallella board accelerates the HyperSignal Matrix Upscaler using Epiphany ManyCore Architecture instead of a power-hungry i7.">
   <meta property="og:image" content="https://lucasteske.dev/assets/cropped-logo.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -97,6 +97,36 @@
   
   <meta property="article:tag" content="x86">
   
+  <meta property="article:tag" content="Epiphany Processor">
+  
+  <meta property="article:tag" content="ManyCore Architecture">
+  
+  <meta property="article:tag" content="Matrix Upscaler">
+  
+  <meta property="article:tag" content="Bilinear Interpolation">
+  
+  <meta property="article:tag" content="Bicosine Interpolation">
+  
+  <meta property="article:tag" content="HyperSignal">
+  
+  <meta property="article:tag" content="Google Maps Tiles">
+  
+  <meta property="article:tag" content="Embedded Systems">
+  
+  <meta property="article:tag" content="Parallel Computing">
+  
+  <meta property="article:tag" content="Python">
+  
+  <meta property="article:tag" content="C++">
+  
+  <meta property="article:tag" content="Interpolation">
+  
+  <meta property="article:tag" content="Bilinear">
+  
+  <meta property="article:tag" content="Bicosine">
+  
+  <meta property="article:tag" content="Campus Party">
+  
   
 
   <!-- Facebook -->
@@ -107,9 +137,9 @@
   <meta name="twitter:title" content="The Parallella Board and HyperSignal | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="I&amp;#8217;ve got my Parallella board a few months ago (at Campus Party Brazil of 2014 to be exact). I&amp;#8217;ve already studyied the Epiphany Processor ManyCore Architecture before, and I was excited to get one of those boards at my hand. The first thing I imagine to do, is a Matrix...">
+  <meta name="twitter:description" content="Discover how the Parallella board accelerates the HyperSignal Matrix Upscaler using Epiphany ManyCore Architecture instead of a power-hungry i7.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/cropped-logo.png">
-  <meta name="twitter:image:alt" content="I&amp;#8217;ve got my Parallella board a few months ago (at Campus Party Brazil of 2014 to be exact). I&amp;#8217;ve already studyied the Epiphany Processor ManyCore Architecture before, and I was excited to get one of those boards at my hand. The first thing I imagine to do, is a Matrix...">
+  <meta name="twitter:image:alt" content="Discover how the Parallella board accelerates the HyperSignal Matrix Upscaler using Epiphany ManyCore Architecture instead of a power-hungry i7.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -119,9 +149,9 @@
     "url": "https://lucasteske.dev/2014/10/the-parallella-board-and-hypersignal/",
     "name": "The Parallella Board and HyperSignal | Lets Hack It",
     "headline": "The Parallella Board and HyperSignal | Lets Hack It",
-    "keywords": ["ARM","Bootleneck","Epiphany","Manycore","Multithreading","Parallella","Performance","Power","x86"],
+    "keywords": ["ARM","Bootleneck","Epiphany","Manycore","Multithreading","Parallella","Performance","Power","x86","Epiphany Processor","ManyCore Architecture","Matrix Upscaler","Bilinear Interpolation","Bicosine Interpolation","HyperSignal","Google Maps Tiles","Embedded Systems","Parallel Computing","Python","C++","Interpolation","Bilinear","Bicosine","Campus Party"],
     "inLanguage": "en",
-    "description": "I&#8217;ve got my Parallella board a few months ago (at Campus Party Brazil of 2014 to be exact). I&#8217;ve already studyied the Epiphany Processor ManyCore Architecture before, and I was excited to get one of those boards at my hand. The first thing I imagine to do, is a Matrix...",
+    "description": "Discover how the Parallella board accelerates the HyperSignal Matrix Upscaler using Epiphany ManyCore Architecture instead of a power-hungry i7.",
     "articleBody": "I&#8217;ve got my Parallella board a few months ago (at Campus Party Brazil of 2014 to be exact). I&#8217;ve already studyied the Epiphany Processor ManyCore Architecture before, and I was excited to get one of those boards at my hand. The first thing I imagine to do, is a Matrix Upscaler Interpolator for my project HyperSignal (its offline now, but I will get it online soon and code at github) because the simple nature of a interpolation algorithm drops all the overhead of multithreading over the memory controller, that has limited number of simultaneous access and also depends on how the operating system manages that. So I have in my mind the old timings that I usually take for rendering the Image tiles (the matrix upscaled). I had about a 8 milion matrix componentes to be upscaled on Google Maps Tiles. Obviously each Google Maps Tiles only use a few hundred of values for upscaling. So it was about 5600 tiles and was taking about 5 hours to do that in a i7 980 running at 6 threads 3.2GHz, 24GB of DDR3 RAM @ 1333MHz. That was really concerning me because of the speed, 5 hours for just 5 thousand...",
     "datePublished": "2014-10-01 23:18:48 +0000",
     "dateModified": "2014-10-01 23:18:48 +0000",
@@ -934,10 +964,10 @@ typedef struct __attribute__((aligned(ALIGN8))) {
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

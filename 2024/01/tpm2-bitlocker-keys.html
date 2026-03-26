@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2024/01/tpm2-bitlocker-keys">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="The TPM 2.0, also known as Trusted Platform Module 2.0, is a hardware security feature embedded in many modern computers. Its purpose is to provide a secure way to store cryptographic keys and other sensitive data, such as passwords and digital certificates, aiming to protect against various security threats, including...">
+  <meta name="description" content="Learn how to extract BitLocker keys from TPM 2.0 using SPI bus sniffing. A guide to reverse engineering hardware security with logic analyzers.">
   
-  <meta name="keywords" content="Flash, PAX, Hardware Hacking, RE, Reverse Engineering, NAND, PAX, RT809H">
+  <meta name="keywords" content="Flash, PAX, Hardware Hacking, RE, Reverse Engineering, NAND, PAX, RT809H, TPM 2.0, Bitlocker, SPI, Logic Analyzer, Pulseview, Sigrok, FDE, VMK, AES256-XTS, Trusted Computing Group, Bus Sniffing, Cryptography">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="TPM 2.0: Extracting Bitlocker keys through SPI | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2024/01/tpm2-bitlocker-keys">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="The TPM 2.0, also known as Trusted Platform Module 2.0, is a hardware security feature embedded in many modern computers. Its purpose is to provide a secure way to store cryptographic keys and other sensitive data, such as passwords and digital certificates, aiming to protect against various security threats, including...">
+  <meta property="og:description" content="Learn how to extract BitLocker keys from TPM 2.0 using SPI bus sniffing. A guide to reverse engineering hardware security with logic analyzers.">
   <meta property="og:image" content="https://lucasteske.dev/assets/gepeto/tpm2.0.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -95,6 +95,30 @@
   
   <meta property="article:tag" content="RT809H">
   
+  <meta property="article:tag" content="TPM 2.0">
+  
+  <meta property="article:tag" content="Bitlocker">
+  
+  <meta property="article:tag" content="SPI">
+  
+  <meta property="article:tag" content="Logic Analyzer">
+  
+  <meta property="article:tag" content="Pulseview">
+  
+  <meta property="article:tag" content="Sigrok">
+  
+  <meta property="article:tag" content="FDE">
+  
+  <meta property="article:tag" content="VMK">
+  
+  <meta property="article:tag" content="AES256-XTS">
+  
+  <meta property="article:tag" content="Trusted Computing Group">
+  
+  <meta property="article:tag" content="Bus Sniffing">
+  
+  <meta property="article:tag" content="Cryptography">
+  
   
 
   <!-- Facebook -->
@@ -105,9 +129,9 @@
   <meta name="twitter:title" content="TPM 2.0: Extracting Bitlocker keys through SPI | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="The TPM 2.0, also known as Trusted Platform Module 2.0, is a hardware security feature embedded in many modern computers. Its purpose is to provide a secure way to store cryptographic keys and other sensitive data, such as passwords and digital certificates, aiming to protect against various security threats, including...">
+  <meta name="twitter:description" content="Learn how to extract BitLocker keys from TPM 2.0 using SPI bus sniffing. A guide to reverse engineering hardware security with logic analyzers.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/gepeto/tpm2.0.jpg">
-  <meta name="twitter:image:alt" content="The TPM 2.0, also known as Trusted Platform Module 2.0, is a hardware security feature embedded in many modern computers. Its purpose is to provide a secure way to store cryptographic keys and other sensitive data, such as passwords and digital certificates, aiming to protect against various security threats, including...">
+  <meta name="twitter:image:alt" content="Learn how to extract BitLocker keys from TPM 2.0 using SPI bus sniffing. A guide to reverse engineering hardware security with logic analyzers.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -117,9 +141,9 @@
     "url": "https://lucasteske.dev/2024/01/tpm2-bitlocker-keys",
     "name": "TPM 2.0: Extracting Bitlocker keys through SPI | Lets Hack It",
     "headline": "TPM 2.0: Extracting Bitlocker keys through SPI | Lets Hack It",
-    "keywords": ["Flash","PAX","Hardware Hacking","RE","Reverse Engineering","NAND","PAX","RT809H"],
+    "keywords": ["Flash","PAX","Hardware Hacking","RE","Reverse Engineering","NAND","PAX","RT809H","TPM 2.0","Bitlocker","SPI","Logic Analyzer","Pulseview","Sigrok","FDE","VMK","AES256-XTS","Trusted Computing Group","Bus Sniffing","Cryptography"],
     "inLanguage": "en",
-    "description": "The TPM 2.0, also known as Trusted Platform Module 2.0, is a hardware security feature embedded in many modern computers. Its purpose is to provide a secure way to store cryptographic keys and other sensitive data, such as passwords and digital certificates, aiming to protect against various security threats, including...",
+    "description": "Learn how to extract BitLocker keys from TPM 2.0 using SPI bus sniffing. A guide to reverse engineering hardware security with logic analyzers.",
     "articleBody": "The TPM 2.0, also known as Trusted Platform Module 2.0, is a hardware security feature embedded in many modern computers. Its purpose is to provide a secure way to store cryptographic keys and other sensitive data, such as passwords and digital certificates, aiming to protect against various security threats, including unauthorized access to a computer’s hardware and software. TPM 2.0 represents an evolution of the original TPM specification, developed by the Trusted Computing Group (TCG), and features additional capabilities and resources, such as support for additional cryptographic algorithms and the ability to store larger amounts of data. Good Things Currently, the Trusted Platform Module (TPM) is widely used by Full Disk Encryption (FDE) mechanisms and also by specific device encryption, as it is usually linked to the device (soldered on the motherboard). It is noteworthy that, besides being an advanced security feature in modern machines, the communication protocol used by TPM Integrated Circuits (ICs) is quite simple. Generally, TPM ICs use the Serial Peripheral Interface (SPI) communication protocol, but they can also use the Low Pin Count (LPC) and Inter-Integrated Circuit (I2C) protocols. An important issue to raise is that users generally trust the TPM as a reliable security measure,...",
     "datePublished": "2024-01-16 23:48:00 +0000",
     "dateModified": "2024-01-16 23:48:00 +0000",
@@ -946,10 +970,10 @@ Here are all the consolidated references for you to check:</p>
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

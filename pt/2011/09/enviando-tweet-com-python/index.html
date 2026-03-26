@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/pt/2011/09/enviando-tweet-com-python/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="[Migrado do LetsHack It no Tumblr] Bom, como estou sem ideias para novos hacks, vou mostrar a vocês um jeito simples de enviar um Tweet com o Python. Existem vários meios de autenticação para o Twitter (ou existiam), o principal é o OAuth. Outro ponto é que existem várias bibliotecas...">
+  <meta name="description" content="Tutorial completo para enviar tweets com Python. Aprenda a configurar OAuth, gerar chaves de API e usar a biblioteca Tweepy para automação.">
   
-  <meta name="keywords" content="">
+  <meta name="keywords" content="Python, Twitter API, Tweepy, OAuth, Automação, Scripting, API Twitter, Twitter Developer, Python Script, Twitter Automation">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Enviando Tweet com Python | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/pt/2011/09/enviando-tweet-com-python/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="[Migrado do LetsHack It no Tumblr] Bom, como estou sem ideias para novos hacks, vou mostrar a vocês um jeito simples de enviar um Tweet com o Python. Existem vários meios de autenticação para o Twitter (ou existiam), o principal é o OAuth. Outro ponto é que existem várias bibliotecas...">
+  <meta property="og:description" content="Tutorial completo para enviar tweets com Python. Aprenda a configurar OAuth, gerar chaves de API e usar a biblioteca Tweepy para automação.">
   <meta property="og:image" content="https://lucasteske.dev/assets/cropped-logo.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -79,6 +79,26 @@
   <meta property="article:modified_time" content="2011-09-07T20:57:56+00:00">
   
   
+  <meta property="article:tag" content="Python">
+  
+  <meta property="article:tag" content="Twitter API">
+  
+  <meta property="article:tag" content="Tweepy">
+  
+  <meta property="article:tag" content="OAuth">
+  
+  <meta property="article:tag" content="Automação">
+  
+  <meta property="article:tag" content="Scripting">
+  
+  <meta property="article:tag" content="API Twitter">
+  
+  <meta property="article:tag" content="Twitter Developer">
+  
+  <meta property="article:tag" content="Python Script">
+  
+  <meta property="article:tag" content="Twitter Automation">
+  
   
 
   <!-- Facebook -->
@@ -89,9 +109,9 @@
   <meta name="twitter:title" content="Enviando Tweet com Python | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="[Migrado do LetsHack It no Tumblr] Bom, como estou sem ideias para novos hacks, vou mostrar a vocês um jeito simples de enviar um Tweet com o Python. Existem vários meios de autenticação para o Twitter (ou existiam), o principal é o OAuth. Outro ponto é que existem várias bibliotecas...">
+  <meta name="twitter:description" content="Tutorial completo para enviar tweets com Python. Aprenda a configurar OAuth, gerar chaves de API e usar a biblioteca Tweepy para automação.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/cropped-logo.png">
-  <meta name="twitter:image:alt" content="[Migrado do LetsHack It no Tumblr] Bom, como estou sem ideias para novos hacks, vou mostrar a vocês um jeito simples de enviar um Tweet com o Python. Existem vários meios de autenticação para o Twitter (ou existiam), o principal é o OAuth. Outro ponto é que existem várias bibliotecas...">
+  <meta name="twitter:image:alt" content="Tutorial completo para enviar tweets com Python. Aprenda a configurar OAuth, gerar chaves de API e usar a biblioteca Tweepy para automação.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -101,9 +121,9 @@
     "url": "https://lucasteske.dev/pt/2011/09/enviando-tweet-com-python/",
     "name": "Enviando Tweet com Python | Lets Hack It",
     "headline": "Enviando Tweet com Python | Lets Hack It",
-    "keywords": [],
+    "keywords": ["Python","Twitter API","Tweepy","OAuth","Automação","Scripting","API Twitter","Twitter Developer","Python Script","Twitter Automation"],
     "inLanguage": "pt",
-    "description": "[Migrado do LetsHack It no Tumblr] Bom, como estou sem ideias para novos hacks, vou mostrar a vocês um jeito simples de enviar um Tweet com o Python. Existem vários meios de autenticação para o Twitter (ou existiam), o principal é o OAuth. Outro ponto é que existem várias bibliotecas...",
+    "description": "Tutorial completo para enviar tweets com Python. Aprenda a configurar OAuth, gerar chaves de API e usar a biblioteca Tweepy para automação.",
     "articleBody": "[Migrado do LetsHack It no Tumblr] Bom, como estou sem ideias para novos hacks, vou mostrar a vocês um jeito simples de enviar um Tweet com o Python. Existem vários meios de autenticação para o Twitter (ou existiam), o principal é o OAuth. Outro ponto é que existem várias bibliotecas para o Python acessar a API do twitter, eu particularmente uso o Tweepy. 1º) Vamos começar baixando o Tweepy do seu repositório no Google Code: http://code.google.com/p/tweepy/ Abrindo a página, você verá vários meios de instalar, escolha um deles, não faz diferença qual. 2º) Vamos criar um aplicativo no twitter para ter acesso a API. Abra o site https://dev.twitter.com/apps e logue com sua conta do twitter. Após isso vá em Create New Application. Preencha os campos obrigatórios (com *****) (Nome, Descrição e Site), aceite os termos abaixo e redigite o Captcha. 3º) Agora a aplicação está criada, precisamos autorizar o uso da API para esta conta do Twitter. Mas antes precisamos alterar as permissões para Read/Write. Clique em Settings, e abaixe a página até ver as permissões. Selecione Read and Write e clique no botão Update. Volte para a aba Details e no final da página clique no botão Create My Access Token. Espere um...",
     "datePublished": "2011-09-07 20:57:56 +0000",
     "dateModified": "2011-09-07 20:57:56 +0000",
@@ -635,10 +655,10 @@ api.update_status("Teste do Lets Hack It!") #Envia o Tweet
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:22 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:51:12 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:22 +0000
+    Last build: 2026-03-26 23:51:12 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

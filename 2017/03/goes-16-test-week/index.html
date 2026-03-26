@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2017/03/goes-16-test-week/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="Yesterday I received an email from NOAA (I’m on their “tester” list) about some tests on GOES-16 that will happen this week. Before I start talking about what will be the tests I want to be clear that GOES-16 is NOT operational yet and any data received from the LRIT/HRIT downlink...">
+  <meta name="description" content="NOAA's GOES-16 test week runs March 27-31. Discover the HRIT and CMI downlink schedules and how to receive satellite imagery using OpenSatelliteProject.">
   
-  <meta name="keywords" content="Airspy, Antenna, Automatic Gain Control, CMI, EMWIN, English, GRC, Hearsat, HRIT, Linux, LRIT, NetCDF, NOAA, SDR, Ubuntu">
+  <meta name="keywords" content="Airspy, Antenna, Automatic Gain Control, CMI, EMWIN, English, GRC, Hearsat, HRIT, Linux, LRIT, NetCDF, NOAA, SDR, Ubuntu, GOES-16, OpenSatelliteProject, Satellite Reception, Linear Polarization, 1694MHz, Cloud and Moisture Imaging, IQ Recording">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="GOES 16 Test Week | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2017/03/goes-16-test-week/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="Yesterday I received an email from NOAA (I’m on their “tester” list) about some tests on GOES-16 that will happen this week. Before I start talking about what will be the tests I want to be clear that GOES-16 is NOT operational yet and any data received from the LRIT/HRIT downlink...">
+  <meta property="og:description" content="NOAA's GOES-16 test week runs March 27-31. Discover the HRIT and CMI downlink schedules and how to receive satellite imagery using OpenSatelliteProject.">
   <meta property="og:image" content="https://lucasteske.dev/assets/cropped-logo.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -109,6 +109,20 @@
   
   <meta property="article:tag" content="Ubuntu">
   
+  <meta property="article:tag" content="GOES-16">
+  
+  <meta property="article:tag" content="OpenSatelliteProject">
+  
+  <meta property="article:tag" content="Satellite Reception">
+  
+  <meta property="article:tag" content="Linear Polarization">
+  
+  <meta property="article:tag" content="1694MHz">
+  
+  <meta property="article:tag" content="Cloud and Moisture Imaging">
+  
+  <meta property="article:tag" content="IQ Recording">
+  
   
 
   <!-- Facebook -->
@@ -119,9 +133,9 @@
   <meta name="twitter:title" content="GOES 16 Test Week | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="Yesterday I received an email from NOAA (I’m on their “tester” list) about some tests on GOES-16 that will happen this week. Before I start talking about what will be the tests I want to be clear that GOES-16 is NOT operational yet and any data received from the LRIT/HRIT downlink...">
+  <meta name="twitter:description" content="NOAA's GOES-16 test week runs March 27-31. Discover the HRIT and CMI downlink schedules and how to receive satellite imagery using OpenSatelliteProject.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/cropped-logo.png">
-  <meta name="twitter:image:alt" content="Yesterday I received an email from NOAA (I’m on their “tester” list) about some tests on GOES-16 that will happen this week. Before I start talking about what will be the tests I want to be clear that GOES-16 is NOT operational yet and any data received from the LRIT/HRIT downlink...">
+  <meta name="twitter:image:alt" content="NOAA's GOES-16 test week runs March 27-31. Discover the HRIT and CMI downlink schedules and how to receive satellite imagery using OpenSatelliteProject.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -131,9 +145,9 @@
     "url": "https://lucasteske.dev/2017/03/goes-16-test-week/",
     "name": "GOES 16 Test Week | Lets Hack It",
     "headline": "GOES 16 Test Week | Lets Hack It",
-    "keywords": ["Airspy","Antenna","Automatic Gain Control","CMI","EMWIN","English","GRC","Hearsat","HRIT","Linux","LRIT","NetCDF","NOAA","SDR","Ubuntu"],
+    "keywords": ["Airspy","Antenna","Automatic Gain Control","CMI","EMWIN","English","GRC","Hearsat","HRIT","Linux","LRIT","NetCDF","NOAA","SDR","Ubuntu","GOES-16","OpenSatelliteProject","Satellite Reception","Linear Polarization","1694MHz","Cloud and Moisture Imaging","IQ Recording"],
     "inLanguage": "en",
-    "description": "Yesterday I received an email from NOAA (I’m on their “tester” list) about some tests on GOES-16 that will happen this week. Before I start talking about what will be the tests I want to be clear that GOES-16 is NOT operational yet and any data received from the LRIT/HRIT downlink...",
+    "description": "NOAA's GOES-16 test week runs March 27-31. Discover the HRIT and CMI downlink schedules and how to receive satellite imagery using OpenSatelliteProject.",
     "articleBody": "Yesterday I received an email from NOAA (I’m on their “tester” list) about some tests on GOES-16 that will happen this week. Before I start talking about what will be the tests I want to be clear that GOES-16 is NOT operational yet and any data received from the LRIT/HRIT downlink are test only data. This means the user of that link assumes all risks related to the use of their data and NOAA disclaims and any and all warranties, whether express or implied, including (without limitation) any implied warranties of merchantability or fitness for a particular purpose. So this week ( from 27th to 31st March ) HRIT will go into a new test phase that will send out DCS, Environmental Messages and charts through. They also will send from 16h to 20h UTC on Monday (27th) some CMI (Cloud and Moisture Imaging) data. That might be interesting for anyone that have a 1.5m+ dish that can run Linear Polarization at 1694MHz and be interested in trying out the super-alpha version of OpenSatelliteProject, that is already compatible to HRIT. Please keep in mind that while OSP does support HRIT, it doesn’t mean it will support the new products coming out from...",
     "datePublished": "2017-03-25 15:38:50 +0000",
     "dateModified": "2017-03-25 15:38:50 +0000",
@@ -623,10 +637,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

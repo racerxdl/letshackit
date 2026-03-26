@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/pt/2011/10/funcao-c-para-multiplos-e-submultiplos-revisado/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="O Caio Alarcon me notificou de algumas coisas sobre minha função de múltiplos e submúltiplos, por exemplo, o tratamento de números negativos. Resolvi então revisar e otimizar a função em C. O Resultado está abaixo: #include &amp;lt;stdio.h&amp;gt; #include &amp;lt;math.h&amp;gt; char toNotationUnit(double value,float *out) { double val; char notacoes[] = {'y','z','a','f','p','n','u','m',' ', 'k','M','G','T','P','E','Z','Y'}; int counter=8; char...">
+  <meta name="description" content="Veja a função C revisada para múltiplos e submúltiplos. Converta números para notação SI (k, M, G, p, n, u) com precisão.">
   
-  <meta name="keywords" content="">
+  <meta name="keywords" content="C programming, function, notation, SI units, multiples, submultiples, floating point, rounding, optimization, code snippet">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Função C para múltiplos e submúltiplos (REVISADO) | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/pt/2011/10/funcao-c-para-multiplos-e-submultiplos-revisado/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="O Caio Alarcon me notificou de algumas coisas sobre minha função de múltiplos e submúltiplos, por exemplo, o tratamento de números negativos. Resolvi então revisar e otimizar a função em C. O Resultado está abaixo: #include &amp;lt;stdio.h&amp;gt; #include &amp;lt;math.h&amp;gt; char toNotationUnit(double value,float *out) { double val; char notacoes[] = {'y','z','a','f','p','n','u','m',' ', 'k','M','G','T','P','E','Z','Y'}; int counter=8; char...">
+  <meta property="og:description" content="Veja a função C revisada para múltiplos e submúltiplos. Converta números para notação SI (k, M, G, p, n, u) com precisão.">
   <meta property="og:image" content="https://lucasteske.dev/assets/cropped-logo.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -79,6 +79,26 @@
   <meta property="article:modified_time" content="2011-10-30T20:50:21+00:00">
   
   
+  <meta property="article:tag" content="C programming">
+  
+  <meta property="article:tag" content="function">
+  
+  <meta property="article:tag" content="notation">
+  
+  <meta property="article:tag" content="SI units">
+  
+  <meta property="article:tag" content="multiples">
+  
+  <meta property="article:tag" content="submultiples">
+  
+  <meta property="article:tag" content="floating point">
+  
+  <meta property="article:tag" content="rounding">
+  
+  <meta property="article:tag" content="optimization">
+  
+  <meta property="article:tag" content="code snippet">
+  
   
 
   <!-- Facebook -->
@@ -89,9 +109,9 @@
   <meta name="twitter:title" content="Função C para múltiplos e submúltiplos (REVISADO) | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="O Caio Alarcon me notificou de algumas coisas sobre minha função de múltiplos e submúltiplos, por exemplo, o tratamento de números negativos. Resolvi então revisar e otimizar a função em C. O Resultado está abaixo: #include &amp;lt;stdio.h&amp;gt; #include &amp;lt;math.h&amp;gt; char toNotationUnit(double value,float *out) { double val; char notacoes[] = {'y','z','a','f','p','n','u','m',' ', 'k','M','G','T','P','E','Z','Y'}; int counter=8; char...">
+  <meta name="twitter:description" content="Veja a função C revisada para múltiplos e submúltiplos. Converta números para notação SI (k, M, G, p, n, u) com precisão.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/cropped-logo.png">
-  <meta name="twitter:image:alt" content="O Caio Alarcon me notificou de algumas coisas sobre minha função de múltiplos e submúltiplos, por exemplo, o tratamento de números negativos. Resolvi então revisar e otimizar a função em C. O Resultado está abaixo: #include &amp;lt;stdio.h&amp;gt; #include &amp;lt;math.h&amp;gt; char toNotationUnit(double value,float *out) { double val; char notacoes[] = {'y','z','a','f','p','n','u','m',' ', 'k','M','G','T','P','E','Z','Y'}; int counter=8; char...">
+  <meta name="twitter:image:alt" content="Veja a função C revisada para múltiplos e submúltiplos. Converta números para notação SI (k, M, G, p, n, u) com precisão.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -101,9 +121,9 @@
     "url": "https://lucasteske.dev/pt/2011/10/funcao-c-para-multiplos-e-submultiplos-revisado/",
     "name": "Função C para múltiplos e submúltiplos (REVISADO) | Lets Hack It",
     "headline": "Função C para múltiplos e submúltiplos (REVISADO) | Lets Hack It",
-    "keywords": [],
+    "keywords": ["C programming","function","notation","SI units","multiples","submultiples","floating point","rounding","optimization","code snippet"],
     "inLanguage": "pt",
-    "description": "O Caio Alarcon me notificou de algumas coisas sobre minha função de múltiplos e submúltiplos, por exemplo, o tratamento de números negativos. Resolvi então revisar e otimizar a função em C. O Resultado está abaixo: #include &lt;stdio.h&gt; #include &lt;math.h&gt; char toNotationUnit(double value,float *out) { double val; char notacoes[] = {'y','z','a','f','p','n','u','m',' ', 'k','M','G','T','P','E','Z','Y'}; int counter=8; char...",
+    "description": "Veja a função C revisada para múltiplos e submúltiplos. Converta números para notação SI (k, M, G, p, n, u) com precisão.",
     "articleBody": "O Caio Alarcon me notificou de algumas coisas sobre minha função de múltiplos e submúltiplos, por exemplo, o tratamento de números negativos. Resolvi então revisar e otimizar a função em C. O Resultado está abaixo:\n\n#include &lt;stdio.h&gt;\n#include &lt;math.h&gt;\nchar toNotationUnit(double value,float *out) {\n        double val;\n        char notacoes[] = {'y','z','a','f','p','n','u','m',' ',\n\n                                   'k','M','G','T','P','E','Z','Y'};\n        int counter=8;\n        char unit;\n        val = value&gt;0?value:-value;\n        if(val &lt; 1) {\n                while( (val &lt; 1.00) &amp; (counter != 0)) {\n                        counter--;\n                        val=val*(double)1000;\n                }\n        }else{\n                while((val &gt;= 1000) &amp; (counter != 16)) {\n                        counter++;\n                        val=val/(double)1000;\n                }\n        }\n        unit = notacoes[counter];\n        val = round(val*(double)100)/(double)100;\n        *out = (float) value&gt;0?val:-val;\n        return unit;\n}\n \nint main() {\n  double x = -1230000;\n  float res;\n  char t;\n  t = toNotationUnit(x,&amp;res);\n  printf(\"%.2F%c\",res,t);\n  return 0;\n}\n\n\nQuem preferir, tem um link no ideone com este código funcionando 😀\n\nhttp://ideone.com/wpvZo\n\nBom uso!\n",
     "datePublished": "2011-10-30 20:50:21 +0000",
     "dateModified": "2011-10-30 20:50:21 +0000",
@@ -613,10 +633,10 @@ int main() {
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:22 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:51:12 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:22 +0000
+    Last build: 2026-03-26 23:51:12 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

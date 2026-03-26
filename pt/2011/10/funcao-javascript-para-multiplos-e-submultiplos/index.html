@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/pt/2011/10/funcao-javascript-para-multiplos-e-submultiplos/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="Bom, estava montando uma outra calculadora aqui para a EnergyLabs Brasil, e quis fazer algo mais legalzinho. Fiz uma função em javascript que concatena o valor com o submúltiplo, e já faz as multiplicações necessárias além de arrendondar para duas casas decimais. Não entendeu? Bom vou exemplificar. Em física se usa...">
+  <meta name="description" content="Função Javascript para múltiplos e submúltiplos. Converta valores para mili, micro, nano e pico automaticamente com este código prático.">
   
-  <meta name="keywords" content="">
+  <meta name="keywords" content="Javascript, Submultiplos, Multiplos, Prefixos SI, Mili, Micro, Nano, Pico, Função, Arredondamento, Unidades, Física">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Função Javascript para Multiplos e Submultiplos | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/pt/2011/10/funcao-javascript-para-multiplos-e-submultiplos/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="Bom, estava montando uma outra calculadora aqui para a EnergyLabs Brasil, e quis fazer algo mais legalzinho. Fiz uma função em javascript que concatena o valor com o submúltiplo, e já faz as multiplicações necessárias além de arrendondar para duas casas decimais. Não entendeu? Bom vou exemplificar. Em física se usa...">
+  <meta property="og:description" content="Função Javascript para múltiplos e submúltiplos. Converta valores para mili, micro, nano e pico automaticamente com este código prático.">
   <meta property="og:image" content="https://lucasteske.dev/assets/cropped-logo.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -79,6 +79,30 @@
   <meta property="article:modified_time" content="2011-10-08T08:50:12+00:00">
   
   
+  <meta property="article:tag" content="Javascript">
+  
+  <meta property="article:tag" content="Submultiplos">
+  
+  <meta property="article:tag" content="Multiplos">
+  
+  <meta property="article:tag" content="Prefixos SI">
+  
+  <meta property="article:tag" content="Mili">
+  
+  <meta property="article:tag" content="Micro">
+  
+  <meta property="article:tag" content="Nano">
+  
+  <meta property="article:tag" content="Pico">
+  
+  <meta property="article:tag" content="Função">
+  
+  <meta property="article:tag" content="Arredondamento">
+  
+  <meta property="article:tag" content="Unidades">
+  
+  <meta property="article:tag" content="Física">
+  
   
 
   <!-- Facebook -->
@@ -89,9 +113,9 @@
   <meta name="twitter:title" content="Função Javascript para Multiplos e Submultiplos | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="Bom, estava montando uma outra calculadora aqui para a EnergyLabs Brasil, e quis fazer algo mais legalzinho. Fiz uma função em javascript que concatena o valor com o submúltiplo, e já faz as multiplicações necessárias além de arrendondar para duas casas decimais. Não entendeu? Bom vou exemplificar. Em física se usa...">
+  <meta name="twitter:description" content="Função Javascript para múltiplos e submúltiplos. Converta valores para mili, micro, nano e pico automaticamente com este código prático.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/cropped-logo.png">
-  <meta name="twitter:image:alt" content="Bom, estava montando uma outra calculadora aqui para a EnergyLabs Brasil, e quis fazer algo mais legalzinho. Fiz uma função em javascript que concatena o valor com o submúltiplo, e já faz as multiplicações necessárias além de arrendondar para duas casas decimais. Não entendeu? Bom vou exemplificar. Em física se usa...">
+  <meta name="twitter:image:alt" content="Função Javascript para múltiplos e submúltiplos. Converta valores para mili, micro, nano e pico automaticamente com este código prático.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -101,9 +125,9 @@
     "url": "https://lucasteske.dev/pt/2011/10/funcao-javascript-para-multiplos-e-submultiplos/",
     "name": "Função Javascript para Multiplos e Submultiplos | Lets Hack It",
     "headline": "Função Javascript para Multiplos e Submultiplos | Lets Hack It",
-    "keywords": [],
+    "keywords": ["Javascript","Submultiplos","Multiplos","Prefixos SI","Mili","Micro","Nano","Pico","Função","Arredondamento","Unidades","Física"],
     "inLanguage": "pt",
-    "description": "Bom, estava montando uma outra calculadora aqui para a EnergyLabs Brasil, e quis fazer algo mais legalzinho. Fiz uma função em javascript que concatena o valor com o submúltiplo, e já faz as multiplicações necessárias além de arrendondar para duas casas decimais. Não entendeu? Bom vou exemplificar. Em física se usa...",
+    "description": "Função Javascript para múltiplos e submúltiplos. Converta valores para mili, micro, nano e pico automaticamente com este código prático.",
     "articleBody": "Bom, estava montando uma outra calculadora aqui para a EnergyLabs Brasil, e quis fazer algo mais legalzinho. Fiz uma função em javascript que concatena o valor com o submúltiplo, e já faz as multiplicações necessárias além de arrendondar para duas casas decimais. Não entendeu? Bom vou exemplificar. Em física se usa muito múltiplos e submúltiplos para ajudar a escrever unidades. Por exemplo, estamos habituados com a unidade segundo no nosso dia a dia. Para representarmos 0,1 segundo, podemos representar como 100ms (100 milissegundos), para 0,0001 segundo, podemos representar como 100us (100 microssegundos), e assim por diante. Isso são os submúltiplos. Ao invés de escrevermos 0,0001 escrevemos 100 * 10^-6 (100 * 0,000001 que é 0,0001) ou 100us. Os mais comuns submúltiplos são: mili – m  – 10^-3 micro – µ – 10^-6 nano – n – 10^-9 pico – p – 10^-12 Então vamos lá para a função: function putunit(v,unit) { var lastunit = ''; var units = [\"m\",\"µ\",\"n\",\"p\"]; var counter= 0; var value = v; while(value &lt; 1) { lastunit = units[counter]; counter++; value=value*1e3; if(counter==5) break; } value = Math.round(value*1e2)/1e2; return \"&lt;B&gt;\"+value+\"&lt;/B&gt; \"+lastunit+unit; } Como usar? Bem simples: var i = 0.015; var resultado = putunit(i,\"s\"); Quer um exemplo mais prático? Vamos lá então, uma página HTML 😀...",
     "datePublished": "2011-10-08 08:50:12 +0000",
     "dateModified": "2011-10-08 08:50:12 +0000",
@@ -645,10 +669,10 @@ Resultado: &lt;div id="resultado"&gt;&lt;/div&gt;
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:22 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:51:12 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:22 +0000
+    Last build: 2026-03-26 23:51:12 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2016/02/recording-noaa-apt-signals-with-gqrx-and-rtl-sdr-on-linux/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="GQRX NOAA 18 Signal So you all saw my last posts [ Play with SDR and Intel Edison! QFH Antenna and my first reception of NOAA! ] but I actually didn’t explained how to capture and decode APT Signals using your computer (in this case, with Linux). So here it is! For this...">
+  <meta name="description" content="Record NOAA APT signals with GQRX and RTL-SDR on Linux. A complete guide to decoding weather satellite images.">
   
-  <meta name="keywords" content="137MHz, 2m Band, Amplifier, Antenna, APT, Decimation, GQRX, intel, Intel Edison, Le Maker Guitar, LeMaker, Linux, LNA, Low Noise Amplifier, NOAA, QFH, RTLSDR, SDR, Signal, Signals, Ubuntu">
+  <meta name="keywords" content="137MHz, 2m Band, Amplifier, Antenna, APT, Decimation, GQRX, intel, Intel Edison, Le Maker Guitar, LeMaker, Linux, LNA, Low Noise Amplifier, NOAA, QFH, RTLSDR, SDR, Signal, Signals, Ubuntu, RTL-SDR, Satellite, Weather Satellite, GPredict, Software Defined Radio, TLE">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Recording NOAA APT Signals with GQRX and RTL-SDR on Linux | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2016/02/recording-noaa-apt-signals-with-gqrx-and-rtl-sdr-on-linux/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="GQRX NOAA 18 Signal So you all saw my last posts [ Play with SDR and Intel Edison! QFH Antenna and my first reception of NOAA! ] but I actually didn’t explained how to capture and decode APT Signals using your computer (in this case, with Linux). So here it is! For this...">
+  <meta property="og:description" content="Record NOAA APT signals with GQRX and RTL-SDR on Linux. A complete guide to decoding weather satellite images.">
   <meta property="og:image" content="https://lucasteske.dev/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-44-17-624x408.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -121,6 +121,18 @@
   
   <meta property="article:tag" content="Ubuntu">
   
+  <meta property="article:tag" content="RTL-SDR">
+  
+  <meta property="article:tag" content="Satellite">
+  
+  <meta property="article:tag" content="Weather Satellite">
+  
+  <meta property="article:tag" content="GPredict">
+  
+  <meta property="article:tag" content="Software Defined Radio">
+  
+  <meta property="article:tag" content="TLE">
+  
   
 
   <!-- Facebook -->
@@ -131,9 +143,9 @@
   <meta name="twitter:title" content="Recording NOAA APT Signals with GQRX and RTL-SDR on Linux | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="GQRX NOAA 18 Signal So you all saw my last posts [ Play with SDR and Intel Edison! QFH Antenna and my first reception of NOAA! ] but I actually didn’t explained how to capture and decode APT Signals using your computer (in this case, with Linux). So here it is! For this...">
+  <meta name="twitter:description" content="Record NOAA APT signals with GQRX and RTL-SDR on Linux. A complete guide to decoding weather satellite images.">
   <meta name="twitter:image" content="https://lucasteske.dev/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-44-17-624x408.png">
-  <meta name="twitter:image:alt" content="GQRX NOAA 18 Signal So you all saw my last posts [ Play with SDR and Intel Edison! QFH Antenna and my first reception of NOAA! ] but I actually didn’t explained how to capture and decode APT Signals using your computer (in this case, with Linux). So here it is! For this...">
+  <meta name="twitter:image:alt" content="Record NOAA APT signals with GQRX and RTL-SDR on Linux. A complete guide to decoding weather satellite images.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -143,9 +155,9 @@
     "url": "https://lucasteske.dev/2016/02/recording-noaa-apt-signals-with-gqrx-and-rtl-sdr-on-linux/",
     "name": "Recording NOAA APT Signals with GQRX and RTL-SDR on Linux | Lets Hack It",
     "headline": "Recording NOAA APT Signals with GQRX and RTL-SDR on Linux | Lets Hack It",
-    "keywords": ["137MHz","2m Band","Amplifier","Antenna","APT","Decimation","GQRX","intel","Intel Edison","Le Maker Guitar","LeMaker","Linux","LNA","Low Noise Amplifier","NOAA","QFH","RTLSDR","SDR","Signal","Signals","Ubuntu"],
+    "keywords": ["137MHz","2m Band","Amplifier","Antenna","APT","Decimation","GQRX","intel","Intel Edison","Le Maker Guitar","LeMaker","Linux","LNA","Low Noise Amplifier","NOAA","QFH","RTLSDR","SDR","Signal","Signals","Ubuntu","RTL-SDR","Satellite","Weather Satellite","GPredict","Software Defined Radio","TLE"],
     "inLanguage": "en",
-    "description": "GQRX NOAA 18 Signal So you all saw my last posts [ Play with SDR and Intel Edison! QFH Antenna and my first reception of NOAA! ] but I actually didn’t explained how to capture and decode APT Signals using your computer (in this case, with Linux). So here it is! For this...",
+    "description": "Record NOAA APT signals with GQRX and RTL-SDR on Linux. A complete guide to decoding weather satellite images.",
     "articleBody": "GQRX NOAA 18 Signal So you all saw my last posts [ Play with SDR and Intel Edison! QFH Antenna and my first reception of NOAA! ] but I actually didn’t explained how to capture and decode APT Signals using your computer (in this case, with Linux). So here it is! For this article I’m using Ubuntu 15.04, but actually any distro will work well (I think most of them have the needed packages) So the first thing you need to do is to get all needed hardware to start playing. I’ve already tested my i7 Skylake Laptop, a Intel Edison and LeMaker Guitar for these uses. For my Laptop and LeMaker guitar you can use only them to do the stuff, because they both have graphical interface for the GQRX. For the Intel Edison all you can do is open a rtl_tcp spectrum server as my sdr edison article explains, and receive the spectrum in any other machine (including LeMaker Guitar). Hardware Needed So for the hardware you will need: RTL-SDR Dongle ( Amazon (USA) , Mercado Livre (Brazil), Dealextreme (International) ) Quadrifiliar Helix Antenna or Double Crossed Dipole for 2m band (preferably in 137MHz center frequency and 75 Ohms ) [ Here what I did ]...",
     "datePublished": "2016-02-05 01:26:57 +0000",
     "dateModified": "2016-02-05 01:26:57 +0000",
@@ -881,10 +893,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

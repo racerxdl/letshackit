@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2016/01/play-with-sdr-and-intel-edison/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="So some people already saw in my facebook that I started playing with SDRs (Software Defined Radio). I always wanted to do my own radio receiver, and I did some in the past. But it’s very hard to adapt the radio for anything new you want do to, and also...">
+  <meta name="description" content="Build a remote radio receiver with Intel Edison and RTL-SDR. Compile rtl-sdr, set up rtl_tcp, and receive NOAA satellites via GQRX.">
   
-  <meta name="keywords" content="ADSB, Airplane, Antenna, edison, FM, GNU Radio, intel, Intel Edison, NOAA, Radio, Realtek, RTL2832U, RTLSDR, SDR, Software, Software Defined Radio, VHF">
+  <meta name="keywords" content="ADSB, Airplane, Antenna, edison, FM, GNU Radio, intel, Intel Edison, NOAA, Radio, Realtek, RTL2832U, RTLSDR, SDR, Software, Software Defined Radio, VHF, RTL-SDR, rtl_tcp, NOAA Satellite, APT, GQRX, Linux, Compilation, libusb, WiFi, Embedded Systems, Remote Receiver, Hardware Hacking, TCP Server, R820T2">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Play with SDR and Intel Edison! | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2016/01/play-with-sdr-and-intel-edison/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="So some people already saw in my facebook that I started playing with SDRs (Software Defined Radio). I always wanted to do my own radio receiver, and I did some in the past. But it’s very hard to adapt the radio for anything new you want do to, and also...">
+  <meta property="og:description" content="Build a remote radio receiver with Intel Edison and RTL-SDR. Compile rtl-sdr, set up rtl_tcp, and receive NOAA satellites via GQRX.">
   <meta property="og:image" content="https://lucasteske.dev/assets/cropped-logo.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -113,6 +113,34 @@
   
   <meta property="article:tag" content="VHF">
   
+  <meta property="article:tag" content="RTL-SDR">
+  
+  <meta property="article:tag" content="rtl_tcp">
+  
+  <meta property="article:tag" content="NOAA Satellite">
+  
+  <meta property="article:tag" content="APT">
+  
+  <meta property="article:tag" content="GQRX">
+  
+  <meta property="article:tag" content="Linux">
+  
+  <meta property="article:tag" content="Compilation">
+  
+  <meta property="article:tag" content="libusb">
+  
+  <meta property="article:tag" content="WiFi">
+  
+  <meta property="article:tag" content="Embedded Systems">
+  
+  <meta property="article:tag" content="Remote Receiver">
+  
+  <meta property="article:tag" content="Hardware Hacking">
+  
+  <meta property="article:tag" content="TCP Server">
+  
+  <meta property="article:tag" content="R820T2">
+  
   
 
   <!-- Facebook -->
@@ -123,9 +151,9 @@
   <meta name="twitter:title" content="Play with SDR and Intel Edison! | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="So some people already saw in my facebook that I started playing with SDRs (Software Defined Radio). I always wanted to do my own radio receiver, and I did some in the past. But it’s very hard to adapt the radio for anything new you want do to, and also...">
+  <meta name="twitter:description" content="Build a remote radio receiver with Intel Edison and RTL-SDR. Compile rtl-sdr, set up rtl_tcp, and receive NOAA satellites via GQRX.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/cropped-logo.png">
-  <meta name="twitter:image:alt" content="So some people already saw in my facebook that I started playing with SDRs (Software Defined Radio). I always wanted to do my own radio receiver, and I did some in the past. But it’s very hard to adapt the radio for anything new you want do to, and also...">
+  <meta name="twitter:image:alt" content="Build a remote radio receiver with Intel Edison and RTL-SDR. Compile rtl-sdr, set up rtl_tcp, and receive NOAA satellites via GQRX.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -135,9 +163,9 @@
     "url": "https://lucasteske.dev/2016/01/play-with-sdr-and-intel-edison/",
     "name": "Play with SDR and Intel Edison! | Lets Hack It",
     "headline": "Play with SDR and Intel Edison! | Lets Hack It",
-    "keywords": ["ADSB","Airplane","Antenna","edison","FM","GNU Radio","intel","Intel Edison","NOAA","Radio","Realtek","RTL2832U","RTLSDR","SDR","Software","Software Defined Radio","VHF"],
+    "keywords": ["ADSB","Airplane","Antenna","edison","FM","GNU Radio","intel","Intel Edison","NOAA","Radio","Realtek","RTL2832U","RTLSDR","SDR","Software","Software Defined Radio","VHF","RTL-SDR","rtl_tcp","NOAA Satellite","APT","GQRX","Linux","Compilation","libusb","WiFi","Embedded Systems","Remote Receiver","Hardware Hacking","TCP Server","R820T2"],
     "inLanguage": "en",
-    "description": "So some people already saw in my facebook that I started playing with SDRs (Software Defined Radio). I always wanted to do my own radio receiver, and I did some in the past. But it’s very hard to adapt the radio for anything new you want do to, and also...",
+    "description": "Build a remote radio receiver with Intel Edison and RTL-SDR. Compile rtl-sdr, set up rtl_tcp, and receive NOAA satellites via GQRX.",
     "articleBody": "So some people already saw in my facebook that I started playing with SDRs (Software Defined Radio). I always wanted to do my own radio receiver, and I did some in the past. But it’s very hard to adapt the radio for anything new you want do to, and also when you want to process data in your computer things become harder. So a few months ago I found a nice tutorial of how to get NOAA Satellite Images using a cheap DVB-T (Digital Video Broadcast – Terrestrial) dongle that can be used as SDR. It costs about R$70 (roughly US$10) and the model I got (with R820T2 tuner) can tune from 24MHz to 1.74GHz!!! What is inside this spectrum? Actually a lot: FM Audio Radio Broadcasts VHF / UHF Television (Both Digital and Analog) Weather Satellites (APT, LRPT, HRPT) ADB-S (Air Traffic Telemetry) FM Air Traffic Radio And more So my goal was to receive NOAA APT Signals (I even made a decoder!) but I don’t have a good enough antenna (yet). The problem So I made up a piece of antenna with two copper pipes (I call a piece, because its a dipole from a Double Cross Antenna)...",
     "datePublished": "2016-01-16 03:25:25 +0000",
     "dateModified": "2016-01-16 03:25:25 +0000",
@@ -766,10 +794,10 @@ update-rc.d startsdr defaults
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

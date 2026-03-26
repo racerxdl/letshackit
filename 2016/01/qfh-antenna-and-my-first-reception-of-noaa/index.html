@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2016/01/qfh-antenna-and-my-first-reception-of-noaa/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="So in my last post I was playing with my RTL-SDR with an Intel Edison. So I decided to build a QFH Antenna to be able to receive NOAA APT Signals. These NOAA Weather Satellites broadcast an APT signal with about 5 to 8 Watts at 2m band, and considering...">
+  <meta name="description" content="Build a QFH antenna to receive NOAA weather satellite APT signals. Learn about circular polarization and using RTL-SDR with Intel Edison.">
   
-  <meta name="keywords" content="APT, Images, Linux, NOAA, RTL SDR, Satellite, SDR, SDR Sharp, Windows">
+  <meta name="keywords" content="APT, Images, Linux, NOAA, RTL SDR, Satellite, SDR, SDR Sharp, Windows, QFH, Quadrifilar Helix, RTL-SDR, Circular Polarization, Weather Satellite, Antenna, Software Defined Radio, Intel Edison, QFH Antenna, NOAA Satellite, Weather Satellites, Sun-synchronous Orbit, 137 MHz, Antenna Construction">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="QFH Antenna and my first reception of NOAA! | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2016/01/qfh-antenna-and-my-first-reception-of-noaa/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="So in my last post I was playing with my RTL-SDR with an Intel Edison. So I decided to build a QFH Antenna to be able to receive NOAA APT Signals. These NOAA Weather Satellites broadcast an APT signal with about 5 to 8 Watts at 2m band, and considering...">
+  <meta property="og:description" content="Build a QFH antenna to receive NOAA weather satellite APT signals. Learn about circular polarization and using RTL-SDR with Intel Edison.">
   <meta property="og:image" content="https://lucasteske.dev/assets/cropped-logo.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -97,6 +97,34 @@
   
   <meta property="article:tag" content="Windows">
   
+  <meta property="article:tag" content="QFH">
+  
+  <meta property="article:tag" content="Quadrifilar Helix">
+  
+  <meta property="article:tag" content="RTL-SDR">
+  
+  <meta property="article:tag" content="Circular Polarization">
+  
+  <meta property="article:tag" content="Weather Satellite">
+  
+  <meta property="article:tag" content="Antenna">
+  
+  <meta property="article:tag" content="Software Defined Radio">
+  
+  <meta property="article:tag" content="Intel Edison">
+  
+  <meta property="article:tag" content="QFH Antenna">
+  
+  <meta property="article:tag" content="NOAA Satellite">
+  
+  <meta property="article:tag" content="Weather Satellites">
+  
+  <meta property="article:tag" content="Sun-synchronous Orbit">
+  
+  <meta property="article:tag" content="137 MHz">
+  
+  <meta property="article:tag" content="Antenna Construction">
+  
   
 
   <!-- Facebook -->
@@ -107,9 +135,9 @@
   <meta name="twitter:title" content="QFH Antenna and my first reception of NOAA! | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="So in my last post I was playing with my RTL-SDR with an Intel Edison. So I decided to build a QFH Antenna to be able to receive NOAA APT Signals. These NOAA Weather Satellites broadcast an APT signal with about 5 to 8 Watts at 2m band, and considering...">
+  <meta name="twitter:description" content="Build a QFH antenna to receive NOAA weather satellite APT signals. Learn about circular polarization and using RTL-SDR with Intel Edison.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/cropped-logo.png">
-  <meta name="twitter:image:alt" content="So in my last post I was playing with my RTL-SDR with an Intel Edison. So I decided to build a QFH Antenna to be able to receive NOAA APT Signals. These NOAA Weather Satellites broadcast an APT signal with about 5 to 8 Watts at 2m band, and considering...">
+  <meta name="twitter:image:alt" content="Build a QFH antenna to receive NOAA weather satellite APT signals. Learn about circular polarization and using RTL-SDR with Intel Edison.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -119,9 +147,9 @@
     "url": "https://lucasteske.dev/2016/01/qfh-antenna-and-my-first-reception-of-noaa/",
     "name": "QFH Antenna and my first reception of NOAA! | Lets Hack It",
     "headline": "QFH Antenna and my first reception of NOAA! | Lets Hack It",
-    "keywords": ["APT","Images","Linux","NOAA","RTL SDR","Satellite","SDR","SDR Sharp","Windows"],
+    "keywords": ["APT","Images","Linux","NOAA","RTL SDR","Satellite","SDR","SDR Sharp","Windows","QFH","Quadrifilar Helix","RTL-SDR","Circular Polarization","Weather Satellite","Antenna","Software Defined Radio","Intel Edison","QFH Antenna","NOAA Satellite","Weather Satellites","Sun-synchronous Orbit","137 MHz","Antenna Construction"],
     "inLanguage": "en",
-    "description": "So in my last post I was playing with my RTL-SDR with an Intel Edison. So I decided to build a QFH Antenna to be able to receive NOAA APT Signals. These NOAA Weather Satellites broadcast an APT signal with about 5 to 8 Watts at 2m band, and considering...",
+    "description": "Build a QFH antenna to receive NOAA weather satellite APT signals. Learn about circular polarization and using RTL-SDR with Intel Edison.",
     "articleBody": "So in my last post I was playing with my RTL-SDR with an Intel Edison. So I decided to build a QFH Antenna to be able to receive NOAA APT Signals. These NOAA Weather Satellites broadcast an APT signal with about 5 to 8 Watts at 2m band, and considering how low this power is, it might surprise you that these signals arrive pretty strong at earth surface. But the biggest challenge to receive these signals are not its power. Its all about movement. These satellites are sun-synchronous low orbit satellites, that means they aren’t locked to earth rotation. Instead, they actually do one turn on earth in about 1 hour and half. So whenever the satellite is in range of your receiver, it will appear on one side of the horizon, and disappear on another one. This creates a need for a good omni directional antenna that can receive signals from anywhere. But not only this: The signal is rotating (a.k.a. circular polarization) So we need a antenna that can receive circular polarized signals. We have a few choices like QFH (QuadriFiliar Helix) , Double Cross Antenna (Double Dipole) or Turnstyle Antenna. TurnStyle Antenna (Source: http://www.rtl-sdr.com/ ) Double Cross...",
     "datePublished": "2016-01-25 03:55:41 +0000",
     "dateModified": "2016-01-25 03:55:41 +0000",
@@ -727,10 +755,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

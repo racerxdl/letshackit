@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2017/04/goes-16-test-week-results/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="In the week from March 27th to 31 NOAA performed some new downstream tests over HRIT link on GOES-16. The idea was to transfer some CMI (Cloud and Moisture Imaging) products and see if the software developers and current stations could receive it fine. Before starting talking about that, please...">
+  <meta name="description" content="GOES-16 Test Week Results: Receiving NOAA HRIT data, CMI images, and ABI products. Fixes for GOES Dump and OpenSatelliteProject updates.">
   
-  <meta name="keywords" content="Airspy, EMWIN, English, False Color, GOES, GOES 16, Hearsat, HRIT, LRIT, NOAA, Open Satellite Project, OSP, Reverse Engineering, RTL SDR, Sat, Satellite, SDR, Software Defined Radio">
+  <meta name="keywords" content="Airspy, EMWIN, English, False Color, GOES, GOES 16, Hearsat, HRIT, LRIT, NOAA, Open Satellite Project, OSP, Reverse Engineering, RTL SDR, Sat, Satellite, SDR, Software Defined Radio, GOES-16, ABI, CMI, Satellite Reception, Weather Satellite, OpenSatelliteProject, XRIT">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="GOES 16 Test Week Results | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2017/04/goes-16-test-week-results/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="In the week from March 27th to 31 NOAA performed some new downstream tests over HRIT link on GOES-16. The idea was to transfer some CMI (Cloud and Moisture Imaging) products and see if the software developers and current stations could receive it fine. Before starting talking about that, please...">
+  <meta property="og:description" content="GOES-16 Test Week Results: Receiving NOAA HRIT data, CMI images, and ABI products. Fixes for GOES Dump and OpenSatelliteProject updates.">
   <meta property="og:image" content="https://lucasteske.dev/wp-content/uploads/2017/04/goes-16-abi-624x312.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -115,6 +115,20 @@
   
   <meta property="article:tag" content="Software Defined Radio">
   
+  <meta property="article:tag" content="GOES-16">
+  
+  <meta property="article:tag" content="ABI">
+  
+  <meta property="article:tag" content="CMI">
+  
+  <meta property="article:tag" content="Satellite Reception">
+  
+  <meta property="article:tag" content="Weather Satellite">
+  
+  <meta property="article:tag" content="OpenSatelliteProject">
+  
+  <meta property="article:tag" content="XRIT">
+  
   
 
   <!-- Facebook -->
@@ -125,9 +139,9 @@
   <meta name="twitter:title" content="GOES 16 Test Week Results | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="In the week from March 27th to 31 NOAA performed some new downstream tests over HRIT link on GOES-16. The idea was to transfer some CMI (Cloud and Moisture Imaging) products and see if the software developers and current stations could receive it fine. Before starting talking about that, please...">
+  <meta name="twitter:description" content="GOES-16 Test Week Results: Receiving NOAA HRIT data, CMI images, and ABI products. Fixes for GOES Dump and OpenSatelliteProject updates.">
   <meta name="twitter:image" content="https://lucasteske.dev/wp-content/uploads/2017/04/goes-16-abi-624x312.jpg">
-  <meta name="twitter:image:alt" content="In the week from March 27th to 31 NOAA performed some new downstream tests over HRIT link on GOES-16. The idea was to transfer some CMI (Cloud and Moisture Imaging) products and see if the software developers and current stations could receive it fine. Before starting talking about that, please...">
+  <meta name="twitter:image:alt" content="GOES-16 Test Week Results: Receiving NOAA HRIT data, CMI images, and ABI products. Fixes for GOES Dump and OpenSatelliteProject updates.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -137,9 +151,9 @@
     "url": "https://lucasteske.dev/2017/04/goes-16-test-week-results/",
     "name": "GOES 16 Test Week Results | Lets Hack It",
     "headline": "GOES 16 Test Week Results | Lets Hack It",
-    "keywords": ["Airspy","EMWIN","English","False Color","GOES","GOES 16","Hearsat","HRIT","LRIT","NOAA","Open Satellite Project","OSP","Reverse Engineering","RTL SDR","Sat","Satellite","SDR","Software Defined Radio"],
+    "keywords": ["Airspy","EMWIN","English","False Color","GOES","GOES 16","Hearsat","HRIT","LRIT","NOAA","Open Satellite Project","OSP","Reverse Engineering","RTL SDR","Sat","Satellite","SDR","Software Defined Radio","GOES-16","ABI","CMI","Satellite Reception","Weather Satellite","OpenSatelliteProject","XRIT"],
     "inLanguage": "en",
-    "description": "In the week from March 27th to 31 NOAA performed some new downstream tests over HRIT link on GOES-16. The idea was to transfer some CMI (Cloud and Moisture Imaging) products and see if the software developers and current stations could receive it fine. Before starting talking about that, please...",
+    "description": "GOES-16 Test Week Results: Receiving NOAA HRIT data, CMI images, and ABI products. Fixes for GOES Dump and OpenSatelliteProject updates.",
     "articleBody": "In the week from March 27th to 31 NOAA performed some new downstream tests over HRIT link on GOES-16. The idea was to transfer some CMI (Cloud and Moisture Imaging) products and see if the software developers and current stations could receive it fine. Before starting talking about that, please notice that all data sent so far is stated as test data and should not be used for any real world measurements. As NOAA states (and I forwarded on my last post): The user of that link assumes all risks related to the use of their data and NOAA disclaims and any and all warranties, whether express or implied, including (without limitation) any implied warranties of merchantability or fitness for a particular purpose. So I kept my dish pointed to GOES-16 all over the week and did record the Monday testing (that contained CMI images) and recorded all files sent all over the week. Some of them are automatically posted on Twitter / Instagram by my OSP Bot but not all of them. I discovered some issues with my Virtual Channel Ingestor on GOES Dump, and also most of the new data was not being handled correctly by Goes Dump. Working together with...",
     "datePublished": "2017-04-02 05:50:37 +0000",
     "dateModified": "2017-04-02 05:50:37 +0000",
@@ -680,10 +694,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

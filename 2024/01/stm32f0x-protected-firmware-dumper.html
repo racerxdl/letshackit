@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2024/01/stm32f0x-protected-firmware-dumper">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="In the process of my hobby hardware hacking, I encountered a Chinese clone of a HASP HL dongle equipped with a STM32F042G6U6 processor. My intention was to clone it, and during my exploration, I discovered four pins from the SWD debug interface located at the bottom of the PCB. I...">
+  <meta name="description" content="A guide on dumping STM32F0 protected firmware using Raspberry Pi Pico and SWD glitching to bypass Read-Out Protection (RDP).">
   
-  <meta name="keywords" content="Protected Firmware, Hardware Hacking, RE, Reverse Engineering, STM32, Patreon, MCU">
+  <meta name="keywords" content="Protected Firmware, Hardware Hacking, RE, Reverse Engineering, STM32, Patreon, MCU, STM32F0, Firmware Dump, Read-Out Protection, SWD, Raspberry Pi Pico, J-Link, OpenOCD, Glitching, Embedded Systems">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="STM32F0x Protected Firmware Dumper | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2024/01/stm32f0x-protected-firmware-dumper">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="In the process of my hobby hardware hacking, I encountered a Chinese clone of a HASP HL dongle equipped with a STM32F042G6U6 processor. My intention was to clone it, and during my exploration, I discovered four pins from the SWD debug interface located at the bottom of the PCB. I...">
+  <meta property="og:description" content="A guide on dumping STM32F0 protected firmware using Raspberry Pi Pico and SWD glitching to bypass Read-Out Protection (RDP).">
   <meta property="og:image" content="https://lucasteske.dev/assets/posts/patreon/Pasted image 20230124035811.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -93,6 +93,24 @@
   
   <meta property="article:tag" content="MCU">
   
+  <meta property="article:tag" content="STM32F0">
+  
+  <meta property="article:tag" content="Firmware Dump">
+  
+  <meta property="article:tag" content="Read-Out Protection">
+  
+  <meta property="article:tag" content="SWD">
+  
+  <meta property="article:tag" content="Raspberry Pi Pico">
+  
+  <meta property="article:tag" content="J-Link">
+  
+  <meta property="article:tag" content="OpenOCD">
+  
+  <meta property="article:tag" content="Glitching">
+  
+  <meta property="article:tag" content="Embedded Systems">
+  
   
 
   <!-- Facebook -->
@@ -103,9 +121,9 @@
   <meta name="twitter:title" content="STM32F0x Protected Firmware Dumper | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="In the process of my hobby hardware hacking, I encountered a Chinese clone of a HASP HL dongle equipped with a STM32F042G6U6 processor. My intention was to clone it, and during my exploration, I discovered four pins from the SWD debug interface located at the bottom of the PCB. I...">
+  <meta name="twitter:description" content="A guide on dumping STM32F0 protected firmware using Raspberry Pi Pico and SWD glitching to bypass Read-Out Protection (RDP).">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/posts/patreon/Pasted image 20230124035811.png">
-  <meta name="twitter:image:alt" content="In the process of my hobby hardware hacking, I encountered a Chinese clone of a HASP HL dongle equipped with a STM32F042G6U6 processor. My intention was to clone it, and during my exploration, I discovered four pins from the SWD debug interface located at the bottom of the PCB. I...">
+  <meta name="twitter:image:alt" content="A guide on dumping STM32F0 protected firmware using Raspberry Pi Pico and SWD glitching to bypass Read-Out Protection (RDP).">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -115,9 +133,9 @@
     "url": "https://lucasteske.dev/2024/01/stm32f0x-protected-firmware-dumper",
     "name": "STM32F0x Protected Firmware Dumper | Lets Hack It",
     "headline": "STM32F0x Protected Firmware Dumper | Lets Hack It",
-    "keywords": ["Protected Firmware","Hardware Hacking","RE","Reverse Engineering","STM32","Patreon","MCU"],
+    "keywords": ["Protected Firmware","Hardware Hacking","RE","Reverse Engineering","STM32","Patreon","MCU","STM32F0","Firmware Dump","Read-Out Protection","SWD","Raspberry Pi Pico","J-Link","OpenOCD","Glitching","Embedded Systems"],
     "inLanguage": "en",
-    "description": "In the process of my hobby hardware hacking, I encountered a Chinese clone of a HASP HL dongle equipped with a STM32F042G6U6 processor. My intention was to clone it, and during my exploration, I discovered four pins from the SWD debug interface located at the bottom of the PCB. I...",
+    "description": "A guide on dumping STM32F0 protected firmware using Raspberry Pi Pico and SWD glitching to bypass Read-Out Protection (RDP).",
     "articleBody": "In the process of my hobby hardware hacking, I encountered a Chinese clone of a HASP HL dongle equipped with a STM32F042G6U6 processor. My intention was to clone it, and during my exploration, I discovered four pins from the SWD debug interface located at the bottom of the PCB. I soldered a 4-pin header to these pins for ease of access. Utilizing my Segger J-Link as a debug probe, although any JTAG adapter should suffice, I paired it with OpenOCD. Given that the chipset is recognized by OpenOCD, I crafted a script to extract all possible data, conditional upon enablement. adapter driver jlink transport select swd adapter_khz 4000 source [find target/stm32f0x.cfg] init dap info reset halt flash read_bank 0 firmwareF1.bin 0 0x8000 reset shutdown But, hit a snag - the device’s RDP (Read-Out Protection) was on, even though SWD was active. No biggie, I thought, and tried to bypass this with voltage fault injection. However, the internal clock generator in the device made clock glitching a no-go. After a few hours of getting nowhere, it was clear I needed a new game plan. My search for alternatives led me to a comprehensive paper detailing three methodologies to extract protected memory:...",
     "datePublished": "2024-01-16 05:23:00 +0000",
     "dateModified": "2024-01-16 05:23:00 +0000",
@@ -1163,10 +1181,10 @@ shutdown
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

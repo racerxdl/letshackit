@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2019/12/integrating-hacked-touch-panel-into-home-assistant/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="Integrating Hacked Touch Panel into Home Assistant In the previous article I showed a simple hack of a chinese Touch Panel. Now I have successfully integrated it Home Assistant and I’m able to turn my room light on / off. Here is how. From now on I will assume you...">
+  <meta name="description" content="Integrate a hacked Chinese touch panel into Home Assistant using ESPHome. This guide covers YAML config, C++ code, and automation setup.">
   
-  <meta name="keywords" content="Camera, Hacking, Home Assistant, Arduino, ESP8266, ESP32, ESPHome">
+  <meta name="keywords" content="Camera, Hacking, Home Assistant, Arduino, ESP8266, ESP32, ESPHome, Touch Panel, YAML, C++, Binary Sensor, Automation, NodeMCU, WTC801, Custom Component, Home Automation">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Integrating Hacked Touch Panel into Home Assistant | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2019/12/integrating-hacked-touch-panel-into-home-assistant/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="Integrating Hacked Touch Panel into Home Assistant In the previous article I showed a simple hack of a chinese Touch Panel. Now I have successfully integrated it Home Assistant and I’m able to turn my room light on / off. Here is how. From now on I will assume you...">
+  <meta property="og:description" content="Integrate a hacked Chinese touch panel into Home Assistant using ESPHome. This guide covers YAML config, C++ code, and automation setup.">
   <meta property="og:image" content="https://lucasteske.dev/assets/posts/medium/1_hBwbHXERpWD5N8ZGqqlXMw.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -93,6 +93,24 @@
   
   <meta property="article:tag" content="ESPHome">
   
+  <meta property="article:tag" content="Touch Panel">
+  
+  <meta property="article:tag" content="YAML">
+  
+  <meta property="article:tag" content="C++">
+  
+  <meta property="article:tag" content="Binary Sensor">
+  
+  <meta property="article:tag" content="Automation">
+  
+  <meta property="article:tag" content="NodeMCU">
+  
+  <meta property="article:tag" content="WTC801">
+  
+  <meta property="article:tag" content="Custom Component">
+  
+  <meta property="article:tag" content="Home Automation">
+  
   
 
   <!-- Facebook -->
@@ -103,9 +121,9 @@
   <meta name="twitter:title" content="Integrating Hacked Touch Panel into Home Assistant | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="Integrating Hacked Touch Panel into Home Assistant In the previous article I showed a simple hack of a chinese Touch Panel. Now I have successfully integrated it Home Assistant and I’m able to turn my room light on / off. Here is how. From now on I will assume you...">
+  <meta name="twitter:description" content="Integrate a hacked Chinese touch panel into Home Assistant using ESPHome. This guide covers YAML config, C++ code, and automation setup.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/posts/medium/1_hBwbHXERpWD5N8ZGqqlXMw.png">
-  <meta name="twitter:image:alt" content="Integrating Hacked Touch Panel into Home Assistant In the previous article I showed a simple hack of a chinese Touch Panel. Now I have successfully integrated it Home Assistant and I’m able to turn my room light on / off. Here is how. From now on I will assume you...">
+  <meta name="twitter:image:alt" content="Integrate a hacked Chinese touch panel into Home Assistant using ESPHome. This guide covers YAML config, C++ code, and automation setup.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -115,9 +133,9 @@
     "url": "https://lucasteske.dev/2019/12/integrating-hacked-touch-panel-into-home-assistant/",
     "name": "Integrating Hacked Touch Panel into Home Assistant | Lets Hack It",
     "headline": "Integrating Hacked Touch Panel into Home Assistant | Lets Hack It",
-    "keywords": ["Camera","Hacking","Home Assistant","Arduino","ESP8266","ESP32","ESPHome"],
+    "keywords": ["Camera","Hacking","Home Assistant","Arduino","ESP8266","ESP32","ESPHome","Touch Panel","YAML","C++","Binary Sensor","Automation","NodeMCU","WTC801","Custom Component","Home Automation"],
     "inLanguage": "en",
-    "description": "Integrating Hacked Touch Panel into Home Assistant In the previous article I showed a simple hack of a chinese Touch Panel. Now I have successfully integrated it Home Assistant and I’m able to turn my room light on / off. Here is how. From now on I will assume you...",
+    "description": "Integrate a hacked Chinese touch panel into Home Assistant using ESPHome. This guide covers YAML config, C++ code, and automation setup.",
     "articleBody": "Integrating Hacked Touch Panel into Home Assistant In the previous article I showed a simple hack of a chinese Touch Panel. Now I have successfully integrated it Home Assistant and I’m able to turn my room light on / off. Here is how. From now on I will assume you have ESPHome working on your machine and Home Assistant configured. ESPHome is very easy to install if you have python pip: pip install esphome Should install everything you need. First let’s create our project. I will call it touchpanel.yml: esphome: # Change it for any name you want. This is what Home Assistant will show name: lucasslider platform: ESP8266 board: nodemcuv2 includes: - touchpanel.h - wtc801.h - wtc801.cpp wifi: # Change to your wifi configuration ssid: \"MyWifiSSID\" password: \"MyWifiPassword\" # Enable fallback hotspot (captive portal) in case wifi connection fails ap: ssid: \"Lucas Slider Fallback Hotspot\" password: \"1234567890\" captive_portal: # Enable logging logger: # Enable Home Assistant API api: # Home Assistant will ask this password when configuring the device password: \"MySecretAPIPass\" ota: # ESPHome will ask this password for reprogramming the ESP8266 Over-The-Air password: \"MySecretAPIPass\" # Empty just to include Binary Sensor Library binary_sensor: # Empty just to include...",
     "datePublished": "2019-12-30 02:15:00 +0000",
     "dateModified": "2019-12-30 02:15:00 +0000",
@@ -787,10 +805,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

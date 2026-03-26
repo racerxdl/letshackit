@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/pt/2021/03/rotor-antenna-parte-1">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="Há uns anos eu comprei um rotor para câmera da Pelco, modelo PT175-24P. Esse rotor é feito para carregar uma câmera com lente de até 8kg, e contém dois motores bifásicos reversíveis internamente. Minha ideia era (e é) colocar uma parabólica acoplada, e controlar seu movimento para rastrear satélites. Assim...">
+  <meta name="description" content="Modificação de rotor Pelco para rastrear satélites. Substituição de motores AC por motores de passo e limpeza completa.">
   
-  <meta name="keywords" content="Airspy, EMWIN, GOES, Hearsat, LRIT, RE, Reverse Engineering, Sat, Satellite, SDR">
+  <meta name="keywords" content="Airspy, EMWIN, GOES, Hearsat, LRIT, RE, Reverse Engineering, Sat, Satellite, SDR, Rotor de antena, Motor de passo, Tracking satélite, Pelco, Eletrônica, Hardware, Antena parabólica, Modificação de hardware, Baixa órbita, Controle de posição">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Rotor de Antena - Parte 1 | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/pt/2021/03/rotor-antenna-parte-1">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="Há uns anos eu comprei um rotor para câmera da Pelco, modelo PT175-24P. Esse rotor é feito para carregar uma câmera com lente de até 8kg, e contém dois motores bifásicos reversíveis internamente. Minha ideia era (e é) colocar uma parabólica acoplada, e controlar seu movimento para rastrear satélites. Assim...">
+  <meta property="og:description" content="Modificação de rotor Pelco para rastrear satélites. Substituição de motores AC por motores de passo e limpeza completa.">
   <meta property="og:image" content="https://lucasteske.dev/assets/posts/tracker-mount/head.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -99,6 +99,26 @@
   
   <meta property="article:tag" content="SDR">
   
+  <meta property="article:tag" content="Rotor de antena">
+  
+  <meta property="article:tag" content="Motor de passo">
+  
+  <meta property="article:tag" content="Tracking satélite">
+  
+  <meta property="article:tag" content="Pelco">
+  
+  <meta property="article:tag" content="Eletrônica">
+  
+  <meta property="article:tag" content="Hardware">
+  
+  <meta property="article:tag" content="Antena parabólica">
+  
+  <meta property="article:tag" content="Modificação de hardware">
+  
+  <meta property="article:tag" content="Baixa órbita">
+  
+  <meta property="article:tag" content="Controle de posição">
+  
   
 
   <!-- Facebook -->
@@ -109,9 +129,9 @@
   <meta name="twitter:title" content="Rotor de Antena - Parte 1 | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="Há uns anos eu comprei um rotor para câmera da Pelco, modelo PT175-24P. Esse rotor é feito para carregar uma câmera com lente de até 8kg, e contém dois motores bifásicos reversíveis internamente. Minha ideia era (e é) colocar uma parabólica acoplada, e controlar seu movimento para rastrear satélites. Assim...">
+  <meta name="twitter:description" content="Modificação de rotor Pelco para rastrear satélites. Substituição de motores AC por motores de passo e limpeza completa.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/posts/tracker-mount/head.jpg">
-  <meta name="twitter:image:alt" content="Há uns anos eu comprei um rotor para câmera da Pelco, modelo PT175-24P. Esse rotor é feito para carregar uma câmera com lente de até 8kg, e contém dois motores bifásicos reversíveis internamente. Minha ideia era (e é) colocar uma parabólica acoplada, e controlar seu movimento para rastrear satélites. Assim...">
+  <meta name="twitter:image:alt" content="Modificação de rotor Pelco para rastrear satélites. Substituição de motores AC por motores de passo e limpeza completa.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -121,9 +141,9 @@
     "url": "https://lucasteske.dev/pt/2021/03/rotor-antenna-parte-1",
     "name": "Rotor de Antena - Parte 1 | Lets Hack It",
     "headline": "Rotor de Antena - Parte 1 | Lets Hack It",
-    "keywords": ["Airspy","EMWIN","GOES","Hearsat","LRIT","RE","Reverse Engineering","Sat","Satellite","SDR"],
+    "keywords": ["Airspy","EMWIN","GOES","Hearsat","LRIT","RE","Reverse Engineering","Sat","Satellite","SDR","Rotor de antena","Motor de passo","Tracking satélite","Pelco","Eletrônica","Hardware","Antena parabólica","Modificação de hardware","Baixa órbita","Controle de posição"],
     "inLanguage": "pt",
-    "description": "Há uns anos eu comprei um rotor para câmera da Pelco, modelo PT175-24P. Esse rotor é feito para carregar uma câmera com lente de até 8kg, e contém dois motores bifásicos reversíveis internamente. Minha ideia era (e é) colocar uma parabólica acoplada, e controlar seu movimento para rastrear satélites. Assim...",
+    "description": "Modificação de rotor Pelco para rastrear satélites. Substituição de motores AC por motores de passo e limpeza completa.",
     "articleBody": "Há uns anos eu comprei um rotor para câmera da Pelco, modelo PT175-24P. Esse rotor é feito para carregar uma câmera com lente de até 8kg, e contém dois motores bifásicos reversíveis internamente. Minha ideia era (e é) colocar uma parabólica acoplada, e controlar seu movimento para rastrear satélites. Assim eu poderia executar a recepção de satélites de baixa órbita. Esquema Interno O problema do sistema original da pelco, é que são dois motores de 24V AC, o que torna um VFD (Variable Frequency Driver) necessário para controlar a velocidade e um sistema de loop fechado com algum sensor de angulo. Isso torna um pouco complexo o controle preciso da antena, então um colega (PY2UEP) sugeriu fazer uma modificação para trocar os motores por motor de passo. A grande vantagem dos motores de passo é que seus passos são sempre de mesmo comprimento. Logo se o motor der N passos em um sentido, e N passos no sentido contrário, ele irá retornar exatamente a mesma posição. Isso permite o uso de circuitos abertos (onde apenas no começo você move tudo para a posição de referência, e depois você não usa o feedback para corrigir nada). Motor de Passo Fazendo a...",
     "datePublished": "2021-03-03 23:57:00 +0000",
     "dateModified": "2021-03-03 23:57:00 +0000",
@@ -638,10 +658,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:22 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:51:12 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:22 +0000
+    Last build: 2026-03-26 23:51:12 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

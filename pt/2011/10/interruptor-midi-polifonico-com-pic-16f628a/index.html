@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/pt/2011/10/interruptor-midi-polifonico-com-pic-16f628a/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="– Introdução Bom, muitos sabem que eu fiz um Interruptor MIDI (ou sintetizador como preferir) com um FPGA. Porém poucos tem acesso a um FPGA principalmente para fazer algo tão *simples*, então resolvi fazer um com PIC 16F628A. No começo queria fazer com um PIC menor, mas os menores não...">
+  <meta name="description" content="Tutorial completo para criar um interruptor MIDI polifônico com PIC 16F628A. Código em C, UART e cálculo de frequências musicais.">
   
-  <meta name="keywords" content="">
+  <meta name="keywords" content="PIC 16F628A, MIDI, Microcontrolador, UART, Timer, Protocolo MIDI, CCS C, Eletrônica, Interruptor, Baud Rate, Frequência, Hardware">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Interruptor MIDI Polifônico com PIC 16F628A | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/pt/2011/10/interruptor-midi-polifonico-com-pic-16f628a/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="– Introdução Bom, muitos sabem que eu fiz um Interruptor MIDI (ou sintetizador como preferir) com um FPGA. Porém poucos tem acesso a um FPGA principalmente para fazer algo tão *simples*, então resolvi fazer um com PIC 16F628A. No começo queria fazer com um PIC menor, mas os menores não...">
+  <meta property="og:description" content="Tutorial completo para criar um interruptor MIDI polifônico com PIC 16F628A. Código em C, UART e cálculo de frequências musicais.">
   <meta property="og:image" content="https://lucasteske.dev/assets/cropped-logo.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -79,6 +79,30 @@
   <meta property="article:modified_time" content="2011-10-16T18:17:52+00:00">
   
   
+  <meta property="article:tag" content="PIC 16F628A">
+  
+  <meta property="article:tag" content="MIDI">
+  
+  <meta property="article:tag" content="Microcontrolador">
+  
+  <meta property="article:tag" content="UART">
+  
+  <meta property="article:tag" content="Timer">
+  
+  <meta property="article:tag" content="Protocolo MIDI">
+  
+  <meta property="article:tag" content="CCS C">
+  
+  <meta property="article:tag" content="Eletrônica">
+  
+  <meta property="article:tag" content="Interruptor">
+  
+  <meta property="article:tag" content="Baud Rate">
+  
+  <meta property="article:tag" content="Frequência">
+  
+  <meta property="article:tag" content="Hardware">
+  
   
 
   <!-- Facebook -->
@@ -89,9 +113,9 @@
   <meta name="twitter:title" content="Interruptor MIDI Polifônico com PIC 16F628A | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="– Introdução Bom, muitos sabem que eu fiz um Interruptor MIDI (ou sintetizador como preferir) com um FPGA. Porém poucos tem acesso a um FPGA principalmente para fazer algo tão *simples*, então resolvi fazer um com PIC 16F628A. No começo queria fazer com um PIC menor, mas os menores não...">
+  <meta name="twitter:description" content="Tutorial completo para criar um interruptor MIDI polifônico com PIC 16F628A. Código em C, UART e cálculo de frequências musicais.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/cropped-logo.png">
-  <meta name="twitter:image:alt" content="– Introdução Bom, muitos sabem que eu fiz um Interruptor MIDI (ou sintetizador como preferir) com um FPGA. Porém poucos tem acesso a um FPGA principalmente para fazer algo tão *simples*, então resolvi fazer um com PIC 16F628A. No começo queria fazer com um PIC menor, mas os menores não...">
+  <meta name="twitter:image:alt" content="Tutorial completo para criar um interruptor MIDI polifônico com PIC 16F628A. Código em C, UART e cálculo de frequências musicais.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -101,9 +125,9 @@
     "url": "https://lucasteske.dev/pt/2011/10/interruptor-midi-polifonico-com-pic-16f628a/",
     "name": "Interruptor MIDI Polifônico com PIC 16F628A | Lets Hack It",
     "headline": "Interruptor MIDI Polifônico com PIC 16F628A | Lets Hack It",
-    "keywords": [],
+    "keywords": ["PIC 16F628A","MIDI","Microcontrolador","UART","Timer","Protocolo MIDI","CCS C","Eletrônica","Interruptor","Baud Rate","Frequência","Hardware"],
     "inLanguage": "pt",
-    "description": "– Introdução Bom, muitos sabem que eu fiz um Interruptor MIDI (ou sintetizador como preferir) com um FPGA. Porém poucos tem acesso a um FPGA principalmente para fazer algo tão *simples*, então resolvi fazer um com PIC 16F628A. No começo queria fazer com um PIC menor, mas os menores não...",
+    "description": "Tutorial completo para criar um interruptor MIDI polifônico com PIC 16F628A. Código em C, UART e cálculo de frequências musicais.",
     "articleBody": "– Introdução Bom, muitos sabem que eu fiz um Interruptor MIDI (ou sintetizador como preferir) com um FPGA. Porém poucos tem acesso a um FPGA principalmente para fazer algo tão *simples*, então resolvi fazer um com PIC 16F628A. No começo queria fazer com um PIC menor, mas os menores não tem Receptor Serial via hardware, então ficaria mais complicado implementar. Outro ponto, é que o preço dos PIC’s menores são praticamente os mesmos, então era só uma questão de espaço mesmo. Usando um PIC maior, fica mais espaço livre para futuras modificações caso seja necessário. O PIC 16F628A tem 2KB de memória flash, 224 Bytes de RAM, 128 Bytes de EEPROM, um Comparador, 3 Timers, e um Receptor Serial Universal. Está no pacote DIP de 18 Pinos, e ele tem 2 portas de 8 bits (dependendo da configuração, a porta A pode *perder* 3 bits. Datasheet dele: http://ww1.microchip.com/downloads/en/DeviceDoc/40044F.pdf Ele tem um oscilador RC Interno de 4MHz calibrado de fábrica para +/- 1%, então podemos fazer uso dele tranquilamente. – Protocolo MIDI Vamos falar um pouco antes do protocolo MIDI. O Sinal MIDI é basicamente um sinal Serial parecido com padrão RS232. São 10 bits enviados, um bit para identificar o inicio...",
     "datePublished": "2011-10-16 18:17:52 +0000",
     "dateModified": "2011-10-16 18:17:52 +0000",
@@ -783,10 +807,10 @@ Com isso iremos ter inicializado tudo que precisamos. Agora vamos aos “checks�
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:22 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:51:12 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:22 +0000
+    Last build: 2026-03-26 23:51:12 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

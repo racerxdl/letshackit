@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/pt/2011/09/enviando-tweet-com-php/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="No post anterior mostrei como enviar um Tweet com Python. Agora mostrarei com o PHP. Repita os mesmos passos de criação das Keys ditas no post anterior e anote todas elas. Para o PHP usamos uma biblioteca chamada tmhOAuth, que pode ser conseguida aqui: https://github.com/themattharris/tmhOAuth Baixe apenas o arquivo tmhOAuth.php...">
+  <meta name="description" content="Tutorial completo para enviar Tweets via PHP usando a biblioteca tmhOAuth. Configure as chaves da API do Twitter e automatize suas redes sociais.">
   
-  <meta name="keywords" content="">
+  <meta name="keywords" content="PHP, Twitter API, OAuth, tmhOAuth, Social Media, Web Development">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Enviando Tweet com PHP | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/pt/2011/09/enviando-tweet-com-php/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="No post anterior mostrei como enviar um Tweet com Python. Agora mostrarei com o PHP. Repita os mesmos passos de criação das Keys ditas no post anterior e anote todas elas. Para o PHP usamos uma biblioteca chamada tmhOAuth, que pode ser conseguida aqui: https://github.com/themattharris/tmhOAuth Baixe apenas o arquivo tmhOAuth.php...">
+  <meta property="og:description" content="Tutorial completo para enviar Tweets via PHP usando a biblioteca tmhOAuth. Configure as chaves da API do Twitter e automatize suas redes sociais.">
   <meta property="og:image" content="https://lucasteske.dev/assets/cropped-logo.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -79,6 +79,18 @@
   <meta property="article:modified_time" content="2011-09-07T21:17:24+00:00">
   
   
+  <meta property="article:tag" content="PHP">
+  
+  <meta property="article:tag" content="Twitter API">
+  
+  <meta property="article:tag" content="OAuth">
+  
+  <meta property="article:tag" content="tmhOAuth">
+  
+  <meta property="article:tag" content="Social Media">
+  
+  <meta property="article:tag" content="Web Development">
+  
   
 
   <!-- Facebook -->
@@ -89,9 +101,9 @@
   <meta name="twitter:title" content="Enviando Tweet com PHP | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="No post anterior mostrei como enviar um Tweet com Python. Agora mostrarei com o PHP. Repita os mesmos passos de criação das Keys ditas no post anterior e anote todas elas. Para o PHP usamos uma biblioteca chamada tmhOAuth, que pode ser conseguida aqui: https://github.com/themattharris/tmhOAuth Baixe apenas o arquivo tmhOAuth.php...">
+  <meta name="twitter:description" content="Tutorial completo para enviar Tweets via PHP usando a biblioteca tmhOAuth. Configure as chaves da API do Twitter e automatize suas redes sociais.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/cropped-logo.png">
-  <meta name="twitter:image:alt" content="No post anterior mostrei como enviar um Tweet com Python. Agora mostrarei com o PHP. Repita os mesmos passos de criação das Keys ditas no post anterior e anote todas elas. Para o PHP usamos uma biblioteca chamada tmhOAuth, que pode ser conseguida aqui: https://github.com/themattharris/tmhOAuth Baixe apenas o arquivo tmhOAuth.php...">
+  <meta name="twitter:image:alt" content="Tutorial completo para enviar Tweets via PHP usando a biblioteca tmhOAuth. Configure as chaves da API do Twitter e automatize suas redes sociais.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -101,9 +113,9 @@
     "url": "https://lucasteske.dev/pt/2011/09/enviando-tweet-com-php/",
     "name": "Enviando Tweet com PHP | Lets Hack It",
     "headline": "Enviando Tweet com PHP | Lets Hack It",
-    "keywords": [],
+    "keywords": ["PHP","Twitter API","OAuth","tmhOAuth","Social Media","Web Development"],
     "inLanguage": "pt",
-    "description": "No post anterior mostrei como enviar um Tweet com Python. Agora mostrarei com o PHP. Repita os mesmos passos de criação das Keys ditas no post anterior e anote todas elas. Para o PHP usamos uma biblioteca chamada tmhOAuth, que pode ser conseguida aqui: https://github.com/themattharris/tmhOAuth Baixe apenas o arquivo tmhOAuth.php...",
+    "description": "Tutorial completo para enviar Tweets via PHP usando a biblioteca tmhOAuth. Configure as chaves da API do Twitter e automatize suas redes sociais.",
     "articleBody": "No post anterior mostrei como enviar um Tweet com Python. Agora mostrarei com o PHP.\n\nRepita os mesmos passos de criação das Keys ditas no post anterior e anote todas elas.\n\nPara o PHP usamos uma biblioteca chamada tmhOAuth, que pode ser conseguida aqui:\n\nhttps://github.com/themattharris/tmhOAuth\n\nBaixe apenas o arquivo tmhOAuth.php que é o que precisamos aqui.\n\nCrie um arquivo PHP com o código abaixo:\n\n\n  \n  \n    http://codepad.org/NngSyam6\n  \n\n\n\n&lt;?\ninclude(\"tmhOAuth.php\");\n\n        $tmhOAuth = new tmhOAuth(array(\n          'consumer_key'    =&gt; \"Sua Consumer Key\",\n          'consumer_secret' =&gt; \"Seu Consumer Secret\",\n          'user_token'      =&gt; \"Seu Access Token\",\n          'user_secret'     =&gt; \"Seu Access Secret\",\n        ));\n\n        $code = $tmhOAuth-&gt;request('POST',\n $tmhOAuth-&gt;url('1/statuses/update'),\n array('status' =&gt; \"Teste do Lets Hack It! Em #PHP!\"\n        ));\n?&gt;\n\n\nSe você executar esse script em PHP terá o seguinte resultado:\n\n\n\nSimples não? Qualquer dúvida só perguntar!\n",
     "datePublished": "2011-09-07 21:17:24 +0000",
     "dateModified": "2011-09-07 21:17:24 +0000",
@@ -611,10 +623,10 @@ include("tmhOAuth.php");
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:22 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:51:12 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:22 +0000
+    Last build: 2026-03-26 23:51:12 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

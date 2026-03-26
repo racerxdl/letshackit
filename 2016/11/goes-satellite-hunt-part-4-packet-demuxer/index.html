@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2016/11/goes-satellite-hunt-part-4-packet-demuxer/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="In the last chapter I showed how to get the frames from the demodulated bit stream. In this chapter I will show you how to parse these frames and get the packets that will on next chapter generate the files that GOES send. I will first add C code to...">
+  <meta name="description" content="Master GOES satellite decoding! This tutorial covers de-randomization, Reed Solomon error correction, and packet demuxing for LRIT frames using Python and C.">
   
-  <meta name="keywords" content="AGC, Airspy, Automatic Gain Control, Bug, Compile, Convolutional Code, Convolutional Encoding, EMWIN, English, GNU Radio, Gnuradio, GOES, GRC, Hearsat, LRIT, Osmocom, RE, Reed Solomon, Reverse Engineering, Root Raised Cosine Filter, RRC Filter, RS, Sat, Satellite, SDR, Statistics, Viterbi">
+  <meta name="keywords" content="AGC, Airspy, Automatic Gain Control, Bug, Compile, Convolutional Code, Convolutional Encoding, EMWIN, English, GNU Radio, Gnuradio, GOES, GRC, Hearsat, LRIT, Osmocom, RE, Reed Solomon, Reverse Engineering, Root Raised Cosine Filter, RRC Filter, RS, Sat, Satellite, SDR, Statistics, Viterbi, CCSDS, Error Correction, De-randomization, PN Sequence, Demuxer, Python, C Programming, Bitstream">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="GOES Satellite Hunt (Part 4 – Packet Demuxer) | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2016/11/goes-satellite-hunt-part-4-packet-demuxer/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="In the last chapter I showed how to get the frames from the demodulated bit stream. In this chapter I will show you how to parse these frames and get the packets that will on next chapter generate the files that GOES send. I will first add C code to...">
+  <meta property="og:description" content="Master GOES satellite decoding! This tutorial covers de-randomization, Reed Solomon error correction, and packet demuxing for LRIT frames using Python and C.">
   <meta property="og:image" content="https://lucasteske.dev/wp-content/uploads/2016/11/5YBmBKt-624x129.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -133,6 +133,22 @@
   
   <meta property="article:tag" content="Viterbi">
   
+  <meta property="article:tag" content="CCSDS">
+  
+  <meta property="article:tag" content="Error Correction">
+  
+  <meta property="article:tag" content="De-randomization">
+  
+  <meta property="article:tag" content="PN Sequence">
+  
+  <meta property="article:tag" content="Demuxer">
+  
+  <meta property="article:tag" content="Python">
+  
+  <meta property="article:tag" content="C Programming">
+  
+  <meta property="article:tag" content="Bitstream">
+  
   
 
   <!-- Facebook -->
@@ -143,9 +159,9 @@
   <meta name="twitter:title" content="GOES Satellite Hunt (Part 4 – Packet Demuxer) | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="In the last chapter I showed how to get the frames from the demodulated bit stream. In this chapter I will show you how to parse these frames and get the packets that will on next chapter generate the files that GOES send. I will first add C code to...">
+  <meta name="twitter:description" content="Master GOES satellite decoding! This tutorial covers de-randomization, Reed Solomon error correction, and packet demuxing for LRIT frames using Python and C.">
   <meta name="twitter:image" content="https://lucasteske.dev/wp-content/uploads/2016/11/5YBmBKt-624x129.png">
-  <meta name="twitter:image:alt" content="In the last chapter I showed how to get the frames from the demodulated bit stream. In this chapter I will show you how to parse these frames and get the packets that will on next chapter generate the files that GOES send. I will first add C code to...">
+  <meta name="twitter:image:alt" content="Master GOES satellite decoding! This tutorial covers de-randomization, Reed Solomon error correction, and packet demuxing for LRIT frames using Python and C.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -155,9 +171,9 @@
     "url": "https://lucasteske.dev/2016/11/goes-satellite-hunt-part-4-packet-demuxer/",
     "name": "GOES Satellite Hunt (Part 4 – Packet Demuxer) | Lets Hack It",
     "headline": "GOES Satellite Hunt (Part 4 – Packet Demuxer) | Lets Hack It",
-    "keywords": ["AGC","Airspy","Automatic Gain Control","Bug","Compile","Convolutional Code","Convolutional Encoding","EMWIN","English","GNU Radio","Gnuradio","GOES","GRC","Hearsat","LRIT","Osmocom","RE","Reed Solomon","Reverse Engineering","Root Raised Cosine Filter","RRC Filter","RS","Sat","Satellite","SDR","Statistics","Viterbi"],
+    "keywords": ["AGC","Airspy","Automatic Gain Control","Bug","Compile","Convolutional Code","Convolutional Encoding","EMWIN","English","GNU Radio","Gnuradio","GOES","GRC","Hearsat","LRIT","Osmocom","RE","Reed Solomon","Reverse Engineering","Root Raised Cosine Filter","RRC Filter","RS","Sat","Satellite","SDR","Statistics","Viterbi","CCSDS","Error Correction","De-randomization","PN Sequence","Demuxer","Python","C Programming","Bitstream"],
     "inLanguage": "en",
-    "description": "In the last chapter I showed how to get the frames from the demodulated bit stream. In this chapter I will show you how to parse these frames and get the packets that will on next chapter generate the files that GOES send. I will first add C code to...",
+    "description": "Master GOES satellite decoding! This tutorial covers de-randomization, Reed Solomon error correction, and packet demuxing for LRIT frames using Python and C.",
     "articleBody": "In the last chapter I showed how to get the frames from the demodulated bit stream. In this chapter I will show you how to parse these frames and get the packets that will on next chapter generate the files that GOES send. I will first add C code to the code I did in the last chapter to separated all the virtual channels by ID. But mainly this chapter will be done in python (just because its easier, I will eventually make a C code as well to do the stuff). De-randomization of the data One of the missing things on the last chapter was the frame data de-randomization. The data inside the frame (excluding the sync word) is randomized by a generator polynomial. This is done because of few things: Pseudo-random Symbols distribute better the energy in the spectrum Avoids “line-polarization” effect when sending a continuous stream of 1’s Better Clock Recovery due more changes in symbol polarity CCSDS has a standard Polynomial as well, and the image below shows how to generate the pseudo-random bitstream: CCSDS Pseudo-random Bitstream Generator The PN Generator polynomial (as shown in the LRIT spec) is x^8 + x^7 + x^5 + x^3...",
     "datePublished": "2016-11-06 03:56:44 +0000",
     "dateModified": "2016-11-06 03:56:44 +0000",
@@ -1091,10 +1107,10 @@ def SavePacket(channelid, packet):
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

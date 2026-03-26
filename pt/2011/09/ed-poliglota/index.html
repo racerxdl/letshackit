@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/pt/2011/09/ed-poliglota/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="[Migrado do LetsHackIt] Hmm, vamos brincar um pouco com Robô Ed? É aquele Robô Ed que está no site do Ministério de Minas de Energia do Brasil… Não sabe qual? Olhe aqui: http://www.ed.conpet.gov.br/br/converse.php – Mas não vamos brincar de conversar não! Vamos fazer algo mais legal, vamos ver o que da pra...">
+  <meta name="description" content="Aprenda a interagir com o Robô Ed do governo brasileiro. Use Python e Google Translate para fazer o bot responder em qualquer idioma.">
   
-  <meta name="keywords" content="">
+  <meta name="keywords" content="Python, Reverse Engineering, Web Scraping, Google Translate API, Chatbot, Bot Gateway, mod_perl, CGI, Source Code Analysis, HTTP Request">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Ed Poliglota | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/pt/2011/09/ed-poliglota/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="[Migrado do LetsHackIt] Hmm, vamos brincar um pouco com Robô Ed? É aquele Robô Ed que está no site do Ministério de Minas de Energia do Brasil… Não sabe qual? Olhe aqui: http://www.ed.conpet.gov.br/br/converse.php – Mas não vamos brincar de conversar não! Vamos fazer algo mais legal, vamos ver o que da pra...">
+  <meta property="og:description" content="Aprenda a interagir com o Robô Ed do governo brasileiro. Use Python e Google Translate para fazer o bot responder em qualquer idioma.">
   <meta property="og:image" content="https://lucasteske.dev/assets/cropped-logo.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -79,6 +79,26 @@
   <meta property="article:modified_time" content="2011-09-06T15:42:24+00:00">
   
   
+  <meta property="article:tag" content="Python">
+  
+  <meta property="article:tag" content="Reverse Engineering">
+  
+  <meta property="article:tag" content="Web Scraping">
+  
+  <meta property="article:tag" content="Google Translate API">
+  
+  <meta property="article:tag" content="Chatbot">
+  
+  <meta property="article:tag" content="Bot Gateway">
+  
+  <meta property="article:tag" content="mod_perl">
+  
+  <meta property="article:tag" content="CGI">
+  
+  <meta property="article:tag" content="Source Code Analysis">
+  
+  <meta property="article:tag" content="HTTP Request">
+  
   
 
   <!-- Facebook -->
@@ -89,9 +109,9 @@
   <meta name="twitter:title" content="Ed Poliglota | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="[Migrado do LetsHackIt] Hmm, vamos brincar um pouco com Robô Ed? É aquele Robô Ed que está no site do Ministério de Minas de Energia do Brasil… Não sabe qual? Olhe aqui: http://www.ed.conpet.gov.br/br/converse.php – Mas não vamos brincar de conversar não! Vamos fazer algo mais legal, vamos ver o que da pra...">
+  <meta name="twitter:description" content="Aprenda a interagir com o Robô Ed do governo brasileiro. Use Python e Google Translate para fazer o bot responder em qualquer idioma.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/cropped-logo.png">
-  <meta name="twitter:image:alt" content="[Migrado do LetsHackIt] Hmm, vamos brincar um pouco com Robô Ed? É aquele Robô Ed que está no site do Ministério de Minas de Energia do Brasil… Não sabe qual? Olhe aqui: http://www.ed.conpet.gov.br/br/converse.php – Mas não vamos brincar de conversar não! Vamos fazer algo mais legal, vamos ver o que da pra...">
+  <meta name="twitter:image:alt" content="Aprenda a interagir com o Robô Ed do governo brasileiro. Use Python e Google Translate para fazer o bot responder em qualquer idioma.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -101,9 +121,9 @@
     "url": "https://lucasteske.dev/pt/2011/09/ed-poliglota/",
     "name": "Ed Poliglota | Lets Hack It",
     "headline": "Ed Poliglota | Lets Hack It",
-    "keywords": [],
+    "keywords": ["Python","Reverse Engineering","Web Scraping","Google Translate API","Chatbot","Bot Gateway","mod_perl","CGI","Source Code Analysis","HTTP Request"],
     "inLanguage": "pt",
-    "description": "[Migrado do LetsHackIt] Hmm, vamos brincar um pouco com Robô Ed? É aquele Robô Ed que está no site do Ministério de Minas de Energia do Brasil… Não sabe qual? Olhe aqui: http://www.ed.conpet.gov.br/br/converse.php – Mas não vamos brincar de conversar não! Vamos fazer algo mais legal, vamos ver o que da pra...",
+    "description": "Aprenda a interagir com o Robô Ed do governo brasileiro. Use Python e Google Translate para fazer o bot responder em qualquer idioma.",
     "articleBody": "[Migrado do LetsHackIt] Hmm, vamos brincar um pouco com Robô Ed? É aquele Robô Ed que está no site do Ministério de Minas de Energia do Brasil… Não sabe qual? Olhe aqui: http://www.ed.conpet.gov.br/br/converse.php – Mas não vamos brincar de conversar não! Vamos fazer algo mais legal, vamos ver o que da pra fazer! Vamos analisar o código fonte do site e ver se descobrimos algo legal! Bom, o botão Enviar tem a função DoTalk() , percorrendo o código para achar o que ela faz achei umas coisas interessantes: var e_usermsg = escape(usermsg); e_usermsg = e_usermsg.replace(/\\+/g, \"%2B\"); var url = '/mod_perl/bot_gateway.cgi?server='+bot_server+'&amp;charset=utf-8&amp;pure=1&amp;js=0&amp;msg='+e_usermsg; // Salva tudo em campo hidden para que outro frame possa ler os dados da conversa document.form1.fulltext.value += \"Você: \"+usermsg+\"\\n\"; document.form1.fulltext.value += \"Ed: \"+answer+\"\\n\"; Vamos ver, tem uma var ali com a URL de request. Será que da pra brincar? ——————————————————————————- Seguindo a lógica da URL, começando com a / significa root do documento, vendo o site por http://www.ed.conpet.gov.br/br/converse.php o root seria http://www.ed.conpet.gov.br . Logo: http://www.ed.conpet.gov.br/mod_perl/bot_gateway.cgi?server=’+bot_server+’&amp;charset=utf-8&amp;pure=1&amp;js=0&amp;msg=’+e_usermsg Vamos descobrir o valor da variável bot_server, afinal o e_usermsg nem preciso comentar né? ——————————————————————————- Olha que legal! Achei o endereço no próprio código: var bot_id = 5; //bot_server = ‘r.bot.insite.com.br:8085’; //bot_server = ‘bot.insite.com.br:8085’; bot_server = ‘0.0.0.0:8085’; Vamos tentar substituir para ver?...",
     "datePublished": "2011-09-06 15:42:24 +0000",
     "dateModified": "2011-09-06 15:42:24 +0000",
@@ -974,10 +994,10 @@ if($mensagem == $_REQUEST["mensagem"])
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:22 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:51:12 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:22 +0000
+    Last build: 2026-03-26 23:51:12 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

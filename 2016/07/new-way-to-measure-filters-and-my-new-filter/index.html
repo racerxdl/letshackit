@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2016/07/new-way-to-measure-filters-and-my-new-filter/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="So I’m still mad about the FM Spectrum (88-108MHz) noise I get when using a LNA or something else. So I’m still looking for a nice and easy way to filter out these signals. Last time I posted about a TV/FM Diplexer, that works great, but doesn’t attenuate enough the...">
+  <meta name="description" content="Construa um filtro FM Trap e teste-o com HackRF e GNU Radio. Veja como eliminar ruídos na banda FM e medir a resposta do filtro com precisão.">
   
-  <meta name="keywords" content="Adam, FM, FM Trap, FM TV Diplexer, HackRF, LNA4ALL, RTLSDR, SDR">
+  <meta name="keywords" content="Adam, FM, FM Trap, FM TV Diplexer, HackRF, LNA4ALL, RTLSDR, SDR, FM Spectrum, LNA, GNU Radio, White Noise Source, Filter Response, Band Stop Filter, Impedance Mismatch, Capacitors, Coil">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="New way to measure filters and my new filter | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2016/07/new-way-to-measure-filters-and-my-new-filter/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="So I’m still mad about the FM Spectrum (88-108MHz) noise I get when using a LNA or something else. So I’m still looking for a nice and easy way to filter out these signals. Last time I posted about a TV/FM Diplexer, that works great, but doesn’t attenuate enough the...">
+  <meta property="og:description" content="Construa um filtro FM Trap e teste-o com HackRF e GNU Radio. Veja como eliminar ruídos na banda FM e medir a resposta do filtro com precisão.">
   <meta property="og:image" content="https://lucasteske.dev/wp-content/uploads/2016/07/20160722_190915-624x351.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -95,6 +95,24 @@
   
   <meta property="article:tag" content="SDR">
   
+  <meta property="article:tag" content="FM Spectrum">
+  
+  <meta property="article:tag" content="LNA">
+  
+  <meta property="article:tag" content="GNU Radio">
+  
+  <meta property="article:tag" content="White Noise Source">
+  
+  <meta property="article:tag" content="Filter Response">
+  
+  <meta property="article:tag" content="Band Stop Filter">
+  
+  <meta property="article:tag" content="Impedance Mismatch">
+  
+  <meta property="article:tag" content="Capacitors">
+  
+  <meta property="article:tag" content="Coil">
+  
   
 
   <!-- Facebook -->
@@ -105,9 +123,9 @@
   <meta name="twitter:title" content="New way to measure filters and my new filter | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="So I’m still mad about the FM Spectrum (88-108MHz) noise I get when using a LNA or something else. So I’m still looking for a nice and easy way to filter out these signals. Last time I posted about a TV/FM Diplexer, that works great, but doesn’t attenuate enough the...">
+  <meta name="twitter:description" content="Construa um filtro FM Trap e teste-o com HackRF e GNU Radio. Veja como eliminar ruídos na banda FM e medir a resposta do filtro com precisão.">
   <meta name="twitter:image" content="https://lucasteske.dev/wp-content/uploads/2016/07/20160722_190915-624x351.jpg">
-  <meta name="twitter:image:alt" content="So I’m still mad about the FM Spectrum (88-108MHz) noise I get when using a LNA or something else. So I’m still looking for a nice and easy way to filter out these signals. Last time I posted about a TV/FM Diplexer, that works great, but doesn’t attenuate enough the...">
+  <meta name="twitter:image:alt" content="Construa um filtro FM Trap e teste-o com HackRF e GNU Radio. Veja como eliminar ruídos na banda FM e medir a resposta do filtro com precisão.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -117,9 +135,9 @@
     "url": "https://lucasteske.dev/2016/07/new-way-to-measure-filters-and-my-new-filter/",
     "name": "New way to measure filters and my new filter | Lets Hack It",
     "headline": "New way to measure filters and my new filter | Lets Hack It",
-    "keywords": ["Adam","FM","FM Trap","FM TV Diplexer","HackRF","LNA4ALL","RTLSDR","SDR"],
+    "keywords": ["Adam","FM","FM Trap","FM TV Diplexer","HackRF","LNA4ALL","RTLSDR","SDR","FM Spectrum","LNA","GNU Radio","White Noise Source","Filter Response","Band Stop Filter","Impedance Mismatch","Capacitors","Coil"],
     "inLanguage": "en",
-    "description": "So I’m still mad about the FM Spectrum (88-108MHz) noise I get when using a LNA or something else. So I’m still looking for a nice and easy way to filter out these signals. Last time I posted about a TV/FM Diplexer, that works great, but doesn’t attenuate enough the...",
+    "description": "Construa um filtro FM Trap e teste-o com HackRF e GNU Radio. Veja como eliminar ruídos na banda FM e medir a resposta do filtro com precisão.",
     "articleBody": "So I’m still mad about the FM Spectrum (88-108MHz) noise I get when using a LNA or something else. So I’m still looking for a nice and easy way to filter out these signals. Last time I posted about a TV/FM Diplexer, that works great, but doesn’t attenuate enough the signals. So the solution would be cascading several of them, but I found that is very hard to find one Diplexer or FM Trap filter those days. So I started looking out how to make my own filters. So I reopened Adam’s Website (LNA4ALL) that have a small filter he did for FM Trap and tried (again) to make my own. This time I tried to find capacitors that actually matches the values that it was calculated. I found here 2 56pF caps and 2 47pF caps. The two 47 is to make in parallel so I would have something around 23.5pF that is close enough for the center tap 20pF cap. Also I found a coil of 0,35mm diameter wire here, that’s exactly what he used. I also got a copper pipe to do the coil wind. So this is how the filter went out: So first I tested...",
     "datePublished": "2016-07-22 22:28:48 +0000",
     "dateModified": "2016-07-22 22:28:48 +0000",
@@ -660,10 +678,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

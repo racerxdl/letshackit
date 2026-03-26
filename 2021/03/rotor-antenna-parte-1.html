@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2021/03/rotor-antenna-parte-1">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="A few years ago I bought a Pelco Câmera Rotor, model PT175-24P. This rotor is made for carrying a camera with up to 8kg, and contains two biphase reversable motors internally. My idea was (and is) to put a satellite dish coupled, and control its movement to track satellites. Then...">
+  <meta name="description" content="Transforme um rotor Pelco PT175-24P em um rastreador de satélites. Veja como substituir os motores AC por passo a passo neste tutorial.">
   
-  <meta name="keywords" content="Airspy, EMWIN, English, GOES, Hearsat, LRIT, RE, Reverse Engineering, Sat, Satellite, SDR">
+  <meta name="keywords" content="Airspy, EMWIN, English, GOES, Hearsat, LRIT, RE, Reverse Engineering, Sat, Satellite, SDR, Pelco PT175-24P, Antenna Rotor, Stepper Motor, Satellite Tracking, Low Orbit Satellites, Open-loop, Azimuth, Elevation, 24V AC Motors, Variable Frequency Driver">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Antenna Rotor - Part 1 | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2021/03/rotor-antenna-parte-1">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="A few years ago I bought a Pelco Câmera Rotor, model PT175-24P. This rotor is made for carrying a camera with up to 8kg, and contains two biphase reversable motors internally. My idea was (and is) to put a satellite dish coupled, and control its movement to track satellites. Then...">
+  <meta property="og:description" content="Transforme um rotor Pelco PT175-24P em um rastreador de satélites. Veja como substituir os motores AC por passo a passo neste tutorial.">
   <meta property="og:image" content="https://lucasteske.dev/assets/posts/tracker-mount/head.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -101,6 +101,26 @@
   
   <meta property="article:tag" content="SDR">
   
+  <meta property="article:tag" content="Pelco PT175-24P">
+  
+  <meta property="article:tag" content="Antenna Rotor">
+  
+  <meta property="article:tag" content="Stepper Motor">
+  
+  <meta property="article:tag" content="Satellite Tracking">
+  
+  <meta property="article:tag" content="Low Orbit Satellites">
+  
+  <meta property="article:tag" content="Open-loop">
+  
+  <meta property="article:tag" content="Azimuth">
+  
+  <meta property="article:tag" content="Elevation">
+  
+  <meta property="article:tag" content="24V AC Motors">
+  
+  <meta property="article:tag" content="Variable Frequency Driver">
+  
   
 
   <!-- Facebook -->
@@ -111,9 +131,9 @@
   <meta name="twitter:title" content="Antenna Rotor - Part 1 | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="A few years ago I bought a Pelco Câmera Rotor, model PT175-24P. This rotor is made for carrying a camera with up to 8kg, and contains two biphase reversable motors internally. My idea was (and is) to put a satellite dish coupled, and control its movement to track satellites. Then...">
+  <meta name="twitter:description" content="Transforme um rotor Pelco PT175-24P em um rastreador de satélites. Veja como substituir os motores AC por passo a passo neste tutorial.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/posts/tracker-mount/head.jpg">
-  <meta name="twitter:image:alt" content="A few years ago I bought a Pelco Câmera Rotor, model PT175-24P. This rotor is made for carrying a camera with up to 8kg, and contains two biphase reversable motors internally. My idea was (and is) to put a satellite dish coupled, and control its movement to track satellites. Then...">
+  <meta name="twitter:image:alt" content="Transforme um rotor Pelco PT175-24P em um rastreador de satélites. Veja como substituir os motores AC por passo a passo neste tutorial.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -123,9 +143,9 @@
     "url": "https://lucasteske.dev/2021/03/rotor-antenna-parte-1",
     "name": "Antenna Rotor - Part 1 | Lets Hack It",
     "headline": "Antenna Rotor - Part 1 | Lets Hack It",
-    "keywords": ["Airspy","EMWIN","English","GOES","Hearsat","LRIT","RE","Reverse Engineering","Sat","Satellite","SDR"],
+    "keywords": ["Airspy","EMWIN","English","GOES","Hearsat","LRIT","RE","Reverse Engineering","Sat","Satellite","SDR","Pelco PT175-24P","Antenna Rotor","Stepper Motor","Satellite Tracking","Low Orbit Satellites","Open-loop","Azimuth","Elevation","24V AC Motors","Variable Frequency Driver"],
     "inLanguage": "en",
-    "description": "A few years ago I bought a Pelco Câmera Rotor, model PT175-24P. This rotor is made for carrying a camera with up to 8kg, and contains two biphase reversable motors internally. My idea was (and is) to put a satellite dish coupled, and control its movement to track satellites. Then...",
+    "description": "Transforme um rotor Pelco PT175-24P em um rastreador de satélites. Veja como substituir os motores AC por passo a passo neste tutorial.",
     "articleBody": "A few years ago I bought a Pelco Câmera Rotor, model PT175-24P. This rotor is made for carrying a camera with up to 8kg, and contains two biphase reversable motors internally. My idea was (and is) to put a satellite dish coupled, and control its movement to track satellites. Then I could use it to receive Low Orbit Satellites. Internal Schematics The problem of the original system from pelco, is that they’re two 24V AC Motors, which would require a VFD (Variable Frequency Driver) to control the speed and a closed-loop system with a angle sensor. That would make it a bit complex to control the antenna, so a friend of my (PY2UEP) suggested to modify it to use stepper motors instead. The big advantage of stepper motors is that their steps always has the same length. So if the motor goes N steps in one direction and then N steps in the oposite direction, it will return exactly where it started. That allows for open-loop circuits (where you just calibrate the start and then you dont need a feedback to fix everything). Stepper Motor Make the cleaning Then I started opening the rotor and make a super-clean. Remove all...",
     "datePublished": "2021-03-03 23:57:00 +0000",
     "dateModified": "2021-03-03 23:57:00 +0000",
@@ -640,10 +660,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

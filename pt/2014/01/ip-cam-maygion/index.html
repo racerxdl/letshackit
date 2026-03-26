@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/pt/2014/01/ip-cam-maygion/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="Bom, estou montando um QuadCopter e sai procurando cameras para colocar nele. Na minha lista de opções coloquei 3 câmeras IP: 1) MayGion IP cam (comprada na Dealextreme, 640×480) 2) DSC-930L (D-LINK 640×480) 3) DSC-2130 (D-LINK 1280×800) Comecei a desmontar a MayGion pra ver como ela era. Ai vai umas...">
+  <meta name="description" content="Montando um QuadCopter? Descubra como hackear a câmera IP MayGion. Análise de hardware, processador MIPS e uso de USB UVC no Linux.">
   
-  <meta name="keywords" content="">
+  <meta name="keywords" content="QuadCopter, IP Camera, MIPS, Stepper Motors, USB, UVC, Sonix, Linux, Engenharia Reversa, Firmware, Hardware Hacking, Microcontrolador">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="IP Cam – MayGion | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/pt/2014/01/ip-cam-maygion/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="Bom, estou montando um QuadCopter e sai procurando cameras para colocar nele. Na minha lista de opções coloquei 3 câmeras IP: 1) MayGion IP cam (comprada na Dealextreme, 640×480) 2) DSC-930L (D-LINK 640×480) 3) DSC-2130 (D-LINK 1280×800) Comecei a desmontar a MayGion pra ver como ela era. Ai vai umas...">
+  <meta property="og:description" content="Montando um QuadCopter? Descubra como hackear a câmera IP MayGion. Análise de hardware, processador MIPS e uso de USB UVC no Linux.">
   <meta property="og:image" content="https://lucasteske.dev/assets/cropped-logo.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -79,6 +79,30 @@
   <meta property="article:modified_time" content="2014-01-18T23:42:45+00:00">
   
   
+  <meta property="article:tag" content="QuadCopter">
+  
+  <meta property="article:tag" content="IP Camera">
+  
+  <meta property="article:tag" content="MIPS">
+  
+  <meta property="article:tag" content="Stepper Motors">
+  
+  <meta property="article:tag" content="USB">
+  
+  <meta property="article:tag" content="UVC">
+  
+  <meta property="article:tag" content="Sonix">
+  
+  <meta property="article:tag" content="Linux">
+  
+  <meta property="article:tag" content="Engenharia Reversa">
+  
+  <meta property="article:tag" content="Firmware">
+  
+  <meta property="article:tag" content="Hardware Hacking">
+  
+  <meta property="article:tag" content="Microcontrolador">
+  
   
 
   <!-- Facebook -->
@@ -89,9 +113,9 @@
   <meta name="twitter:title" content="IP Cam – MayGion | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="Bom, estou montando um QuadCopter e sai procurando cameras para colocar nele. Na minha lista de opções coloquei 3 câmeras IP: 1) MayGion IP cam (comprada na Dealextreme, 640×480) 2) DSC-930L (D-LINK 640×480) 3) DSC-2130 (D-LINK 1280×800) Comecei a desmontar a MayGion pra ver como ela era. Ai vai umas...">
+  <meta name="twitter:description" content="Montando um QuadCopter? Descubra como hackear a câmera IP MayGion. Análise de hardware, processador MIPS e uso de USB UVC no Linux.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/cropped-logo.png">
-  <meta name="twitter:image:alt" content="Bom, estou montando um QuadCopter e sai procurando cameras para colocar nele. Na minha lista de opções coloquei 3 câmeras IP: 1) MayGion IP cam (comprada na Dealextreme, 640×480) 2) DSC-930L (D-LINK 640×480) 3) DSC-2130 (D-LINK 1280×800) Comecei a desmontar a MayGion pra ver como ela era. Ai vai umas...">
+  <meta name="twitter:image:alt" content="Montando um QuadCopter? Descubra como hackear a câmera IP MayGion. Análise de hardware, processador MIPS e uso de USB UVC no Linux.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -101,9 +125,9 @@
     "url": "https://lucasteske.dev/pt/2014/01/ip-cam-maygion/",
     "name": "IP Cam &#8211; MayGion | Lets Hack It",
     "headline": "IP Cam &#8211; MayGion | Lets Hack It",
-    "keywords": [],
+    "keywords": ["QuadCopter","IP Camera","MIPS","Stepper Motors","USB","UVC","Sonix","Linux","Engenharia Reversa","Firmware","Hardware Hacking","Microcontrolador"],
     "inLanguage": "pt",
-    "description": "Bom, estou montando um QuadCopter e sai procurando cameras para colocar nele. Na minha lista de opções coloquei 3 câmeras IP: 1) MayGion IP cam (comprada na Dealextreme, 640×480) 2) DSC-930L (D-LINK 640×480) 3) DSC-2130 (D-LINK 1280×800) Comecei a desmontar a MayGion pra ver como ela era. Ai vai umas...",
+    "description": "Montando um QuadCopter? Descubra como hackear a câmera IP MayGion. Análise de hardware, processador MIPS e uso de USB UVC no Linux.",
     "articleBody": "Bom, estou montando um QuadCopter e sai procurando cameras para colocar nele.\n\nNa minha lista de opções coloquei 3 câmeras IP:\n\n1) MayGion IP cam (comprada na Dealextreme, 640×480)\n\n2) DSC-930L (D-LINK 640×480)\n\n3) DSC-2130 (D-LINK 1280×800)\n\nComecei a desmontar a MayGion pra ver como ela era. Ai vai umas fotos\n\n\n\n\n\nEssa é a placa principal. O microcontrolador parece proprietário (ao menos, não conheço a marca). Pela engenharia reversa na firmware, é um processador MIPS que roda a cerca de 400MHz.\n\n\n\nA câmera usa motores de passo para os controles dos eixos, um jeito bem preciso de mexer a câmera.\n\n\n\n\n\n\n\nA câmera (para minha surpresa) é USB. Deduzi então que fosse uma câmera genérica compatível com UVC. Para ajudar mais ainda, os bons chineses deixaram os pinos no padrão do USB. Logo, Lets Hack it!\n\n\n\nLigando no meu notebook usando Linux tenho:\n\nBingo! Uma câmera UVC Sonix. Tudo funcionando ótimo! 😀\n\n\n\n\n\n\n\nBom, por hoje é só isso! Em breve devo postar notícias sobre meu QuadCopter! 😀\n",
     "datePublished": "2014-01-18 23:42:45 +0000",
     "dateModified": "2014-01-18 23:42:45 +0000",
@@ -612,10 +636,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:22 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:51:12 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:22 +0000
+    Last build: 2026-03-26 23:51:12 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

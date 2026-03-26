@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2016/11/goes-satellite-hunt-part-3-frame-decoder/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="In the last chapter of GOES Satellite Hunt, I explained how I did the BPSK Demodulator for the LRIT Signal. Now I will explain how to decode the output of the data we got in the last chapter. One thing that is worth mentioning is that most (if not all)...">
+  <meta name="description" content="Master the GOES satellite frame decoder! This guide explains convolution encoding, Viterbi decoding, and CCSDS packet synchronization for LRIT signals.">
   
-  <meta name="keywords" content="AGC, Airspy, Automatic Gain Control, Bug, Compile, Convolutional Code, Convolutional Encoding, EMWIN, English, GNU Radio, Gnuradio, GOES, GRC, Hearsat, LRIT, Osmocom, RE, Reed Solomon, Reverse Engineering, Root Raised Cosine Filter, RRC Filter, RS, Sat, Satellite, SDR, Statistics, Viterbi">
+  <meta name="keywords" content="AGC, Airspy, Automatic Gain Control, Bug, Compile, Convolutional Code, Convolutional Encoding, EMWIN, English, GNU Radio, Gnuradio, GOES, GRC, Hearsat, LRIT, Osmocom, RE, Reed Solomon, Reverse Engineering, Root Raised Cosine Filter, RRC Filter, RS, Sat, Satellite, SDR, Statistics, Viterbi, CCSDS, Frame Synchronization, Generator Polynomials, libfec, C++, Digital Signal Processing, Weather Satellite">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="GOES Satellite Hunt (Part 3 – Frame Decoder) | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2016/11/goes-satellite-hunt-part-3-frame-decoder/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="In the last chapter of GOES Satellite Hunt, I explained how I did the BPSK Demodulator for the LRIT Signal. Now I will explain how to decode the output of the data we got in the last chapter. One thing that is worth mentioning is that most (if not all)...">
+  <meta property="og:description" content="Master the GOES satellite frame decoder! This guide explains convolution encoding, Viterbi decoding, and CCSDS packet synchronization for LRIT signals.">
   <meta property="og:image" content="https://lucasteske.dev/wp-content/uploads/2016/11/qqk3UwA-624x135.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -133,6 +133,20 @@
   
   <meta property="article:tag" content="Viterbi">
   
+  <meta property="article:tag" content="CCSDS">
+  
+  <meta property="article:tag" content="Frame Synchronization">
+  
+  <meta property="article:tag" content="Generator Polynomials">
+  
+  <meta property="article:tag" content="libfec">
+  
+  <meta property="article:tag" content="C++">
+  
+  <meta property="article:tag" content="Digital Signal Processing">
+  
+  <meta property="article:tag" content="Weather Satellite">
+  
   
 
   <!-- Facebook -->
@@ -143,9 +157,9 @@
   <meta name="twitter:title" content="GOES Satellite Hunt (Part 3 – Frame Decoder) | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="In the last chapter of GOES Satellite Hunt, I explained how I did the BPSK Demodulator for the LRIT Signal. Now I will explain how to decode the output of the data we got in the last chapter. One thing that is worth mentioning is that most (if not all)...">
+  <meta name="twitter:description" content="Master the GOES satellite frame decoder! This guide explains convolution encoding, Viterbi decoding, and CCSDS packet synchronization for LRIT signals.">
   <meta name="twitter:image" content="https://lucasteske.dev/wp-content/uploads/2016/11/qqk3UwA-624x135.png">
-  <meta name="twitter:image:alt" content="In the last chapter of GOES Satellite Hunt, I explained how I did the BPSK Demodulator for the LRIT Signal. Now I will explain how to decode the output of the data we got in the last chapter. One thing that is worth mentioning is that most (if not all)...">
+  <meta name="twitter:image:alt" content="Master the GOES satellite frame decoder! This guide explains convolution encoding, Viterbi decoding, and CCSDS packet synchronization for LRIT signals.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -155,9 +169,9 @@
     "url": "https://lucasteske.dev/2016/11/goes-satellite-hunt-part-3-frame-decoder/",
     "name": "GOES Satellite Hunt (Part 3 – Frame Decoder) | Lets Hack It",
     "headline": "GOES Satellite Hunt (Part 3 – Frame Decoder) | Lets Hack It",
-    "keywords": ["AGC","Airspy","Automatic Gain Control","Bug","Compile","Convolutional Code","Convolutional Encoding","EMWIN","English","GNU Radio","Gnuradio","GOES","GRC","Hearsat","LRIT","Osmocom","RE","Reed Solomon","Reverse Engineering","Root Raised Cosine Filter","RRC Filter","RS","Sat","Satellite","SDR","Statistics","Viterbi"],
+    "keywords": ["AGC","Airspy","Automatic Gain Control","Bug","Compile","Convolutional Code","Convolutional Encoding","EMWIN","English","GNU Radio","Gnuradio","GOES","GRC","Hearsat","LRIT","Osmocom","RE","Reed Solomon","Reverse Engineering","Root Raised Cosine Filter","RRC Filter","RS","Sat","Satellite","SDR","Statistics","Viterbi","CCSDS","Frame Synchronization","Generator Polynomials","libfec","C++","Digital Signal Processing","Weather Satellite"],
     "inLanguage": "en",
-    "description": "In the last chapter of GOES Satellite Hunt, I explained how I did the BPSK Demodulator for the LRIT Signal. Now I will explain how to decode the output of the data we got in the last chapter. One thing that is worth mentioning is that most (if not all)...",
+    "description": "Master the GOES satellite frame decoder! This guide explains convolution encoding, Viterbi decoding, and CCSDS packet synchronization for LRIT signals.",
     "articleBody": "In the last chapter of GOES Satellite Hunt, I explained how I did the BPSK Demodulator for the LRIT Signal. Now I will explain how to decode the output of the data we got in the last chapter. One thing that is worth mentioning is that most (if not all) weather satellites that transmit digital signals use the CCSDS standard packet format, or at least something based on it. For example this frame decoder can be used (with some modifications due QPSK instead BPSK) for LRPT Signals from Meteor Satellites (I plan to do a LRPT decoder as well in the future, and I will post about it). I will not describe my entire code here, just the pieces for decoding the data. I will also not write the entire code here, since it can be checked on GitHub. So before start see the picture below (again). We will some info from it as well. LRIT Signal Specifications Convolution Encoding, Frame Synchronization and Viterbi The first thing we need to do is sync our frame starts. For making easier to find the packet start, these bit streams have something called preamble. The preamble is basically a period when the bits sent...",
     "datePublished": "2016-11-02 20:50:34 +0000",
     "dateModified": "2016-11-02 20:50:34 +0000",
@@ -911,10 +925,10 @@ float signalErrors = (100.f * errors) / 8192;
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

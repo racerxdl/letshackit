@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/pt/2011/10/funcao-javascript-para-multiplos-e-submultiplos-2/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="Bom, vocês devem ter visto meu tópico anterior sobre Função Javascript para Submúltiplos e eu resolvi fazer uma função mais completa. Agora abrangendo mais submúltiplos e também abrangendo múltiplos. O conceito é o mesmo do anterior, gerar o valor com múltiplo ou submúltiplo e arredondar para duas casas decimais apenas. A...">
+  <meta name="description" content="Função Javascript completa para converter valores em múltiplos e submúltiplos, retornando array com valor e unidade arredondada.">
   
-  <meta name="keywords" content="">
+  <meta name="keywords" content="Javascript, Função, Múltiplos, Submúltiplos, Notação, Arredondamento, Array, HTML, Código, Métrica, Prefixos">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Função Javascript para Múltiplos e Submúltiplos | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/pt/2011/10/funcao-javascript-para-multiplos-e-submultiplos-2/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="Bom, vocês devem ter visto meu tópico anterior sobre Função Javascript para Submúltiplos e eu resolvi fazer uma função mais completa. Agora abrangendo mais submúltiplos e também abrangendo múltiplos. O conceito é o mesmo do anterior, gerar o valor com múltiplo ou submúltiplo e arredondar para duas casas decimais apenas. A...">
+  <meta property="og:description" content="Função Javascript completa para converter valores em múltiplos e submúltiplos, retornando array com valor e unidade arredondada.">
   <meta property="og:image" content="https://lucasteske.dev/assets/cropped-logo.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -79,6 +79,28 @@
   <meta property="article:modified_time" content="2011-10-09T22:24:31+00:00">
   
   
+  <meta property="article:tag" content="Javascript">
+  
+  <meta property="article:tag" content="Função">
+  
+  <meta property="article:tag" content="Múltiplos">
+  
+  <meta property="article:tag" content="Submúltiplos">
+  
+  <meta property="article:tag" content="Notação">
+  
+  <meta property="article:tag" content="Arredondamento">
+  
+  <meta property="article:tag" content="Array">
+  
+  <meta property="article:tag" content="HTML">
+  
+  <meta property="article:tag" content="Código">
+  
+  <meta property="article:tag" content="Métrica">
+  
+  <meta property="article:tag" content="Prefixos">
+  
   
 
   <!-- Facebook -->
@@ -89,9 +111,9 @@
   <meta name="twitter:title" content="Função Javascript para Múltiplos e Submúltiplos | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="Bom, vocês devem ter visto meu tópico anterior sobre Função Javascript para Submúltiplos e eu resolvi fazer uma função mais completa. Agora abrangendo mais submúltiplos e também abrangendo múltiplos. O conceito é o mesmo do anterior, gerar o valor com múltiplo ou submúltiplo e arredondar para duas casas decimais apenas. A...">
+  <meta name="twitter:description" content="Função Javascript completa para converter valores em múltiplos e submúltiplos, retornando array com valor e unidade arredondada.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/cropped-logo.png">
-  <meta name="twitter:image:alt" content="Bom, vocês devem ter visto meu tópico anterior sobre Função Javascript para Submúltiplos e eu resolvi fazer uma função mais completa. Agora abrangendo mais submúltiplos e também abrangendo múltiplos. O conceito é o mesmo do anterior, gerar o valor com múltiplo ou submúltiplo e arredondar para duas casas decimais apenas. A...">
+  <meta name="twitter:image:alt" content="Função Javascript completa para converter valores em múltiplos e submúltiplos, retornando array com valor e unidade arredondada.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -101,9 +123,9 @@
     "url": "https://lucasteske.dev/pt/2011/10/funcao-javascript-para-multiplos-e-submultiplos-2/",
     "name": "Função Javascript para Múltiplos e Submúltiplos | Lets Hack It",
     "headline": "Função Javascript para Múltiplos e Submúltiplos | Lets Hack It",
-    "keywords": [],
+    "keywords": ["Javascript","Função","Múltiplos","Submúltiplos","Notação","Arredondamento","Array","HTML","Código","Métrica","Prefixos"],
     "inLanguage": "pt",
-    "description": "Bom, vocês devem ter visto meu tópico anterior sobre Função Javascript para Submúltiplos e eu resolvi fazer uma função mais completa. Agora abrangendo mais submúltiplos e também abrangendo múltiplos. O conceito é o mesmo do anterior, gerar o valor com múltiplo ou submúltiplo e arredondar para duas casas decimais apenas. A...",
+    "description": "Função Javascript completa para converter valores em múltiplos e submúltiplos, retornando array com valor e unidade arredondada.",
     "articleBody": "Bom, vocês devem ter visto meu tópico anterior sobre Função Javascript para Submúltiplos e eu resolvi fazer uma função mais completa. Agora abrangendo mais submúltiplos e também abrangendo múltiplos. O conceito é o mesmo do anterior, gerar o valor com múltiplo ou submúltiplo e arredondar para duas casas decimais apenas. A função fica assim: function toNotationUnit(v) { var unit; var submultiplo = [\"\",\"m\",\"&micro;\",\"n\",\"p\",\"f\",\"a\",\"z\",\"y\"]; var multiplo = [\"\",\"k\",\"M\",\"G\",\"T\",\"P\",\"E\",\"Z\",\"Y\"] var counter= 0; var value = v; if(value &lt; 1) { while(value &lt; 1) { counter++; value=value*1e3; if(counter==8) break; } unit = submultiplo[counter]; }else{ while(value &gt;= 1000) { counter++; value=value/1e3; if(counter==8) break; } unit = multiplo[counter]; } value = Math.round(value*1e2)/1e2; return [value,unit]; } Como podem ver, eu coloquei para retornar uma array contendo na sua posição 0 o valor arredondado em duas casas, e na posição 1 a unidade, assim você poderá tratar da maneira que bem entender o resultado. Para usá-la é bem simples, vamos a um exemplo em HTML: &lt;script type=\"text/javascript\"&gt; function toNotationUnit(v) { var unit; var submultiplo = [\"\",\"m\",\"µ\",\"n\",\"p\",\"f\",\"a\",\"z\",\"y\"]; var multiplo = [\"\",\"k\",\"M\",\"G\",\"T\",\"P\",\"E\",\"Z\",\"Y\"] var counter= 0; var value = v; if(value &lt; 1) { while(value &lt; 1) { counter++; value=value*1e3; if(counter==8) break; } unit = submultiplo[counter]; }else{ while(value &gt;= 1000) {...",
     "datePublished": "2011-10-09 22:24:31 +0000",
     "dateModified": "2011-10-09 22:24:31 +0000",
@@ -640,10 +662,10 @@ Resultado: &lt;div id="resultado"&gt;&lt;/div&gt;
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:22 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:51:12 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:22 +0000
+    Last build: 2026-03-26 23:51:12 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

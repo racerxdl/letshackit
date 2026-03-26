@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/pt/2015/02/um-presente-inesperado-na-campus-party/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="Como a maioria sabe, todos os anos eu vou para o evento anual Campus Party. Apesar de eu achar que ele está decaindo a cada ano que se passa, ainda há muito o que se aproveitar lá além de rever os amigos da internet nesta oportunidade anual. Este ano fui...">
+  <meta name="description" content="Review do kit de desenvolvimento Intel Edison. Descubra as especificações do processador Atom Dual-Core, WiFi e Bluetooth para projetos IoT.">
   
-  <meta name="keywords" content="apm, arduino, ARM, atom, drone, dualcore, edison, galileo, gift, intel, internet das coisas, internet of things, iot, multiwii, mwc, pixhawk, presente, quadricoptero, x86">
+  <meta name="keywords" content="apm, arduino, ARM, atom, drone, dualcore, edison, galileo, gift, intel, internet das coisas, internet of things, iot, multiwii, mwc, pixhawk, presente, quadricoptero, x86, Intel Edison, Wearables, Dual-Core, WiFi, Bluetooth, SIMD, IMU">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Um presente inesperado na Campus Party! | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/pt/2015/02/um-presente-inesperado-na-campus-party/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="Como a maioria sabe, todos os anos eu vou para o evento anual Campus Party. Apesar de eu achar que ele está decaindo a cada ano que se passa, ainda há muito o que se aproveitar lá além de rever os amigos da internet nesta oportunidade anual. Este ano fui...">
+  <meta property="og:description" content="Review do kit de desenvolvimento Intel Edison. Descubra as especificações do processador Atom Dual-Core, WiFi e Bluetooth para projetos IoT.">
   <meta property="og:image" content="https://lucasteske.dev/wp-content/uploads/2015/04/tumblr_inline_njxos3euZM1rvy8i7.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -117,6 +117,20 @@
   
   <meta property="article:tag" content="x86">
   
+  <meta property="article:tag" content="Intel Edison">
+  
+  <meta property="article:tag" content="Wearables">
+  
+  <meta property="article:tag" content="Dual-Core">
+  
+  <meta property="article:tag" content="WiFi">
+  
+  <meta property="article:tag" content="Bluetooth">
+  
+  <meta property="article:tag" content="SIMD">
+  
+  <meta property="article:tag" content="IMU">
+  
   
 
   <!-- Facebook -->
@@ -127,9 +141,9 @@
   <meta name="twitter:title" content="Um presente inesperado na Campus Party! | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="Como a maioria sabe, todos os anos eu vou para o evento anual Campus Party. Apesar de eu achar que ele está decaindo a cada ano que se passa, ainda há muito o que se aproveitar lá além de rever os amigos da internet nesta oportunidade anual. Este ano fui...">
+  <meta name="twitter:description" content="Review do kit de desenvolvimento Intel Edison. Descubra as especificações do processador Atom Dual-Core, WiFi e Bluetooth para projetos IoT.">
   <meta name="twitter:image" content="https://lucasteske.dev/wp-content/uploads/2015/04/tumblr_inline_njxos3euZM1rvy8i7.jpg">
-  <meta name="twitter:image:alt" content="Como a maioria sabe, todos os anos eu vou para o evento anual Campus Party. Apesar de eu achar que ele está decaindo a cada ano que se passa, ainda há muito o que se aproveitar lá além de rever os amigos da internet nesta oportunidade anual. Este ano fui...">
+  <meta name="twitter:image:alt" content="Review do kit de desenvolvimento Intel Edison. Descubra as especificações do processador Atom Dual-Core, WiFi e Bluetooth para projetos IoT.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -139,9 +153,9 @@
     "url": "https://lucasteske.dev/pt/2015/02/um-presente-inesperado-na-campus-party/",
     "name": "Um presente inesperado na Campus Party! | Lets Hack It",
     "headline": "Um presente inesperado na Campus Party! | Lets Hack It",
-    "keywords": ["apm","arduino","ARM","atom","drone","dualcore","edison","galileo","gift","intel","internet das coisas","internet of things","iot","multiwii","mwc","pixhawk","presente","quadricoptero","x86"],
+    "keywords": ["apm","arduino","ARM","atom","drone","dualcore","edison","galileo","gift","intel","internet das coisas","internet of things","iot","multiwii","mwc","pixhawk","presente","quadricoptero","x86","Intel Edison","Wearables","Dual-Core","WiFi","Bluetooth","SIMD","IMU"],
     "inLanguage": "pt",
-    "description": "Como a maioria sabe, todos os anos eu vou para o evento anual Campus Party. Apesar de eu achar que ele está decaindo a cada ano que se passa, ainda há muito o que se aproveitar lá além de rever os amigos da internet nesta oportunidade anual. Este ano fui...",
+    "description": "Review do kit de desenvolvimento Intel Edison. Descubra as especificações do processador Atom Dual-Core, WiFi e Bluetooth para projetos IoT.",
     "articleBody": "Como a maioria sabe, todos os anos eu vou para o evento anual Campus Party. Apesar de eu achar que ele está decaindo a cada ano que se passa, ainda há muito o que se aproveitar lá além de rever os amigos da internet nesta oportunidade anual. Este ano fui também chamado para a cerimônia de abertura (estreia) do Intel Edison no Brasil. Como muitos sabem (e os que não sabem é só ler meu post anterior) eu fiz várias críticas ao Intel Galileo, muitas delas as quais foram corrigidas na sua segunda versão (Galileo Gen 2). Apesar da ideia da Intel sobre IoT (Internet of Things) para o Galileo, minha ideia inicial era ter um processador melhor para o meu quadricóptero. A IMU (unidade de movimento inercial) de um quadricóptero faz operações matemáticas complexas ao nível computacional embarcado (operações matriciais em ponto flutuante) e mesmo as melhores controladoras sendo processadores ARM, usam processadores relativamente simples (sem NEON e outros sistemas de SIMD (Single Instruction Multiple Data) ). O problema é que apesar do Quark (processador do galileo) ter um clock relativamente alto (400MHz) ele não possui nenhum tipo de SIMD (nem o MMX que é o mais simples de...",
     "datePublished": "2015-02-18 20:40:39 +0000",
     "dateModified": "2015-02-18 20:40:39 +0000",
@@ -682,10 +696,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:22 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:51:12 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:22 +0000
+    Last build: 2026-03-26 23:51:12 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

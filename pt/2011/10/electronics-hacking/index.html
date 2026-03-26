@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/pt/2011/10/electronics-hacking/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="Bom, decidi postar hacks de eletrônica aqui também. Até por que são mais frequentes que os meus hacks. Ai vai umas fotos de um sensor CMOS que soldei numa placa pra facilitar, e verei um dia de brincar com ela: É um Sensor CMOS VGA Colorido, que roda em 3.3V. A sua...">
+  <meta name="description" content="Hackeando eletrônica: solderando um sensor CMOS VGA para uso em FPGA. Saiba mais sobre filtros Bayer e processamento de imagem.">
   
-  <meta name="keywords" content="">
+  <meta name="keywords" content="CMOS sensor, FPGA, VGA, Bayer filter, Image processing, Surveillance camera, 3.3V, Sub-pixel, Raw data, Electronics, Datasheet, PCB">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Electronics Hacking | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/pt/2011/10/electronics-hacking/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="Bom, decidi postar hacks de eletrônica aqui também. Até por que são mais frequentes que os meus hacks. Ai vai umas fotos de um sensor CMOS que soldei numa placa pra facilitar, e verei um dia de brincar com ela: É um Sensor CMOS VGA Colorido, que roda em 3.3V. A sua...">
+  <meta property="og:description" content="Hackeando eletrônica: solderando um sensor CMOS VGA para uso em FPGA. Saiba mais sobre filtros Bayer e processamento de imagem.">
   <meta property="og:image" content="https://lucasteske.dev/assets/cropped-logo.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -79,6 +79,30 @@
   <meta property="article:modified_time" content="2011-10-13T18:16:52+00:00">
   
   
+  <meta property="article:tag" content="CMOS sensor">
+  
+  <meta property="article:tag" content="FPGA">
+  
+  <meta property="article:tag" content="VGA">
+  
+  <meta property="article:tag" content="Bayer filter">
+  
+  <meta property="article:tag" content="Image processing">
+  
+  <meta property="article:tag" content="Surveillance camera">
+  
+  <meta property="article:tag" content="3.3V">
+  
+  <meta property="article:tag" content="Sub-pixel">
+  
+  <meta property="article:tag" content="Raw data">
+  
+  <meta property="article:tag" content="Electronics">
+  
+  <meta property="article:tag" content="Datasheet">
+  
+  <meta property="article:tag" content="PCB">
+  
   
 
   <!-- Facebook -->
@@ -89,9 +113,9 @@
   <meta name="twitter:title" content="Electronics Hacking | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="Bom, decidi postar hacks de eletrônica aqui também. Até por que são mais frequentes que os meus hacks. Ai vai umas fotos de um sensor CMOS que soldei numa placa pra facilitar, e verei um dia de brincar com ela: É um Sensor CMOS VGA Colorido, que roda em 3.3V. A sua...">
+  <meta name="twitter:description" content="Hackeando eletrônica: solderando um sensor CMOS VGA para uso em FPGA. Saiba mais sobre filtros Bayer e processamento de imagem.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/cropped-logo.png">
-  <meta name="twitter:image:alt" content="Bom, decidi postar hacks de eletrônica aqui também. Até por que são mais frequentes que os meus hacks. Ai vai umas fotos de um sensor CMOS que soldei numa placa pra facilitar, e verei um dia de brincar com ela: É um Sensor CMOS VGA Colorido, que roda em 3.3V. A sua...">
+  <meta name="twitter:image:alt" content="Hackeando eletrônica: solderando um sensor CMOS VGA para uso em FPGA. Saiba mais sobre filtros Bayer e processamento de imagem.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -101,9 +125,9 @@
     "url": "https://lucasteske.dev/pt/2011/10/electronics-hacking/",
     "name": "Electronics Hacking | Lets Hack It",
     "headline": "Electronics Hacking | Lets Hack It",
-    "keywords": [],
+    "keywords": ["CMOS sensor","FPGA","VGA","Bayer filter","Image processing","Surveillance camera","3.3V","Sub-pixel","Raw data","Electronics","Datasheet","PCB"],
     "inLanguage": "pt",
-    "description": "Bom, decidi postar hacks de eletrônica aqui também. Até por que são mais frequentes que os meus hacks. Ai vai umas fotos de um sensor CMOS que soldei numa placa pra facilitar, e verei um dia de brincar com ela: É um Sensor CMOS VGA Colorido, que roda em 3.3V. A sua...",
+    "description": "Hackeando eletrônica: solderando um sensor CMOS VGA para uso em FPGA. Saiba mais sobre filtros Bayer e processamento de imagem.",
     "articleBody": "Bom, decidi postar hacks de eletrônica aqui também. Até por que são mais frequentes que os meus hacks. Ai vai umas fotos de um sensor CMOS que soldei numa placa pra facilitar, e verei um dia de brincar com ela: É um Sensor CMOS VGA Colorido, que roda em 3.3V. A sua interface também é CMOS (muitas vezes o sensor é cmos, mas a interface é analógica) e como o nível de tensão é 3v3 é fácil de eu trabalhar com um FPGA. Devo ter tirado isso de uma webcam ou câmera de vigilância, não lembro. A resolução é 644×484 pixels, porém ela tem uma área morta como qualquer câmera, logo não é tudo isso que é aproveitável. Outro ponto positivo, diz o datasheet que ela é capaz de chegar a 30FPS de taxa de amostragem, o que me leva a pensar que não foi uma webcam, e sim uma câmera de vigilância. De qualquer maneira não irei brincar com ela hoje, e não tenho previsões. Preciso estudar muito ainda como funciona os sensores. A unica coisa que sei até agora é que ela trabalha com varredura dos sub-pixels, a cada clock tenho 10 Bits que demonstram a intensidade do sub-pixel. Porém o datasheet é meio...",
     "datePublished": "2011-10-13 18:16:52 +0000",
     "dateModified": "2011-10-13 18:16:52 +0000",
@@ -588,10 +612,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:22 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:51:12 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:22 +0000
+    Last build: 2026-03-26 23:51:12 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

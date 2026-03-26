@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2020/06/hacking-a-esp32-into-fpga-board">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="Hacking a ESP32 into FPGA Board Colorlight Hub 5A-75B V6.1 Board Last year I saw a russian guy that found out that this cheap board (US$15~) had an Lattice ECP5 FPGA, which is compatible with Open Source Tool-chains for synthesis. He was running a RISC-V Core inside that and piping...">
+  <meta name="description" content="Learn how to hack a Colorlight FPGA board by soldering an ESP32 and using it as a networked JTAG debugger for open-source tools.">
   
-  <meta name="keywords" content="Hacking, FPGA, ICEWolf, IceStick, ECP5, Lattice, ESP32, Colorlight">
+  <meta name="keywords" content="Hacking, FPGA, ICEWolf, IceStick, ECP5, Lattice, ESP32, Colorlight, Lattice ECP5, JTAG, OpenOCD, Remote Bitbang, Soldering, Hardware Modification, WiFi, Serial Communication, VHDL, GHDL">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="Hacking a ESP32 into FPGA Board | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2020/06/hacking-a-esp32-into-fpga-board">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="Hacking a ESP32 into FPGA Board Colorlight Hub 5A-75B V6.1 Board Last year I saw a russian guy that found out that this cheap board (US$15~) had an Lattice ECP5 FPGA, which is compatible with Open Source Tool-chains for synthesis. He was running a RISC-V Core inside that and piping...">
+  <meta property="og:description" content="Learn how to hack a Colorlight FPGA board by soldering an ESP32 and using it as a networked JTAG debugger for open-source tools.">
   <meta property="og:image" content="https://lucasteske.dev/assets/posts/medium/1_ALnLx9L06FSciqeEV5OCuQ.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -95,6 +95,26 @@
   
   <meta property="article:tag" content="Colorlight">
   
+  <meta property="article:tag" content="Lattice ECP5">
+  
+  <meta property="article:tag" content="JTAG">
+  
+  <meta property="article:tag" content="OpenOCD">
+  
+  <meta property="article:tag" content="Remote Bitbang">
+  
+  <meta property="article:tag" content="Soldering">
+  
+  <meta property="article:tag" content="Hardware Modification">
+  
+  <meta property="article:tag" content="WiFi">
+  
+  <meta property="article:tag" content="Serial Communication">
+  
+  <meta property="article:tag" content="VHDL">
+  
+  <meta property="article:tag" content="GHDL">
+  
   
 
   <!-- Facebook -->
@@ -105,9 +125,9 @@
   <meta name="twitter:title" content="Hacking a ESP32 into FPGA Board | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="Hacking a ESP32 into FPGA Board Colorlight Hub 5A-75B V6.1 Board Last year I saw a russian guy that found out that this cheap board (US$15~) had an Lattice ECP5 FPGA, which is compatible with Open Source Tool-chains for synthesis. He was running a RISC-V Core inside that and piping...">
+  <meta name="twitter:description" content="Learn how to hack a Colorlight FPGA board by soldering an ESP32 and using it as a networked JTAG debugger for open-source tools.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/posts/medium/1_ALnLx9L06FSciqeEV5OCuQ.png">
-  <meta name="twitter:image:alt" content="Hacking a ESP32 into FPGA Board Colorlight Hub 5A-75B V6.1 Board Last year I saw a russian guy that found out that this cheap board (US$15~) had an Lattice ECP5 FPGA, which is compatible with Open Source Tool-chains for synthesis. He was running a RISC-V Core inside that and piping...">
+  <meta name="twitter:image:alt" content="Learn how to hack a Colorlight FPGA board by soldering an ESP32 and using it as a networked JTAG debugger for open-source tools.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -117,9 +137,9 @@
     "url": "https://lucasteske.dev/2020/06/hacking-a-esp32-into-fpga-board",
     "name": "Hacking a ESP32 into FPGA Board | Lets Hack It",
     "headline": "Hacking a ESP32 into FPGA Board | Lets Hack It",
-    "keywords": ["Hacking","FPGA","ICEWolf","IceStick","ECP5","Lattice","ESP32","Colorlight"],
+    "keywords": ["Hacking","FPGA","ICEWolf","IceStick","ECP5","Lattice","ESP32","Colorlight","Lattice ECP5","JTAG","OpenOCD","Remote Bitbang","Soldering","Hardware Modification","WiFi","Serial Communication","VHDL","GHDL"],
     "inLanguage": "en",
-    "description": "Hacking a ESP32 into FPGA Board Colorlight Hub 5A-75B V6.1 Board Last year I saw a russian guy that found out that this cheap board (US$15~) had an Lattice ECP5 FPGA, which is compatible with Open Source Tool-chains for synthesis. He was running a RISC-V Core inside that and piping...",
+    "description": "Learn how to hack a Colorlight FPGA board by soldering an ESP32 and using it as a networked JTAG debugger for open-source tools.",
     "articleBody": "Hacking a ESP32 into FPGA Board Colorlight Hub 5A-75B V6.1 Board Last year I saw a russian guy that found out that this cheap board (US$15~) had an Lattice ECP5 FPGA, which is compatible with Open Source Tool-chains for synthesis. He was running a RISC-V Core inside that and piping the serial through the ethernet ports. I wanted to get one and start playing by myself. These boards are relatively cheap, about US$15 and contains a Lattice ECP5 FPGA ( LFE5U-25F-6BG381C ), 4MB DRAM, Two Gigabit Ethernet and several level shifters for I/O. This is good because: That’s a very cheap board by the specs You can use open-source synth toolchain There is lots of 5V bi-directional level shifters I decided to give a shot and buy one from Aliexpress. Sadly because of the pandemic COVID-19, the package is long time delayed (still haven’t arrived yet, 3 months after I bought). Luckily I found it on Mercado Livre (the Brazilian eBay) to sell at a reasonable price. When it arrived, I first tried to run the classic Hardware Hello World: The led blink. For that I got this project to test it: https://github.com/antonblanchard/ghdl-yosys-blink I did a fork to add the...",
     "datePublished": "2020-06-14 19:17:00 +0000",
     "dateModified": "2020-06-14 19:17:00 +0000",
@@ -846,10 +866,10 @@ These boards are relatively cheap, about US$15 and contains a Lattice ECP5 FPGA 
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

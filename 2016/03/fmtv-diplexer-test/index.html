@@ -42,9 +42,9 @@
   <link rel="canonical" href="https://lucasteske.dev/2016/03/fmtv-diplexer-test/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="So it has been a time since my last post (again). Today I’m writing about a TV/FM Diplexer that I bought to address an issue that I’m having here with my NOAA stuff. So the biggest problem is that in São Paulo the FM Radio (88-110MHz) are VERY strong. I can...">
+  <meta name="description" content="Solve RTL-SDR signal saturation with a commercial FM/TV diplexer. This test shows how to filter strong FM signals for better NOAA reception.">
   
-  <meta name="keywords" content="Band Pass, Band Stop, Diplexer, Filter, FM, FM TV Diplexer, High Pass, Linux, Low Pass, qspectrumanalyzer, RTL SDR, RTLSDR, SDR, TV">
+  <meta name="keywords" content="Band Pass, Band Stop, Diplexer, Filter, FM, FM TV Diplexer, High Pass, Linux, Low Pass, qspectrumanalyzer, RTL SDR, RTLSDR, SDR, TV, RTL-SDR, FM Filter, Signal Saturation, Spectrum Analysis, QFH Antenna, NOAA, LNA, RF, Band Stop Filter">
   
 
   <!-- Pagination -->
@@ -65,7 +65,7 @@
   <meta property="og:title" content="FM/TV Diplexer Test | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/2016/03/fmtv-diplexer-test/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="So it has been a time since my last post (again). Today I’m writing about a TV/FM Diplexer that I bought to address an issue that I’m having here with my NOAA stuff. So the biggest problem is that in São Paulo the FM Radio (88-110MHz) are VERY strong. I can...">
+  <meta property="og:description" content="Solve RTL-SDR signal saturation with a commercial FM/TV diplexer. This test shows how to filter strong FM signals for better NOAA reception.">
   <meta property="og:image" content="https://lucasteske.dev/assets/cropped-logo.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -107,6 +107,24 @@
   
   <meta property="article:tag" content="TV">
   
+  <meta property="article:tag" content="RTL-SDR">
+  
+  <meta property="article:tag" content="FM Filter">
+  
+  <meta property="article:tag" content="Signal Saturation">
+  
+  <meta property="article:tag" content="Spectrum Analysis">
+  
+  <meta property="article:tag" content="QFH Antenna">
+  
+  <meta property="article:tag" content="NOAA">
+  
+  <meta property="article:tag" content="LNA">
+  
+  <meta property="article:tag" content="RF">
+  
+  <meta property="article:tag" content="Band Stop Filter">
+  
   
 
   <!-- Facebook -->
@@ -117,9 +135,9 @@
   <meta name="twitter:title" content="FM/TV Diplexer Test | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="So it has been a time since my last post (again). Today I’m writing about a TV/FM Diplexer that I bought to address an issue that I’m having here with my NOAA stuff. So the biggest problem is that in São Paulo the FM Radio (88-110MHz) are VERY strong. I can...">
+  <meta name="twitter:description" content="Solve RTL-SDR signal saturation with a commercial FM/TV diplexer. This test shows how to filter strong FM signals for better NOAA reception.">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/cropped-logo.png">
-  <meta name="twitter:image:alt" content="So it has been a time since my last post (again). Today I’m writing about a TV/FM Diplexer that I bought to address an issue that I’m having here with my NOAA stuff. So the biggest problem is that in São Paulo the FM Radio (88-110MHz) are VERY strong. I can...">
+  <meta name="twitter:image:alt" content="Solve RTL-SDR signal saturation with a commercial FM/TV diplexer. This test shows how to filter strong FM signals for better NOAA reception.">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -129,9 +147,9 @@
     "url": "https://lucasteske.dev/2016/03/fmtv-diplexer-test/",
     "name": "FM/TV Diplexer Test | Lets Hack It",
     "headline": "FM/TV Diplexer Test | Lets Hack It",
-    "keywords": ["Band Pass","Band Stop","Diplexer","Filter","FM","FM TV Diplexer","High Pass","Linux","Low Pass","qspectrumanalyzer","RTL SDR","RTLSDR","SDR","TV"],
+    "keywords": ["Band Pass","Band Stop","Diplexer","Filter","FM","FM TV Diplexer","High Pass","Linux","Low Pass","qspectrumanalyzer","RTL SDR","RTLSDR","SDR","TV","RTL-SDR","FM Filter","Signal Saturation","Spectrum Analysis","QFH Antenna","NOAA","LNA","RF","Band Stop Filter"],
     "inLanguage": "en",
-    "description": "So it has been a time since my last post (again). Today I’m writing about a TV/FM Diplexer that I bought to address an issue that I’m having here with my NOAA stuff. So the biggest problem is that in São Paulo the FM Radio (88-110MHz) are VERY strong. I can...",
+    "description": "Solve RTL-SDR signal saturation with a commercial FM/TV diplexer. This test shows how to filter strong FM signals for better NOAA reception.",
     "articleBody": "So it has been a time since my last post (again). Today I’m writing about a TV/FM Diplexer that I bought to address an issue that I’m having here with my NOAA stuff. So the biggest problem is that in São Paulo the FM Radio (88-110MHz) are VERY strong. I can receive a -40dBm signal with a RTL-SDR with no gains in almost all channels. This is a big issue since the RTL-SDR does not have a input filter (actually it has, see my patches at https://github.com/librtlsdr/librtlsdr ) the LNA gets very easily saturated when getting gains over 25dB (usually needed by APT Signals). So I started to search for a FM Band Stop Filter. But it turned that it was not so simple to do a good FM Band Stop Filter. So I started searching for a commercial filter, and I noticed that most of the FM Filters were discontinued a few years ago and the only thing I could find was a FM/TV Diplexer. So the idea behind a diplexer is that it has a common input (or output depending on the direction that is used) that have FM + TV Signals. To separate (or combine) there is a low pass...",
     "datePublished": "2016-03-24 01:29:24 +0000",
     "dateModified": "2016-03-24 01:29:24 +0000",
@@ -640,10 +658,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-26 23:36:07 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-03-26 23:50:58 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-26 23:36:07 +0000
+    Last build: 2026-03-26 23:50:58 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">
