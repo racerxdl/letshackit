@@ -12,73 +12,42 @@ body {
   background-attachment: fixed;
 }
 
+// Legacy .site wrapper — keep it transparent, no white card
 body .site {
-  padding: 0 40px;
-  padding: 0 2.857142857rem;
-  margin-top: 48px;
-  margin-top: 3.428571429rem;
-  margin-bottom: 48px;
-  margin-bottom: 3.428571429rem;
-  background-color: #fff;
-  max-width: 960px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-
-  -webkit-box-shadow: 0px 10px 16px -9px rgba(0,0,0,0.7);
-  -moz-box-shadow: 0px 10px 16px -9px rgba(0,0,0,0.7);
-  box-shadow: 0px 10px 16px -9px rgba(0,0,0,0.7);
+  background-color: transparent;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  border-radius: 0;
+  max-width: 860px;
+  padding: 0;
+  margin: 0 auto;
 }
 
+// Remove old white nav/topbar overrides
 body .nav {
   width: 100%;
-  background-color: #fff;
+  background-color: transparent;
 }
 
-body .topbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  content-align: center;
-  background-color: #fff;
-  height: 45px;
-  text-align: center;
-  -webkit-box-shadow: 0px 10px 16px -9px rgba(0,0,0,0.7);
-  -moz-box-shadow: 0px 10px 16px -9px rgba(0,0,0,0.7);
-  box-shadow: 0px 10px 16px -9px rgba(0,0,0,0.7);
-}
-
-.like-box {
-  position: fixed;
-  right: 40px;
-  bottom: 40px;
-  @media (max-width: 700px) {
-    right: 5px;
-    bottom: 5px;
-  }
-}
+.like-box { display: none; }
 
 .post-image {
   max-height: 400px;
 }
 
+// Search — let _layout.scss control this, just clear old sizing
 .search-input {
-  display: flex;
-  align-content: right;
-  width: 100%;
-  height: 20px;
-  margin-top: 10px;
-  margin-bottom: 0px;
+  display: block;
+  width: auto;
+  height: auto;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
-.results-container {
-  margin: 0 0 0 0;
-  min-height: 0px;
-  padding: 0 0 0 0;
-}
-
+// navul — clear old width so flexbox in _layout.scss works
 .navul {
-  width: 90%;
+  width: auto;
 }
 
 /* Share buttons */
@@ -105,41 +74,18 @@ body .topbar {
   height: 40px;
 }
 
-.sharebuttons .reddit svg {
-  fill: #FF4500;
-}
+.sharebuttons .reddit svg { fill: #FF4500; }
+.sharebuttons .hn svg    { fill: #F0652F; }
+.sharebuttons .twitter svg { fill: #1DA1F2; }
+.sharebuttons .youtube svg { fill: #1DA1F2; }
 
-.sharebuttons .hn svg {
-  fill: #F0652F;
-}
-
-.sharebuttons .twitter svg {
-  fill: #1DA1F2;
-}
-
-.sharebuttons .youtube svg {
-  fill: #1DA1F2;
-}
-
-/* Social Network Icons */
-.social-icon {
-  margin: 0 auto 0 auto;
-  box-shadow: 0 2px 2px -2px rgba(0,0,0,0.2);
-  padding-bottom: 15px;
-}
-
+/* Social Network Icons — let _layout.scss handle layout; only keep specifics */
 .social-icon ul li {
   display: inline;
   padding-left: 8px;
   padding-right: 8px;
   vertical-align: middle;
   line-height: 20px;
-}
-
-.social-icon ul {
-  margin: 20px 0 0 0;
-  padding: 0 0 0 0;
-  text-align: center;
 }
 
 .social-icon ul li svg {
@@ -160,86 +106,32 @@ body .topbar {
 .btn-a a {
   color: #FFFFFF;
   padding: 5px 10px 5px 10px;
-  border-radius: 10px 10px 10px 10px;
-  -moz-border-radius: 10px 10px 10px 10px;
-  -webkit-border-radius: 10px 10px 10px 10px;
+  border-radius: 10px;
   border: 0px solid #000000;
 }
 
-.btn-reddit a {
-  background-color: #FF4500;
-}
+.btn-reddit a    { background-color: #FF4500; }
+.btn-twitter a   { background-color: #1DA1F2; }
+.btn-linkedin a  { background-color: #0077B5; }
+.btn-facebook a  { background-color: #4172B8; }
+.btn-instagram a { background-color: #E4405F; }
+.btn-github a    { background-color: #181717; }
+.btn-patreon a   { background-color: #FF424D; }
+.btn-youtube a   { background-color: #FF0000; }
+.btn-twitch a    { background-color: #9146FF; }
+.btn-code-stats a { background-color: #181717; }
+.btn-telegram a  { background-color: #2CA5E0; }
+.btn-mastodon a  { background-color: #2b90d9; }
+.btn-bluesky a   { background-color: #0285FF; }
 
-.btn-twitter a {
-  background-color: #1DA1F2;
-}
-
-.btn-linkedin a {
-  background-color: #0077B5;
-}
-
-.btn-linkedin a {
-  background-color: #0077B5;
-}
-
-.btn-facebook a {
-  background-color: #4172B8;
-}
-
-.btn-instagram a {
-  background-color: #E4405F
-}
-
-.btn-github a {
-  background-color: #181717
-}
-
-.btn-patreon a {
-  background-color: #FF424D;
-}
-
-.btn-youtube a {
-  background-color: #FF0000
-}
-
-.btn-twitch a {
-  background-color: #9146FF;
-}
-
-.btn-code-stats a {
-  background-color: #181717;
-}
-
-.btn-telegram a {
-  background-color: #2CA5E0;
-}
-
-.btn-mastodon a {
-  background-color: #2b90d9;
-}
-
-.btn-bluesky a {
-  background-color: #0285FF;
-}
-
-.site-build {
-  font-size: 10px;
-  color: #AAAAAA;
-  height: 20px;
-  text-align: center;
-  width: 100%;
-}
-
+// language-bar — clear old absolute positioning hack
 .language-bar {
-  width: 100px;
-  margin: -40px 0 0 auto;
-  height: 32px;
+  width: auto;
+  margin: 0;
+  height: auto;
 }
 
-
-.twitch-embed {
-  width: 100%;
-}
+.twitch-embed { width: 100%; }
 
 .post-image-div {
   display: flex;
@@ -248,73 +140,48 @@ body .topbar {
   align-content: center;
 }
 
-.post-image-2 {
-  margin: 0 auto;
-}
-
-.catalogue-item-2 {
-  width: 100%;
-}
+.post-image-2 { margin: 0 auto; }
+.catalogue-item-2 { width: 100%; }
 
 div.truth-table-holder {
   width: 100%;
-    display: flex;
+  display: flex;
 }
 
-div.truth-table-container {
-  flex-grow: 1;
-}
+div.truth-table-container { flex-grow: 1; }
 
 /* Truth Table */
 table.truth {
-  border-collapse:collapse;
-  margin:0 auto;
+  border-collapse: collapse;
+  margin: 0 auto;
 }
 
 table.truth th {
-  border-bottom:1px solid black;
+  border-bottom: 1px solid #00ff41;
   text-align: center;
-  padding:.4em;
+  padding: .4em;
   font-weight: normal;
 }
 
 table.truth td {
-  border:0;
-  padding:.4em;
+  border: 0;
+  padding: .4em;
   text-align: center;
 }
 
-table.truth .dv {
-  border-right:1px solid black;
-}
-
-table.truth .mc {
-  color:red;
-}
-table.truth .tv {
-  color:green;
-  font-weight: bold;
-}
+table.truth .dv { border-right: 1px solid #00ff41; }
+table.truth .mc { color: #ff4444; }
+table.truth .tv { color: #00ff41; font-weight: bold; }
 
 .github-corner:hover .octo-arm {
-  animation: octocat-wave 560ms ease-in-out
+  animation: octocat-wave 560ms ease-in-out;
 }
 
 @keyframes octocat-wave {
-  0%,
-  100% {
-    transform: rotate(0)
-  }
-  20%,
-  60% {
-    transform: rotate(-25deg)
-  }
-  40%,
-  80% {
-    transform: rotate(10deg)
-  }
+  0%, 100% { transform: rotate(0); }
+  20%, 60%  { transform: rotate(-25deg); }
+  40%, 80%  { transform: rotate(10deg); }
 }
 
-.latex svg {
-  max-width: 100%
-}
+.latex svg { max-width: 100%; }
+

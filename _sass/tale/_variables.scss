@@ -1,21 +1,36 @@
-// Colors
-$default-color: #555;
-$default-shade: #353535;
-$default-tint: #aaa;
-$grey-1: #979797;
-$grey-2: #e5e5e5;
-$grey-3: #f9f9f9;
-$white: #fff;
-$blue: #4a9ae1;
-$shadow-color: rgba(0, 0, 0, .2);
-$code-color: #bf616a;
+// ─── Terminal Green Cyberpunk Palette ───────────────────────────────────────
+$bg-primary:       #020202;
+$bg-surface:       rgba(0, 18, 0, 0.65);
+$bg-surface-hover: rgba(0, 30, 0, 0.82);
+$neon-green:       #00ff41;
+$neon-green-dim:   rgba(0, 255, 65, 0.7);
+$neon-green-glow:  rgba(0, 255, 65, 0.15);
+$text-primary:     #b8ffb8;
+$text-muted:       #4a9a4a;
+$text-dim:         #2a622a;
+$border-color:     rgba(0, 255, 65, 0.22);
+$border-bright:    rgba(0, 255, 65, 0.55);
 
-// Fonts
-$serif-primary: 'Libre Baskerville', 'Times New Roman', Times, serif;
-$serif-secondary: Palatino, 'Palatino LT STD', 'Palatino Linotype', 'Book Antiqua', 'Georgia', serif;
-$sans-serif: 'Helvetica Neue', 'Segoe UI', Helvetica, Arial, sans-serif;
-$monospaced: Menlo, Monaco, monospace;
+// Legacy aliases (kept so existing SCSS references compile)
+$default-color: $text-primary;
+$default-shade: $neon-green;
+$default-tint:  $text-muted;
+$grey-1:        $text-muted;
+$grey-2:        $border-color;
+$grey-3:        rgba(0, 20, 0, 0.55);
+$white:         $text-primary;
+$blue:          $neon-green;
+$shadow-color:  rgba(0, 255, 65, 0.08);
+$code-color:    $neon-green;
 
+// ─── Fonts ───────────────────────────────────────────────────────────────────
+$mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+$serif-primary:   $mono;
+$serif-secondary: $mono;
+$sans-serif:      $mono;
+$monospaced:      $mono;
+
+// ─── Mixins ──────────────────────────────────────────────────────────────────
 @mixin box-sizing($type: border-box) {
   -webkit-box-sizing: $type;
      -moz-box-sizing: $type;
@@ -26,4 +41,22 @@ $monospaced: Menlo, Monaco, monospace;
   -webkit-transition: $args;
      -moz-transition: $args;
           transition: $args;
+}
+
+@mixin neon-text($color: #00ff41, $r: 7px) {
+  text-shadow: 0 0 $r $color, 0 0 ($r * 2) rgba($color, 0.4);
+}
+
+@mixin neon-box($color: #00ff41, $r: 6px) {
+  box-shadow:
+    0 0 $r $color,
+    0 0 ($r * 2) rgba($color, 0.25),
+    inset 0 0 $r rgba($color, 0.06);
+}
+
+@mixin glass {
+  background: $bg-surface;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid $border-color;
 }

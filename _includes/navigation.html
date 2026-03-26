@@ -1,15 +1,19 @@
 
-<BR/>
-<img src="{{ '/assets/cropped-logo.png' | prepend: site.baseurl_root }}" style="margin-left: auto; margin-right: auto;" />
-<ul class="language-bar">
-  {% capture enuslink %}{{ site.baseurl_root }}{{ page.url }}{% endcapture %}
-  {% capture ptbrlink %}{{ site.baseurl_root }}/pt{{ page.url }}{% endcapture %}
-  <a class="link-pt flag-icon flag-icon-us" href="{{ enuslink }}"></a>
-  <a class="link-en flag-icon flag-icon-br" href="{{ ptbrlink }}"></a>
-</ul>
-<nav class="nav">
-  <div class="nav-container" style="height: 50px">
-    <ul class="navul">
+<nav class="nav-header">
+  <div class="nav-header-inner">
+    <a class="nav-brand" href="{{ site.baseurl }}/">
+      <img src="{{ '/assets/cropped-logo.png' | prepend: site.baseurl_root }}" alt="Logo" />
+    </a>
+    <div style="display:flex;align-items:center;gap:0.5rem;">
+      <ul class="language-bar">
+        {% capture enuslink %}{{ site.baseurl_root }}{{ page.url }}{% endcapture %}
+        {% capture ptbrlink %}{{ site.baseurl_root }}/pt{{ page.url }}{% endcapture %}
+        <li><a class="link-pt flag-icon flag-icon-us" href="{{ enuslink }}" aria-label="English"></a></li>
+        <li><a class="link-en flag-icon flag-icon-br" href="{{ ptbrlink }}" aria-label="Português"></a></li>
+      </ul>
+      <button class="nav-hamburger" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+    </div>
+    <ul class="navul" id="nav-menu">
       <li><a href="{{ site.baseurl }}/">Home</a></li>
     {% if site.lang == "en" %}
       <li><a href="/donate">{% t global.donate %}</a></li>
@@ -31,6 +35,7 @@
     </ul>
   </div>
 </nav>
+
 <div class="social-icon">
   <ul>
     <li class="btn-a btn-svg btn-twitch">
@@ -62,7 +67,7 @@
         {% include social/github.svg %}
         @racerxdl
       </a>
-    </li><BR/>
+    </li>
     <li class="btn-a btn-svg btn-youtube">
       <a href="https://www.youtube.com/c/TeskesLab">
         {% include social/youtube.svg %}
@@ -80,7 +85,7 @@
         {% include social/code-stats.svg %}
         racerxdl
       </a>
-    </li><BR/>
+    </li>
     <li class="btn-a btn-svg btn-telegram">
       <a href="https://t.me/hardwareHackingBrasil">
         {% include social/telegram.svg %}
@@ -108,6 +113,19 @@
   </ul>
 </div>
 <div class="search-input">
-  <input type="text" id="search-input" style="margin: 0 auto;" placeholder="{% t global.search-posts %}">
+  <input type="text" id="search-input" placeholder="{% t global.search-posts %}">
 </div>
 <ul id="results-container" class="results-container"></ul>
+
+<script>
+  (function() {
+    var toggle = document.getElementById('nav-toggle');
+    var menu   = document.getElementById('nav-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        var open = menu.classList.toggle('nav-open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    }
+  })();
+</script>

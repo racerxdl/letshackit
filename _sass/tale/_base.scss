@@ -1,57 +1,79 @@
 * {
   @include box-sizing;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 html,
 body {
-  color: $default-color;
   margin: 0;
   padding: 0;
+  background-color: $bg-primary;
+  color: $text-primary;
 }
 
 html {
-  font-family: $serif-primary;
-  font-size: 14px;
+  font-family: $mono;
+  font-size: 13px;
   overflow-y: scroll;
 
   @media (min-width: 600px) {
-    font-size: 16px;
+    font-size: 15px;
   }
 }
 
 body {
   -webkit-text-size-adjust: 100%;
+
+  // Scanline overlay
+  &::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.06) 2px,
+      rgba(0, 0, 0, 0.06) 4px
+    );
+  }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: $default-shade;
-  font-family: $sans-serif;
+h1, h2, h3, h4, h5, h6 {
+  color: $neon-green;
+  font-family: $mono;
   line-height: normal;
+  @include neon-text($neon-green, 6px);
+  letter-spacing: 0.04em;
 }
 
 a {
-  color: $blue;
+  color: $neon-green;
   text-decoration: none;
+  @include transition(color 0.2s, text-shadow 0.2s);
+
+  &:hover {
+    color: #fff;
+    @include neon-text(#00ff41, 10px);
+  }
 }
 
 blockquote {
-  border-left: .25rem solid $grey-2;
-  color: $grey-1;
+  border-left: 3px solid $neon-green;
+  color: $text-muted;
   margin: .8rem 0;
   padding: .5rem 1rem;
+  background: rgba(0, 255, 65, 0.04);
+  font-style: italic;
 
   p:last-child {
     margin-bottom: 0;
   }
 
   @media (min-width: 600px) {
-    padding: 0 5rem 0 1.25rem;
+    padding: 0 4rem 0 1.25rem;
   }
 }
 
@@ -63,4 +85,32 @@ img {
 
 td {
   vertical-align: top;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid $border-color;
+  margin: 1.5rem 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    color: $neon-green;
+    border-bottom: 1px solid $border-bright;
+    padding: 0.4rem 0.6rem;
+    text-align: left;
+  }
+
+  td {
+    border-bottom: 1px solid $border-color;
+    padding: 0.4rem 0.6rem;
+  }
+}
+
+::selection {
+  background: $neon-green;
+  color: $bg-primary;
 }

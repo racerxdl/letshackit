@@ -1,14 +1,15 @@
 pre,
 code {
-  font-family: $monospaced;
+  font-family: $mono;
 }
 
 code {
-  background-color: $grey-3;
+  background: rgba(0, 40, 0, 0.7);
   border-radius: 3px;
-  color: $code-color;
+  color: $neon-green;
   font-size: 85%;
-  padding: .25em .5em;
+  padding: .2em .45em;
+  border: 1px solid $border-color;
 }
 
 pre {
@@ -16,15 +17,17 @@ pre {
 }
 
 pre code {
-  background-color: transparent;
+  background: transparent;
+  border: none;
   color: inherit;
   font-size: 100%;
   padding: 0;
 }
 
 .highlight {
-  background-color: $grey-3;
-  border-radius: 3px;
+  background: rgba(0, 15, 0, 0.8);
+  border: 1px solid $border-color;
+  border-radius: 6px;
   line-height: 1.4;
   margin: 0 0 1rem;
   padding: 1rem;
@@ -35,10 +38,9 @@ pre code {
   }
 
   .lineno {
-    color: $default-tint;
-    display: inline-block; // Ensures the null space also isn't selectable
+    color: $text-dim;
+    display: inline-block;
     padding: 0 .75rem 0 .25rem;
-    // Make sure numbers aren't selectable
     -webkit-user-select: none;
        -moz-user-select: none;
             user-select: none;

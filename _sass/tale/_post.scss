@@ -1,11 +1,20 @@
 .post {
-  padding: 1rem 0;
+  @include glass;
+  border-radius: 8px;
+  padding: 2rem;
+  margin: 1rem 0;
+
+  @media (max-width: 700px) {
+    padding: 1.25rem 1rem;
+    border-radius: 0;
+  }
 
   &-info {
-    color: $default-tint;
-    font-family: $serif-secondary;
+    color: $text-muted;
+    font-family: $mono;
     letter-spacing: 0.5px;
     text-align: center;
+    font-size: 0.85rem;
 
     span {
       font-style: italic;
@@ -13,18 +22,25 @@
   }
 
   &-title {
-    color: $default-shade;
-    font-family: $sans-serif;
-    font-size: 4rem;
+    color: $neon-green;
+    font-family: $mono;
+    font-size: 2.4rem;
     margin: 1rem 0;
     text-align: center;
+    @include neon-text($neon-green, 8px);
+
+    @media (max-width: 700px) {
+      font-size: 1.6rem;
+    }
   }
 
   &-line {
-    border-top: 0.4rem solid $default-shade;
+    border: none;
+    border-top: 2px solid $neon-green;
     display: block;
-    margin: 0 auto 3rem;
+    margin: 0 auto 2.5rem;
     width: 4rem;
+    box-shadow: 0 0 8px $neon-green;
   }
 
   p {
@@ -41,15 +57,14 @@
   }
 
   img + em {
-    color: $default-tint;
+    color: $text-muted;
     display: block;
-    font-family: $sans-serif;
-    font-size: 0.9rem;
+    font-family: $mono;
+    font-size: 0.85rem;
     font-style: normal;
     text-align: center;
   }
 
-  // CSS for making emoji inline
   img.emoji {
     display: inline-block;
     left: 0;

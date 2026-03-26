@@ -1,7 +1,7 @@
 .container {
   margin: 0 auto;
-  max-width: 800px;
-  width: 80%;
+  max-width: 860px;
+  width: 90%;
 }
 
 main,
@@ -9,87 +9,238 @@ footer,
 .nav-container {
   display: block;
   margin: 0 auto;
-  max-width: 800px;
+  max-width: 860px;
   width: 90%;
+
   @media (max-width: 700px) {
     width: 100%;
+    padding: 0 0.75rem;
+    box-sizing: border-box;
   }
 }
 
-.nav {
-  box-shadow: 0 2px 2px -2px $shadow-color;
-  overflow: auto;
+// ─── Hamburger ───────────────────────────────────────────────────────────────
+.nav-hamburger {
+  display: none;
+  background: none;
+  border: 1px solid $border-color;
+  color: $neon-green;
+  cursor: pointer;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  font-size: 1.3rem;
+  line-height: 1;
+  @include transition(border-color 0.2s, box-shadow 0.2s);
 
-  &-container {
-    margin: 1rem auto;
-    position: relative;
-    text-align: center;
+  &:hover {
+    border-color: $neon-green;
+    @include neon-box($neon-green, 5px);
   }
 
-  &-title {
-    @include transition(all .2s ease-out);
-    color: $default-color;
-    display: inline-block;
-    margin: 0;
-    padding-right: .2rem;
+  @media (max-width: 700px) {
+    display: block;
+  }
+}
 
-    &:hover,
-    &:focus {
-      opacity: .6;
+// ─── Nav ─────────────────────────────────────────────────────────────────────
+.nav-header {
+  @include glass;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid $border-color;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  &-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0.5rem 1rem;
+
+    @media (max-width: 700px) {
+      gap: 0.5rem;
     }
   }
+}
 
-  ul {
-    list-style-type: none;
-    margin: 1rem 0 0;
+.nav-brand img {
+  height: 38px;
+  width: auto;
+  margin: 0;
+  display: block;
+}
+
+.nav-header {
+  .navul {
+    list-style: none;
+    margin: 0;
     padding: 0;
-    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.1rem;
+    align-items: center;
+
+    @media (max-width: 700px) {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      padding: 0.5rem 0;
+      border-top: 1px solid $border-color;
+
+      &.nav-open {
+        display: flex;
+      }
+    }
   }
 
   li {
-    @include transition(all .2s ease-out);
-    color: $default-color;
+    @include transition(opacity 0.2s);
     display: inline-block;
-    opacity: .6;
-    padding: 0 2rem 0 0;
+  }
 
-    &:last-child {
-      padding-right: 0;
-    }
+  li a {
+    color: $text-muted;
+    font-family: $mono;
+    padding: 0.3rem 0.7rem;
+    border-radius: 4px;
+    display: block;
+    @include transition(color 0.2s, background 0.2s, border-color 0.2s);
+    border: 1px solid transparent;
+    font-size: 0.9rem;
 
-    &:hover,
-    &:focus {
-      opacity: 1;
+    &:hover {
+      color: $neon-green;
+      border-color: $border-color;
+      background: rgba(0, 255, 65, 0.06);
+      @include neon-text($neon-green, 4px);
     }
   }
+}
+
+// ─── Language bar ────────────────────────────────────────────────────────────
+.language-bar {
+  list-style: none;
+  padding: 0.15rem 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
 
   a {
-    color: $default-color;
-    font-family: $sans-serif;
+    opacity: 0.65;
+    @include transition(opacity 0.2s);
+
+    &:hover { opacity: 1; }
   }
 }
 
-@media (min-width: 600px) {
-  .nav {
-    &-container {
-      text-align: left;
+// ─── Social icons ────────────────────────────────────────────────────────────
+.social-icon {
+  @include glass;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    justify-content: center;
+  }
+}
+
+// ─── Search ──────────────────────────────────────────────────────────────────
+.search-input {
+  margin: 0.75rem 0;
+
+  input {
+    background: $bg-surface;
+    border: 1px solid $border-color;
+    color: $text-primary;
+    font-family: $mono;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 860px;
+    display: block;
+    margin: 0 auto;
+    @include transition(border-color 0.2s, box-shadow 0.2s);
+
+    &:focus {
+      outline: none;
+      border-color: $neon-green;
+      @include neon-box($neon-green, 5px);
     }
 
-    ul {
-      bottom: 0;
-      position: absolute;
-      right: 0;
+    &::placeholder { color: $text-muted; }
+  }
+}
+
+.results-container {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 860px;
+
+  &:not(:empty) {
+    @include glass;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    padding: 0.25rem 0.5rem 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  li {
+    border-bottom: 1px solid $border-color;
+
+    &:last-child { border-bottom: none; }
+
+    a {
+      display: block;
+      padding: 0.4rem 0.5rem;
+      color: $text-muted;
+      font-size: 0.88rem;
+      @include transition(color 0.15s, background 0.15s);
+      border-radius: 4px;
+
+      &:hover {
+        color: $neon-green;
+        background: rgba(0, 255, 65, 0.05);
+        @include neon-text($neon-green, 4px);
+      }
     }
   }
 }
 
+// ─── Footer ──────────────────────────────────────────────────────────────────
 footer {
-  font-family: $serif-secondary;
-  padding: 2rem 0;
+  @include glass;
+  border-radius: 8px 8px 0 0;
+  border-bottom: none;
+  font-family: $mono;
+  padding: 1.25rem 1.5rem;
   text-align: center;
+  margin-top: 2rem;
 
   span {
-    color: $default-color;
+    color: $text-muted;
     font-size: .8rem;
+    display: block;
   }
+
+  a { color: $neon-green; }
+}
+
+.site-build {
+  font-size: 0.72rem;
+  color: $text-dim;
+  margin-top: 0.2rem;
 }
