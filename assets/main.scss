@@ -210,10 +210,55 @@ table.truth .tv { color: #00ff41; font-weight: bold; }
 }
 
 /* WordPress alignment helpers */
-.aligncenter { display: block; margin: 0 auto 1rem; }
-.alignleft   { float: left;  margin: 0 1rem 1rem 0; }
-.alignright  { float: right; margin: 0 0 1rem 1rem; }
-.alignnone   { display: block; margin: 0 0 1rem; }
+.aligncenter {
+  display: block;
+  margin: 0 auto 1rem;
+  float: none;
+}
+
+.alignleft {
+  display: block;
+  float: left;
+  margin: 0 1rem 1rem 0;
+  max-width: 50%;
+}
+
+.alignright {
+  display: block;
+  float: right;
+  margin: 0 0 1rem 1rem;
+  max-width: 50%;
+}
+
+.alignnone {
+  display: block;
+  margin: 0 0 1rem;
+  float: none;
+}
+
+/* Neutralise WP size/image classes that can carry implicit fixed widths */
+[class*="wp-image-"],
+[class*="size-"] {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Clear floats inside the post content so they don't escape the container */
+.post::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+/* On narrow screens, drop floats and go full-width */
+@media (max-width: 600px) {
+  .alignleft,
+  .alignright {
+    float: none;
+    max-width: 100%;
+    margin: 0 0 1rem;
+  }
+}
 /* Waveforms use black strokes on transparent background; give them a bright
    glass frame so the signals are readable on the dark cyberpunk theme.      */
 .wavedrom {
