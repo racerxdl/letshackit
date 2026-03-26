@@ -1,8 +1,8 @@
-@import 'tale/variables';
-@import 'tale/base';
-@import 'tale/code';
-@import 'tale/post';
-@import 'tale/syntax';
-@import 'tale/layout';
-@import 'tale/pagination';
-@import 'tale/catalogue';
+@forward 'tale/variables';
+@forward 'tale/base';
+@forward 'tale/code';
+@forward 'tale/post';
+@forward 'tale/syntax';
+@forward 'tale/layout';
+@forward 'tale/pagination';
+@forward 'tale/catalogue';

@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 * {
   @include box-sizing;
   line-height: 1.6;

@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 .catalogue {
   &-item {
     @include glass;
