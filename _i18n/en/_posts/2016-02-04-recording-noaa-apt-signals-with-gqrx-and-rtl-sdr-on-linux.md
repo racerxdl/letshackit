@@ -109,7 +109,7 @@ So now you can track all the satellites! So let me give you a few hints about th
   2. In the **map-view** the yellow circle around the satellite is the horizon, or in another words: the range of the satellite. So if you are on edge of this circle, it means the satellite will look that is on the horizon for you.
   3. You can **right-click** at the Satellite name on map to show a **Ground Track** (where the satellite will pass), show **Next Pass** to show the next time after the radar time the satellite will pass and show **Future Passes** that will predict where the satellite will pass in next days.
 
-So now, you just need to program yourself to be available when a satellite passes over your ground station. The satellites have a orbit arround 1h30, but that doesn&#8217;t mean their orbit position are the same everytime it passes. As I observed, these NOAA satellites usually passes on the _same location** **_once per week. So just have attention when it will pass over your station. Before moving to the next step, please have at least 10 minutes on the clock before the satellite passes.
+So now, you just need to program yourself to be available when a satellite passes over your ground station. The satellites have a orbit around 1h30, but that doesn&#8217;t mean their orbit position are the same everytime it passes. As I observed, these NOAA satellites usually passes on the _same location** **_once per week. So just have attention when it will pass over your station. Before moving to the next step, please have at least 10 minutes on the clock before the satellite passes.
 
 ## Capturing the Satellite Signal
 
@@ -201,7 +201,7 @@ You might want to adjust the gray block to have the _red_ line centered on the 
   </p>
 </div>
 
-After the satellite gets out of range (or the signal is to noisy), click the **Rec** button again to stop recording. The output audio file should be on your target folder.
+After the satellite gets out of range (or the signal is too noisy), click the **Rec** button again to stop recording. The output audio file should be on your target folder.
 
 ## Processing the Audio File
 

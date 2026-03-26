@@ -53,7 +53,7 @@ One of the missing things on the last chapter was the frame data de-randomizatio
   * Avoids &#8220;line-polarization&#8221; effect when sending a continuous stream of 1&#8217;s
   * Better Clock Recovery due more changes in symbol polarity
 
-CCSDS has a standard Polynomial as well, and the image below shows how to generate the pseudo-random bistream:
+CCSDS has a standard Polynomial as well, and the image below shows how to generate the pseudo-random bitstream:
 
 <div style="width: 650px" class="wp-caption aligncenter">
   <img class="" src="https://i.imgur.com/LAqE19G.png" width="640" />

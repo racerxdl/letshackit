@@ -55,7 +55,7 @@ So I made up a piece of antenna with two copper pipes (I call a piece, because i
 
 ### The solution
 
-So I though: I have an Intel Edison board here. Why not? Let&#8217;s make a remote Radio Receiver!
+So I thought: I have an Intel Edison board here. Why not? Let&#8217;s make a remote Radio Receiver!
 
 ## Pieces needed
 
@@ -71,9 +71,9 @@ So if you&#8217;re lazy to make a new antenna, just use the original one. It wor
 
 For our remote station we will need **rtl_tcp** program that opens a TCP Server to send the baseband packets through network to another machine. So for that we need to compile the **rtl-sdr** package from scratch.
 
-One of its dependencies is the **libusb**, but there is no oficial Intel repository with it. So I used this tutorial: <a href="http://alextgalileo.altervista.org/edison-package-repo-configuration-instructions.html" target="_blank">http://alextgalileo.altervista.org/edison-package-repo-configuration-instructions.html</a>
+One of its dependencies is the **libusb**, but there is no official Intel repository with it. So I used this tutorial: <a href="http://alextgalileo.altervista.org/edison-package-repo-configuration-instructions.html" target="_blank">http://alextgalileo.altervista.org/edison-package-repo-configuration-instructions.html</a>
 
-So I will resume the tutorial. Just add the lines below to **/etc/opkg/base-feeds.conf** and run **opkg update**
+So I will summarize the tutorial. Just add the lines below to **/etc/opkg/base-feeds.conf** and run **opkg update**
 
 <pre class="wiki">src/gz all http://repo.opkg.net/edison/repo/all
 src/gz edison http://repo.opkg.net/edison/repo/edison
@@ -108,7 +108,7 @@ Plug it and run:
 
 <pre class="wiki">rtl_test</pre>
 
-You should get a output like this:
+You should get an output like this:
 
 <pre class="wiki">root@TVS-RADIO:~# rtl_test
 Found 1 device(s):
@@ -168,11 +168,11 @@ So now let&#8217;s test it! Have the IP Address of the Edison on the hand and go
   1. Click on **Configure I/O Devices ** <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/gqrx_setup_icon.png" rel="attachment wp-att-104"><img class="alignnone size-full wp-image-104" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/gqrx_setup_icon.png" alt="gqrx_setup_icon" width="37" height="34" /></a>
   2. Select **RTL-SDR Spectrum Server** at **Device** section.
   3. On **Device string** use **rtl\_tcp=YOUR\_EDISON_IP:1234**
-  4. On **Sample Rate** you can select the sample rate (that implies in signal bandwidth). I usually uses **2.56MSps (2560000)**. But depending on the quality of the wifi signal on Edison, you may not be able to reach that sample rate (this is about 24Mbps of throuput on your wireless). For FM Radio receiving **250kSps (250000)** should be enough.
+  4. On **Sample Rate** you can select the sample rate (that implies in signal bandwidth). I usually use **2.56MSps (2560000)**. But depending on the quality of the wifi signal on Edison, you may not be able to reach that sample rate (this is about 24Mbps of throughput on your wireless). For FM Radio receiving **250kSps (250000)** should be enough.
   5. Keep **Bandwidth **in 0,000000 MHz
   6. Keep **LNB LO** ** **in 0,000000 MHz
   7. Click **OK**
-  8. Set the frequency in the **Frequency Bar** to a know FM Radio Frequency<img class="alignnone size-full wp-image-105" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/gqrx_frequency_bar.png" alt="gqrx_frequency_bar" width="369" height="40" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/gqrx_frequency_bar.png 369w, https://www.teske.net.br/lucas/wp-content/uploads/2016/01/gqrx_frequency_bar-300x33.png 300w" sizes="(max-width: 369px) 100vw, 369px" />
+  8. Set the frequency in the **Frequency Bar** to a known FM Radio Frequency<img class="alignnone size-full wp-image-105" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/gqrx_frequency_bar.png" alt="gqrx_frequency_bar" width="369" height="40" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/gqrx_frequency_bar.png 369w, https://www.teske.net.br/lucas/wp-content/uploads/2016/01/gqrx_frequency_bar-300x33.png 300w" sizes="(max-width: 369px) 100vw, 369px" />
   9. Set **Filter** to **Normal** in **Receiver Options**
  10. Set **Mode **to **WFM (stereo)**
  11. Click at **Start DSP Processing **<a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/gqrx_power_button.png" rel="attachment wp-att-106"><img class="alignnone size-full wp-image-106" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/gqrx_power_button.png" alt="gqrx_power_button" width="38" height="34" /></a>

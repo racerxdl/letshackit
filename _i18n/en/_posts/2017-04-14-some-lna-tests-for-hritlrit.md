@@ -25,7 +25,7 @@ tags:
   - SDR
   - Software Defined Radio
 ---
-So I was talking with @luigi on [OSP RocketChat](https://osp.teske.net.br/) and he noticed that one of the LNA&#8217;s I suggested alogn with the LNA4ALL (the SPF5189) got a comment on ebay saying that it doesn&#8217;t work on L Band.
+So I was talking with @luigi on [OSP RocketChat](https://osp.teske.net.br/) and he noticed that one of the LNA&#8217;s I suggested along with the LNA4ALL (the SPF5189) got a comment on ebay saying that it doesn&#8217;t work on L Band.
 
 [<img class="alignnone size-full wp-image-331" src="https://www.teske.net.br/lucas/wp-content/uploads/2017/04/Captura-de-tela-de-2017-04-13-23-55-56.png" alt="" width="612" height="195" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2017/04/Captura-de-tela-de-2017-04-13-23-55-56.png 612w, https://www.teske.net.br/lucas/wp-content/uploads/2017/04/Captura-de-tela-de-2017-04-13-23-55-56-300x96.png 300w" sizes="(max-width: 612px) 100vw, 612px" />](https://www.teske.net.br/lucas/wp-content/uploads/2017/04/Captura-de-tela-de-2017-04-13-23-55-56.png)
 
@@ -91,13 +91,13 @@ Some details worth mention:
 
   * Although the SPF5189 is much cheaper than LNA4ALL and does look to perform as good, the performance chip-wise is about the same, but keep in mind that since there are only Chinese boards you might get a bad manufacturer or seller that have bad quality LNAs.
   * There are several boards that use SPF5189 and the board design impact the performance about as much as the actual LNA chip. With LNA4ALL you will be sure that you have a good board, with SPF5189 you can buy the link I mention in the end of this post, but be warned that you might get a LNA that doesn&#8217;t match exactly what you want.
-  * LNA4ALL has more features than this SPF5189 I bought. You can use Bias T, have onboard regulator (so flexible voltage range) and its smaller.
+  * LNA4ALL has more features than this SPF5189 I bought. You can use Bias T, have onboard regulator (so flexible voltage range) and it's smaller.
   * I notice that some cases the SPF board I have perform better, that may due the shield that comes with the board.
   * I use on my GOES setup since its cheaper than LNA4ALL and works good. Sadly for me that is in Brazil, the bad thing about LNA4ALL is the shipping cost (no cost on China devices).
 
 &nbsp;
 
-I hope that helps understanding that the SPF5189 does work on L Band and its a cheap alternative for someone who might want few LNAs for LRIT/HRIT setup. Of course this test is not  the best test that could be done with the LNAs but this gives an idea how it performs on L Band.
+I hope that helps understanding that the SPF5189 does work on L Band and it's a cheap alternative for someone who might want few LNAs for LRIT/HRIT setup. Of course this test is not  the best test that could be done with the LNAs but this gives an idea how it performs on L Band.
 
 For those who want to buy:
 

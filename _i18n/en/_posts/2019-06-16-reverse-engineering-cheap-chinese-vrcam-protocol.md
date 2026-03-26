@@ -47,11 +47,11 @@ The back of that board has a painted chip (probably to hide which is the real mo
 
 ![](/assets/posts/medium/1*Rna323ta1jYKck0-Uh37Cg.png)
 
-So you can see that there is also a TX/RX/GND marking over there, which is the label for three pins mostly below the camera packaging. And yeah you guessed right: its the debug serial port. Sadly there is not much that it outputs from it:
+So you can see that there is also a TX/RX/GND marking over there, which is the label for three pins mostly below the camera packaging. And yeah you guessed right: it's the debug serial port. Sadly there is not much that it outputs from it:
 
 ![](/assets/posts/medium/1*9kFM1kpoIMg0LgDCAgRrYw.png)
 
-So long story short: That’s basically a Bananna Pi camera ([http://www.banana-pi.org/d1.html](http://www.banana-pi.org/d1.html)) which some custom board. That’s make sense since its a very cheap camera, they wouldn’t bother making something from scratch. But still it does not make sense creating a new whole non standard protocol for that.
+So long story short: That’s basically a Bananna Pi camera ([http://www.banana-pi.org/d1.html](http://www.banana-pi.org/d1.html)) which some custom board. That’s make sense since its a very cheap camera, they wouldn’t bother making something from scratch. But still it does not make sense to create a whole new non-standard protocol for that.
 
 ## Let’s find out what it does
 
@@ -61,9 +61,9 @@ The first thing I wanted to try is to reverse the VRCAM android application ([ht
 
 This quickly seemed a very bad application to reverse engineer. Also most of the protocol itself was inside some native libraries. So I decided to go the other way and sniff everything first. IP Cameras usually lack any type of crypto and sends everything plain text. The few ones that doesn’t, negotiate a static AES/DES key in plain text which can be caught by the sniffer.
 
-To do the sniffing, I did what I usually did when one of the endpoints is wireless: Used my Ubiquiti Unifi.
+To do the sniffing, I did what I usually do when one of the endpoints is wireless: Used my Ubiquiti Unifi.
 
-Some people really don’t know how usefull a linux wifi router is, and Ubiquiti was nice enough to embed a tcpdump inside the Unifi firmware. This allows me to do this in my laptop:
+Some people really don’t know how useful a Linux wifi router is, and Ubiquiti was nice enough to embed a tcpdump inside the Unifi firmware. This allows me to do this in my laptop:
 
 ```bash
 ssh admin@10.10.5.150 -C tcpdump -i ath4 -s 65535 -w — | wireshark -k -i -

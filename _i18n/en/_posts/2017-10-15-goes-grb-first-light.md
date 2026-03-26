@@ -49,11 +49,11 @@ For HRIT downlink usually a 1 meter dish is enough for receiving with a good sig
 
 <!--more-->
 
-We all know that NOAA has big margins over their recommended sizes (especially for GRB which tecnically should work in any weather condition). So we were testing with few dish sizes (and still testing) and checking which is the minimum size to receive a GRB signal.
+We all know that NOAA has big margins over their recommended sizes (especially for GRB which technically should work in any weather condition). So we were testing with few dish sizes (and still testing) and checking which is the minimum size to receive a GRB signal.
 
 I have a 2.2m prime focus dish, but sadly my station is offline for house changes (which I hope to finish by start of next year), [@usa_satcom](https://twitter.com/usa_satcom) did some tests with his 1.8m dish with a RHCP feed  and a TBS device and haven&#8217;t got a lock (although [@drmpeg](https://twitter.com/drmpeg) did some tests with his IQ and got a lock and almost a decodable signal with about 6dB SNR). One of OpenSatelliteProject users at [OSP RocketChat](https://osp.teske.net.br) , Ray Weber ( @weather01089 ) nave a 3m dish in Boston with a nice Septum Feed from [RF Ham Design](http://www.rfhamdesign.com/products/dish-feeds/septum-dish-feed/index.php) which gets about 12dB SNR signal and a perfect lock. Sadly for some reason the CCSDS inner data looks corrupt for unknown reasons right now. I tested with Ray with a TBS Card and a Ayecka Device with alpha testing firmware for raw BB Frame output and so far no luck (for unknown reasons).
 
-We will continue trying and checking, and any people that has a DVB-S2 Generic Stream capable receiver and a dish bigger than 2 meters and visiblity to GOES 16 is welcome to help us with testing for GRB. Notice that GOES-16 will change position next month to its final location replacing GOES 13.
+We will continue trying and checking, and any people that has a DVB-S2 Generic Stream capable receiver and a dish bigger than 2 meters and visibility to GOES 16 is welcome to help us with testing for GRB. Notice that GOES-16 will change position next month to its final location replacing GOES 13.
 
 ## GRB Ingestion
 

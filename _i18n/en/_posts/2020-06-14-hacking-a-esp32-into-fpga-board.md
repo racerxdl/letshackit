@@ -42,7 +42,7 @@ When it arrived, I first tried to run the classic Hardware Hello World: The led 
 
 I did a fork to add the board constraints, and also a FT232R bitbang mode to OpenOCD (since it was the only JTAG adapter I had at the moment)[ see [https://github.com/racerxdl/ghdl-yosys-blink](https://github.com/racerxdl/ghdl-yosys-blink) ]
 
-I didn’t had to reverse engineer the board, since someone already did all the reverse engineer: [https://github.com/q3k/chubby75/blob/master/5a-75b/hardware_V6.1.md](https://github.com/q3k/chubby75/blob/master/5a-75b/hardware_V6.1.md)
+I didn’t have to reverse engineer the board, since someone already did all the reverse engineering: [https://github.com/q3k/chubby75/blob/master/5a-75b/hardware_V6.1.md](https://github.com/q3k/chubby75/blob/master/5a-75b/hardware_V6.1.md)
 
 The JTAG Headers are easy to access, and all pinouts are mapped. Great!
 
@@ -70,7 +70,7 @@ I also decided to remove J3 to make easier to solder the bypass wires at that co
 
 ![Bypass wires soldered in U23](/assets/posts/medium/1_tT_gWmR6KPWXKKoewW-KDQ.png)*Bypass wires soldered in U23*
 
-The 33 Ohm resistores are nice since it could avoid short circuits when wrong pins are associated to serial port. So I decided to keep then as is. After checking that all pins were OK and not shorted, I decided to use hot-glue to secure them:
+The 33 Ohm resistors are nice since it could avoid short circuits when wrong pins are associated to serial port. So I decided to keep them as is. After checking that all pins were OK and not shorted, I decided to use hot-glue to secure them:
 
 ![Hot-glue raw pieces](/assets/posts/medium/1_53DN-rC8MrNRfFdVmzN-Uw.png)*Hot-glue raw pieces*
 

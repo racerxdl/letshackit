@@ -37,7 +37,7 @@ tags:
   - Waveguide
   - Waveguide Feed
 ---
-It has been some time since I posted something here about my satellite projects. So now I finished assembling my new dish! Previous (on GOES Satellite Hunt) I use a 1.9m TV dish that was cheap (R$200 or about US$70) and got really nice results (about 6dB SNR on LRIT and 10dB SNR on EMWIN). But I was willing to get the new GRB Signal from GOES-16 (previous named as GOES-R) that went up to Geostationary orbit last month. The GRB is the replacement for the GOES 13/14/15 GVAR signal. Basically GVAR is a rebroadcast of the partially processed data from the satellite. It is basically the raw sensor data packed in a format so the users can get and process by their own. The disadvantage of GVAR system over LRIT is that it does not have any error correcting methods. So either you have a very good signal, or you don&#8217;t have anything at all. The GRB signal that is on GOES-16 will send same raw data as the GVAR (actually it will send more data than GVAR, but thats another point) but now it will use DVB-S2, a market standard, for transmitting their data. Being DVB-S2 it does have error correcting like LRIT signal ( wikipedia has a good info about [DVB-S2](https://en.wikipedia.org/wiki/DVB-S2)). But the bandwidth of GRB is much higher than LRIT and GVAR (LRIT is 600kHz wide, GVAR is 2.5MHz wide and GRB is 9MHz wide) so I would need a bigger dish to get a good signal.
+It has been some time since I posted something here about my satellite projects. So now I finished assembling my new dish! Previous (on GOES Satellite Hunt) I use a 1.9m TV dish that was cheap (R$200 or about US$70) and got really nice results (about 6dB SNR on LRIT and 10dB SNR on EMWIN). But I was willing to get the new GRB Signal from GOES-16 (previous named as GOES-R) that went up to Geostationary orbit last month. The GRB is the replacement for the GOES 13/14/15 GVAR signal. Basically GVAR is a rebroadcast of the partially processed data from the satellite. It is basically the raw sensor data packed in a format so the users can get and process by their own. The disadvantage of GVAR system over LRIT is that it does not have any error correcting methods. So either you have a very good signal, or you don&#8217;t have anything at all. The GRB signal that is on GOES-16 will send same raw data as the GVAR (actually it will send more data than GVAR, but that's another point) but now it will use DVB-S2, a market standard, for transmitting their data. Being DVB-S2 it does have error correcting like LRIT signal ( wikipedia has a good info about [DVB-S2](https://en.wikipedia.org/wiki/DVB-S2)). But the bandwidth of GRB is much higher than LRIT and GVAR (LRIT is 600kHz wide, GVAR is 2.5MHz wide and GRB is 9MHz wide) so I would need a bigger dish to get a good signal.
 
 <!--more-->
 
@@ -57,7 +57,7 @@ This time I decided to buy a better dish. I searched for national professional d
   * Shipping for Sao Paulo &#8211; R$230,20
   * Total: R$2169,20
 
-If you want to buy from Embrasat, I advise you to make a quote with them. These was the prices I got when I quoted (2016/11/18), that prices can vary over time and where you&#8217;re. I only putting these here for reference.
+If you want to buy from Embrasat, I advise you to make a quote with them. These were the prices I got when I quoted (2016/11/18), that prices can vary over time and where you&#8217;re. I am only putting these here for reference.
 
 But at the same time I found a guy selling a new 2.2m dish from Embrasat on Mercado Livre. He said that he bought a few for a project, but didn&#8217;t used all of them so it was even packed on the original case. The price was cheaper: R$800 for the antenna and the Base Kit. I decided to buy from him. The total price with the shipping was something around R$900.
 
@@ -73,13 +73,13 @@ The overall weight was about 54kg but half of the weight is just the pole base.
 
 # Assembling the dish
 
-The manual had assembling instructions for the dish. It&#8217;s pretty straight forward, and the total assembling time was about 2h (against 6h for my old 1.9m dish). Basically is just screw everything together. The only hard part is that the metal parts that actually bend the fiberglass pieces to the right position, so I had to be careful before tightening the screws to be able to bend the fiberglass to the correct holes. After assembled I noticed a **important thing**: The old TV dish has a 1.9m (actually 1.85m) total outer diameter. This embrasat dish has 2.2m **inner usefull diameter** (excluding the border of the antenna). That makes a huge difference since the border of the antenna usually (not the TV dish though) have a specific shape to reduce the noise generated from that part. The **total outer diameter** of the Embrasat dish is actually **2.4m**
+The manual had assembling instructions for the dish. It&#8217;s pretty straight forward, and the total assembling time was about 2h (against 6h for my old 1.9m dish). Basically is just screw everything together. The only hard part is that the metal parts that actually bend the fiberglass pieces to the right position, so I had to be careful before tightening the screws to be able to bend the fiberglass to the correct holes. After assembled I noticed a **important thing**: The old TV dish has a 1.9m (actually 1.85m) total outer diameter. This embrasat dish has 2.2m **inner useful diameter** (excluding the border of the antenna). That makes a huge difference since the border of the antenna usually (not the TV dish though) have a specific shape to reduce the noise generated from that part. The **total outer diameter** of the Embrasat dish is actually **2.4m**
 
 <img class="aligncenter size-large" src="https://i.imgur.com/hdTwpZJ.png" width="1280 /> <img class="aligncenter size-large" src="https://i.imgur.com/zYn605K.png" width="720" />
 
 <img class="aligncenter size-large" src="https://i.imgur.com/qr0HsIn.png" width="1280" /> 
 
-# Mouting the base
+# Mounting the base
 
 The first thing we wanted (actually suggested by my father and uncle) to do for the base was to drill some holes in the ground to fix the Base Kit and make a concrete block. Sadly my floor surface is very bad and the concrete block went off with part of the floor surface on the first wind.
 
@@ -153,10 +153,10 @@ So the signal almost doubled (from 5.4dB SNR to 10dB SNR) and my lock is basical
   </p>
 </div>
 
-So the Viterbi Correction bits went down from 100 to 16 and the average RS Correction is now 0. Thats a huge improvement. Also notice that I still have some RS Corrections (and I shouldn&#8217;t). That problably means something is wrong on OSP Decoder (some analysis from me and trango made we believe that this is a mistake, since his decoder shows 0 RS all over the time and mine sometimes show something on the 4th RS Frame, and always on the 4th).
+So the Viterbi Correction bits went down from 100 to 16 and the average RS Correction is now 0. That's a huge improvement. Also notice that I still have some RS Corrections (and I shouldn&#8217;t). That probably means something is wrong on OSP Decoder (some analysis from me and trango made we believe that this is a mistake, since his decoder shows 0 RS all over the time and mine sometimes show something on the 4th RS Frame, and always on the 4th).
 
 # Conclusion
 
-I probably have some room for improvement on the feed. I didn&#8217;t tuned the position of the feed regarding the focus neither the rotation (the polarization is linear), but so far I got a very huge improvement in signal from GOES 13. For the GOES-16 I will need to replace the feed since GRB signals are Circular Polarized (two Channels, one LHCP and one RHCP). I&#8217;m looking forward for a Backfire Helix and a Dual CP Waveguide but both requires some complex assembling for this dish. I will keep you guys noticed about it.
+I probably have some room for improvement on the feed. I didn&#8217;t tuned the position of the feed regarding the focus neither the rotation (the polarization is linear), but so far I got a very huge improvement in signal from GOES 13. For the GOES-16 I will need to replace the feed since GRB signals are Circular Polarized (two Channels, one LHCP and one RHCP). I&#8217;m looking forward for a Backfire Helix and a Dual CP Waveguide but both requires some complex assembling for this dish. I will keep you guys posted about it.
 
-If you want to check the LRIT signals yourself, I have some basebands recorded here: [http://www.teske.net.br/lucas/basebands/goes13/lrit/](https://www.teske.net.br/lucas/basebands/goes13/lrit/) . There is the old dish baseband and the new dish (you can check by date). They&#8217;re GQRX recordings, so its a raw GNU Radio Complex IQ Data, check the README for details.
+If you want to check the LRIT signals yourself, I have some basebands recorded here: [http://www.teske.net.br/lucas/basebands/goes13/lrit/](https://www.teske.net.br/lucas/basebands/goes13/lrit/) . There is the old dish baseband and the new dish (you can check by date). They&#8217;re GQRX recordings, so it's a raw GNU Radio Complex IQ Data, check the README for details.

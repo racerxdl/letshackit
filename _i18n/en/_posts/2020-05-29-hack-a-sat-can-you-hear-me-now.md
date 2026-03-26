@@ -24,7 +24,7 @@ tags:
 
 # Hack-a-sat — Can you hear me now?
 
-That challenged asked us to decode a Telemetry data that was being sent over a TCP port. If you open the netcat, the following happen:
+That challenge asked us to decode a Telemetry data that was being sent over a TCP port. If you open the netcat, the following happen:
 
 ![](/assets/posts/medium/1_WTSv1hH_Rbrc98-SLlmUOw.png)
 
@@ -70,7 +70,7 @@ From there we can infer:
 
 If you sum up all, you will get a header that is 6 bytes long. When seeing this two fields came to my attention. The APID and PLENGTH . **APID** is usually refered to **AP**plication **ID**entification and **PLENGTH** to **P**acket **LENGTH**.
 
-That means that even if there are a lot of packets, we dont need to *really* parse them, just the flag one. We can skip by knowing the APID and Packet Length. So let’s search the Flag packet!
+That means that even if there are a lot of packets, we don't need to *really* parse them, just the flag one. We can skip by knowing the APID and Packet Length. So let’s search the Flag packet!
 
 ![Start of Flag Packet definition](/assets/posts/medium/1_99xgvX4FJB4oieHVz2ug8g.png)*Start of Flag Packet definition*
 

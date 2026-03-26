@@ -463,7 +463,7 @@ I still want to reverse engineer about everything I can from these SoCs, since t
 * <https://github.com/racerxdl/platformio-air105> - PIO Platform for AIR105/MH1903
 * <https://github.com/racerxdl/framework-megahunt> - PIO Framework for Megahunt devices
 * <https://github.com/racerxdl/air105-uploader> - Python script to upload using the boot rom
-* <https://archive.org/details/mh-1903-s-v-1.5> - Some usefull MH1903 datasheets
+* <https://archive.org/details/mh-1903-s-v-1.5> - Some useful MH1903 datasheets
 * <https://github.com/racerxdl/d177-crasharalho> - Crasharalho Source Code
 * <https://github.com/racerxdl/megahunt-bootroms> - Megahunt Bootroms
 * <https://github.com/racerxdl/mhdumper> - Megahunt ROM Dumper Tool

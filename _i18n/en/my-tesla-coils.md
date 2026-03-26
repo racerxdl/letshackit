@@ -1,6 +1,6 @@
 Here are some of the Tesla Coils I built over time. It has been a long time since I built (or even powered one). But they&#8217;re still amazing.
 
-PS: The dates are actually when the videos was sent, not when recorded. Although the difference shouldn&#8217;t be much between recording and uploading.
+PS: The dates are actually when the videos were sent, not when recorded. Although the difference shouldn&#8217;t be much between recording and uploading.
 
 <hr/>
 
@@ -10,7 +10,7 @@ PS: The dates are actually when the videos was sent, not when recorded. Although
   <iframe width="560" height="315" src="https://www.youtube.com/embed/vFWoArNIBew" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </center>
 
-So this was my latest Tesla Coil built. It is a small SSTC drived by two IRFP250N, a GDT Driver made on protoboard ( yeah LOL ). It was designed to be &#8220;portable&#8221; so I could take anywhere to show people. It works with the same Audio Interrupter I designed for ZARC.
+So this was my latest Tesla Coil built. It is a small SSTC driven by two IRFP250N, a GDT Driver made on protoboard ( yeah LOL ). It was designed to be &#8220;portable&#8221; so I could take anywhere to show people. It works with the same Audio Interrupter I designed for ZARC.
 
 <hr/>
 
@@ -21,7 +21,7 @@ So this was my latest Tesla Coil built. It is a small SSTC drived by two IRFP250
 </center>
 
 
-That was a circuit I designed. Its basically a Half-Wave rectified Driverless SSTC. There is a Current Transformer on the secondary that feed the energy directly to mosfet gates to switch it. I never optimized the circuit, but it works.
+That was a circuit I designed. It's basically a half-wave rectified Driverless SSTC. There is a Current Transformer on the secondary that feed the energy directly to mosfet gates to switch it. I never optimized the circuit, but it works.
 
 <img src="https://i.imgur.com/Th0JOug.png" />
 
@@ -39,7 +39,7 @@ And a very nice explosion of my Variac:
   <iframe width="560" height="315" src="https://www.youtube.com/embed/BHmwMWUPKDc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </center>
 
-That was basically the final setup of ZARC. An polyphonic FPGA Interrupter (4 channels) that drive the main controller in the bottom of the tesla coil. Current Limiter at 400A (never reached more than 320A, I detuned the coil a bit to keep the current limited). The coil is still here, and could be improved. But I have no space anymore :/
+That was basically the final setup of ZARC. A polyphonic FPGA Interrupter (4 channels) that drive the main controller in the bottom of the tesla coil. Current Limiter at 400A (never reached more than 320A, I detuned the coil a bit to keep the current limited). The coil is still here, and could be improved. But I have no space anymore :/
 
 <hr/>
 
@@ -56,7 +56,7 @@ That was basically the final setup of ZARC. An polyphonic FPGA Interrupter (4 ch
 Now I remade the base of my ZARC DRSSTC and tuned a bit more. This is basically my final Setup for ZARC DRSSTC. 1kW input,  110V doubled mains ( about 320VDC in the bus). 300A peak in the fullbridge of IRG4PC50UD
 
 <a title="New Base Top-Front look" href="https://www.flickr.com/photos/energylabs/5583127713/in/album-72157626476042126/" data-flickr-embed="true"><img src="https://c2.staticflickr.com/6/5180/5583127713_041b5428d4_n.jpg" alt="New Base Top-Front look" width="320" height="240" /></a><a title="New Base Front look" href="https://www.flickr.com/photos/energylabs/5583715958/in/album-72157626476042126/" data-flickr-embed="true"><img src="https://c7.staticflickr.com/6/5142/5583715958_dd2a87e698_n.jpg" alt="New Base Front look" width="320" height="240" /></a><a title="Leds for illumination" href="https://www.flickr.com/photos/energylabs/5578809376/in/album-72157626476042126/" data-flickr-embed="true"><img src="https://c1.staticflickr.com/6/5096/5578809376_7a91391356_n.jpg" alt="Leds for illumination" width="320" height="240" /></a><a title="My DRSSTC at half power :D" href="https://www.flickr.com/photos/energylabs/5620107121/in/album-72157626476042126/" data-flickr-embed="true"><img src="https://c2.staticflickr.com/6/5143/5620107121_cb3cc9f639_n.jpg" alt="My DRSSTC at half power :D" width="320" height="180" /></a>
-Funny that is probably my best Eletronical Engineering project lol.
+Funny that this is probably my best Electrical Engineering project lol.
 
 <hr/>
 
@@ -70,7 +70,7 @@ Funny that is probably my best Eletronical Engineering project lol.
   <iframe width="560" height="315" src="https://www.youtube.com/embed/W45HzzltVCU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </center>
 
-So this was ZARC in actual final body without final tunning. The interrupter was the same shitty one as before, but now almost 70cm sparks and better stability.
+So this was ZARC in actual final body without final tuning. The interrupter was the same shitty one as before, but now almost 70cm sparks and better stability.
 
 <hr/>
 
@@ -81,7 +81,7 @@ So this was ZARC in actual final body without final tunning. The interrupter was
 </center>
 
 
-This was the first <del>good</del> working DRSSTC with audio modulation (I did other atempts before, but all of them resulted in explosion). Same ZARC prototype as before.
+This was the first <del>good</del> working DRSSTC with audio modulation (I did other attempts before, but all of them resulted in explosion). Same ZARC prototype as before.
 
 <hr/>
 

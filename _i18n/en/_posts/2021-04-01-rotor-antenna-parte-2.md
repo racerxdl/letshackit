@@ -42,8 +42,8 @@ For the elevation motor, I made a cut in a circular mark around the exit of the 
 
 For the shaft, it was nescessary to reduce its size and made a bevel so I could fit it better in a 3D Printed part. To do so, I use two plywood pieces to hold the shaft while me and my father cut it. For the bevel, we used a grinder.
 
-![Plywood and cutted shaft](/assets/posts/tracker-mount-2/elevation-shaft-cut.jpg)*Plywood and cutted shaft*
-![Cutted Shaft on motor head](/assets/posts/tracker-mount-2/elevation-shaft-support-with-shaft.jpg)*Cutted Shaft on motor head*
+![Plywood and cut shaft](/assets/posts/tracker-mount-2/elevation-shaft-cut.jpg)*Plywood and cut shaft*
+![Cut shaft on motor head](/assets/posts/tracker-mount-2/elevation-shaft-support-with-shaft.jpg)*Cut shaft on motor head*
 
 With that, I could then start the 3D Drawings for the adapters.
 

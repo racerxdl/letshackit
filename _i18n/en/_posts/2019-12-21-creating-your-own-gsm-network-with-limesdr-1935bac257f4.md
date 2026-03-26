@@ -26,7 +26,7 @@ tags:
 
 # Creating your own GSM Network with LimeSDR
 
-> ## **DISCLAIMER: This procedure is highly ilegal basically anywhere in the world. Be sure to run this in a closed RF environment (aka Faraday Cage)**
+> ## **DISCLAIMER: This procedure is highly illegal basically anywhere in the world. Be sure to run this in a closed RF environment (aka Faraday Cage)**
 > ## This article works with any LimeSDR version.
 
 For this example we will use the Osmocom GSM Stack in the NITB (Network in the box) mode. In this mode the phones connected to you BTS will be able to call each other and send SMS messages. There is also the Interconnect mode in which the BSC (Base Station Controller) connects to a ISDN or IPBX (for example Asterisk) to manage the connected phones. You can check the different modes here: [https://osmocom.org/projects/openbsc/wiki/OpenBSC#Configurations-Modes](https://osmocom.org/projects/openbsc/wiki/OpenBSC#Configurations-Modes)
@@ -67,7 +67,7 @@ These packages are:
 
 ## Updating the LimeSDR Firmware
 
-It is a good pratice to check if your LimeSDR firmware is up to date. To check and update if needed, you only need to run:
+It is a good practice to check if your LimeSDR firmware is up to date. To check and update if needed, you only need to run:
 
 ```bash
 LimeUtil --update
@@ -208,7 +208,7 @@ bts 0
   phy 0 instance 0
 ```
 
-The only importante parameter here to take care is **band**. Make sure is the same as in *openbsc.cfg* file. The next one is *osmo-trx.cfg* which will be used by *osmo-trx-lms:*
+The only important parameter here to take care is **band**. Make sure is the same as in *openbsc.cfg* file. The next one is *osmo-trx.cfg* which will be used by *osmo-trx-lms:*
 
 ```
 log stderr

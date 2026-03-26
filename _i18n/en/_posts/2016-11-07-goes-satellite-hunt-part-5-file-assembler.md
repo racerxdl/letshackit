@@ -42,7 +42,7 @@ tags:
   - Statistics
   - Viterbi
 ---
-In the last chapter of my GOES Satellite Hunt, I explained how to obtain the packets. In this part I will explain how to aggregate and decompress the packets to generate the LRIT files.  This part will be somwhat quick, because most of the hard stuff was already done in the last part. Sadly the decompression algorithm is a modified RICE algorithm, and the Linux version of the library provided by NOAA cannot be used anymore because of incompatibilities between GCC ABIs ( The NOAA library has been compiled with GCC 2). Until I reverse engineer and create a open version of the decompression algorithm, I will use the  workaround I will explain here.
+In the last chapter of my GOES Satellite Hunt, I explained how to obtain the packets. In this part I will explain how to aggregate and decompress the packets to generate the LRIT files.  This part will be somewhat quick, because most of the hard stuff was already done in the last part. Sadly the decompression algorithm is a modified RICE algorithm, and the Linux version of the library provided by NOAA cannot be used anymore because of incompatibilities between GCC ABIs ( The NOAA library has been compiled with GCC 2). Until I reverse engineer and create a open version of the decompression algorithm, I will use the  workaround I will explain here.
 
 <!--more-->
 
@@ -50,7 +50,7 @@ In the packets before we have a flag called **continuation flag** that will spe
 
 # File Header Processing
 
-The LRIT File has several headers. The first one is from the transport layer that says what is the file number and what is the total decompressed size. i usually ignore this data because its only used for validation of the finished file. This header has 10 bytes.
+The LRIT File has several headers. The first one is from the transport layer that says what is the file number and what is the total decompressed size. I usually ignore this data because its only used for validation of the finished file. This header has 10 bytes.
 
 <div style="width: 636px" class="wp-caption aligncenter">
   <img class="size-large" src="https://i.imgur.com/OPMwMQz.png" alt="LRIT File" width="626" />
@@ -136,7 +136,7 @@ With that, we have enough stuff for using in our **channeldecoder.py** and know
 
 # LritRice Compression
 
-Usually for images, the data is compressed using **LritRice.lib**. Although RICE compression is a open standard (NASA&#8217;s fitsio library has compression and decompression of RICE), the LritRice use a modified version. With time I will reverse engineer and create a open version that will be able to decompress LRIT data, but for now I had to do a workarround. Since the LritRice from linux is &#8220;broken&#8221;, I made a very nasty workarround:
+Usually for images, the data is compressed using **LritRice.lib**. Although RICE compression is a open standard (NASA&#8217;s fitsio library has compression and decompression of RICE), the LritRice use a modified version. With time I will reverse engineer and create a open version that will be able to decompress LRIT data, but for now I had to do a workaround. Since the LritRice from linux is &#8220;broken&#8221;, I made a very nasty workaround:
 
 Make a windows application to decompress and run through wine.
 

@@ -27,9 +27,9 @@ So I started looking out how to make my own filters. So I reopened Adam&#8217;s 
 
 <!--more-->
 
-This time I tryed to find capacitores that actually matches the values that it was calculated. I found here 2 56pF caps and 2 47pF caps. The two 47 is to make in parallel so I would have something arround 23,5pF that is close enough for the center tap 20pF cap.
+This time I tried to find capacitors that actually matches the values that it was calculated. I found here 2 56pF caps and 2 47pF caps. The two 47 is to make in parallel so I would have something around 23.5pF that is close enough for the center tap 20pF cap.
 
-Also I found a coil of 0,35mm diameter wire here, that&#8217;s exactly what he used. I also got a Cooper Pipe to do the coil wind. So this is how the filter went out:
+Also I found a coil of 0,35mm diameter wire here, that&#8217;s exactly what he used. I also got a copper pipe to do the coil wind. So this is how the filter went out:
 
 [<img class="size-large wp-image-192 aligncenter" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/07/20160722_190915-1024x576.jpg" alt="My FM Trap Filter" width="625" height="352" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/07/20160722_190915-1024x576.jpg 1024w, https://www.teske.net.br/lucas/wp-content/uploads/2016/07/20160722_190915-300x169.jpg 300w, https://www.teske.net.br/lucas/wp-content/uploads/2016/07/20160722_190915-768x432.jpg 768w, https://www.teske.net.br/lucas/wp-content/uploads/2016/07/20160722_190915-624x351.jpg 624w" sizes="(max-width: 625px) 100vw, 625px" />](https://www.teske.net.br/lucas/wp-content/uploads/2016/07/20160722_190915.jpg)
 
@@ -49,7 +49,7 @@ And here is what it looks like with my filter:
 
 I got impressed this time, because it really made a big difference. I also played with the coils stretching and compressing to change the center frequency. But as you can see, there are still some very high signals there. This generates a lot of background noise (in HackRF more than RTLSDR because of the IF Filters).
 
-So I decided to find a better way to measure my filter response, since I don&#8217;t have a wideband noise generator. My idea was to go to GNU Radio and put my HackRF to generate a a wideband Noise signal. This could easily be done by putting a White Noise Source directly to Osmocom output. I also added a Slider to range the output frequency from 20MHz to 160MHz, so I can do a wide analysis of the filter.[<img class="size-full wp-image-186 aligncenter" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/07/Captura-de-tela-de-2016-07-22-19-15-17.png" alt="GNU Radio Noise Generator" width="468" height="246" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/07/Captura-de-tela-de-2016-07-22-19-15-17.png 468w, https://www.teske.net.br/lucas/wp-content/uploads/2016/07/Captura-de-tela-de-2016-07-22-19-15-17-300x158.png 300w" sizes="(max-width: 468px) 100vw, 468px" />](https://www.teske.net.br/lucas/wp-content/uploads/2016/07/Captura-de-tela-de-2016-07-22-19-15-17.png)
+So I decided to find a better way to measure my filter response, since I don&#8217;t have a wideband noise generator. My idea was to go to GNU Radio and put my HackRF to generate a wideband Noise signal. This could easily be done by putting a White Noise Source directly to Osmocom output. I also added a Slider to range the output frequency from 20MHz to 160MHz, so I can do a wide analysis of the filter.[<img class="size-full wp-image-186 aligncenter" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/07/Captura-de-tela-de-2016-07-22-19-15-17.png" alt="GNU Radio Noise Generator" width="468" height="246" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/07/Captura-de-tela-de-2016-07-22-19-15-17.png 468w, https://www.teske.net.br/lucas/wp-content/uploads/2016/07/Captura-de-tela-de-2016-07-22-19-15-17-300x158.png 300w" sizes="(max-width: 468px) 100vw, 468px" />](https://www.teske.net.br/lucas/wp-content/uploads/2016/07/Captura-de-tela-de-2016-07-22-19-15-17.png)
 
 So first I wanted to setup a baseline profile of the HackRF Output in the spectrum. For that I just got the output of HackRF through a 3dB attenuator and to my RTLSDR. I used QSpectrumAnalyzer as before with the range from 50MHz to 160MHz and 100kHz steps. This time for some weird reason I got some notching at the QSpectrumAnalyzer between the frequency steps.
 
@@ -89,6 +89,6 @@ So as you can see, my notch is at 103MHz. But sadly I still get moderated high s
   </p>
 </div>
 
-So as you can see, the TV/FM Diplexer have a very wide band stop filtering and completes (-30dB) attenuates the FM Spectrum. So probably this filter is still my best way around. I hope I can make better filters in the future (I ordered a lot of capacitores with a lot of values so I can keep making better filters).
+So as you can see, the TV/FM Diplexer has a very wide band stop filtering and completely (-30dB) attenuates the FM Spectrum. So probably this filter is still my best way around. I hope I can make better filters in the future (I ordered a lot of capacitors with a lot of values so I can keep making better filters).
 
 I hope this information is useful for you, reader. I will keep posting news about my Crusade against the FM Band

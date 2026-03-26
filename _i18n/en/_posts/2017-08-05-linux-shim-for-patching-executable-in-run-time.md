@@ -24,7 +24,7 @@ That's something I already did a long time and few people know. It's not somethi
 
 ### First, what's a shim?
 
-A shim is a small library that can intercept API calls transparently for a specific program / library. Basically its a proxy library that can transparently intercept some API calls to either change the content, monitor the data or just making a API translation. That has its variants over all Operating Systems (Linux, Mac OSX, Windows) but I will talk mainly about Linux here (which is the OS I use).
+A shim is a small library that can intercept API calls transparently for a specific program / library. Basically it's a proxy library that can transparently intercept some API calls to either change the content, monitor the data or just making a API translation. That has its variants over all Operating Systems (Linux, Mac OSX, Windows) but I will talk mainly about Linux here (which is the OS I use).
 
 ### Creating our executable
 
@@ -68,7 +68,7 @@ Ok, so far so good! Now let's shim it!
 
 The process of shimming is pretty simple at first. We just need to create a library that contains a function that has **exactly** the name and parameters of the function we're trying to call. We will also need to load the original function somewhere, but first let's try to replace the entire call starting with **fopen**.
 
-Its really important that the call is exactly the same. Since *fopen* is a *libc* call, let's take a look somewhere for how the function is declared. I *usually* check at [http://www.cplusplus.com](http://www.cplusplus.com) or (google). The *fopen* call is here: [http://www.cplusplus.com/reference/cstdio/fopen/](http://www.cplusplus.com/reference/cstdio/printf/)
+It's really important that the call is exactly the same. Since *fopen* is a *libc* call, let's take a look somewhere for how the function is declared. I *usually* check at [http://www.cplusplus.com](http://www.cplusplus.com) or (google). The *fopen* call is here: [http://www.cplusplus.com/reference/cstdio/fopen/](http://www.cplusplus.com/reference/cstdio/printf/)
 
 Let's do something … hmmm … interesting. Let's print a message in *fopen* and return *stdout* as a file descriptor. That way it will write the output to the console. So that's how we will write our library:
 
@@ -95,7 +95,7 @@ And for running with our executable we will use a Library Loader trick with **LD
 └─[$] <> LD_PRELOAD="./shim.so" ./amazingprogram
 ```
 
-This will tell the library loader to first try to load the **shim.so** library and them load other libraries. The way the Library Loader works is that it searches for all calls that are external from your application (from other libraries) and try to resolves them using the system libraries, but since we're telling it to load first our shim library, it will fill the gap where the fopen is wanted with our fopen call. Let's run to see what happens:
+This will tell the library loader to first try to load the **shim.so** library and then load other libraries. The way the Library Loader works is that it searches for all calls that are external from your application (from other libraries) and try to resolves them using the system libraries, but since we're telling it to load first our shim library, it will fill the gap where the fopen is wanted with our fopen call. Let's run to see what happens:
 
 ```
 ┌─[lucas@nblucas] - [/media/ELTN/Hacks/shim] - [Sáb Ago 05, 20:40]

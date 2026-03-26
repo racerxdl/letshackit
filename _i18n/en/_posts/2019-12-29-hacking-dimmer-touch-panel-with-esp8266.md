@@ -38,7 +38,7 @@ The dimmer board does have some micro controller that looks like a PIC, few mosf
 
 ![WTC801SPI Controller](/assets/posts/medium/1_LOEEUiky7RU3Kr7xkSYvAw.png)*WTC801SPI Controller*
 
-Luckily the datasheet is available for this controller, and I were able to find the 10-pin flat cable connector pinout by using a multimeter and the datasheet info.
+Luckily the datasheet is available for this controller, and I was able to find the 10-pin flat cable connector pinout by using a multimeter and the datasheet info.
 ```
      1 -
      2 -

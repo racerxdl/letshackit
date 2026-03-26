@@ -69,7 +69,7 @@ Basically what we have is:
   * When our bit is 1, our carrier wave phase shift is 0 degrees.
   * When our bit is 0, our carrier wave phase shift is 180 degrees (inverted)
 
-Simple isn&#8217;t it? So we can represente also our data in a phase-diagram by having two unitary vectors I and Q. Below there are some representations of Phase Diagram for BPSK (a), QPSK (b) and 8-PSK (c).
+Simple isn&#8217;t it? So we can also represent our data in a phase-diagram by having two unitary vectors I and Q. Below there are some representations of Phase Diagram for BPSK (a), QPSK (b) and 8-PSK (c).
 
 <div style="width: 435px" class="wp-caption aligncenter">
   <img class="" src="https://i.imgur.com/3IADL7c.png" width="425" height="407" />
@@ -94,7 +94,7 @@ Same works for 8-PSK, but with 3 bits instead of 2. Usually the binary code is g
 
 How to make the reverse process (a.k.a. demodulate the signal)?
 
-First we need to make sure that we have our carrier in the base band (a.k.a. center of our spectrum). You might think that just tunning at 1691MHz will make sure of that, but there are some factors that we need to account for:
+First we need to make sure that we have our carrier in the base band (a.k.a. center of our spectrum). You might think that just tuning at 1691MHz will make sure of that, but there are some factors that we need to account for:
 
   1. The SDR Tuner Cristal is not 100% precise, and there will be some deviation from the actual signal.
   2. The temperature change over the SDR will also lead to deviation on the signal.
@@ -116,9 +116,9 @@ Costas Loop is basically a double PLL system. The main idea is: If our supposed 
 
 Ok, after that we need to recovery a second information: The Symbol Clock. The thing is: we modulated a binary signal over the carrier wave, but if we have like a string of 10 bits one, how we would know that the string has 10 bits, and not 5 or 7? We will need to recover the original clock using a M&M (Mueller and Müller) algorithm. But before that, how can we even recovery such thing?
 
-Why we can recovery the original data clock?
+Why can we recover the original data clock?
 
-We can recovery the original clock because we have two information:
+We can recover the original clock because we have two information:
 
   1. The estimated symbol rate (in this case 293883 symbols / s)
   2. The carrier phase transitions between 0 to 1 and 1 to 0
@@ -129,7 +129,7 @@ After that we should have our symbol in the I vector of our IQ Sample.
 
 # GNU Radio Flow
 
-So let&#8217;s get our hands to GNU Radio and build our demodulator. So in GNU Radio we will have some additional blocks along the Costas Loop and M&M Recovery. I will be using Airspy R2 / Mini so the values are for them, but I will soon provide also a version for RTLSDR (that will just have different values for the first steps). As suggested by Trango in #hearsat, is best to run the sample rate a bit low in airspy to avoid USB Packet Losses (to be honest I never had any USB packet drop with airspy or hackrf, but this will heavily depend on the CPU and USB Controller that you have on your machine. So its better to be safe than sorry.). For Airspy R2 we will use 2.5 Msps, and for Airspy mini we can use 3 Msps. Our target sample rate for the whole process is 1.25Msps (actually we can use anything near that value). So let&#8217;s start with the osmocom block:
+So let&#8217;s get our hands to GNU Radio and build our demodulator. So in GNU Radio we will have some additional blocks along the Costas Loop and M&M Recovery. I will be using Airspy R2 / Mini so the values are for them, but I will soon provide also a version for RTLSDR (that will just have different values for the first steps). As suggested by Trango in #hearsat, is best to run the sample rate a bit low in airspy to avoid USB Packet Losses (to be honest I never had any USB packet drop with airspy or hackrf, but this will heavily depend on the CPU and USB Controller that you have on your machine. So it's better to be safe than sorry.). For Airspy R2 we will use 2.5 Msps, and for Airspy mini we can use 3 Msps. Our target sample rate for the whole process is 1.25Msps (actually we can use anything near that value). So let&#8217;s start with the osmocom block:
 
 <div style="width: 214px" class="wp-caption aligncenter">
   <img class="" src="https://i.imgur.com/yExU4Uo.png" width="204" height="184" />

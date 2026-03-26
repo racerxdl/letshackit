@@ -29,13 +29,13 @@ tags:
 
 The challenge
 
-I got really excited about it because its a SDR one. And everyone that knows me know that I love SDR stuff.
+I got really excited about it because it's a SDR one. And everyone that knows me know that I love SDR stuff.
 
 The zip file itself contains a wav file which they told us is not an audio but an radio signal
 
 ![File command to show what the wave file is](/assets/posts/medium/1_oEKFYtXfQrg3o9EcymOpLw.png)*File command to show what the wave file is*
 
-If we open in audacity we will se a very interesting pattern:
+If we open in audacity we will see a very interesting pattern:
 
 ![Audacity view of the wave file](/assets/posts/medium/1_B6iuajNIgKRnK1eDHE9RfA.png)*Audacity view of the wave file*
 
@@ -53,7 +53,7 @@ In GNU Radio the first thing we should do is get a Wav File Source to open the f
 
 ![Wave File Source](/assets/posts/medium/1_FFyDLx-6GeTnYS8-aUNqRA.png)*Wave File Source*
 
-I selected the option **Repeat** to be false, so it will not run foverer repeting the file. After that we need something to synchronize our bits and find where to sample the bits we want. There are several blocks that can do that, but I usually prefer the **M&M Clock Recovery** block. Its easy to use and since the singnal does not have much noise on it, it will work perfectly. One thing to notice is that the M&M usually works on complex samples, so you need to change the sample type to **float**. Then there is a few parameters to set:
+I selected the option **Repeat** to be false, so it will not run forever repeating the file. After that we need something to synchronize our bits and find where to sample the bits we want. There are several blocks that can do that, but I usually prefer the **M&M Clock Recovery** block. Its easy to use and since the signal does not have much noise on it, it will work perfectly. One thing to notice is that the M&M usually works on complex samples, so you need to change the sample type to **float**. Then there is a few parameters to set:
 
 ![M&M Clock Recovery Parameters](/assets/posts/medium/1_bo6sVsrnFugs0MHKug-2Aw.png)*M&M Clock Recovery Parameters*
 

@@ -99,7 +99,7 @@ After syncing, I can just run viterbi as always to decode it. But before the dat
 
 # New Data
 
-The Satellite is currently under test load. So it&#8217;s expected to have lot&#8217;s of fill frames. Indeed most of the time is sending Fill Frames (VCID 63), and some DCS Data (VCID 31). But I also got some images and there was one thing interesting on them: The NOAA Specific Header Compression was set to 5 instead of one. Further looking into file contents, I figured out that Compression = 5 means GIF file (It&#8217;s very easy to spot a GIF file since the data starts with GIF), and that was crashing my decompressor because it was intended to LRIT RICE. I did a few modifications at GOES Dump to handle GIF files and here are some of them:
+The Satellite is currently under test load. So it&#8217;s expected to have lots of fill frames. Indeed most of the time is sending Fill Frames (VCID 63), and some DCS Data (VCID 31). But I also got some images and there was one thing interesting on them: The NOAA Specific Header Compression was set to 5 instead of one. Further looking into file contents, I figured out that Compression = 5 means GIF file (It&#8217;s very easy to spot a GIF file since the data starts with GIF), and that was crashing my decompressor because it was intended to LRIT RICE. I did a few modifications at GOES Dump to handle GIF files and here are some of them:
 
 [<img class="alignnone size-full wp-image-300" src="https://www.teske.net.br/lucas/wp-content/uploads/2017/01/201701251701745-10.gif" alt="" width="720" height="720" />](https://www.teske.net.br/lucas/wp-content/uploads/2017/01/201701251701745-10.gif)
 

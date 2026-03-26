@@ -1,6 +1,6 @@
-Lucas Teske, born November, 8 of 1991 in São José dos Campos (São Paulo / Brazil). Lives in South of the São Paulo capital and has great interest in tecnological researchs.
+Lucas Teske, born November 8, 1991 in São José dos Campos (São Paulo / Brazil). Lives in the south of São Paulo and has a great interest in technological research.
 
-It is Creator of OpenSatelliteProject, SegDSP and other stuff (check github!).
+He is the creator of OpenSatelliteProject, SegDSP and other stuff (check GitHub!).
 
 HAM Callsign: PU2NVX
 

@@ -43,7 +43,7 @@ How to perform a very simple MitM Attack on a Intelbras/Dahua IP Cameras / DVR. 
 
 ## Attack Idea
 
-The main idea between the is the concept of MitM (Man-in-the-Middle) using ARP Poisoning. The idea is to inform all network devices that you have the IP that belongs to the DVR, and then receive all the packets that were intended originally to the DVR. That way, when someone logs in, you will also receive the Login Packet.
+The main idea behind this is the concept of MitM (Man-in-the-Middle) using ARP Poisoning. The idea is to inform all network devices that you have the IP that belongs to the DVR, and then receive all the packets that were intended originally to the DVR. That way, when someone logs in, you will also receive the Login Packet.
 
 Ideal scenario: We have a direct communication between the DVR and the phone application:
 

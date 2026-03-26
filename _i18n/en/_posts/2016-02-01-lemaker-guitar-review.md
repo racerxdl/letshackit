@@ -33,7 +33,7 @@ format: image
 ---
 <a title="20160119_191023" href="https://www.flickr.com/photos/energylabs/24762647165/in/dateposted-public/" data-flickr-embed="true"><img class="alignleft" src="https://farm2.staticflickr.com/1484/24762647165_1cff28db6d_n.jpg" alt="20160119_191023" width="180" height="320" /></a>
 
-So I few weeks ago I received a **<a href="http://www.lemaker.org/product-guitar-index.html" target="_blank">LeMaker Guitar</a> **board that I won on a <a href="http://www.lemaker.org/project/index/project_id/27.html" target="_blank">contest</a>. I got really happy about that and they sent by DHL that made everything went really fast.
+So a few weeks ago I received a **<a href="http://www.lemaker.org/product-guitar-index.html" target="_blank">LeMaker Guitar</a> **board that I won on a <a href="http://www.lemaker.org/project/index/project_id/27.html" target="_blank">contest</a>. I got really happy about that and they sent by DHL that made everything went really fast.
 
 As usual, in Brazil the tax everything including prizes and samples, so I got R$90 of taxes over the board. I won&#8217;t complain much about it, because it was cheap and expected.
 
@@ -96,7 +96,7 @@ I&#8217;m also using **Lemunto for Guitar** distro, but it came with Android. I
  Linux lemaker 3.10.37 #2 SMP PREEMPT Sat Jan 16 14:33:53 CST 2016 armv7l armv7l armv7l GNU/Linux<br />
 ` 
 
-The Lemunto can use Oficial Ubuntu ports (that as I remember is provided by Linaro) and that is really good because we can have most packages we need. For example I wanted **rtl-sdr** to starting using it as a station:
+The Lemunto can use official Ubuntu ports (that as I remember is provided by Linaro) and that is really good because we can have most packages we need. For example I wanted **rtl-sdr** to start using it as a station:
 
 &nbsp;
 

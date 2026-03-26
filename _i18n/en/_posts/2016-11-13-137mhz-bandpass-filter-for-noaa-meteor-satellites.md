@@ -38,7 +38,7 @@ tags:
 ---
 Yesterday I saw a new blog post by Adam (9a4qv) in LNA4ALL. The post ([here](http://lna4all.blogspot.com.br/2015/11/diy-137-mhz-wx-sat-bp-filter.html)) talks about a band pass filter he did for Weather Satellites and I decided to try as well.
 
-Unfortunately I don&#8217;t have a exact match for that components at home, so I tried to do something with the components I have. So the lower value I had for capacitors was 10pF, and the needed values for Adam&#8217;s Filter is 1pF, 4.7pF and 15pF. I decided then to use 10 in series to do the 1pF, 2 in series for the 4.7pF (that will be 5pF) and then one in parallel with two in series to give me the 15pF. Its a very close match, and I&#8217;m unsure about the effects of serialization of capacitores in the filter (increase inductance maybe?). So here is the results.
+Unfortunately I don&#8217;t have a exact match for that components at home, so I tried to do something with the components I have. So the lower value I had for capacitors was 10pF, and the needed values for Adam&#8217;s Filter is 1pF, 4.7pF and 15pF. I decided then to use 10 in series to do the 1pF, 2 in series for the 4.7pF (that will be 5pF) and then one in parallel with two in series to give me the 15pF. Its a very close match, and I&#8217;m unsure about the effects of serialization of capacitors in the filter (increase inductance maybe?). So here is the results.
 
 <!--more-->
 
@@ -73,10 +73,10 @@ And here is how it looks like:
 The first thing I did was to setup my &#8220;_Spectrum Analyzer_&#8221; (a.k.a. HackRF + RTLSDR) to test the filter response and tune the coils. My coils was wound very tight so I get the lowest possible response. Then I started stretching the coils until I reached the peak at 137MHz. Here is the response curve using QSpectrumAnalyzer and HackRF with sweep.
 
 <div id="attachment_261" style="width: 635px" class="wp-caption aligncenter">
-  <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/11/filterA.png"><img aria-describedby="caption-attachment-261" class="size-large wp-image-261" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/11/filterA-1024x762.png" alt="Filter Response, the red line is the peak response. Here is -31dB at 136.462MHz, check the baseline for comparsion." width="625" height="465" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/11/filterA-1024x762.png 1024w, https://www.teske.net.br/lucas/wp-content/uploads/2016/11/filterA-300x223.png 300w, https://www.teske.net.br/lucas/wp-content/uploads/2016/11/filterA-768x572.png 768w, https://www.teske.net.br/lucas/wp-content/uploads/2016/11/filterA-624x465.png 624w, https://www.teske.net.br/lucas/wp-content/uploads/2016/11/filterA.png 1080w" sizes="(max-width: 625px) 100vw, 625px" /></a>
+  <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/11/filterA.png"><img aria-describedby="caption-attachment-261" class="size-large wp-image-261" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/11/filterA-1024x762.png" alt="Filter Response, the red line is the peak response. Here is -31dB at 136.462MHz, check the baseline for comparison." width="625" height="465" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/11/filterA-1024x762.png 1024w, https://www.teske.net.br/lucas/wp-content/uploads/2016/11/filterA-300x223.png 300w, https://www.teske.net.br/lucas/wp-content/uploads/2016/11/filterA-768x572.png 768w, https://www.teske.net.br/lucas/wp-content/uploads/2016/11/filterA-624x465.png 624w, https://www.teske.net.br/lucas/wp-content/uploads/2016/11/filterA.png 1080w" sizes="(max-width: 625px) 100vw, 625px" /></a>
   
   <p id="caption-attachment-261" class="wp-caption-text">
-    Filter Response, the red line is the peak response. Here is -31dB at 136.462MHz, check the baseline for comparsion.
+    Filter Response, the red line is the peak response. Here is -31dB at 136.462MHz, check the baseline for comparison.
   </p>
 </div>
 

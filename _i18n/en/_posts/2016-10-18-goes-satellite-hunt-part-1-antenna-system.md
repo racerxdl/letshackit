@@ -26,7 +26,7 @@ tags:
   - SDR
 ---
   
-So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that&#8217;s reachable in São Paulo) with a good SNR (enough to decode) and them make all the toolkit to demodulate, decode and output the images and other data they send. I wanted a high-res image, and the L-Band transmissions usually provide that (GOES for example is 1km/px with whole earth sphere in frame. A 10000 x 10000 pixels image)
+So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that&#8217;s reachable in São Paulo) with a good SNR (enough to decode) and then make all the tools to demodulate, decode and output the images and other data they send. I wanted a high-res image, and the L-Band transmissions usually provide that (GOES for example is 1km/px with whole earth sphere in frame. A 10000 x 10000 pixels image)
 
 So I choose GOES over other Weather Satellites mainly because GOES is a **Geostationary** Satellite. That means its position never change. That was needed for me, because L Band usually needs a relatively big dish to capture the signal, and if the satellite is moving, the antenna needs to track it. That means: Alt-Az tracker (or something else) that will be most likely more expensive than the whole capture system (at least in Brazil). Since GOES does not move, I could just point my dish and forget about it. It would always capture the signal.
 
@@ -44,13 +44,13 @@ I found some people in twitter ( More specific [@USASatcom](https://twitter.com/
   </p>
 </div>
 
-And then I found the IRC Channel called #hearsat in server StarChat ( irc.starchat.net ). So a lot of people actually helped me by giving me the information I need to take a decision over which dish antenna should I buy. They were suggesting a 1.2m offset dish (same time of the Sky, Claro, and some other TV dishes, but bigger) for receiving GOES. Sadly I couldn&#8217;t find a offset dish bigger than 90 cm here. So someone suggested that I need at least 1.5m prime focus (the &#8220;old&#8221; type of TV dishes) that should have equivalent surface area than a 1.2m offset dish. So I went to Santa Efigenia Street (people from São Paulo will recognize) and went to [Sat Imagem Store](http://satimagem.com.br/). Since my father and I was already friends with a seller, I asked what dishes they had to sell and said that I want something around 1.5m. He said that he has a 1.9m dish to sell.
+And then I found the IRC Channel called #hearsat in server StarChat ( irc.starchat.net ). So a lot of people actually helped me by giving me the information I need to take a decision over which dish antenna should I buy. They were suggesting a 1.2m offset dish (same type as the Sky, Claro, and some other TV dishes, but bigger) for receiving GOES. Sadly I couldn&#8217;t find a offset dish bigger than 90 cm here. So someone suggested that I need at least 1.5m prime focus (the &#8220;old&#8221; type of TV dishes) that should have equivalent surface area than a 1.2m offset dish. So I went to Santa Efigenia Street (people from São Paulo will recognize) and went to [Sat Imagem Store](http://satimagem.com.br/). Since my father and I were already friends with a seller, I asked what dishes they had to sell and said that I want something around 1.5m. He said that he has a 1.9m dish to sell.
 
 So I bought the dish, costed about R$200 (that&#8217;s about US$60) and also some cables and adapters.  So since I was very excited to get things working, I asked my father&#8217;s help to assemble the antenna. I arrived home about 5 PM so it was very late to assemble the antenna. So I let it for the day after.
 
 # Assemble Process
 
-So the assemble process was sort of straightforward. It was not easy to do, but even without a manual (that did not came) you should be able to figure out what piece goes where. We were in 4 persons, we started just after lunch (about 1PM) and took us about 6 &#8211; 7 hours to get it assembled. LOL
+So the assemble process was sort of straightforward. It was not easy to do, but even without a manual (that did not come) you should be able to figure out what piece goes where. We were in 4 persons, we started just after lunch (about 1PM) and took us about 6 &#8211; 7 hours to get it assembled. LOL
 
 <a title="20160825_173157" href="https://www.flickr.com/photos/energylabs/30117193780/in/album-72157674018535342/" data-flickr-embed="true"><img class="aligncenter" src="https://c5.staticflickr.com/6/5648/30117193780_c128f0ac0c_n.jpg" alt="20160825_173157" width="320" height="180" /></a>
 
@@ -68,7 +68,7 @@ So the dish assemble is done. Now we need to worry about the feed.
 
 Dish Feed (The actual receiver)
 
-So I did several tries for like one month and half. The guys in #hearsat and me was struggling to find what was the reason that I couldn&#8217;t get the signal. I have all pictures of my failed feeds here: <https://www.flickr.com/photos/energylabs/albums/72157675387388535>. I will not detail each one of the assembles of these feeds because it didn&#8217;t work. So for historical reasons as well the reason why they didn&#8217;t work is because of the illumination angle of the Helical Coils. Usually the Helix Feeds have a very narrow beam width (and high gain), this causes to only some portion of the dish to be actually used by the feed. I only discovered that when I drawed my dish in FreeCad and did some auxiliary lines to show the angles. Then I noticed that something was REALLY wrong: Only like 60cm of my dish was actually illuminated, and from this 60cm only 40cm was actually visible by the dish (we need to discount the dead center). This is the drawing I did. So mybit from hearsat suggested me a Wave Guide Feed. For those that used to hack wireless systems, this is known as CanAntenna or Cantenna. Its very simple to do and I found this calculator to get things better:
+So I did several tries for like one month and half. The guys in #hearsat and I were struggling to find what was the reason that I couldn&#8217;t get the signal. I have all pictures of my failed feeds here: <https://www.flickr.com/photos/energylabs/albums/72157675387388535>. I will not detail each one of the assembles of these feeds because it didn&#8217;t work. So for historical reasons as well the reason why they didn&#8217;t work is because of the illumination angle of the Helical Coils. Usually the Helix Feeds have a very narrow beam width (and high gain), this causes to only some portion of the dish to be actually used by the feed. I only discovered that when I drew my dish in FreeCad and did some auxiliary lines to show the angles. Then I noticed that something was REALLY wrong: Only like 60cm of my dish was actually illuminated, and from this 60cm only 40cm was actually visible by the dish (we need to discount the dead center). This is the drawing I did. So mybit from hearsat suggested me a Wave Guide Feed. For those that used to hack wireless systems, this is known as CanAntenna or Cantenna. It's very simple to do and I found this calculator to get things better:
 
 <http://www.changpuak.ch/electronics/cantenna.php>
 
@@ -102,7 +102,7 @@ These waveguides usually have really wide bandwidth ( mine can probably get anyt
 
 # The LNA and Filter
 
-So in my failure setups I was having a REALLY huge noise from the GSM Band at 1800MHz. That was: even without any LNA I could get like 10dB of GSM signal. So mybit suggested me to use some filtering to wipe out this signal. So I bought some Lorch Filters (recommeded and sold by him) that has a center frequency of 1675MHz and 150MHz bandwidth (so from 1600 to 1750 MHz).
+So in my failure setups I was having a REALLY huge noise from the GSM Band at 1800MHz. That was: even without any LNA I could get like 10dB of GSM signal. So mybit suggested me to use some filtering to wipe out this signal. So I bought some Lorch Filters (recommended and sold by him) that has a center frequency of 1675MHz and 150MHz bandwidth (so from 1600 to 1750 MHz).
 
 <a title="Lorch Filter" href="https://www.flickr.com/photos/energylabs/30414447265/in/album-72157674205924170/" data-flickr-embed="true"><img class="aligncenter" src="https://c2.staticflickr.com/6/5813/30414447265_b5267bc07a_n.jpg" alt="Lorch Filter" width="320" height="180" /></a>  
 I also bought 3 LNA4ALL (one with connectors, two without) to use in this and other projects.
@@ -118,7 +118,7 @@ Then I finished by gluing in the CanAntenna:
 
 <a title="20160930_234628" href="https://www.flickr.com/photos/energylabs/30328137581/in/album-72157674205924170/" data-flickr-embed="true"><img class="aligncenter" src="https://c6.staticflickr.com/6/5608/30328137581_895896ba9e_n.jpg" alt="20160930_234628" width="320" height="180" /></a>
 
-And that it!
+And that's it!
 
 # Positioning the Antenna
 
@@ -126,11 +126,11 @@ So the last thing was to position the antenna. I actually did this before the st
 
 So in the past it would been tough to position an antenna, but today we have cellphones to help everything. One application I use in Android is [Satellite AR](https://play.google.com/store/apps/details?id=com.agi.android.augmentedreality). Another good one is [Pointer Antena](https://play.google.com/store/apps/details?id=ftl.satellitedishpointer.sdp).
 
-Satellite AR has a preset list of Satellites (including GOES), and Pointer Antena allows you to fill with the coordinates of the satellite. Both are good and enough for positioning, just be carefull that your compass needs to be calibrated.
+Satellite AR has a preset list of Satellites (including GOES), and Pointer Antena allows you to fill with the coordinates of the satellite. Both are good and enough for positioning, just be careful that your compass needs to be calibrated.
 
-Another solution would be use [GPredict](http://gpredict.oz9aec.net/) or [Orbitron](http://www.stoff.pl/) to get the Elevation (The inclination in relation to ground) and Azimuth (the bearing in relation to North) angles  and position manually. I noticed that for my dish there is a working band of about 4 degrees of Azimuth and Elevation that the signal doesn&#8217;t change. I would recommend get your laptop / cellphone and hookup to the feed and check where you get the best signal.
+Another solution would be use [GPredict](http://gpredict.oz9aec.net/) or [Orbitron](http://www.stoff.pl/) to get the Elevation (The inclination in relation to ground) and Azimuth (the bearing in relation to North) angles  and position manually. I noticed that for my dish there is a working band of about 4 degrees of Azimuth and Elevation that the signal doesn&#8217;t change. I would recommend getting your laptop / cellphone and hookup to the feed and check where you get the best signal.
 
-Other two things that you need to care is related to the feed itself. Since we have a linear polarized feed, the rotation of the feed matters in relation to the satellite. This is less critical and I found that even 15 degrees rotation doesn&#8217;t change a lot the signal. Other thing is the focal point of the dish. You need to adjust the feed distance from the base of the dish to also get the best signal. Mine has the probe (the linear feed inside the can) in the focal point (so the can opening is far ahead). After all, you should get something like this (got with airspy, 10MHz bandwidth):
+Two other things that you need to care is related to the feed itself. Since we have a linear polarized feed, the rotation of the feed matters in relation to the satellite. This is less critical and I found that even 15 degrees rotation doesn&#8217;t change a lot the signal. Other thing is the focal point of the dish. You need to adjust the feed distance from the base of the dish to also get the best signal. Mine has the probe (the linear feed inside the can) in the focal point (so the can opening is far ahead). After all, you should get something like this (got with airspy, 10MHz bandwidth):
 
 <img class="aligncenter" src="https://i.imgur.com/Xkb8JvM.png" width="1367" height="982" /> 
 

@@ -22,7 +22,7 @@ tags:
 ---
 <a href="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/20160119_203854.jpg" rel="attachment wp-att-121"><img class="size-medium wp-image-121 aligncenter" src="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/20160119_203854-169x300.jpg" alt="20160119_203854" width="169" height="300" srcset="https://www.teske.net.br/lucas/wp-content/uploads/2016/01/20160119_203854-169x300.jpg 169w, https://www.teske.net.br/lucas/wp-content/uploads/2016/01/20160119_203854.jpg 551w" sizes="(max-width: 169px) 100vw, 169px" /></a>
 
-So in my last post I was playing with my RTL-SDR with an Intel Edison. So I decided to build a QFH Antenna to ble able to receive NOAA <a href="https://en.wikipedia.org/wiki/Automatic_picture_transmission" target="_blank">APT</a> Signals. These NOAA Weather Satellites broadcast a APT signal with about 5 to 8 Watts at 2m band, and considering how low this power is, it might suprise you that these signals arrive pretty strong at earth surface. But the biggest challenge to receive this signals are not its power. Its all about movement.
+So in my last post I was playing with my RTL-SDR with an Intel Edison. So I decided to build a QFH Antenna to be able to receive NOAA <a href="https://en.wikipedia.org/wiki/Automatic_picture_transmission" target="_blank">APT</a> Signals. These NOAA Weather Satellites broadcast an APT signal with about 5 to 8 Watts at 2m band, and considering how low this power is, it might surprise you that these signals arrive pretty strong at earth surface. But the biggest challenge to receive these signals are not its power. Its all about movement.
 
 <!--more-->
 
@@ -52,9 +52,9 @@ I decided to go for QFH because it was the easiest to be done with what I had.
 
 ## Building the Antenna
 
-So for building a antenna, I first start searching some previous experiences with QFH in the internet. I found this website <a href="http://www.jcoppens.com/ant/qfh/calc.en.php" target="_blank">http://www.jcoppens.com/ant/qfh/calc.en.php</a> that have a pretty good calculator. To be honest I didnt liked much how the layout of the calculator is (I think it is very confusing) but it gets the right values and can even generate drilling templates. But later I will make my own calculator and drilling generator for that.
+So for building an antenna, I first started searching some previous experiences with QFH in the internet. I found this website <a href="http://www.jcoppens.com/ant/qfh/calc.en.php" target="_blank">http://www.jcoppens.com/ant/qfh/calc.en.php</a> that have a pretty good calculator. To be honest I did not like much how the layout of the calculator is (I think it is very confusing) but it gets the right values and can even generate drilling templates. But later I will make my own calculator and drilling generator for that.
 
-So the default parameters were very good for me, and I printed the drilling guides for my tubes. For the mast (vertical tube) I had use a 2m x 5cm PVC Pipe (sewer pipe) and for the Horizontal tubes I had use a 2cm diameter PVC tube (sewer pipe as well). I bought 2m of it as well and it were enough.  
+So the default parameters were very good for me, and I printed the drilling guides for my tubes. For the mast (vertical tube) I had to use a 2m x 5cm PVC Pipe (sewer pipe) and for the Horizontal tubes I had to use a 2cm diameter PVC tube (sewer pipe as well). I bought 2m of it as well and it was enough.  
 <a title="QFH Main Support" href="https://www.flickr.com/photos/energylabs/24322927011/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1620/24322927011_284622755a.jpg" alt="QFH Main Support" width="281" height="500" /></a><a title="QFH Drilling Guide" href="https://www.flickr.com/photos/energylabs/24297145512/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1539/24297145512_5a8734a6aa.jpg" alt="QFH Drilling Guide" width="500" height="281" /></a>
 
 <a title="QFH Drilling Guide" href="https://www.flickr.com/photos/energylabs/24405407065/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1544/24405407065_485f521d8f.jpg" alt="QFH Drilling Guide" width="281" height="500" /></a>
@@ -69,7 +69,7 @@ So as you can see, the drilling templates were only used for positioning. First 
 
 <a title="Quadrifiliar Helix Antenna for 137MHz" href="https://www.flickr.com/photos/energylabs/24142526480/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1677/24142526480_28f90740ee.jpg" alt="Quadrifiliar Helix Antenna for 137MHz" width="404" height="500" /></a>
 
-So the two top-most horizontal guides are on the same level, also is where the cables go out to I plug with the output. So I cutted 80% of the pipe in the middle with the width of a pipe (so, 2cm). The two guides from the middle had to have holes in the ends so the Coax Cable passes through it.
+So the two top-most horizontal guides are on the same level, also is where the cables go out to I plug with the output. So I cut 80% of the pipe in the middle with the width of a pipe (so, 2cm). The two guides from the middle had to have holes in the ends so the Coax Cable passes through it.
 
 
 
@@ -83,7 +83,7 @@ So first things first. I glued with hot glue and insulation tape the output cabl
 
 <a title="Quadrifiliar Helix Antenna for 137MHz" href="https://www.flickr.com/photos/energylabs/24438127645/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1490/24438127645_3572527b11.jpg" alt="Quadrifiliar Helix Antenna for 137MHz" width="281" height="500" /></a>
 
-After that I started winding the antenna. So I had to cut two pieces of 2m coax cable to do the two loops of the antenna. Firstly I made a mistake doing Left Handed Polarization instead of Right Hand Polarization. So just to help you guys: Make your right hand a L shape with your fingers with your Thumb parallel with the antenna. If you rotate your hand in the direction of your fingers, and the cable follows the direction of your fingers, you have Right Hand Polarization. If it doesnt, it will probably do with your Left hand. Make sure your antenna is **Right Hand Polarized** not left. The cables should go top to down when you rotate your hand. If you have any doubts, take a look on the next picture. So if you are thinking about how the cables goes inside these tubings, basically just imagine as a O shape loop, with the O cutted in the top of the mast (so actually a U shape lol)
+After that I started winding the antenna. So I had to cut two pieces of 2m coax cable to do the two loops of the antenna. Firstly I made a mistake doing Left Handed Polarization instead of Right Hand Polarization. So just to help you guys: Make your right hand a L shape with your fingers with your Thumb parallel with the antenna. If you rotate your hand in the direction of your fingers, and the cable follows the direction of your fingers, you have Right Hand Polarization. If it doesn't, it will probably do with your Left hand. Make sure your antenna is **Right Hand Polarized** not left. The cables should go top to down when you rotate your hand. If you have any doubts, take a look on the next picture. So if you are thinking about how the cables goes inside these tubings, basically just imagine as a O shape loop, with the O cut at the top of the mast (so actually a U shape lol)
 
 
 
@@ -119,7 +119,7 @@ So after everything wired, the antenna looks like this:<a title="Quadrifiliar He
 
 ## First Test
 
-So just after I finished wiring everything up, I got my laptop, my SDR and my antenna and went out to test it on the first satellite that would pass. So besides the antenna is on the ground on the picture, I actually holded the antenna still on the wall, pointing upwards. I got a good signal, but not for a long time because the antenna was too low and since there is a lot of houses (and even my roof was higher than the antenna) I didnt got much of the horizon for it. So I went to fix it.
+So just after I finished wiring everything up, I got my laptop, my SDR and my antenna and went out to test it on the first satellite that would pass. So besides the antenna is on the ground on the picture, I actually held the antenna still on the wall, pointing upwards. I got a good signal, but not for a long time because the antenna was too low and since there is a lot of houses (and even my roof was higher than the antenna) I did not get much of the horizon for it. So I went to fix it.
 
 <a title="Quadrifiliar Helix Antenna for 137MHz" href="https://www.flickr.com/photos/energylabs/23811303963/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1607/23811303963_897fc17025.jpg" alt="Quadrifiliar Helix Antenna for 137MHz" width="281" height="500" /></a>
 
@@ -139,13 +139,13 @@ I also got a LNA (Low noise amplifier) in the antenna (you can see on the first 
 
 ## New Filters
 
-So I decided to start with a basic filter and then go to a better filter (which I didnt yet). The simplest way I thought was to try to remove the FM Radio Band (88 to 108MHz) and the 200MHz+ Band. The perfect filter for removing specific frequencies are the Notch Filters. I found a very simple notch filter that is done by using a piece of coax cable cut in 1/4 of the wavelength you want to strip out from your signal. So I made two coax notch filters: One for 106MHz and other for 270MHz. The 270MHz filter have a 135MHz pass band, and the 106MHz should atennuate the 88-108MHZ band a little. This should reduce my noise floor.
+So I decided to start with a basic filter and then go to a better filter (which I didnt yet). The simplest way I thought was to try to remove the FM Radio Band (88 to 108MHz) and the 200MHz+ Band. The perfect filter for removing specific frequencies are the Notch Filters. I found a very simple notch filter that is done by using a piece of coax cable cut in 1/4 of the wavelength you want to strip out from your signal. So I made two coax notch filters: One for 106MHz and other for 270MHz. The 270MHz filter have a 135MHz pass band, and the 106MHz should attenuate the 88-108MHZ band a little. This should reduce my noise floor.
 
 <a title="Notch Filters for removing 106MHz band and 270MHz band." href="https://www.flickr.com/photos/energylabs/24595103135/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1514/24595103135_58aa51cd5d.jpg" alt="Notch Filters for removing 106MHz band and 270MHz band." width="500" height="281" /></a>
 
 
 
-So before putting the filter at the antenna, I went some tests here in my desk. The test were simple: I had the best Spectrum Analyzer I could have &#8211; The SDR. So I just got another LNA I had here and wired like this:
+So before putting the filter at the antenna, I ran some tests here in my desk. The test were simple: I had the best Spectrum Analyzer I could have &#8211; The SDR. So I just got another LNA I had here and wired like this:
 
 > Random FM Radio Antenna **=>** Filters **=> **LNA **=>** SDR
 
@@ -167,7 +167,7 @@ So in this way I could test how effective the Filter would be.Here is the result
   </p>
 </div>
 
-Also, I had no attenuation at 135-138MHz band. So I decide to put the filter on the antenna.
+Also, I had no attenuation at 135-138MHz band. So I decided to put the filter on the antenna.
 
 <a title="QFH + LNA + Notch Filters" href="https://www.flickr.com/photos/energylabs/23966969304/in/album-72157663446128821/" data-flickr-embed="true"><img class="aligncenter" src="https://farm2.staticflickr.com/1521/23966969304_f8fe2be32f.jpg" alt="QFH + LNA + Notch Filters" width="281" height="500" /></a>
 
