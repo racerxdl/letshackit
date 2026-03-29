@@ -1,5 +1,6 @@
 These are my presentations. I usually don&#8217;t do good slides for the presentations so please be kind. Hope the information is useful. Most of them are in Portuguese.
 
+  * Rodando código em uma máquina de cartão de crédito ( [Video](https://peertube.lhc.net.br/w/9FSknQ9zeVhoNwUQSG9GHx) \| [Slides](/presentations/tosconf-06/) ) Tosconf 06 - 28/03/2026
   * Satellite Communications Reverse Engineering ( [Video](https://youtu.be/qAiqKHG6uYM?t=17389) \| [Slides](https://docs.google.com/presentation/d/1-b7UrRDIwJ4mmdVMbgyu_MvRiSJDDp9FKBR7ifUGUCM/edit?usp=sharing) ) &#8211; GambiConf EU 2022
   * Fault Injection ( [Video](https://youtu.be/YcwwKnnRJjk?t=5417) \| [Slides](https://docs.google.com/presentation/d/1OJJfyzHfPZx7ctUYytGZ_xhn55dlfD_2A4d1KD5JdRk/edit?usp=sharing) )  (Portuguese) &#8211; II Semana Aratu - Boitatech
   * Fault Injection ( [Video](https://www.youtube.com/watch?v=BFj93s1lGI8) \| [Slides](https://docs.google.com/presentation/d/e/2PACX-1vSAg1Liox9Uu8sHm_hgog2_O25e3mYkHBNlPXHm1gWGK0mGuG2dUvqCCFytXHvEdSDAatuwoKwIXdOw/pub?start=false&loop=false&delayms=3000) )  (Portuguese) &#8211; BSides VIX 2022
