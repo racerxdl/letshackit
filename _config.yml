@@ -32,7 +32,7 @@ plugins:
 
 # Multiple Languages
 languages: ["en", "pt"]
-exclude_from_localizations: ["javascript", "images", "css", "assets"]
+exclude_from_localizations: ["javascript", "images", "css", "assets", "presentations"]
 
 
 # Permalinks
