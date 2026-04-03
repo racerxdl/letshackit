@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rodando código em uma máquina de cartão - TOSCONF[6]</title>
+    <style>
+        /* Paleta e Variáveis Hacker/TOSCONF */
+        :root {
+            --bg-color: #050505;
+            --bg-gradient: radial-gradient(circle at 50% 50%, #151815 0%, #050505 100%);
+            --accent-color: #00ff41; /* Verde Terminal */
+            --accent-dark: #004d13;
+            --text-main: #e0e0e0;
+            --text-muted: #999999;
+            --font-mono: 'Fira Code', 'Courier New', Courier, monospace;
+            --font-sans: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* Base Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow: hidden;
+        }
+
+        /* Presentation Container */
+        .presentation {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: var(--bg-gradient);
+            /* Scanline effect sutil */
+            background-image: repeating-linear-gradient(0deg, rgba(0, 255, 65, 0.02) 0px, rgba(0, 255, 65, 0.02) 1px, transparent 1px, transparent 3px);
+        }
+
+        /* Slide Styles */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            padding: 40px 60px;
+            box-sizing: border-box;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Header & Footer */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            height: 80px;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            font-family: var(--font-mono);
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -1px;
+            color: #ffffff;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        .logo-date {
+            color: var(--accent-color);
+            font-size: 20px;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 5px;
+            font-weight: normal;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 30px;
+            left: 60px;
+            font-size: 13px;
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer .terminal-prompt {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        /* Typography & Layout */
+        .content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 40px;
+            width: 100%;
+        }
+
+        .col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            font-family: var(--font-mono);
+            font-size: 52px;
+            font-weight: 600;
+            margin: 0 0 20px 0;
+            line-height: 1.2;
+            color: #ffffff;
+        }
+
+        h2 {
+            font-family: var(--font-mono);
+            font-size: 38px;
+            font-weight: 500;
+            margin: 0 0 30px 0;
+            color: var(--accent-color);
+        }
+
+        h3 {
+            font-family: var(--font-mono);
+            font-size: 26px;
+            font-weight: 500;
+            color: #ffffff;
+            margin: 0 0 10px 0;
+        }
+
+        p, li {
+            font-size: 20px;
+            line-height: 1.6;
+            margin-top: 0;
+        }
+
+        strong {
+            color: #ffffff;
+        }
+
+        .highlight-border {
+            border-left: 8px solid var(--accent-color);
+            padding-left: 30px;
+        }
+
+        /* Specific Components */
+        .slide-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 4px;
+            border: 1px solid #333;
+            background-color: #0a0a0a; /* Fundo escuro para caso a imagem demore a carregar */
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.05); /* Brilho verde muito sutil */
+        }
+
+        .image-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .disclaimer-box {
+            background-color: rgba(0, 20, 0, 0.6);
+            padding: 40px;
+        }
+
+        .disclaimer-title {
+            color: #ffeb3b; /* Amarelo alerta */
+            font-family: var(--font-mono);
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .disclaimer-text {
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .profile-img {
+            width: 250px;
+            height: 250px;
+            border-radius: 5px; /* Bordas mais retas pro visual hacker */
+            margin-bottom: 30px;
+            object-fit: cover;
+            border: 2px solid var(--accent-dark);
+        }
+
+        .qr-code {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 30px auto;
+            border-radius: 5px;
+            border: 5px solid #fff; /* Fundo branco pra leitura do QR */
+            background-color: #fff;
+        }
+
+        /* Lists */
+        ul.terminal-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul.terminal-list > li::before {
+            content: "> ";
+            color: var(--accent-color);
+            font-family: var(--font-mono);
+            font-weight: bold;
+        }
+
+        /* Controls */
+        .controls {
+            position: absolute;
+            bottom: 30px;
+            right: 60px;
+            z-index: 100;
+            display: flex;
+            gap: 15px;
+        }
+
+        .controls button {
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--accent-dark);
+            color: var(--accent-color);
+            width: 45px;
+            height: 45px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            font-family: var(--font-mono);
+            transition: all 0.2s;
+        }
+
+        .controls button:hover {
+            background: var(--accent-color);
+            color: #000;
+            box-shadow: 0 0 10px var(--accent-color);
+        }
+
+        .controls button:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+
+<div class="presentation">
+
+    <!-- Controls -->
+    <div class="controls">
+        <button onclick="prevSlide()">❮</button>
+        <button onclick="nextSlide()">❯</button>
+    </div>
+
+    <!-- Slide 1: Title -->
+    <div class="slide active">
+        <div class="content" style="align-items: center; justify-content: center; text-align: center;">
+            <div style="font-family: var(--font-mono); font-size: 100px; font-weight: bold; margin-bottom: 10px; text-shadow: 0 0 20px rgba(0,255,65,0.2);">
+                TOSCONF<span>[6]</span>
+            </div>
+            <div style="color: var(--accent-color); font-family: var(--font-mono); font-size: 32px; letter-spacing: 3px;">
+                >_ 28/03/2026
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+    <!-- Slide 2: Disclaimer Intro -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content row" >
+            <div class="col disclaimer-box" style="flex: 1.2;">
+                <div class="disclaimer-title">Aviso legal / Disclaimer / Descargo de responsabilidad</div>
+                <p class="disclaimer-text">As apresentações destinam-se apenas a fins educacionais e não substituem o julgamento profissional independente. As declarações de fato e opiniões aqui expressas são de total responsabilidade dos participantes e não representam a opinião ou posição do LHC. Os participantes devem observar que as sessões podem ser gravadas em áudio ou vídeo e podem ser publicadas em diversos meios.</p>
+                <p class="disclaimer-text">The presentations are intended for educational purposes only and are not a substitute for independent professional judgment. The statements of fact and opinions expressed herein are solely the responsibility of the participants and do not represent the opinion or position of LHC.</p>
+                <p class="disclaimer-text" style="margin-bottom: 0;">Las presentaciones están destinadas únicamente a fines educativos y no sustituyen el juicio profesional independiente. Las declaraciones de hecho y las opiniones aquí expresadas son las de los participantes.</p>
+            </div>
+            <div class="col highlight-border">
+                <h1>Rodando código em<br>uma máquina de<br>cartão de crédito</h1>
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+    <!-- Slide 3: Speaker 1 -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content row">
+            <div class="col" style="background: rgba(0,0,0,0.5); padding: 50px;">
+                <h2 style="font-size: 48px; margin-bottom: 40px;">quem sou eu</h2>
+                <p style="font-size: 22px;">Engenheiro de software com 10+ anos de experiência.<br>Ex Hardware Pentester na PRIDE Security, Game<br>Engine Developer, e fundador da Teske Virtual System.<br>Especialista em quebrar e proteger sistemas, desde<br>hardware até software.</p>
+            </div>
+            <div class="col" style="align-items: center; justify-content: center;">
+                <!-- IMAGEM AQUI -->
+                <img src="images/foto-lucas.jpg" alt="Foto Lucas Teske" class="profile-img">
+                <h1 style="font-size: 64px; margin-bottom: 10px;">Lucas<br>Teske</h1>
+                <h3 style="font-size: 28px; font-weight: 400; color: var(--text-muted);">Hardware Deconstructor</h3>
+                <h3 style="font-size: 28px; font-weight: 400; color: var(--accent-color);">Teske Virtual System</h3>
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+    <!-- Slide 5: Topic Intro -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content row">
+            <div class="col">
+                <div class="highlight-border">
+                    <h1 style="font-size: 42px;">Rodando código em<br>uma máquina de cartão de crédito</h1>
+                </div>
+                <p style="margin-top: 50px; font-size: 22px; max-width: 500px;">Uma jornada de um processo de engenharia reversa de uma máquina de cartão de crédito PAX D177 para rodar código customizado.</p>
+            </div>
+            <div class="col image-container" style="height: 500px;">
+                <!-- IMAGEM AQUI -->
+                <img src="images/slide5-maquina-doom.jpg" alt="Máquina D177 Customizada" class="slide-image">
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+    <!-- Slide 6: Important Disclaimer -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+            <h2 style="color: #ff3333; margin: 0; font-family: var(--font-mono);">[ ! ] DISCLAIMER</h2>
+        </div>
+        <div class="content row" style="background: rgba(0,0,0,0.6); padding: 40px; justify-content: center;">
+            <div class="col">
+                <p><strong>Todos os procedimentos descritos aqui foram feitos com material disponível publicamente</strong> - Nenhuma falha de segurança foi realmente explorada aqui para obter execução de código. A técnica de troca de processador <span style="color: #ff3333;">não contorna as proteções contra violações nem permite que uma máquina falsa efetue pagamentos.</span></p>
+                <p style="margin-top: 20px;">As máquinas de pagamento com cartão de crédito no Brasil geralmente estão no estado da arte em relação às medidas de segurança. Lembro-me uma vez que um funcionário da Elavon me disse que <strong>o Brasil recebeu todos os primeiros lançamentos de máquinas e sistemas de pagamento.</strong> Quando perguntei por que, ele disse: <strong>as fraudes no Brasil são sofisticadas o suficiente, que se o sistema for seguro o suficiente para o Brasil, funciona em qualquer lugar do mundo.</strong></p>
+            </div>
+            <div class="col">
+                <p>No futuro, farei um artigo sobre as medidas de segurança que tanto a MegaHunt, quanto a PAX e as empresas brasileiras implementam em suas máquinas para evitar que os sistemas sejam adulterados.</p>
+                <p style="margin-top: 20px;">Se você estiver compartilhando / comentando sobre este artigo, por favor coloque o mesmo aviso de isenção de responsabilidade lá. Não me importo de usar as informações aqui para fazer novos artigos, mas o Brasil <strong>sofre</strong> muito com fakenews (especialmente envolvendo hardware de segurança feito aqui) e alguém pode pensar que isso torna possível hackear seus cartões de crédito ou contas.</p>
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+    <!-- Slide 7: Expectations -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content">
+            <h2 style="margin-bottom: 50px;">Primeiros trabalhos e Identificação de coisas</h2>
+            <div class="row">
+                <div class="col">
+                    <h3 style="color: #fff; margin-bottom: 25px;">
+                        Conseguir 3 dispositivos para testes <span style="color: var(--accent-color);">[OK]</span>
+                    </h3>
+                    <ol style="font-size: 22px; line-height: 1.8; color: var(--text-main); padding-left: 20px; font-family: var(--font-mono);">
+                        <li style="margin-bottom: 15px;">Vou abrir, e deixar todas proteções dispararem.</li>
+                        <li style="margin-bottom: 15px;">Vou usar para tentar bypassar todas proteções (caso seja meu objetivo)</li>
+                        <li style="margin-bottom: 15px;">Vou manter como está, para poder ter um modelo de referência para os estudos.</li>
+                    </ol>
+                </div>
+                <div class="col">
+                    <h3 style="color: #fff; margin-bottom: 25px;">
+                        O que era esperado: <span style="color: #ff3333;">[FAIL]</span>
+                    </h3>
+                    <ul class="terminal-list" style="font-size: 22px; line-height: 1.8; color: var(--text-main);">
+                        <li style="margin-bottom: 10px;">Segurança pesada
+                            <ul style="list-style-type: none; margin-top: 10px; color: var(--text-muted); padding-left: 20px;">
+                                <li>- Proteção contra tamper</li>
+                                <li>- Proteção contra clock-glitching</li>
+                                <li>- Proteção contra manipulação de RNG</li>
+                                <li>- Assinaturas de código</li>
+                                <li>- Criptografia de Código</li>
+                            </ul>
+                        </li>
+                        <li style="margin-top: 20px;">Muita frustração</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+    <!-- Slide 8: Target -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content">
+            <h2 style="text-align: center; margin-bottom: 30px;">Alvo</h2>
+            <div class="image-container" style="height: 65vh;">
+                <!-- IMAGEM AQUI -->
+                <img src="images/alvo-pax-d177.jpg" alt="Alvo Máquina PAX D177" class="slide-image">
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+    <!-- Slide 9: Tamper Points -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content">
+            <h2 style="text-align: center; margin-bottom: 30px;">Tamper Points</h2>
+            <div class="row">
+                <div class="col image-container" style="height: 60vh;">
+                    <!-- IMAGEM AQUI -->
+                    <img src="images/tamper-traseira.jpg" alt="Tamper Traseira" class="slide-image">
+                </div>
+                <div class="col image-container" style="height: 60vh;">
+                    <!-- IMAGEM AQUI -->
+                    <img src="images/tamper-carcaca.jpg" alt="Tamper Carcaça" class="slide-image">
+                </div>
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+    <!-- Slide 10: Opsss -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content">
+            <h2 style="text-align: center; margin-bottom: 30px;">Opsss</h2>
+            <div class="image-container" style="height: 60vh;">
+                <!-- IMAGEM AQUI -->
+                <img src="images/opsss-tela.jpg" alt="Tela Switch EXT2/EXT3" class="slide-image">
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+    <!-- Slide 11: Mesh -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content">
+            <div class="image-container" style="height: 30vh;">
+                <!-- IMAGEM AQUI -->
+                <img src="images/meshinplace.jpg" alt="Mesh In Place" class="slide-image">
+            </div>
+            <div class="image-container" style="height: 30vh;">
+                <!-- IMAGEM AQUI -->
+                <img src="images/meshscan.jpg" alt="Mesh Scan" class="slide-image">
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+    <!-- Slide 12: Full Machine -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content">
+            <div class="image-container" style="height: 60vh;">
+                <!-- IMAGEM AQUI -->
+                <img src="images/machine.jpg" alt="Maquina" class="slide-image">
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+
+    <!-- Slide 13: What matters to us -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content row">
+            <div class="col image-container" style="height: 65vh;">
+                <!-- IMAGEM AQUI -->
+                <img src="images/pcb-macro.jpg" alt="Macro PCB" class="slide-image">
+            </div>
+            <div class="col">
+                <h2 style="margin-bottom: 30px;">O que importa pra gente</h2>
+                <ul class="terminal-list" style="font-size: 24px; line-height: 2;">
+                    <li><strong style="color:var(--accent-color); font-family: var(--font-mono);">MH1903</strong> - Nosso principal SoC (CPU)</li>
+                    <li><strong style="color:var(--accent-color); font-family: var(--font-mono);">NXP 8035S</strong> - PHY de Interface de SmartCard</li>
+                    <li><strong style="color:var(--accent-color); font-family: var(--font-mono);">FM17660</strong> - Leitor NFC</li>
+                    <li><strong style="color:var(--accent-color); font-family: var(--font-mono);">XM25Q65</strong> - Memória Flash SPI de 16MB</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+    <!-- Slide 14: The CPU -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content" style="max-width: 1000px; margin: 0 auto; width: 100%;">
+            <h2 style="text-align: center; margin-bottom: 30px;">A CPU da máquina</h2>
+            <div class="row" style="margin-bottom: 30px;">
+                <div class="col image-container" style="height: 35vh;">
+                    <!-- IMAGEM AQUI -->
+                    <img src="images/mh190x-diagrama.jpg" alt="Diagrama MH190x" class="slide-image" style="background: #fff; padding: 10px;">
+                </div>
+                <div class="col image-container" style="height: 35vh;">
+                    <!-- IMAGEM AQUI -->
+                    <img src="images/chip-mh1903.jpg" alt="Chip MH1903" class="slide-image">
+                </div>
+            </div>
+            <div style="font-size: 24px; line-height: 1.8; font-family: var(--font-mono); color: var(--text-main); background: rgba(0,0,0,0.5); padding: 20px; border-left: 4px solid var(--accent-color);">
+                ARM Cortex M4F (Especificação SC300)<br>
+                1MB de RAM<br>
+                1MB de Flash<br>
+                <span style="color: #ffeb3b;">// Datasheets incompletos, SDKs incompletas espalhadas pela internet</span>
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+    <!-- Slide 15: Arduino-like -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content" style="max-width: 1000px; margin: 0 auto; width: 100%;">
+            <h2 style="text-align: center; margin-bottom: 30px;">Irmão "Arduino-like"</h2>
+            <div class="image-container" style="height: 35vh; margin-bottom: 30px;">
+                <!-- IMAGEM AQUI -->
+                <img src="images/air105-aliexpress.jpg" alt="Placa AIR105" class="slide-image">
+            </div>
+            <div style="font-size: 24px; line-height: 1.8; font-family: var(--font-mono); color: var(--text-main); background: rgba(0,0,0,0.5); padding: 20px; border-left: 4px solid var(--accent-color);">
+                ARM Cortex M4F (Especificação SC300)<br>
+                640KB de RAM<br>
+                4MB de Flash<br>
+                <span style="color: #ffeb3b;">// Datasheets incompletos, SDKs incompletas espalhadas pela internet</span>
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+    <!-- Slide 16: Decaps -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content">
+            <h2 style="text-align: center; margin-bottom: 40px;">Decaps</h2>
+            <div class="row" style="text-align: center;">
+                <div class="col">
+                    <div class="image-container" style="height: 45vh; margin-bottom: 20px;">
+                        <!-- IMAGEM AQUI -->
+                        <img src="images/decaps-air105.jpg" alt="Microscópio AIR105" class="slide-image">
+                        <img src="images/decaps-air105-2.jpg" alt="Microscópio AIR105" class="slide-image">
+                    </div>
+                    <h3 style="color: var(--accent-color);">AIR105</h3>
+                </div>
+                <div class="col">
+                    <div class="image-container" style="height: 45vh; margin-bottom: 20px;">
+                        <!-- IMAGEM AQUI -->
+                        <img src="images/decaps-mh1903.jpg" alt="Microscópio MH1903" class="slide-image">
+                    </div>
+                    <h3 style="color: var(--accent-color);">MH1903</h3>
+                </div>
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+    <!-- Slide 17: Connections -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content" style="align-items: center;">
+            <h2 style="margin-bottom: 50px;">Descobrindo como as coisas estão conectadas</h2>
+            <div style="background: rgba(0,0,0,0.6); padding: 50px; border: 1px solid #333; border-radius: 4px; width: 80%; max-width: 800px; box-shadow: -5px 5px 0px rgba(0, 255, 65, 0.2);">
+                <p style="font-size: 26px; margin-bottom: 30px; color: #fff; font-family: var(--font-mono);">> Descobrir onde está a UART ou JTAG/SWD</p>
+                <ol style="font-size: 24px; line-height: 2; color: var(--text-main); font-family: var(--font-mono);">
+                    <li>Tirar todos componentes da PCB</li>
+                    <li>Escanear a PCB (com scanner doméstico)</li>
+                    <li>Mapear os pinos da CPU</li>
+                    <li>Seguir as trilhas</li>
+                </ol>
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+    <!-- Slide 18: Connections 2 -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content" style="align-items: center;">
+            <h2 style="margin-bottom: 50px;">Descobrindo como as coisas estão conectadas</h2>
+
+            <div class="image-container" style="height: 25vh; margin-bottom: 20px;">
+                <!-- IMAGEM AQUI -->
+                <img src="images/qfn88j.jpg" alt="QFN88J" class="slide-image">
+            </div>
+            <div class="image-container" style="height: 25vh; margin-bottom: 20px;">
+                <!-- IMAGEM AQUI -->
+                <img src="images/trilhasqfn.jpg" alt="Trilhas QFN88J" class="slide-image">
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+
+    <!-- Slide 19: Connections 3 -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content" style="align-items: center;">
+            <h2 style="margin-bottom: 50px;">Descobrindo como as coisas estão conectadas</h2>
+
+            <div class="image-container" style="height: 45vh; margin-bottom: 20px;">
+                <!-- IMAGEM AQUI -->
+                <img src="images/uart.jpg" alt="UART" class="slide-image">
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+
+    <!-- Slide 20: CPU or Vuln -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content" style="align-items: center; justify-content: center;">
+            <h1 style="font-size: 64px; text-align: center; line-height: 1.5; color: var(--accent-color); text-shadow: 0 0 10px rgba(0,255,65,0.3);">
+                Trocar CPU<br>
+                <span style="color: #fff;">ou</span><br>
+                achar vulnerabilidade?
+            </h1>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+    <!-- Slide 21/22: Changing CPU -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content">
+            <h2 style="text-align: center; margin-bottom: 40px;">Trocando CPU</h2>
+            <div class="row">
+                <div class="col image-container" style="height: 55vh;">
+                    <!-- IMAGEM AQUI -->
+                    <img src="images/chip-qixinruite.jpg" alt="Anúncio MH1903" class="slide-image" style="background: #fff;">
+                </div>
+                <div class="col image-container" style="height: 55vh;">
+                    <!-- IMAGEM AQUI -->
+                    <img src="images/pcb-solda.jpg" alt="Solda na PCB" class="slide-image">
+                </div>
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+    <!-- Slide 23: Soft Tamper -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content row">
+            <div class="col" style="flex: 1;">
+                <div class="image-container" style="height: 35vh; margin-bottom: 15px;">
+                    <!-- IMAGEM AQUI -->
+                    <img src="images/vbat-trilha.jpg" alt="Trilha da Bateria" class="slide-image">
+                </div>
+                <p style="text-align: center; font-size: 16px; font-family: var(--font-mono); color: var(--accent-color);">[ Caminho da bateria moeda para o MH1903 ]</p>
+            </div>
+            <div class="col" style="flex: 1.2;">
+                <p style="font-size: 22px; line-height: 1.6; margin-bottom: 40px; color: #fff;">Para gravar o MH1903, é preciso resetar ele para entrar no bootloader. Um dos jeitos é retirar temporariamente a tensão da bateria moeda causando um soft-tamper.</p>
+                <div class="image-container" style="height: 15vh; margin-bottom: 20px;">
+                    <!-- IMAGEM AQUI -->
+                    <img src="images/datasheet-vbat.jpg" alt="Tabela Datasheet VBAT33" class="slide-image" style="background: #ddd; padding: 5px;">
+                </div>
+                <p style="font-size: 16px; color: var(--text-muted); border-left: 2px solid #555; padding-left: 10px;">Em chinês: Alimentação da bateria, precisa ser energizado caso contrário não funciona.</p>
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+    <!-- Slide 24: Success -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content row">
+            <div class="col">
+                <div class="image-container" style="max-height: 35vh; margin-bottom: 20px;">
+                    <!-- IMAGEM AQUI -->
+                    <img src="images/log-terminal.jpg" alt="Log Terminal Gravado com Sucesso" class="slide-image" style="border-color: var(--accent-color);">
+                </div>
+                <p style="text-align: center; color: var(--accent-color); font-family: var(--font-mono);">> Dispositivo gravado com sucesso :)</p>
+            </div>
+            <div class="col">
+                <div class="image-container" style="max-height: 35vh; margin-bottom: 20px;">
+                    <!-- IMAGEM AQUI -->
+                    <img src="images/fios-uart.jpg" alt="Fios UART Soldados" class="slide-image">
+                </div>
+                <p style="text-align: center; color: var(--text-muted); font-family: var(--font-mono);">[ Fios para expor a UART e o "Reset" ]</p>
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+    <!-- Slide 25: Success -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content" style="align-items: center;">
+            <div class="image-container" style="height: 45vh; margin-bottom: 20px;">
+                <!-- IMAGEM AQUI -->
+                <img src="images/crasharalho.jpg" alt="Crasharalho" class="slide-image">
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+    <!-- Slide 26: Magic Stuff -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content" style="align-items: center;">
+            <h2 style="margin-bottom: 40px; font-size: 48px;">MAGIC STUFF</h2>
+            <div style="background: rgba(0,0,0,0.6); border: 1px solid #333; padding: 40px; border-radius: 4px; width: 90%; max-width: 1000px; box-shadow: -5px 5px 0px rgba(0, 255, 65, 0.2);">
+                <p style="font-size: 24px; margin-bottom: 30px; color: #fff; font-family: var(--font-mono);">> Algumas coisas foram omitidas para simplicidade:</p>
+                <ul class="terminal-list" style="font-size: 20px; line-height: 1.8; color: var(--text-main);">
+                    <li style="margin-bottom: 15px;">Foi feita engenharia reversa na firmware original do dispositivo e também na bootrom para descobrir os "periféricos ocultos" do MH1903 que controlavam a tela.</li>
+                    <li style="margin-bottom: 15px;">Foi criado um emulador para fazer um trace do que a firmware acessava ou usava.</li>
+                    <li style="margin-bottom: 15px;">A parte da criação do código. Ela é bem simples pois o LCD é um ST7735 rodando via SPI, algo comum para projetos arduino.</li>
+                    <li style="margin-bottom: 15px;">Em breve novidades sobre a engenharia reversa :D</li>
+                    <li style="color: var(--accent-color); font-weight: bold;">E OBVIAMENTE, em breve, DOOM no mesmo dispositivo!</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+    <!-- Slide 27: Spoilers -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content">
+            <h2 style="text-align: center; margin-bottom: 40px;">Spoilers</h2>
+            <div class="image-container" style="max-width: 1000px; margin: 0 auto;">
+                <img src="images/mhemu-emulador.jpg" alt="MHEmu Emulador" class="slide-image">
+            </div>
+            <div class="image-container" style="max-width: 1000px; margin: 0 auto;">
+                <img src="images/mhemu-emulador-crasharalho.jpg" alt="MHEmu Emulador" class="slide-image">
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+    <!-- Slide 28: End -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">TOSCONF<span>[6]</span><br><div class="logo-date">>_ 28/03/2026</div></div>
+        </div>
+        <div class="content row" style="padding-top: 40px;">
+            <div class="col" style="flex: 1; text-align: center;">
+                <h1 style="font-size: 56px; margin-bottom: 50px;">Perguntas?</h1>
+
+                <h2 style="font-size: 28px; font-weight: 300; margin-bottom: 20px; color: var(--text-muted); font-family: var(--font-mono);">> entre em contato</h2>
+
+                <h1 style="font-size: 56px; margin-bottom: 10px; line-height: 1;">Lucas <span style="font-weight: 300; color: #777;">Teske</span></h1>
+                <p style="color: var(--accent-color); font-size: 20px; margin-bottom: 40px; font-family: var(--font-mono);">in/lucas-teske-8206301b | lucas@teske.com.br</p>
+                <img src="images/crasharalho-gambiconf.jpg" alt="Crasharalho Gambiconf">
+            </div>
+            <div class="col" style="flex: 1; text-align: center;">
+                <img src="images/qr-code-lucas.png" alt="QR Code Link" class="qr-code">
+                <p>https://lucasteske.dev</p>
+
+                <p>Podcast Gambiconf:</p>
+                <img src="images/qrcodegambiconf.jpg" alt="QR Code GambiConf" class="qr-code">
+
+                <div style="border-left: 8px solid var(--accent-color); padding-left: 20px; text-align: left; margin-top: 20px; background: rgba(0,255,65,0.05); padding-top: 15px; padding-bottom: 15px; padding-right: 20px;">
+                    <h1 style="font-size: 42px; font-weight: 400; line-height: 1.2; margin-bottom: 10px;">Obrigado pela<br>sua atenção</h1>
+                    <p style="color: var(--text-muted); font-size: 16px; margin: 0; font-family: var(--font-mono);">tosconf.lhc.net.br | @lhc</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer"><span class="terminal-prompt">root@lhc:~#</span> LABORATÓRIO HACKER DE CAMPINAS - DESCONFERÊNCIA ANUAL</div>
+    </div>
+
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            if (i === index) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        });
+    }
+
+    function nextSlide() {
+        currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+        showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+        currentSlide = Math.max(currentSlide - 1, 0);
+        showSlide(currentSlide);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'Space') {
+            nextSlide();
+        } else if (e.key === 'ArrowLeft') {
+            prevSlide();
+        }
+    });
+
+    // Controle para Swipe em Mobile/Tablet
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+
+    document.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+
+    function handleSwipe() {
+        if (touchEndX < touchStartX - 50) nextSlide();
+        if (touchEndX > touchStartX + 50) prevSlide();
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="528.30713"
+   height="344.90552"
+   viewBox="0 0 55.91247 36.502478"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="nand-block.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title
+     id="title30923">NAND Block Structure</title>
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="18.384776"
+     inkscape:cy="-72.124891"
+     inkscape:window-width="1862"
+     inkscape:window-height="999"
+     inkscape:window-x="58"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     scale-x="0.4"
+     units="px" />
+  <defs
+     id="defs2">
+    <marker
+       style="overflow:visible"
+       id="Arrow1Mend"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path6882" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Mstart"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mstart"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,4,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path6879" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Lstart"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path6873" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Sstart"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Sstart"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.2,0,0,0.2,1.2,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path6885" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker12488"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path12486" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path6900" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mstart"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path6897" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Lend"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path6894" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Lstart"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lstart"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(1.1,0,0,1.1,1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path6891" />
+    </marker>
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#Checkerboard"
+       id="pattern5514"
+       patternTransform="matrix(0.08733368,0,0,0.1180338,-14.784894,0.54086279)" />
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#Checkerboard"
+       id="pattern4234"
+       patternTransform="matrix(0.11519702,0,0,0.11227547,-14.784894,-1.0470614)" />
+    <pattern
+       inkscape:collect="always"
+       patternUnits="userSpaceOnUse"
+       width="2"
+       height="2"
+       patternTransform="translate(0,0) scale(10,10)"
+       id="Checkerboard"
+       inkscape:stockid="Checkerboard"
+       inkscape:isstock="true">
+      <rect
+         style="fill:black;stroke:none"
+         x="0"
+         y="0"
+         width="1"
+         height="1"
+         id="rect3202" />
+      <rect
+         style="fill:black;stroke:none"
+         x="1"
+         y="1"
+         width="1"
+         height="1"
+         id="rect3204" />
+    </pattern>
+  </defs>
+  <g
+     inkscape:label="Camada 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:inline">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 1.7696773,20.975134 V 7.2051493 l 7.84391,-5.4578128 H 35.498078 V 15.534722 l -7.958831,5.460728 z"
+       id="path869" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 1.7696773,7.2051493 H 27.553244 l 7.944834,-5.4578128 v 0"
+       id="path871" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 27.539247,20.99545 0.014,-13.7903007 v 0"
+       id="path873" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 24.430968,21.001772 24.429284,7.1797458 32.539106,1.7498643"
+       id="path1266"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="fill:url(#pattern4234);fill-opacity:1;stroke:#000000;stroke-width:0.265;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 1.7772593,12.172056 H 27.411848 l 8.085325,-5.4782685 0.0027,1.5781017 -7.974601,5.4153828 H 1.8386663 1.7665963 Z"
+       id="path1965"
+       sodipodi:nodetypes="cccccccc" />
+    <path
+       style="fill:url(#pattern5514);fill-opacity:1;stroke:#000000;stroke-width:0.264583px;stroke-linecap:round;stroke-linejoin:bevel;stroke-opacity:1"
+       d="m 1.7302653,32.842021 h 0.03965 l 25.6915047,2.89e-4 8.033464,-5.488226 v -1.486943 l -8.007868,5.476955 H 1.7302653 v 1.497925"
+       id="path5186"
+       sodipodi:nodetypes="cccccccc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 27.487016,31.344096 v 1.471877 h 0.02596"
+       id="path5701" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 35.494884,25.867141 H 9.5349043 l -7.804639,5.476955 v 1.497925 0"
+       id="path5991"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 32.496552,25.85444 -8.057555,5.481917 v 1.483858"
+       id="path6348" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Camada 3"
+     style="display:inline">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.529166, 0.264583;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 24.430967,21.001772 c 0.837077,1.866146 1.706914,3.413753 3.086992,0"
+       id="path14539"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:3.9;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow2Lstart);marker-end:url(#Arrow2Lend)"
+       d="m 19.262467,22.65873 v 4.575112"
+       id="path6791"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:1.41111px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';letter-spacing:0px;word-spacing:0px;stroke:#ffffff;stroke-width:0.565;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       x="25.68771"
+       y="22.976078"
+       id="text8562-5"><tspan
+         sodipodi:role="line"
+         id="tspan8560-2"
+         style="font-size:1.41111px;stroke:#ffffff;stroke-width:0.565;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+         x="25.68771"
+         y="22.976078">64 Bytes</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:1.41111px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';letter-spacing:0px;word-spacing:0px;display:inline;stroke:#ffffff;stroke-width:0.565;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       x="48.414093"
+       y="8.4110661"
+       id="text8562-5-4"><tspan
+         sodipodi:role="line"
+         id="tspan8560-2-6"
+         style="font-size:1.41111px;text-align:center;text-anchor:middle;stroke:#ffffff;stroke-width:0.565;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+         x="48.414093"
+         y="8.4110661">NAND Block</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:1.41111px;text-align:center;text-anchor:middle;stroke:#ffffff;stroke-width:0.565;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+         x="48.414093"
+         y="10.174953"
+         id="tspan27473">1 Block = 64 Pages</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:1.41111px;text-align:center;text-anchor:middle;stroke:#ffffff;stroke-width:0.565;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+         x="48.414093"
+         y="11.938841"
+         id="tspan18839">(128K + 4K Bytes)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:1.41111px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
+       x="9.1787539"
+       y="35.00832"
+       id="text8562-2"><tspan
+         sodipodi:role="line"
+         id="tspan8560-27"
+         style="font-size:1.41111px;stroke-width:0.264583"
+         x="9.1787539"
+         y="35.00832">2048 Bytes</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:1.41111px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
+       x="24.38493"
+       y="34.932423"
+       id="text8562-5-0"><tspan
+         sodipodi:role="line"
+         id="tspan8560-2-3"
+         style="font-size:1.41111px;stroke-width:0.264583"
+         x="24.38493"
+         y="34.932423">64 Bytes</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.05833, 2.11666;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 24.429284,20.886274 c -8.35922,2.551684 -14.7817347,2.532729 -22.6596067,0.08886 v 0"
+       id="path12027"
+       sodipodi:nodetypes="ccc" />
+    <text
+       xml:space="preserve"
+       style="font-size:1.41111px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';letter-spacing:0px;word-spacing:0px;fill:#020000;fill-opacity:1;stroke:#ffffff;stroke-width:0.365;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       x="9.1787539"
+       y="23.144426"
+       id="text8562"><tspan
+         sodipodi:role="line"
+         id="tspan8560"
+         style="font-size:1.41111px;fill:#020000;fill-opacity:1;stroke:#ffffff;stroke-width:0.365;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         x="9.1787539"
+         y="23.144426">2048 Bytes</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:1.41111px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';letter-spacing:0px;word-spacing:0px;display:inline;stroke:#ffffff;stroke-width:0.565;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       x="13.243289"
+       y="28.968885"
+       id="text8562-5-4-4-5"><tspan
+         sodipodi:role="line"
+         style="font-size:1.41111px;stroke:#ffffff;stroke-width:0.565;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+         x="13.243289"
+         y="28.968885"
+         id="tspan18839-3-8">NAND Page</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.265;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.795, 0.265;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 27.512977,32.815973 c 4.618646,-0.453998 10.02491,-0.358263 7.981907,-5.461889"
+       id="path22013"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:1.41111px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';letter-spacing:0px;word-spacing:0px;display:inline;stroke:#ffffff;stroke-width:0.565;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       x="33.66608"
+       y="31.423351"
+       id="text8562-5-9"><tspan
+         sodipodi:role="line"
+         id="tspan8560-2-7"
+         style="font-size:1.41111px;stroke:#ffffff;stroke-width:0.565;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+         x="33.66608"
+         y="31.423351">8 Bits</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Mend)"
+       d="M 42.137643,9.0383296 C 40.775752,7.5386901 39.799337,6.4875927 36.905427,7.7908624"
+       id="path22265"
+       sodipodi:nodetypes="cc" />
+  </g>
+  <metadata
+     id="metadata30921">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>NAND Block Structure</dc:title>
+        <dc:date>2022/08/07</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Lucas Teske</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Creative Commons Share-alike</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>NAND</rdf:li>
+            <rdf:li>Block</rdf:li>
+            <rdf:li>Structure</rdf:li>
+            <rdf:li>Flash</rdf:li>
+            <rdf:li>Memory</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/4.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

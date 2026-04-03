@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   width="400"
+   height="260"
+   id="svg2"
+   sodipodi:docname="logic-gates.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <metadata
+     id="metadata71">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1056"
+     id="namedview69"
+     showgrid="false"
+     inkscape:zoom="3.05"
+     inkscape:cx="151.63934"
+     inkscape:cy="130"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g169" />
+  <defs
+     id="defs4" />
+  <g
+     id="g169"
+     transform="translate(-55.160368,-307.13626)">
+    <g
+       id="g242"
+       transform="translate(31.48574,-0.40491062)">
+      <path
+         d="m 84.61685,542.63672 h 16.46665 v -14.50273 l 24.05085,13.88577 -24.0381,13.97698 v -13.3441"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="path5161" />
+      <path
+         d="m 135.4436,542.06536 a 4.7229962,4.7229962 0 1 1 -9.44599,0 4.7229962,4.7229962 0 1 1 9.44599,0 z"
+         style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1"
+         id="path5163" />
+      <path
+         d="M 152.23647,542.06536 H 136.31822"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="path5165" />
+      <path
+         d="m 84.872158,493.74703 h 15.09033"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="path5167" />
+      <path
+         d="M 84.87216,506.74661 H 99.96249"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="path5169" />
+      <path
+         d="m 96.746518,487.48001 c 10.307602,12.94635 0,25.64531 0,25.64531"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="path5171" />
+      <path
+         d="m 102.10647,486.40802 c 30.67941,0 34.05631,13.85342 34.05631,13.85342 h 16.24478 -16.32724 c -4.39156,16.38954 -34.05631,13.77095 -34.05631,13.77095 14.18326,-13.85342 0.0825,-27.62437 0.0825,-27.62437 z"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="path5173" />
+      <path
+         d="m 96.10647,445.25357 c 30.67941,0 34.05631,13.85342 34.05631,13.85342 h -0.0825 c -4.39156,16.38954 -34.05631,13.77095 -34.05631,13.77095 14.18326,-13.85342 0.08246,-27.62437 0.08246,-27.62437 z"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="path6144" />
+      <path
+         d="m 85.47854,453.21644 h 15.09033"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="path6146" />
+      <path
+         d="m 85.47854,466.21602 h 15.09033"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="path6148" />
+      <path
+         d="m 136.61507,459.27472 a 3.0698493,3.0698493 0 1 1 -6.13969,0 3.0698493,3.0698493 0 1 1 6.13969,0 z"
+         style="fill:none;stroke:#000000;stroke-width:1.82623;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1"
+         id="path6150" />
+      <path
+         d="M 153.06108,459.27471 H 137.14283"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="path6152" />
+      <path
+         d="m 96.49742,403.18185 c 30.67941,0 34.05631,13.85342 34.05631,13.85342 h 16.24478 -16.32724 c -4.39156,16.38954 -34.05631,13.77095 -34.05631,13.77095 14.18326,-13.85342 0.08246,-27.62437 0.08246,-27.62437 z"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="path6154" />
+      <path
+         d="m 85.78403,411.27754 h 15.09033"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="path6156" />
+      <path
+         d="m 85.78403,424.27712 h 15.09033"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="path6158" />
+      <path
+         d="m 142.15386,374.25147 a 3.0698493,3.0698493 0 1 1 -6.13969,0 3.0698493,3.0698493 0 1 1 6.13969,0 z"
+         style="fill:none;stroke:#000000;stroke-width:1.82623;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1"
+         id="path6160" />
+      <path
+         d="M 158.59987,374.25146 H 142.68162"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="path6162" />
+      <path
+         d="m 101.01807,361.22832 v 26.95859 c 46.14365,2.41936 47.2183,-29.55076 0,-26.95859 z"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="path6164" />
+      <path
+         d="m 85.43841,367.62316 h 15.09033"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="path6166" />
+      <path
+         d="m 85.43841,380.62274 h 15.09033"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="path6168" />
+      <path
+         d="M 152.99929,331.92679 H 137.08104"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="path6170" />
+      <path
+         d="m 101.42391,318.49781 v 26.95859 c 46.14365,2.41936 47.2183,-29.55076 0,-26.95859 z"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="path6172" />
+      <path
+         d="m 85.43841,325.62316 h 15.09033"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="path6174" />
+      <path
+         d="m 85.43841,338.62274 h 15.09033"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="path6176" />
+      <text
+         x="172.64407"
+         y="337.72189"
+         style="font-style:normal;font-weight:normal;font-size:15.2975px;font-family:'Bitstream Vera Sans';fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="text6206"
+         xml:space="preserve"><tspan
+           x="172.64407"
+           y="337.72189"
+           id="tspan6208">Porta E (AND)</tspan></text>
+      <text
+         x="171.34369"
+         y="379.0376"
+         style="font-style:normal;font-weight:normal;font-size:15.2975px;font-family:'Bitstream Vera Sans';fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="text6210"
+         xml:space="preserve"><tspan
+           x="171.34369"
+           y="379.0376"
+           id="tspan6212">Porta Não-E (NAND)</tspan></text>
+      <text
+         x="171.96976"
+         y="421.45499"
+         style="font-style:normal;font-weight:normal;font-size:15.2975px;font-family:'Bitstream Vera Sans';fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="text6214"
+         xml:space="preserve"><tspan
+           x="171.96976"
+           y="421.45499"
+           id="tspan6216">Porta OU (OR)</tspan></text>
+      <text
+         x="171.55237"
+         y="463.19327"
+         style="font-style:normal;font-weight:normal;font-size:15.2975px;font-family:'Bitstream Vera Sans';fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="text6218"
+         xml:space="preserve"><tspan
+           x="171.55237"
+           y="463.19327"
+           id="tspan6220">Porta Não-OU (NOR)</tspan></text>
+      <text
+         x="172.17844"
+         y="504.51416"
+         style="font-style:normal;font-weight:normal;font-size:15.2975px;font-family:'Bitstream Vera Sans';fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="text6222"
+         xml:space="preserve"><tspan
+           x="172.17844"
+           y="504.51416"
+           id="tspan6224">Porta Ou-exclusivo (XOR)</tspan></text>
+      <text
+         x="170.94289"
+         y="546.29791"
+         style="font-style:normal;font-weight:normal;font-size:15.2975px;font-family:'Bitstream Vera Sans';fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="text6226"
+         xml:space="preserve">Porta Inversora (NOT)</text>
+    </g>
+  </g>
+</svg>
