@@ -73,6 +73,7 @@ exclude:
   - lets-hack-it.sublime-project
   - lets-hack-it.sublime-workspace
   - vendor
+  - CLAUDE.md
 
 data:
   en:
