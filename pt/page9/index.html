@@ -510,6 +510,19 @@
 
 <div class="catalogue">
   
+    <a href="/pt/2014/01/ip-cam-maygion/" class="catalogue-item catalogue-item-2">
+      <div>
+        <time datetime="2014-01-18 23:42:45 +0000" class="catalogue-time">January 18, 2014</time>
+        <h1 class="catalogue-title">IP Cam – MayGion</h1>
+        <div class="catalogue-line"></div>
+        
+        <p>
+          Bom, estou montando um QuadCopter e sai procurando cameras para colocar nele. Na minha lista de opções coloquei 3 câmeras IP: 1) MayGion IP cam (comprada na Dealextreme, 640×480) 2) DSC-930L (D-LINK 640×480) 3) DSC-2130 (D-LINK 1280×800) Comecei a desmontar a MayGion pra ver como ela era. Ai vai umas fotos Essa é a placa principal. O microcontrolador parece proprietário (ao menos, não conheço a marca). Pela engenharia reversa na firmware, é um processador MIPS que roda a cerca de 400MHz. A câmera usa motores de passo para os controles dos eixos, um jeito bem preciso de mexer a câmera....
+        </p>
+
+      </div>
+    </a>
+  
     <a href="/pt/2011/10/funcao-c-para-multiplos-e-submultiplos-revisado/" class="catalogue-item catalogue-item-2">
       <div>
         <time datetime="2011-10-30 20:50:21 +0000" class="catalogue-time">October 30, 2011</time>
@@ -592,19 +605,6 @@ Créditos ao Uzzors2k pela ideia de cascatear microprocessadores para polifonia
       </div>
     </a>
   
-    <a href="/pt/2011/10/amostra-de-memoria-mram-da-everspin/" class="catalogue-item catalogue-item-2">
-      <div>
-        <time datetime="2011-10-13 19:42:09 +0000" class="catalogue-time">October 13, 2011</time>
-        <h1 class="catalogue-title">Amostra de Memória MRAM da Everspin</h1>
-        <div class="catalogue-line"></div>
-        
-        <p>
-          Há muito tempo atrás pedi amostras de uma memória magnética da Everspin para fazer testes aqui, porém depois me deparei com o problema de que ela é 3.3V. De qualquer maneira agora tenho um FPGA para brincar com ela. O modelo de amostra é a MR2A16AYS35, uma MRAM de 1M de endereço e 16 Bits de “palavra”, totalizando 16Mbit ou 2 Mbytes. MRAM é um acrônimo para Magneto-resistive Random Access Memory, que é uma memória RAM não-volátil (não perde os dados quando se desliga). Ela é considerada a chave para o futuro da computação, principalmente portátil. Com ela vem o conceito de “boot-instantâneo” onde...
-        </p>
-
-      </div>
-    </a>
-  
 </div>
 
 <div class="pagination">
@@ -623,10 +623,10 @@ Créditos ao Uzzors2k pela ideia de cascatear microprocessadores para polifonia
 
     <footer>
   <span>
-    © <time datetime="2026-03-30 19:35:41 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-04-03 21:25:46 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-30 19:35:41 +0000
+    Last build: 2026-04-03 21:25:46 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">
@@ -655,6 +655,20 @@ Créditos ao Uzzors2k pela ideia de cascatear microprocessadores para polifonia
   anchors.add();
 </script>
 <!-- End AnchorJS -->
+<!-- Mermaid.js Diagrams -->
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'dark',
+    securityLevel: 'loose'
+  });
+  await mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+<!-- End Mermaid.js -->
+
 <!-- Cloudflare Web Analytics -->
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "6fdff3f05d2847b58d553381bb1e8115"}'></script>
 <!-- End Cloudflare Web Analytics -->

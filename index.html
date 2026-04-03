@@ -510,6 +510,23 @@
 
 <div class="catalogue">
   
+    <a href="/2026/04/reverse-engineering-air105-bootrom-mh1903s-boot-process" class="catalogue-item catalogue-item-2">
+      <div>
+        <time datetime="2026-04-03 20:00:00 +0000" class="catalogue-time">April 03, 2026</time>
+        <h1 class="catalogue-title">Reverse Engineering the AIR105 Bootrom - A Deep Dive into the MH1903S Boot Process</h1>
+        <div class="catalogue-line"></div>
+        
+          <div class="post-image-div">
+            <img src="/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/9138886ea831b06c18888099fd0e26a6_MD5.jpeg" class="post-image post-image-2" alt='Yellow pixelated text "1903S" on a faded, speckled background with vertical lines.'>
+          </div>
+        
+        <p>
+          Reverse Engineering the AIR105 Bootrom: A Deep Dive into the MH1903S Boot Process The AIR105 is a secure microcontroller built around the MH1903S core — an ARM Cortex-M4F processor running at 168 MHz, designed for payment terminals and other security-critical embedded applications. It features hardware cryptography (SM2/SM3/SM4, AES, RSA-2048, SHA-256/384/512), OTP (One-Time Programmable) memory for key storage — though as we’ll see, the bootrom can write to OTP regions via the UART protocol, so it’s better thought of as controlled-access storage rather than truly write-once — on-the-fly flash encryption via a cache encryption engine, and a battery-backed key processing unit...
+        </p>
+
+      </div>
+    </a>
+  
     <a href="/2025/09/running-code-in-pax-machines" class="catalogue-item catalogue-item-2">
       <div>
         <time datetime="2025-09-05 19:30:00 +0000" class="catalogue-time">September 05, 2025</time>
@@ -578,23 +595,6 @@
       </div>
     </a>
   
-    <a href="/2021/04/rotor-antenna-parte-2" class="catalogue-item catalogue-item-2">
-      <div>
-        <time datetime="2021-04-01 05:23:00 +0000" class="catalogue-time">April 01, 2021</time>
-        <h1 class="catalogue-title">Antenna Rotor - Part 2</h1>
-        <div class="catalogue-line"></div>
-        
-          <div class="post-image-div">
-            <img src="/assets/posts/tracker-mount-2/assembled-elevation-shaft.jpg" class="post-image post-image-2" alt="Black stepper motor with wires and gear shaft, surrounded by tools on a workbench.">
-          </div>
-        
-        <p>
-          Continuing the tracker project, I managed to make some significant progress. As Demilson (PY2UEP) had cut the original motors, I did the same. The azimuth motor was too rusted and I eventually destroyed one of the coils (which I wanted to salvage the wire), but in the end the shaft went out. After removing the shaft, I broke the magnet with a hammer until there was any piece left. That way, the only thing that would be left there is the shaft and the hexagon magnet support. Motor shaft showing the hexagon support For the elevation motor, I made a...
-        </p>
-
-      </div>
-    </a>
-  
 </div>
 
 <div class="pagination">
@@ -611,10 +611,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-30 19:35:26 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-04-03 21:25:32 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-30 19:35:26 +0000
+    Last build: 2026-04-03 21:25:32 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">
@@ -643,6 +643,20 @@
   anchors.add();
 </script>
 <!-- End AnchorJS -->
+<!-- Mermaid.js Diagrams -->
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'dark',
+    securityLevel: 'loose'
+  });
+  await mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+<!-- End Mermaid.js -->
+
 <!-- Cloudflare Web Analytics -->
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "6fdff3f05d2847b58d553381bb1e8115"}'></script>
 <!-- End Cloudflare Web Analytics -->

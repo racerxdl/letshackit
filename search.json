@@ -1,6 +1,15 @@
 [
   
     {
+      "title"    : "Reverse Engineering the AIR105 Bootrom - A Deep Dive into the MH1903S Boot Process",
+      "url"      : "/2026/04/reverse-engineering-air105-bootrom-mh1903s-boot-process",
+      "category" : "",
+      "tags"     : "AIR105, MH1903S, Bootrom, Boot Process, Reverse Engineering, Hardware Hacking, Firmware, ARM, Embedded, ARM Cortex-M4F, Ghidra, QSPI, UART, OTP, Security, Cryptography, Embedded Systems",
+      "date"     : "April 03, 2026",
+      "excerpt"  : "Reverse Engineering the AIR105 Bootrom: A Deep Dive into the MH1903S Boot ProcessThe AIR105 is a secure microcontroller built around the MH1903S core — an ARM Cortex-M4F processor running at 168 MHz, designed for payment terminals and other security-critical embedded applications. It features hardware cryptography (SM2/SM3/SM4, AES, RSA-2048, SHA-256/384/512), OTP..."
+    } ,
+  
+    {
       "title"    : "Running code in a PAX Credit Card Payment Machine (part1)",
       "url"      : "/2025/09/running-code-in-pax-machines",
       "category" : "",

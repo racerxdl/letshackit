@@ -510,6 +510,23 @@
 
 <div class="catalogue">
   
+    <a href="/2017/04/goes-16-test-week-results/" class="catalogue-item catalogue-item-2">
+      <div>
+        <time datetime="2017-04-02 05:50:37 +0000" class="catalogue-time">April 02, 2017</time>
+        <h1 class="catalogue-title">GOES 16 Test Week Results</h1>
+        <div class="catalogue-line"></div>
+        
+          <div class="post-image-div">
+            <img src="/wp-content/uploads/2017/04/goes-16-abi-624x312.jpg" class="post-image post-image-2">
+          </div>
+        
+        <p>
+          In the week from March 27th to 31 NOAA performed some new downstream tests over HRIT link on GOES-16. The idea was to transfer some CMI (Cloud and Moisture Imaging) products and see if the software developers and current stations could receive it fine. Before starting talking about that, please notice that all data sent so far is stated as test data and should not be used for any real world measurements. As NOAA states (and I forwarded on my last post): The user of that link assumes all risks related to the use of their data and NOAA disclaims and any...
+        </p>
+
+      </div>
+    </a>
+  
     <a href="/2017/03/goes-16-test-week/" class="catalogue-item catalogue-item-2">
       <div>
         <time datetime="2017-03-25 15:38:50 +0000" class="catalogue-time">March 25, 2017</time>
@@ -575,23 +592,6 @@
       </div>
     </a>
   
-    <a href="/2016/11/137mhz-bandpass-filter-for-noaa-meteor-satellites/" class="catalogue-item catalogue-item-2">
-      <div>
-        <time datetime="2016-11-13 17:44:12 +0000" class="catalogue-time">November 13, 2016</time>
-        <h1 class="catalogue-title">137MHz Bandpass filter for NOAA / Meteor Satellites</h1>
-        <div class="catalogue-line"></div>
-        
-          <div class="post-image-div">
-            <img src="/wp-content/uploads/2016/11/newfilter_predict-624x482.png" class="post-image post-image-2">
-          </div>
-        
-        <p>
-          Yesterday I saw a new blog post by Adam (9a4qv) in LNA4ALL. The post (here) talks about a band pass filter he did for Weather Satellites and I decided to try as well. Unfortunately I don’t have a exact match for that components at home, so I tried to do something with the components I have. So the lower value I had for capacitors was 10pF, and the needed values for Adam’s Filter is 1pF, 4.7pF and 15pF. I decided then to use 10 in series to do the 1pF, 2 in series for the 4.7pF (that will be 5pF)...
-        </p>
-
-      </div>
-    </a>
-  
 </div>
 
 <div class="pagination">
@@ -610,10 +610,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-30 19:35:26 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-04-03 21:25:32 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-30 19:35:26 +0000
+    Last build: 2026-04-03 21:25:32 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">
@@ -642,6 +642,20 @@
   anchors.add();
 </script>
 <!-- End AnchorJS -->
+<!-- Mermaid.js Diagrams -->
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'dark',
+    securityLevel: 'loose'
+  });
+  await mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+<!-- End Mermaid.js -->
+
 <!-- Cloudflare Web Analytics -->
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "6fdff3f05d2847b58d553381bb1e8115"}'></script>
 <!-- End Cloudflare Web Analytics -->

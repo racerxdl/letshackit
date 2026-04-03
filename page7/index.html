@@ -510,6 +510,23 @@
 
 <div class="catalogue">
   
+    <a href="/2016/10/goes-satellite-hunt-part-1-antenna-system/" class="catalogue-item catalogue-item-2">
+      <div>
+        <time datetime="2016-10-18 22:24:40 +0000" class="catalogue-time">October 18, 2016</time>
+        <h1 class="catalogue-title">GOES Satellite Hunt (Part 1 – Antenna System)</h1>
+        <div class="catalogue-line"></div>
+        
+          <div class="post-image-div">
+            <img src="/wp-content/uploads/2016/10/Sem-t%C3%ADtulo.png" class="post-image post-image-2">
+          </div>
+        
+        <p>
+          So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that’s reachable in São Paulo) with a good SNR (enough to decode) and then make all the tools to demodulate, decode and output the images and other data they send. I wanted a high-res image, and the L-Band transmissions usually provide that (GOES for example is 1km/px with whole earth sphere in frame. A 10000 x 10000 pixels image) So I choose GOES over other Weather Satellites mainly because GOES is a Geostationary Satellite. That means its position...
+        </p>
+
+      </div>
+    </a>
+  
     <a href="/2016/07/new-way-to-measure-filters-and-my-new-filter/" class="catalogue-item catalogue-item-2">
       <div>
         <time datetime="2016-07-22 22:28:48 +0000" class="catalogue-time">July 22, 2016</time>
@@ -574,19 +591,6 @@
       </div>
     </a>
   
-    <a href="/2016/01/qfh-antenna-and-my-first-reception-of-noaa/" class="catalogue-item catalogue-item-2">
-      <div>
-        <time datetime="2016-01-25 03:55:41 +0000" class="catalogue-time">January 25, 2016</time>
-        <h1 class="catalogue-title">QFH Antenna and my first reception of NOAA!</h1>
-        <div class="catalogue-line"></div>
-        
-        <p>
-          So in my last post I was playing with my RTL-SDR with an Intel Edison. So I decided to build a QFH Antenna to be able to receive NOAA APT Signals. These NOAA Weather Satellites broadcast an APT signal with about 5 to 8 Watts at 2m band, and considering how low this power is, it might surprise you that these signals arrive pretty strong at earth surface. But the biggest challenge to receive these signals are not its power. Its all about movement. These satellites are sun-synchronous low orbit satellites, that means they aren’t locked to earth rotation. Instead,...
-        </p>
-
-      </div>
-    </a>
-  
 </div>
 
 <div class="pagination">
@@ -605,10 +609,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-30 19:35:26 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-04-03 21:25:32 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-30 19:35:26 +0000
+    Last build: 2026-04-03 21:25:32 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">
@@ -637,6 +641,20 @@
   anchors.add();
 </script>
 <!-- End AnchorJS -->
+<!-- Mermaid.js Diagrams -->
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'dark',
+    securityLevel: 'loose'
+  });
+  await mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+<!-- End Mermaid.js -->
+
 <!-- Cloudflare Web Analytics -->
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "6fdff3f05d2847b58d553381bb1e8115"}'></script>
 <!-- End Cloudflare Web Analytics -->

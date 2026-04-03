@@ -1,4 +1,1216 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://lucasteske.dev/feed.xml" rel="self" type="application/atom+xml" /><link href="https://lucasteske.dev/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-03-30T19:35:26+00:00</updated><id>https://lucasteske.dev/feed.xml</id><title type="html">Lets Hack It</title><subtitle>Lucas Teske&apos;s blog about electronics, hardware hacking, SDR, satellites, reverse engineering and more.</subtitle><author><name>Lucas Teske</name><email>letshackit@nvx.li</email></author><entry><title type="html">Running code in a PAX Credit Card Payment Machine (part1)</title><link href="https://lucasteske.dev/2025/09/running-code-in-pax-machines" rel="alternate" type="text/html" title="Running code in a PAX Credit Card Payment Machine (part1)" /><published>2025-09-05T19:30:00+00:00</published><updated>2025-09-05T19:30:00+00:00</updated><id>https://lucasteske.dev/2025/09/running-code-in-pax-machines</id><content type="html" xml:base="https://lucasteske.dev/2025/09/running-code-in-pax-machines"><![CDATA[<h2 id="disclaimer">Disclaimer</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://lucasteske.dev/feed.xml" rel="self" type="application/atom+xml" /><link href="https://lucasteske.dev/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-04-03T21:25:32+00:00</updated><id>https://lucasteske.dev/feed.xml</id><title type="html">Lets Hack It</title><subtitle>Lucas Teske&apos;s blog about electronics, hardware hacking, SDR, satellites, reverse engineering and more.</subtitle><author><name>Lucas Teske</name><email>letshackit@nvx.li</email></author><entry><title type="html">Reverse Engineering the AIR105 Bootrom - A Deep Dive into the MH1903S Boot Process</title><link href="https://lucasteske.dev/2026/04/reverse-engineering-air105-bootrom-mh1903s-boot-process" rel="alternate" type="text/html" title="Reverse Engineering the AIR105 Bootrom - A Deep Dive into the MH1903S Boot Process" /><published>2026-04-03T20:00:00+00:00</published><updated>2026-04-03T20:00:00+00:00</updated><id>https://lucasteske.dev/2026/04/reverse-engineering-air105-bootrom-mh1903s-boot-process</id><content type="html" xml:base="https://lucasteske.dev/2026/04/reverse-engineering-air105-bootrom-mh1903s-boot-process"><![CDATA[<h1 id="reverse-engineering-the-air105-bootrom-a-deep-dive-into-the-mh1903s-boot-process">Reverse Engineering the AIR105 Bootrom: A Deep Dive into the MH1903S Boot Process</h1>
+
+<p>The AIR105 is a secure microcontroller built around the MH1903S core — an ARM Cortex-M4F processor running at 168 MHz, designed for payment terminals and other security-critical embedded applications. It features hardware cryptography (SM2/SM3/SM4, AES, RSA-2048, SHA-256/384/512), OTP (One-Time Programmable) memory for key storage — though as we’ll see, the bootrom can write to OTP regions via the UART protocol, so it’s better thought of as controlled-access storage rather than truly write-once — on-the-fly flash encryption via a cache encryption engine, and a battery-backed key processing unit (BPU).</p>
+
+<p>This article documents the complete boot process of its immutable bootrom, reverse engineered from the raw binary using Ghidra. We’ll trace the execution path from the reset vector all the way through to launching user firmware, covering the security lifecycle, the UART download protocol, firmware validation, and the differences between development and production devices.</p>
+
+<hr />
+
+<h2 id="the-bootrom">The Bootrom</h2>
+
+<p>The bootrom is approximately 200 KB of Thumb-2 code mapped at address <code class="language-plaintext highlighter-rouge">0x00000000</code>. It is factory-masked and cannot be modified. On reset, the Cortex-M processor reads the vector table from this address:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Offset</th>
+      <th>Value</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x00</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0x200D0120</code></td>
+      <td>Initial stack pointer</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x04</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0x00000329</code></td>
+      <td>Reset handler (Thumb bit set)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x08</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0x0000021D</code></td>
+      <td>NMI handler</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x0C</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0x0000021D</code></td>
+      <td>HardFault handler</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The reset vector points to <code class="language-plaintext highlighter-rouge">0x00000328</code>, the entry point into the bootrom’s main logic.</p>
+
+<hr />
+
+<h2 id="phase-1-reset-vector-and-early-startup">Phase 1: Reset Vector and Early Startup</h2>
+
+<h3 id="resethandler-0x00000328">ResetHandler (0x00000328)</h3>
+
+<p>The reset handler is minimal:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">ResetHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">NVIC</span><span class="p">.</span><span class="n">SCB</span><span class="p">.</span><span class="n">VTOR</span> <span class="o">=</span> <span class="mh">0x0</span><span class="p">;</span>     <span class="c1">// Vector table offset = 0 (bootrom)</span>
+    <span class="n">_start</span><span class="p">();</span>                 <span class="c1">// Never returns</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>It sets the Vector Table Offset Register to point at the bootrom’s own vector table (address 0x0) and immediately calls <code class="language-plaintext highlighter-rouge">_start</code>.</p>
+
+<h3 id="_start-0x000000fc">_start (0x000000FC)</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">_start</code> function performs the standard C runtime initialization: it sets the stack pointer, zeroes the <code class="language-plaintext highlighter-rouge">.bss</code> section, copies initialized data from flash to RAM, and then calls <code class="language-plaintext highlighter-rouge">_start2</code>.</p>
+
+<h3 id="_start2-0x0000277c">_start2 (0x0000277C)</h3>
+
+<p>This function walks a constructor table — an array of <code class="language-plaintext highlighter-rouge">{function_ptr, arg0, arg1, arg2}</code> entries located between <code class="language-plaintext highlighter-rouge">0x0001FA88</code> and the end of the table. Each entry’s function is called in order, performing static initializations before the main boot logic begins:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">_start2</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">ptr</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ctorTable_start</span><span class="p">;</span> <span class="n">ptr</span> <span class="o">&lt;</span> <span class="o">&amp;</span><span class="n">ctorTable_end</span><span class="p">;</span> <span class="n">ptr</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">(</span><span class="o">*</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">function</span><span class="p">)(</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">arg0</span><span class="p">,</span> <span class="n">ptr</span><span class="o">-&gt;</span><span class="n">arg1</span><span class="p">,</span> <span class="n">ptr</span><span class="o">-&gt;</span><span class="n">arg2</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">bootMain</span><span class="p">();</span>    <span class="c1">// Never returns</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>After all constructors run, control passes to <code class="language-plaintext highlighter-rouge">bootMain</code> — the heart of the bootrom.</p>
+
+<hr />
+
+<h2 id="phase-2-bootmain--the-orchestrator">Phase 2: bootMain — The Orchestrator</h2>
+
+<h3 id="bootmain-0x00012944">bootMain (0x00012944)</h3>
+
+<p>The real <code class="language-plaintext highlighter-rouge">bootMain</code> (not to be confused with the thin trampoline at <code class="language-plaintext highlighter-rouge">0x00000104</code>) orchestrates the entire boot sequence:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">bootMain</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 1. Enable FPU</span>
+    <span class="n">NVIC</span><span class="p">.</span><span class="n">SCB</span><span class="p">.</span><span class="n">CPACR</span> <span class="o">|=</span> <span class="mh">0xF00000</span><span class="p">;</span>
+
+    <span class="c1">// 2. Phase marker and hardware init</span>
+    <span class="n">FUN_0001d404</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="n">InitializeHardware</span><span class="p">();</span>
+    <span class="n">ConfigureQSPIFlash</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="n">init_boot_marker</span><span class="p">();</span>
+    <span class="n">FUN_0001d404</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+    <span class="c1">// 3. Determine security state from OTP</span>
+    <span class="n">uVar2</span> <span class="o">=</span> <span class="n">get_boot_state</span><span class="p">();</span>
+
+    <span class="c1">// 4. Attempt UART/USB download (with timeout)</span>
+    <span class="n">HandshakeStateMachine</span><span class="p">(</span><span class="n">uVar2</span><span class="p">);</span>
+
+    <span class="c1">// 5. Try booting from internal flash</span>
+    <span class="n">uVar3</span> <span class="o">=</span> <span class="n">TryBoot</span><span class="p">(</span><span class="n">uVar2</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">MH_FLASH_BASE</span><span class="p">);</span>
+    <span class="n">DAT_20020118</span> <span class="o">=</span> <span class="n">uVar3</span> <span class="o">|</span> <span class="mh">0x55550000</span><span class="p">;</span>
+
+    <span class="c1">// 6. Try booting from external flash (XIP region)</span>
+    <span class="n">uVar2</span> <span class="o">=</span> <span class="n">TryBoot</span><span class="p">(</span><span class="n">uVar2</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">DAT_20020000</span><span class="p">);</span>
+    <span class="n">DAT_2002011c</span> <span class="o">=</span> <span class="n">uVar2</span> <span class="o">|</span> <span class="mh">0x66660000</span><span class="p">;</span>
+
+    <span class="c1">// 7. Nothing worked --- increment boot counter and restart</span>
+    <span class="n">SYSCTRL_BASE</span><span class="p">.</span><span class="n">RSVD_POR</span> <span class="o">|=</span> <span class="mh">0x55</span><span class="p">;</span>
+    <span class="n">Restart</span><span class="p">(</span><span class="n">bootCounter</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>   <span class="c1">// Never returns</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The boot strategy is straightforward:</p>
+
+<ol>
+  <li><strong>Initialize hardware</strong> — clocks, UART, QSPI flash, TRNG.</li>
+  <li><strong>Read security configuration</strong> from OTP memory.</li>
+  <li><strong>Listen for a download command</strong> over UART/USB for a limited time window.</li>
+  <li><strong>Try to boot from internal flash</strong> (built-in QSPI).</li>
+  <li><strong>Try to boot from external flash</strong> (memory-mapped XIP region at <code class="language-plaintext highlighter-rouge">0x20020000</code>).</li>
+  <li><strong>Restart</strong> if neither flash source contains valid firmware.</li>
+</ol>
+
+<p>The <code class="language-plaintext highlighter-rouge">Restart()</code> function is the bootrom’s universal error handler. It increments a boot-attempt counter in the <code class="language-plaintext highlighter-rouge">SYSCTRL_BASE.RSVD_POR</code> register, waits a configurable delay, then triggers a soft reset via <code class="language-plaintext highlighter-rouge">SYSCTRL_BASE.SOFT_RST2 = 0x80000000</code>. On production devices, it also disables JTAG (<code class="language-plaintext highlighter-rouge">TST_BASE.TST_ROM = 0</code>).</p>
+
+<hr />
+
+<h2 id="phase-3-hardware-initialization">Phase 3: Hardware Initialization</h2>
+
+<h3 id="initializehardware-0x00002c28">InitializeHardware (0x00002C28)</h3>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">InitializeHardware</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">ConfigureCaches</span><span class="p">();</span>                              <span class="c1">// Enable I/D caches</span>
+    <span class="n">SYSCTRL_PLLConfig</span><span class="p">(</span><span class="n">SYSCTRL_PLL_168MHz</span><span class="p">);</span>          <span class="c1">// Set PLL to 168 MHz</span>
+    <span class="n">SYSCTRL_PLLDivConfig</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>                        <span class="c1">// PLL divider</span>
+    <span class="n">SYSCTRL_HCLKConfig</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>                          <span class="c1">// AHB divider = 1 (168 MHz)</span>
+    <span class="n">SYSCTRL_PCLKConfig</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>                          <span class="c1">// APB divider = 2 (84 MHz)</span>
+    <span class="n">SYSCTRL_APBPeriphClockCmd</span><span class="p">(</span><span class="mh">0xa4300001</span><span class="p">,</span> <span class="n">ENABLE</span><span class="p">);</span>  <span class="c1">// Enable APB peripherals</span>
+    <span class="n">SYSCTRL_APBPeriphResetCmd</span><span class="p">(</span><span class="mh">0xa4300001</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>       <span class="c1">// Reset them</span>
+    <span class="n">SYSCTRL_APBPeriphClockCmd</span><span class="p">(</span><span class="mh">0x30000001</span><span class="p">,</span> <span class="n">ENABLE</span><span class="p">);</span>  <span class="c1">// Enable AHB peripherals</span>
+    <span class="n">SYSCTRL_AHBPeriphResetCmd</span><span class="p">(</span><span class="mh">0x30000001</span><span class="p">,</span> <span class="n">ENABLE</span><span class="p">);</span>  <span class="c1">// Reset them</span>
+    <span class="n">SYSCTRL_AHBPeriphResetCmd</span><span class="p">(</span><span class="mh">0x10000000</span><span class="p">,</span> <span class="n">DISABLE</span><span class="p">);</span> <span class="c1">// Release crypto from reset</span>
+    <span class="n">ConfigurePortC</span><span class="p">();</span>                               <span class="c1">// GPIO port C setup</span>
+    <span class="n">EnableUART3</span><span class="p">();</span>                                  <span class="c1">// Secondary UART</span>
+    <span class="n">TRNG_Start</span><span class="p">(</span><span class="n">TRNG0</span><span class="p">);</span>                              <span class="c1">// Start True Random Number Generator</span>
+    <span class="n">EnableUSBIRQ</span><span class="p">();</span>                                 <span class="c1">// USB interrupts</span>
+    <span class="n">ConfigureUART0</span><span class="p">(</span><span class="mi">115200</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>                      <span class="c1">// Primary UART at 115200 baud</span>
+    <span class="n">ConfigureInterrupts</span><span class="p">();</span>                          <span class="c1">// NVIC setup</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The system comes up at 168 MHz with all cryptographic hardware enabled and the TRNG already seeded. UART0 is configured at 115200 baud — this is the primary interface for firmware download.</p>
+
+<hr />
+
+<h2 id="phase-4-security-state-determination">Phase 4: Security State Determination</h2>
+
+<p>Before doing anything security-sensitive, the bootrom must determine what kind of device it’s running on. This is controlled by OTP memory values. Despite the “One-Time Programmable” name, the bootrom provides commands to write to OTP through the UART download protocol (via <code class="language-plaintext highlighter-rouge">WriteFlashOption</code>, <code class="language-plaintext highlighter-rouge">ImportSmKey</code>, <code class="language-plaintext highlighter-rouge">WritePatch</code>, etc.), with an unlock mechanism (<code class="language-plaintext highlighter-rouge">InitializeOTPUnlockKeys</code>) that gates access. So OTP here is more accurately “controlled-access storage” — writable under specific conditions, but not freely modifiable by arbitrary code.</p>
+
+<h3 id="get_boot_state-0x00005048">get_boot_state (0x00005048)</h3>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">uint</span> <span class="nf">get_boot_state</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">__aeabi_memclr</span><span class="p">(</span><span class="o">&amp;</span><span class="n">encryptKey</span><span class="p">,</span> <span class="mi">32</span><span class="p">);</span>        <span class="c1">// Clear encryption key</span>
+    <span class="n">apply_otp_register_patches</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>           <span class="c1">// Apply OTP register overrides</span>
+    <span class="n">ConfigureInterrupts</span><span class="p">();</span>
+
+    <span class="n">version</span> <span class="o">=</span> <span class="n">determine_boot_version</span><span class="p">();</span>      <span class="c1">// Read OTP regions</span>
+    <span class="n">minOTPVersion</span> <span class="o">=</span> <span class="n">get_min_otp_version</span><span class="p">();</span>   <span class="c1">// Anti-rollback threshold</span>
+    <span class="n">validate_otp_and_configure</span><span class="p">(</span><span class="n">version</span><span class="p">);</span>     <span class="c1">// Load crypto config</span>
+    <span class="n">downloadTimeout</span> <span class="o">=</span> <span class="n">get_download_timeout</span><span class="p">();</span>
+
+    <span class="c1">// Apply SRAM-based OTP lock overrides</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">MH_SRAM_BASE</span> <span class="o">!=</span> <span class="mh">0xFFFFFFFF</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">MH_OTP_BASE</span><span class="p">.</span><span class="n">RO</span>  <span class="o">|=</span> <span class="o">*</span><span class="n">MH_SRAM_BASE</span><span class="p">;</span>
+        <span class="n">MH_OTP_BASE</span><span class="p">.</span><span class="n">ROL</span> <span class="o">|=</span> <span class="o">*</span><span class="n">MH_SRAM_BASE</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">version</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="determine_boot_version-0x000071d0">determine_boot_version (0x000071D0)</h3>
+
+<p>This function reads OTP regions to establish the device’s security lifecycle stage. It produces two critical values:</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">version</code></strong> — a numeric stage identifier ranging from <code class="language-plaintext highlighter-rouge">0xA535AC55</code> to <code class="language-plaintext highlighter-rouge">0xA535AC59</code></li>
+  <li><strong><code class="language-plaintext highlighter-rouge">UINT_20000004</code></strong> — the security mode flag: <code class="language-plaintext highlighter-rouge">0x648913E6</code> (DEV) or <code class="language-plaintext highlighter-rouge">0xAC371D01</code> (PROD)</li>
+</ul>
+
+<p>The decision tree is:</p>
+
+<pre><code class="language-mermaid">flowchart TD
+    A[Read OTP.RESERVED5] --&gt; B{RESERVED5 != 0xFFFFFFFF?}
+    B --&gt;|YES| C[version = 0xA535AC59\nmode = PROD\nJTAG disabled]
+    B --&gt;|NO| D{BPU.RTC_INTCLR == 1?}
+    D --&gt;|NO| E[Restart 0x5A00\npower failure halt]
+    D --&gt;|YES| F[version = 0xA535AC59 tentative]
+    F --&gt; G{RESERVED5 double-read\n!= 0xFFFFFFFF?}
+    G --&gt;|YES| C
+    G --&gt;|NO| H{BPU.RTC_INTCLR == 1?\nsecond check}
+    H --&gt;|FAIL| E
+    H --&gt;|OK| I[version = 0xA535AC58\nmode = DEV 0x648913E6]
+    I --&gt; J{OTP.RESERVED4 == 0xFFFFFFFF?}
+    J --&gt;|YES| K[version = 0xA535AC57]
+    J --&gt;|NO| L[version stays 0xA535AC58]
+    K --&gt; M{OTP.RESERVED3 == 0xFFFFFFFF?}
+    L --&gt; M
+    M --&gt;|YES| N[version = 0xA535AC56]
+    M --&gt;|NO| O[version unchanged]
+</code></pre>
+
+<p>In plain English: the OTP regions form a progression from development to production. As OTP fields are written during manufacturing (via the UART protocol’s <code class="language-plaintext highlighter-rouge">WriteFlashOption</code>, <code class="language-plaintext highlighter-rouge">WritePatch</code>, <code class="language-plaintext highlighter-rouge">ChipUpdate</code>, and <code class="language-plaintext highlighter-rouge">ImportSmKey</code> commands), the device moves from development (open, permissive) to production (locked down, signature-enforced). Once <code class="language-plaintext highlighter-rouge">OTP.RESERVED5</code> is programmed, the device enters PROD mode with JTAG disabled. Unlike traditional fuse-based OTP, these regions can be written by the bootrom under controlled conditions — the write operations are gated by the protocol state machine and version checks, not by hardware immutability.</p>
+
+<h3 id="validate_otp_and_configure-0x000050d0">validate_otp_and_configure (0x000050D0)</h3>
+
+<p>Once the version is known, this function validates OTP content integrity and configures the security hardware:</p>
+
+<ol>
+  <li>
+    <p><strong>CRC-verify OTP sections</strong> — If the CRC of <code class="language-plaintext highlighter-rouge">OTP.UnkSection0</code> fails, the version is downgraded to <code class="language-plaintext highlighter-rouge">0xA535AC57</code>. If the CRC of <code class="language-plaintext highlighter-rouge">OTP.FlashEncryptionSection</code> fails, it’s downgraded to <code class="language-plaintext highlighter-rouge">0xA535AC58</code>.</p>
+  </li>
+  <li><strong>Load flash encryption key</strong> — For version <code class="language-plaintext highlighter-rouge">0xA535AC59</code> (PROD):
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">encryptKey</span><span class="p">,</span> <span class="n">OTP</span><span class="p">.</span><span class="n">FlashEncryptionSection</span> <span class="o">+</span> <span class="mh">0x129</span><span class="p">,</span> <span class="mi">32</span><span class="p">);</span>
+</code></pre></div>    </div>
+    <p>If <code class="language-plaintext highlighter-rouge">OTP._293_4_ == 0x55555555</code> (unprogrammed), cache encryption is disabled. Otherwise, the cache encryption engine is configured with the key from OTP for on-the-fly flash decryption.</p>
+  </li>
+  <li>
+    <p><strong>Run crypto self-tests</strong> — Via <code class="language-plaintext highlighter-rouge">MaybeValidateSignature()</code>, which tests SM2, SM3, SM4, AES, SHA-256, TRNG, and RSA based on a bitmask from OTP. If any test fails, the device halts with <code class="language-plaintext highlighter-rouge">Restart(0x5A03)</code>.</p>
+  </li>
+  <li>
+    <p><strong>Boot counter check</strong> — On non-DEV devices, verifies that the boot attempt counter hasn’t exceeded a threshold (10 attempts). If it has, the device locks itself via the BPU.</p>
+  </li>
+  <li><strong>Integrity marker verification</strong> — Double-checks a marker with <code class="language-plaintext highlighter-rouge">random_delay()</code> calls between checks (anti-glitching measure).</li>
+</ol>
+
+<p>The function returns the finalized version number, which then flows into the handshake and boot attempts.</p>
+
+<hr />
+
+<h2 id="the-manufacturing-provisioning-flow">The Manufacturing Provisioning Flow</h2>
+
+<p>The version numbers (<code class="language-plaintext highlighter-rouge">0xA535AC55</code> through <code class="language-plaintext highlighter-rouge">0xA535AC59</code>) aren’t just passive labels — they represent discrete stages in a factory provisioning pipeline. Each stage is advanced by sending specific commands over the UART protocol, and each command writes data to OTP memory before bumping the version. The <code class="language-plaintext highlighter-rouge">uint32_t_ARRAY_200001ac</code> array in RAM tracks the current version and a monotonically increasing step counter that increments with every successful manufacturing operation.</p>
+
+<p>The bootrom implements a complete wafer-to-product programming sequence, all driven through the same UART protocol used for firmware download.</p>
+
+<h3 id="otp-write-mechanism">OTP Write Mechanism</h3>
+
+<p>All OTP writes go through <code class="language-plaintext highlighter-rouge">WriteOTPData()</code> at <code class="language-plaintext highlighter-rouge">0x0000D378</code>, which:</p>
+
+<ol>
+  <li>Verifies the target OTP region is unwritten (all <code class="language-plaintext highlighter-rouge">0xFF</code>)</li>
+  <li>Calls <code class="language-plaintext highlighter-rouge">OTP_UnProtect()</code> for each word address (unlocks the write protection)</li>
+  <li>Writes one 32-bit word at a time via <code class="language-plaintext highlighter-rouge">OTP_WriteWord()</code></li>
+</ol>
+
+<p>The unlock keys are trivial fixed constants set by <code class="language-plaintext highlighter-rouge">InitializeOTPUnlockKeys()</code> at <code class="language-plaintext highlighter-rouge">0x00007B94</code>:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">InitializeOTPUnlocKKeys</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">gu32OTP_Key1</span> <span class="o">=</span> <span class="mh">0xABCD00A5</span><span class="p">;</span>
+    <span class="n">gu32OTP_Key2</span> <span class="o">=</span> <span class="mh">0x1234005A</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This function is called during the handshake (after <code class="language-plaintext highlighter-rouge">WAIT_FOR_HANDSHAKE2</code>), but only if <code class="language-plaintext highlighter-rouge">version &lt; 0xA535AC59</code> — meaning the unlock is available on DEV devices but not on fully-provisioned PROD devices. The “unlock” is really just setting two well-known constants in RAM; there is no challenge-response or authentication.</p>
+
+<h3 id="the-factory-pipeline">The Factory Pipeline</h3>
+
+<pre><code class="language-mermaid">flowchart LR
+    A["0xA535AC55\nBare wafer\nAll OTP unwritten"] --&gt;|"WaferComplete\n(write version to OTP)"| B
+    B["0xA535AC56\nWafer tested"] --&gt;|"WritePatch\n(OTP register patches)"| B
+    B --&gt;|"ChipUpdate\n(write OTP.UnkSection0\n288 bytes of device config)"| C
+    C["0xA535AC57\nChip personalized"] --&gt;|"WritePatch\n(more OTP patches)"| C
+    C --&gt;|"GenerateRandomFlashEncryption\n(write encryption keys + config\nto OTP.FlashEncryptionSection\n332 bytes)"| D
+    D["0xA535AC58\nEncryption provisioned\nmode = DEV"] --&gt;|"ImportSmKey\n(write SM2 keys\nto OTP.SMKeySection\n312 bytes)"| E
+    E["0xA535AC59\nFully provisioned\nmode = PROD"]
+
+    style A fill:#5588cc,stroke:#333,color:#fff
+    style B fill:#5588cc,stroke:#333,color:#fff
+    style C fill:#55aa88,stroke:#333
+    style D fill:#cc8833,stroke:#333
+    style E fill:#cc5555,stroke:#333,color:#fff
+</code></pre>
+
+<p>Each step is gated by the current version — you can’t skip ahead. Here’s what each command does:</p>
+
+<h4 id="wafercomplete-param_1--0xa535ac55">WaferComplete (<code class="language-plaintext highlighter-rouge">param_1 == 0xA535AC55</code>)</h4>
+
+<p>The first manufacturing step. Checks that the current version is exactly <code class="language-plaintext highlighter-rouge">0xA535AC55</code> (by verifying <code class="language-plaintext highlighter-rouge">param_1 == -0x5ACA53AA</code>), then writes the target version value (<code class="language-plaintext highlighter-rouge">0xA535AC56</code>) as a 4-byte word to the next free OTP slot. This is essentially a “wafer test passed” marker.</p>
+
+<p>The underlying function <code class="language-plaintext highlighter-rouge">FUN_0000AE58</code> is the generic version-advancer: it checks that the target OTP word is still <code class="language-plaintext highlighter-rouge">0xFFFFFFFF</code> (unwritten), writes the new version number, and returns. If the OTP word is already written, it returns an error — preventing double-advancement.</p>
+
+<h4 id="writepatch-versions-0xa535ac56--0xa535ac58">WritePatch (versions <code class="language-plaintext highlighter-rouge">0xA535AC56</code> – <code class="language-plaintext highlighter-rouge">0xA535AC58</code>)</h4>
+
+<p>Writes patch records to OTP. A patch record is a variable-length block starting with a <code class="language-plaintext highlighter-rouge">0x5555AAAA</code> magic, followed by a count and CRC-verified data. The function <code class="language-plaintext highlighter-rouge">FUN_00007130</code> walks the OTP region looking for the next free slot (scanning for <code class="language-plaintext highlighter-rouge">0xFFFFFFFF</code>), respecting existing records that start with <code class="language-plaintext highlighter-rouge">0x5555AAAA</code>.</p>
+
+<p>Patches can be applied at multiple stages and are used to override system register values via <code class="language-plaintext highlighter-rouge">apply_otp_register_patches()</code>. The <code class="language-plaintext highlighter-rouge">param_4</code> flag (0 = forward, 1 = backward via <code class="language-plaintext highlighter-rouge">BackPatch</code> command) selects between two OTP banks.</p>
+
+<h4 id="chipupdate-version-0xa535ac57">ChipUpdate (version <code class="language-plaintext highlighter-rouge">0xA535AC57</code>)</h4>
+
+<p>Available only when <code class="language-plaintext highlighter-rouge">param_1 == 0xA535AC57</code>. Writes 288 bytes of device-specific configuration to <code class="language-plaintext highlighter-rouge">OTP.UnkSection0</code>:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Header: fixed magic</span>
+<span class="n">otpData</span><span class="p">[</span><span class="mi">0</span><span class="p">..</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mh">0xAA</span><span class="p">,</span> <span class="mh">0xAA</span><span class="p">,</span> <span class="mh">0x55</span><span class="p">,</span> <span class="mh">0x55</span><span class="p">};</span>
+<span class="c1">// Copy 288 bytes from host</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="n">otpData</span> <span class="o">+</span> <span class="mi">4</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="mi">288</span><span class="p">);</span>
+<span class="c1">// Append CRC-16</span>
+<span class="n">otpData</span><span class="p">[</span><span class="mi">292</span><span class="p">..</span><span class="mi">295</span><span class="p">]</span> <span class="o">=</span> <span class="n">CRC16</span><span class="p">(</span><span class="n">otpData</span><span class="p">[</span><span class="mi">0</span><span class="p">..</span><span class="mi">291</span><span class="p">]);</span>
+<span class="c1">// Write to OTP</span>
+<span class="n">WriteOTPData</span><span class="p">(</span><span class="n">OTP</span><span class="p">.</span><span class="n">UnkSection0</span><span class="p">,</span> <span class="n">otpData</span><span class="p">,</span> <span class="mi">296</span><span class="p">);</span>
+<span class="c1">// Advance version to 0xA535AC57</span>
+</code></pre></div></div>
+
+<p>This is the “chip personalization” step — the host provides device-unique data that gets baked into OTP. The 24 bytes at <code class="language-plaintext highlighter-rouge">OTP.UnkSection0 + 4</code> are later sent as part of the ChipSN during the handshake, and bytes at offset 20-21 configure the download timeout.</p>
+
+<p>On success, the version is advanced to <code class="language-plaintext highlighter-rouge">0xA535AC57</code>.</p>
+
+<h4 id="generaterandomflashencryption-version-0xa535ac58">GenerateRandomFlashEncryption (version <code class="language-plaintext highlighter-rouge">0xA535AC58</code>)</h4>
+
+<p>The most complex provisioning step. Available when <code class="language-plaintext highlighter-rouge">param_1 == 0xA535AC58</code>. It writes the flash encryption configuration to <code class="language-plaintext highlighter-rouge">OTP.FlashEncryptionSection</code>:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Fixed magic header</span>
+<span class="n">otpData</span><span class="p">[</span><span class="mi">0</span><span class="p">..</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mh">0xAA</span><span class="p">,</span> <span class="mh">0xAA</span><span class="p">,</span> <span class="mh">0x55</span><span class="p">,</span> <span class="mh">0x55</span><span class="p">};</span>
+<span class="c1">// Copy host-provided config (288 or 324 bytes)</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="n">otpData</span> <span class="o">+</span> <span class="mi">4</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span>
+
+<span class="c1">// Auto-generate encryption key and IV from TRNG</span>
+<span class="c1">// (unless host provides them with 0xAAAA flag)</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">otpData</span><span class="p">.</span><span class="n">_292_4_</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span> <span class="o">!=</span> <span class="mh">0xAAAA</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">generate_random_bytes</span><span class="p">(</span><span class="n">otpData</span> <span class="o">+</span> <span class="mh">0x128</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>  <span class="c1">// encryptKey</span>
+    <span class="n">generate_random_bytes</span><span class="p">(</span><span class="n">otpData</span> <span class="o">+</span> <span class="mh">0x138</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>  <span class="c1">// encryptIV</span>
+<span class="p">}</span>
+
+<span class="c1">// Set plaintext-write flag based on host config</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">otpData</span><span class="p">.</span><span class="n">_292_4_</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span> <span class="o">==</span> <span class="mh">0x5555</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">otpData</span><span class="p">[</span><span class="mh">0x124</span><span class="p">..</span><span class="mh">0x127</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mh">0x55</span><span class="p">,</span> <span class="mh">0x55</span><span class="p">,</span> <span class="mh">0x55</span><span class="p">,</span> <span class="mh">0x55</span><span class="p">};</span>  <span class="c1">// plaintext allowed</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">otpData</span><span class="p">[</span><span class="mh">0x124</span><span class="p">..</span><span class="mh">0x127</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">};</span>  <span class="c1">// encryption required</span>
+<span class="p">}</span>
+
+<span class="c1">// Load key into cache encryption engine</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">encryptKey</span><span class="p">,</span> <span class="n">otpData</span> <span class="o">+</span> <span class="mh">0x128</span><span class="p">,</span> <span class="mi">32</span><span class="p">);</span>
+<span class="n">ConfigureCache</span><span class="p">(</span><span class="o">&amp;</span><span class="n">encryptKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">encryptIV</span><span class="p">,</span> <span class="n">otpData</span><span class="p">.</span><span class="n">_24_4_</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">);</span>
+
+<span class="c1">// CRC and write</span>
+<span class="n">otpData</span><span class="p">[</span><span class="mi">328</span><span class="p">..</span><span class="mi">331</span><span class="p">]</span> <span class="o">=</span> <span class="n">CRC16</span><span class="p">(</span><span class="n">otpData</span><span class="p">[</span><span class="mi">0</span><span class="p">..</span><span class="mi">327</span><span class="p">]);</span>
+<span class="n">WriteOTPData</span><span class="p">(</span><span class="n">OTP</span><span class="p">.</span><span class="n">FlashEncryptionSection</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">otpData</span><span class="p">,</span> <span class="mi">332</span><span class="p">);</span>
+
+<span class="c1">// Advance version to 0xA535AC58</span>
+</code></pre></div></div>
+
+<p>This is where the device’s flash encryption identity is created. The encryption key (16 bytes for SM4 or 32 bytes for AES) is either provided by the host or <strong>generated randomly by the TRNG on-chip</strong>. Once written, this key is used for on-the-fly flash decryption via the cache encryption engine. The key never leaves the device in the random generation path.</p>
+
+<p>Critically, if <code class="language-plaintext highlighter-rouge">otpData._292_4_ == 0x55555555</code> (all default), cache encryption is disabled entirely and flash is stored in plaintext. This is the “no encryption” configuration.</p>
+
+<p>On success, the version advances to <code class="language-plaintext highlighter-rouge">0xA535AC58</code> and <code class="language-plaintext highlighter-rouge">UINT_20000004</code> remains <code class="language-plaintext highlighter-rouge">0x648913E6</code> (DEV mode).</p>
+
+<h4 id="importsmkey-version--0xa535ac58">ImportSmKey (version &gt;= <code class="language-plaintext highlighter-rouge">0xA535AC58</code>)</h4>
+
+<p>Writes 312 bytes of SM2 cryptographic keys to <code class="language-plaintext highlighter-rouge">OTP.SMKeySection</code>:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">memcpy</span><span class="p">(</span><span class="n">smKeyData</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="mi">312</span><span class="p">);</span>
+<span class="n">smKeyData</span><span class="p">[</span><span class="mi">312</span><span class="p">..</span><span class="mi">315</span><span class="p">]</span> <span class="o">=</span> <span class="n">CRC16</span><span class="p">(</span><span class="n">smKeyData</span><span class="p">[</span><span class="mi">0</span><span class="p">..</span><span class="mi">311</span><span class="p">]);</span>
+<span class="n">WriteOTPData</span><span class="p">(</span><span class="n">OTP</span><span class="p">.</span><span class="n">SMKeySection</span><span class="p">,</span> <span class="n">smKeyData</span><span class="p">,</span> <span class="mi">316</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>This is gated by <code class="language-plaintext highlighter-rouge">param_1 &gt;= 0xA535AC58</code> — it can only be written after the flash encryption config is in place. The SM2 keys are used for device authentication and firmware signature verification in the SM2 path.</p>
+
+<h4 id="the-final-transition-to-prod">The Final Transition to PROD</h4>
+
+<p>After all OTP sections are written, the final step is to write <code class="language-plaintext highlighter-rouge">OTP.RESERVED5</code> with a value other than <code class="language-plaintext highlighter-rouge">0xFFFFFFFF</code>. This happens through the <code class="language-plaintext highlighter-rouge">GenerateRandomFlashEncryption</code> function’s second call path or through the <code class="language-plaintext highlighter-rouge">ChipUpdate</code> flow at version <code class="language-plaintext highlighter-rouge">0xA535AC59</code>. Once <code class="language-plaintext highlighter-rouge">RESERVED5</code> is written, <code class="language-plaintext highlighter-rouge">determine_boot_version</code> detects it on the next boot, sets <code class="language-plaintext highlighter-rouge">UINT_20000004 = 0xAC371D01</code> (PROD), disables JTAG, and the device is permanently in production mode.</p>
+
+<h3 id="auxiliary-commands">Auxiliary Commands</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>Version Gate</th>
+      <th>OTP Target</th>
+      <th>Size</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">WriteFlashOption</code></td>
+      <td>Any (DEV)</td>
+      <td><code class="language-plaintext highlighter-rouge">OTP.RESERVED7</code> or <code class="language-plaintext highlighter-rouge">OTP.RESERVED8</code></td>
+      <td>40 bytes + CRC</td>
+      <td>Flash configuration (QSPI parameters, timing). Writes to first available slot.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">WriteUSBTimeout</code></td>
+      <td>Any (DEV)</td>
+      <td><code class="language-plaintext highlighter-rouge">OTP.USBTimeoutData</code></td>
+      <td>12 bytes</td>
+      <td>Download timeout configuration</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">WritePatch</code> / <code class="language-plaintext highlighter-rouge">BackPatch</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0xA535AC56</code> – <code class="language-plaintext highlighter-rouge">0xA535AC58</code></td>
+      <td>OTP patch area (forward or backward bank)</td>
+      <td>Variable, 16-byte aligned</td>
+      <td>Register override patches</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">CryptoCheck</code></td>
+      <td>Any</td>
+      <td>None (read-only)</td>
+      <td>2 bytes (bitmask)</td>
+      <td>Run crypto self-tests on demand</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="what-this-means-for-security">What This Means for Security</h3>
+
+<p>The entire provisioning flow is accessible over UART with no authentication beyond the version gates. The unlock keys are fixed constants (<code class="language-plaintext highlighter-rouge">0xABCD00A5</code>, <code class="language-plaintext highlighter-rouge">0x1234005A</code>). On a device that hasn’t been fully provisioned (version &lt; <code class="language-plaintext highlighter-rouge">0xA535AC59</code>), anyone with UART access can:</p>
+
+<ul>
+  <li>Read the device serial numbers (ChipSN, DeviceSN) from the handshake</li>
+  <li>Write arbitrary OTP data (flash config, encryption keys, SM2 keys)</li>
+  <li>Control the encryption configuration (including choosing no encryption)</li>
+  <li>Provision their own SM2 keys, effectively making themselves the firmware signing authority</li>
+</ul>
+
+<p>The only thing protecting a partially-provisioned device is that the version must advance sequentially — you can’t skip from <code class="language-plaintext highlighter-rouge">0xA535AC55</code> directly to <code class="language-plaintext highlighter-rouge">0xA535AC59</code>. But you <em>can</em> advance through all stages yourself, providing your own keys at each step.</p>
+
+<hr />
+
+<h2 id="the-security-lifecycle">The Security Lifecycle</h2>
+
+<p>Before continuing, it’s worth summarizing the five lifecycle stages:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Version</th>
+      <th>Mode</th>
+      <th>OTP State</th>
+      <th>Download Allowed</th>
+      <th>Signature Required</th>
+      <th>Flash Encryption</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0xA535AC55</code></td>
+      <td>DEV</td>
+      <td>All unwritten</td>
+      <td>Yes (UART/USB)</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0xA535AC56</code></td>
+      <td>DEV</td>
+      <td>R5-R3 unwritten</td>
+      <td>Yes (UART/USB)</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0xA535AC57</code></td>
+      <td>DEV</td>
+      <td>R5-R4 unwritten</td>
+      <td>Yes (UART/USB)</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0xA535AC58</code></td>
+      <td>DEV</td>
+      <td>R5 unwritten</td>
+      <td>Yes (UART/USB)</td>
+      <td>RSA or plain</td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0xA535AC59</code></td>
+      <td>PROD</td>
+      <td>R5 written</td>
+      <td>Yes (UART/USB)</td>
+      <td>RSA-2048 or SM2</td>
+      <td>Yes (SM4/AES)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The key insight is that <strong>download mode is always available</strong> — even on production devices, the UART/USB handshake protocol is accessible. What changes is what the bootrom requires to accept new firmware: in DEV mode, a simple CRC-16 suffices; in PROD mode, a valid RSA-2048 or SM2 signature from the manufacturer is mandatory.</p>
+
+<hr />
+
+<h2 id="phase-5-the-uart-handshake-protocol">Phase 5: The UART Handshake Protocol</h2>
+
+<h3 id="handshakestatemachine-0x00006874">HandshakeStateMachine (0x00006874)</h3>
+
+<p>After hardware init and security configuration, <code class="language-plaintext highlighter-rouge">bootMain</code> calls <code class="language-plaintext highlighter-rouge">HandshakeStateMachine(version)</code>. This function opens a limited-time window during which an external tool can connect and initiate a firmware download. The state machine has four states:</p>
+
+<pre><code class="language-mermaid">stateDiagram-v2
+    [*] --&gt; INITIAL_STATE : Timeout starts
+    INITIAL_STATE --&gt; WAIT_FOR_HANDSHAKE1 : uart_autobaud_detect() OK\nor 10× 0xF8 bytes (USB)
+    WAIT_FOR_HANDSHAKE1 --&gt; WAIT_FOR_HANDSHAKE1 : Wrong byte → reset counter
+    WAIT_FOR_HANDSHAKE1 --&gt; WAIT_FOR_HANDSHAKE2 : 10× HANDSHAKE1 bytes\n→ Send ChipSN (37 bytes)
+    WAIT_FOR_HANDSHAKE2 --&gt; WAIT_FOR_HANDSHAKE2 : Wrong byte → reset counter
+    WAIT_FOR_HANDSHAKE2 --&gt; WAIT_FOR_FLASH_DATA : 10× HANDSHAKE2 bytes\n→ Send DeviceSN (24 bytes)
+    WAIT_FOR_FLASH_DATA --&gt; [*] : Enter BootFwStateMachine()
+    INITIAL_STATE --&gt; [*] : Timeout expired
+</code></pre>
+
+<h4 id="state-initial">State: INITIAL</h4>
+
+<p>The bootrom listens for connection on either UART or USB:</p>
+
+<ul>
+  <li><strong>UART path</strong>: Calls <code class="language-plaintext highlighter-rouge">uart_autobaud_detect(10)</code> which measures the timing of incoming bytes to auto-detect the baud rate. Once a valid byte is detected, it switches to <code class="language-plaintext highlighter-rouge">WAIT_FOR_HANDSHAKE1</code> on UART0.</li>
+  <li><strong>USB path</strong>: Watches for <code class="language-plaintext highlighter-rouge">0xF8</code> sync bytes on UART1 (which is multiplexed with USB). After receiving more than 10 of these, it switches to <code class="language-plaintext highlighter-rouge">WAIT_FOR_HANDSHAKE1</code> on UART1/USB.</li>
+</ul>
+
+<p>If nothing is received before the timeout expires (controlled by <code class="language-plaintext highlighter-rouge">uint32_t_ARRAY_200001ac[5]</code>, which comes from OTP or defaults to a manufacturer-defined value), the function returns and <code class="language-plaintext highlighter-rouge">bootMain</code> proceeds to try booting from flash.</p>
+
+<h4 id="state-wait_for_handshake1">State: WAIT_FOR_HANDSHAKE1</h4>
+
+<p>The host must send exactly 10 consecutive <code class="language-plaintext highlighter-rouge">HANDSHAKE1</code> bytes (any incorrect byte resets the counter to zero). After 10 correct bytes, the device responds with a <strong>ChipSN</strong> response (37 bytes):</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Offset</th>
+      <th>Length</th>
+      <th>Content</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>1</td>
+      <td><code class="language-plaintext highlighter-rouge">version - 0x55</code> (encoded version byte)</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>24</td>
+      <td><code class="language-plaintext highlighter-rouge">OTP.UnkSection0 + 4</code> (device-unique data)</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>3</td>
+      <td>Fixed string <code class="language-plaintext highlighter-rouge">`0x60, 0x04, 0x00</code></td>
+    </tr>
+    <tr>
+      <td>28</td>
+      <td>4</td>
+      <td><code class="language-plaintext highlighter-rouge">`0x00, '0', '3', '0'</code></td>
+    </tr>
+    <tr>
+      <td>32</td>
+      <td>1</td>
+      <td><code class="language-plaintext highlighter-rouge">'S'</code></td>
+    </tr>
+    <tr>
+      <td>33</td>
+      <td>4</td>
+      <td><code class="language-plaintext highlighter-rouge">SYSCTRL_BASE.CHIP_ID</code> (silicon serial)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>This identifies the chip to the host tool. The timeout is multiplied by 8 after this step, giving the host more time.</p>
+
+<h4 id="state-wait_for_handshake2">State: WAIT_FOR_HANDSHAKE2</h4>
+
+<p>Again, 10 consecutive <code class="language-plaintext highlighter-rouge">HANDSHAKE2</code> bytes are required. After that:</p>
+
+<ul>
+  <li>If <code class="language-plaintext highlighter-rouge">version &lt; 0xA535AC59</code>, <code class="language-plaintext highlighter-rouge">InitializeOTPUnlockKeys()</code> is called (probably derives keys for OTP write access).</li>
+  <li>The device sends a <strong>DeviceSN</strong> response (24 bytes from <code class="language-plaintext highlighter-rouge">OTP.FlashEncryptionSection + 5</code>).</li>
+</ul>
+
+<p>Then the state transitions to <code class="language-plaintext highlighter-rouge">WAIT_FOR_FLASH_DATA</code>, and <code class="language-plaintext highlighter-rouge">BootFwStateMachine(version, uartN)</code> is called — entering the firmware download protocol proper.</p>
+
+<hr />
+
+<h2 id="phase-6-the-firmware-download-protocol">Phase 6: The Firmware Download Protocol</h2>
+
+<h3 id="bootfwstatemachine-0x000052c0">BootFwStateMachine (0x000052C0)</h3>
+
+<p>This is the main download loop. It receives packets one at a time via <code class="language-plaintext highlighter-rouge">ReadPacket()</code> and dispatches them based on a packet type code. The loop never exits under normal operation — it either succeeds and jumps to the downloaded firmware, or fails and returns an error code.</p>
+
+<h3 id="packet-format">Packet Format</h3>
+
+<p>All communication uses a simple framed protocol:</p>
+
+<pre><code class="language-mermaid">block-beta
+    columns 7
+    STX["0x02\n(STX)"]:1 Type["Type\n(1 byte)"]:1 SizeLO["Size_LO"]:1 SizeHI["Size_HI"]:1 Payload["Payload (Size bytes)"]:1 CRCLO["CRC16_LO"]:1 CRCHI["CRC16_HI"]:1
+</code></pre>
+
+<ul>
+  <li><strong>STX</strong>: Always <code class="language-plaintext highlighter-rouge">0x02</code> (start-of-packet marker)</li>
+  <li><strong>Type</strong>: Packet type code (1 byte)</li>
+  <li><strong>Size</strong>: Payload size, little-endian (2 bytes)</li>
+  <li><strong>Payload</strong>: <code class="language-plaintext highlighter-rouge">Size</code> bytes of data</li>
+  <li><strong>CRC-16</strong>: Computed over everything from STX to the last payload byte, using the hardware CRC engine</li>
+</ul>
+
+<p>The maximum payload size is <code class="language-plaintext highlighter-rouge">0x1400 - 6 = 0x13FA</code> bytes. Packets exceeding this are rejected with error <code class="language-plaintext highlighter-rouge">0x4100</code>. The CRC is verified on every packet; a CRC mismatch returns error <code class="language-plaintext highlighter-rouge">0x4101</code> and the parser attempts to re-sync by searching for the next <code class="language-plaintext highlighter-rouge">0x02</code> byte.</p>
+
+<h3 id="packet-types">Packet Types</h3>
+
+<p>The following packet types are recognized:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">FWHeader</code></td>
+      <td>Firmware Header</td>
+      <td>Contains firmware metadata (address, size, hash, version)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">FWData</code></td>
+      <td>Firmware Data</td>
+      <td>Contains a chunk of firmware to write</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">EraserFlash</code></td>
+      <td>Erase Flash</td>
+      <td>Erase flash sectors or entire chip</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">FlashID</code></td>
+      <td>Flash ID</td>
+      <td>Query the flash chip identification</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">BootCheck</code></td>
+      <td>Boot Check</td>
+      <td>Run crypto self-tests</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ReadBootCheck</code></td>
+      <td>Read Boot Check</td>
+      <td>Read the last boot check result</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">CryptoCheck</code></td>
+      <td>Crypto Check</td>
+      <td>Run specific crypto self-tests by bitmask</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">WriteFlashOption</code></td>
+      <td>Write Flash Option</td>
+      <td>Write configuration to OTP</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Patch</code></td>
+      <td>OTP Patch</td>
+      <td>Write a patch record to OTP (forward)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">BackPatch</code></td>
+      <td>OTP Back Patch</td>
+      <td>Write a patch record to OTP (backward)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ImportSmKey</code></td>
+      <td>Import SM Key</td>
+      <td>Write SM2 keys to OTP (version &gt;= 0xA535AC58)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">USBTimeOut</code></td>
+      <td>USB Timeout</td>
+      <td>Configure the download timeout</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">WaferComplete</code></td>
+      <td>Wafer Complete</td>
+      <td>Manufacturing step completion</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ChipUpdate</code></td>
+      <td>Chip Update</td>
+      <td>Manufacturing: version upgrade</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">EnterSMBranch</code></td>
+      <td>Enter SM Branch</td>
+      <td>Enter secure monitor mode</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="the-firmware-download-sequence">The Firmware Download Sequence</h3>
+
+<p>A typical firmware download follows this sequence:</p>
+
+<pre><code class="language-mermaid">sequenceDiagram
+    participant Host
+    participant Device
+
+    Host-&gt;&gt;Device: FWHeader (firmware metadata)
+    Device--&gt;&gt;Host: ACK(SUCCESS)
+
+    loop For each chunk
+        Host-&gt;&gt;Device: FWData [chunk N]
+        Device--&gt;&gt;Host: ACK(SUCCESS)
+    end
+
+    Note over Device: Hash verification internally after last chunk
+    Note over Device: SHA-256/384/512 or SM2 check
+
+    Device--&gt;&gt;Host: ACK(SUCCESS) — firmware verified &amp; written
+    Note over Device: Device jumps to new firmware
+</code></pre>
+
+<h3 id="fwheader-processing">FWHeader Processing</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">FWHeader</code> packet is the most critical — it establishes all parameters for the subsequent download:</p>
+
+<ol>
+  <li><strong>Copy header to global state</strong>:
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">DAT_200001C8</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="n">buffSize</span><span class="p">);</span>   <span class="c1">// buffSize from packet!</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>Check for upgrade mode</strong>: If the first 4 bytes are <code class="language-plaintext highlighter-rouge">0xCCCC55AA</code>, the flag <code class="language-plaintext highlighter-rouge">DAT_20000008</code> is set to <code class="language-plaintext highlighter-rouge">0xAAAAAA55</code>. This signals an “upgrade” operation that will jump to the new firmware after successful download.</p>
+  </li>
+  <li>
+    <p><strong>Set magic value</strong>: <code class="language-plaintext highlighter-rouge">DAT_200001C8 = 0x5555AAAA</code> (overwrite the first word)</p>
+  </li>
+  <li>
+    <p><strong>Validate the header</strong> via <code class="language-plaintext highlighter-rouge">validate_firmware_header()</code> — this is where the security mode matters.</p>
+  </li>
+  <li>
+    <p><strong>Range-check the firmware address and size</strong>: The target address must fall within either the internal flash region (<code class="language-plaintext highlighter-rouge">0x200</code> – <code class="language-plaintext highlighter-rouge">0x1FFFFF</code>) or the external RAM region (<code class="language-plaintext highlighter-rouge">0x20020200</code> – <code class="language-plaintext highlighter-rouge">0x2009FFFF</code>).</p>
+  </li>
+  <li>
+    <p><strong>Anti-rollback check</strong>: The firmware’s version counter must not exceed the minimum OTP version.</p>
+  </li>
+  <li><strong>Hash algorithm check</strong>: Must be SHA-256 (value 2) or SHA-384/512 (value 4).</li>
+</ol>
+
+<h3 id="validate_firmware_header-0x00004c24">validate_firmware_header (0x00004C24)</h3>
+
+<p>The header validation path depends entirely on the device mode:</p>
+
+<p><strong>DEV mode</strong> (<code class="language-plaintext highlighter-rouge">UINT_20000004 == 0x648913E6</code>):</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Plain copy, no signature verification</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="n">outputHeader</span><span class="p">,</span> <span class="n">inputBuffer</span><span class="p">,</span> <span class="mh">0x104</span><span class="p">);</span>
+<span class="c1">// Then CRC-16 check of header fields</span>
+<span class="n">crc</span> <span class="o">=</span> <span class="n">HardwareComputeCRC</span><span class="p">(</span><span class="mh">0x1E</span><span class="p">,</span> <span class="n">header</span><span class="p">[</span><span class="mi">4</span><span class="o">:</span><span class="mh">0x58</span><span class="p">],</span> <span class="mh">0x54</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="mh">0x58</span><span class="p">]</span> <span class="o">==</span> <span class="n">crc</span><span class="p">)</span> <span class="k">return</span> <span class="n">SUCCESS</span><span class="p">;</span>
+</code></pre></div></div>
+<p>The attacker controls all header content and can trivially compute the CRC. This is the weakest path.</p>
+
+<p><strong>PROD mode with upgrade flag</strong> (<code class="language-plaintext highlighter-rouge">0xCCCC55AA</code> sent, version <code class="language-plaintext highlighter-rouge">0xA535AC58-0xA535AC59</code>):</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// RSA-2048 signature verification</span>
+<span class="n">rsa_verify_signature</span><span class="p">(</span><span class="n">outputHeader</span> <span class="o">+</span> <span class="mi">4</span><span class="p">,</span> <span class="n">inputBuffer</span> <span class="o">+</span> <span class="mi">4</span><span class="p">,</span> <span class="mh">0x100</span><span class="p">,</span> <span class="n">RSA_pubkey</span><span class="p">);</span>
+</code></pre></div></div>
+<p>Requires the manufacturer’s RSA private key to forge a signature. Not practically exploitable.</p>
+
+<p><strong>PROD mode with SM2 OTP</strong> (version <code class="language-plaintext highlighter-rouge">0xA535AC59</code>, <code class="language-plaintext highlighter-rouge">OTP._25_4_ == 0xA501</code>):</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Plain copy (header itself is trusted)</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="n">outputHeader</span><span class="p">,</span> <span class="n">inputBuffer</span><span class="p">,</span> <span class="mh">0x104</span><span class="p">);</span>
+</code></pre></div></div>
+<p>But SM2 signature verification happens later, after all firmware data is received.</p>
+
+<p><strong>PROD mode without SM2</strong>:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// RSA-2048 signature verification on the header</span>
+<span class="n">rsa_verify_signature</span><span class="p">(</span><span class="n">outputHeader</span> <span class="o">+</span> <span class="mi">4</span><span class="p">,</span> <span class="n">inputBuffer</span> <span class="o">+</span> <span class="mi">4</span><span class="p">,</span> <span class="mh">0x100</span><span class="p">,</span> <span class="n">RSA_pubkey</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="firmware-header-structure-0x104-bytes">Firmware Header Structure (0x104 bytes)</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Offset</th>
+      <th>Size</th>
+      <th>Field</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x00</code></td>
+      <td>4</td>
+      <td><code class="language-plaintext highlighter-rouge">magic</code></td>
+      <td>Must be <code class="language-plaintext highlighter-rouge">0x5555AAAA</code> (or <code class="language-plaintext highlighter-rouge">0xCCCC55AA</code> for upgrade)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x04</code></td>
+      <td>84</td>
+      <td><code class="language-plaintext highlighter-rouge">headerBody</code></td>
+      <td>CRC-16 is computed over this region</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x58</code></td>
+      <td>4</td>
+      <td><code class="language-plaintext highlighter-rouge">headerCRC</code></td>
+      <td>CRC-16(init=0x1E) of bytes [4:0x58]</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x28</code></td>
+      <td>4</td>
+      <td><code class="language-plaintext highlighter-rouge">firmwareAddress</code></td>
+      <td>Where to load the firmware</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x2C</code></td>
+      <td>4</td>
+      <td><code class="language-plaintext highlighter-rouge">firmwareSize</code></td>
+      <td>Size of firmware data</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x30</code></td>
+      <td>4</td>
+      <td><code class="language-plaintext highlighter-rouge">versionCounter</code></td>
+      <td>Anti-rollback counter</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x34</code></td>
+      <td>4</td>
+      <td><code class="language-plaintext highlighter-rouge">hashAlgorithm</code></td>
+      <td>2=SHA-256, 4=SHA-384/512</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x38</code></td>
+      <td>64</td>
+      <td><code class="language-plaintext highlighter-rouge">expectedHash</code></td>
+      <td>Expected SHA hash of firmware</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x78</code></td>
+      <td>128</td>
+      <td><code class="language-plaintext highlighter-rouge">signature</code></td>
+      <td>RSA-2048 signature (PROD mode)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>(Above layout inferred from code offsets; exact field positions within the header body may vary.)</p>
+
+<h3 id="fwdata-processing">FWData Processing</h3>
+
+<p>After a valid <code class="language-plaintext highlighter-rouge">FWHeader</code>, the bootrom accepts <code class="language-plaintext highlighter-rouge">FWData</code> packets:</p>
+
+<ol>
+  <li>
+    <p><strong>Address continuity check</strong>: Each <code class="language-plaintext highlighter-rouge">FWData</code> packet’s address must match the expected next address (sequential writes only).</p>
+  </li>
+  <li>
+    <p><strong>Size accounting</strong>: The data size is deducted from the total firmware size. If a packet claims more data than remaining, it’s rejected.</p>
+  </li>
+  <li>
+    <p><strong>Mode check</strong>: The device must be in either DEV (<code class="language-plaintext highlighter-rouge">0x648913E6</code>) or PROD (<code class="language-plaintext highlighter-rouge">0xAC371D01</code>) mode.</p>
+  </li>
+  <li>
+    <p><strong>Write via ProgramFlashCheckEncryption</strong>: The actual write path depends on the target address and security mode.</p>
+  </li>
+</ol>
+
+<h3 id="programflashcheckencryption-0x0000d154">ProgramFlashCheckEncryption (0x0000D154)</h3>
+
+<p>This function is responsible for writing firmware data to its destination, with optional encryption:</p>
+
+<pre><code class="language-mermaid">flowchart TD
+    A[ProgramFlashCheckEncryption] --&gt; B{Target in\n0x20020000–0x2009FFFF?}
+    B --&gt;|YES| C[Plain memcpy to RAM\nno flash write, no encryption]
+    B --&gt;|NO| D{DEV mode OR\nOTP._293_4_ == 0x55555555?}
+    D --&gt;|YES| E[Plaintext flash write\nno encryption]
+    D --&gt;|NO| F{OTP._25_2_ == 0xA501?}
+    F --&gt;|YES| G[SM4-CBC encryption\nwith OTP key/IV]
+    F --&gt;|NO| H[AES-CBC encryption\nwith OTP key/IV]
+</code></pre>
+
+<p>The RAM write path is particularly notable: if the firmware address falls in <code class="language-plaintext highlighter-rouge">0x20020000-0x2009FFFF</code> (the external memory-mapped region), the data is simply copied to RAM with <code class="language-plaintext highlighter-rouge">memcpy</code>. No flash programming, no encryption. This is used for loading firmware into external RAM for execution.</p>
+
+<h3 id="final-verification">Final Verification</h3>
+
+<p>When the last <code class="language-plaintext highlighter-rouge">FWData</code> packet is received (total bytes written equals <code class="language-plaintext highlighter-rouge">firmwareSize</code>), the bootrom performs a final integrity check:</p>
+
+<p><strong>If SM2 OTP is configured AND NOT in upgrade mode:</strong></p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">result</span> <span class="o">=</span> <span class="n">mh_sm2_verify_device_signature</span><span class="p">(</span><span class="o">&amp;</span><span class="n">expectedHash</span><span class="p">,</span> <span class="n">firmwareAddress</span><span class="p">,</span> <span class="n">firmwareSize</span><span class="p">,</span> <span class="n">pubkey</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">!=</span> <span class="mh">0x52535653</span><span class="p">)</span> <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><strong>Otherwise (hash-based verification):</strong></p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mh_sha</span><span class="p">(</span><span class="n">hashAlgorithm</span><span class="p">,</span> <span class="n">computedHash</span><span class="p">,</span> <span class="n">firmwareAddress</span><span class="p">,</span> <span class="n">firmwareSize</span><span class="p">);</span>
+<span class="n">random_delay</span><span class="p">(</span><span class="mh">0x1F</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">memcmp</span><span class="p">(</span><span class="n">computedHash</span><span class="p">,</span> <span class="n">expectedHash</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+<span class="n">random_delay</span><span class="p">(</span><span class="mh">0x1F</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">memcmp</span><span class="p">(</span><span class="n">computedHash</span><span class="p">,</span> <span class="n">expectedHash</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>  <span class="c1">// Double-check!</span>
+</code></pre></div></div>
+
+<p>The hash verification uses a <strong>double-comparison pattern</strong> with <code class="language-plaintext highlighter-rouge">random_delay()</code> calls between them — this is an explicit countermeasure against voltage glitching attacks that might try to skip the comparison.</p>
+
+<p>If verification passes, the firmware header is written to the target flash region, and the bootrom proceeds to launch the firmware.</p>
+
+<hr />
+
+<h2 id="phase-7-launching-the-application">Phase 7: Launching the Application</h2>
+
+<h3 id="the-upgrade-path">The Upgrade Path</h3>
+
+<p>If the upgrade flag was set (<code class="language-plaintext highlighter-rouge">DAT_20000008 == 0xAAAAAA55</code>), after a 1-second delay the bootrom calls:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">finalize_and_jump_to_app</span><span class="p">(</span><span class="n">firmwareAddress</span><span class="p">,</span> <span class="n">version</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="finalize_and_jump_to_app-0x00008ff4">finalize_and_jump_to_app (0x00008FF4)</h3>
+
+<p>This function prepares the transition from bootrom to user firmware:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">finalize_and_jump_to_app</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">firmwareAddress</span><span class="p">,</span> <span class="n">uint</span> <span class="n">version</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">DAT_20020114</span> <span class="o">=</span> <span class="n">firmwareAddress</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">address</span> <span class="n">in</span> <span class="mh">0x20020000</span><span class="o">-</span><span class="mh">0x2009FFFF</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// RAM target: no random seed needed</span>
+        <span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">bootMode</span> <span class="o">=</span> <span class="mh">0x33330052</span><span class="p">;</span>    <span class="c1">// External RAM boot</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// Flash target: generate random seed for app</span>
+        <span class="n">generate_random_bytes</span><span class="p">(</span><span class="o">&amp;</span><span class="n">seed</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+        <span class="n">bootMode</span> <span class="o">=</span> <span class="mh">0x33330046</span><span class="p">;</span>    <span class="c1">// Internal flash boot</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">upgrade_mode</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">DAT_20020110</span> <span class="o">=</span> <span class="n">bootMode</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// Apply OTP register locks (one-time programmable restrictions)</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">SRAM_OTP_locks</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">OTP</span><span class="p">.</span><span class="n">RO</span>  <span class="o">|=</span> <span class="n">SRAM_OTP_locks</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+                <span class="n">OTP</span><span class="p">.</span><span class="n">ROL</span> <span class="o">|=</span> <span class="n">SRAM_OTP_locks</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">apply_otp_register_patches</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>      <span class="c1">// Final OTP overrides</span>
+    <span class="n">cleanup_before_app_jump</span><span class="p">(</span><span class="n">version</span><span class="p">);</span>    <span class="c1">// Reset peripherals</span>
+    <span class="n">jump_to_app</span><span class="p">(</span><span class="n">firmwareAddress</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">NVIC_reinit</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="cleanup_before_app_jump-0x00008e00">cleanup_before_app_jump (0x00008E00)</h3>
+
+<p>Before jumping to the application, the bootrom cleans up after itself:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">cleanup_before_app_jump</span><span class="p">(</span><span class="n">uint</span> <span class="n">version</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">NVIC</span><span class="p">.</span><span class="n">ICER</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mh">0xFFFFFFFF</span><span class="p">;</span>          <span class="c1">// Disable all interrupts (bank 0)</span>
+    <span class="n">NVIC</span><span class="p">.</span><span class="n">ICER</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mh">0xFFFFFFFF</span><span class="p">;</span>          <span class="c1">// Disable all interrupts (bank 1)</span>
+    <span class="n">SYSCTRL_BASE</span><span class="p">.</span><span class="n">SOFT_RST1</span> <span class="o">=</span> <span class="mh">0xA4300001</span><span class="p">;</span> <span class="c1">// Reset crypto peripherals</span>
+    <span class="n">SYSCTRL_BASE</span><span class="p">.</span><span class="n">SOFT_RST2</span> <span class="o">=</span> <span class="mh">0x30000001</span><span class="p">;</span> <span class="c1">// Reset system peripherals</span>
+    <span class="n">SysTick</span><span class="p">.</span><span class="n">CTRL</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                    <span class="c1">// Stop SysTick</span>
+
+    <span class="c1">// Reconfigure debug port (only for specific versions with JTAG enabled)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">version</span> <span class="n">in</span> <span class="mh">0xA535AC55</span><span class="o">-</span><span class="mh">0xA535AC58</span> <span class="o">&amp;&amp;</span> <span class="n">TST_JTAG</span> <span class="o">==</span> <span class="mh">0xA69CB35D</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ConfigurePortC</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Restore saved clock gating</span>
+    <span class="n">SYSCTRL_BASE</span><span class="p">.</span><span class="n">CG_CTRL1</span> <span class="o">=</span> <span class="n">savedClockGate1</span><span class="p">;</span>
+    <span class="n">SYSCTRL_BASE</span><span class="p">.</span><span class="n">CG_CTRL2</span> <span class="o">=</span> <span class="n">savedClockGate2</span><span class="p">;</span>
+
+    <span class="n">NVIC</span><span class="p">.</span><span class="n">ICPR</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mh">0xFFFFFFFF</span><span class="p">;</span>          <span class="c1">// Clear all pending interrupts</span>
+    <span class="n">NVIC</span><span class="p">.</span><span class="n">ICPR</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mh">0xFFFFFFFF</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="jump_to_app-0x000002e4">jump_to_app (0x000002E4)</h3>
+
+<p>The final handoff:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">jump_to_app</span><span class="p">(</span><span class="n">uint</span> <span class="n">appAddress</span><span class="p">,</span> <span class="n">uint</span> <span class="n">seed</span><span class="p">,</span> <span class="n">uint</span> <span class="n">reinitNVIC</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">reinitNVIC</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">NVIC_InitPriorityGrouping</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">seed</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">SSC_BASE</span><span class="p">.</span><span class="n">DATARAM_SCR</span> <span class="o">=</span> <span class="n">seed</span><span class="p">;</span>    <span class="c1">// Pass random seed to app</span>
+    <span class="p">}</span>
+    <span class="n">TST_BASE</span><span class="p">.</span><span class="n">TST_ROM</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>              <span class="c1">// Disable test interface</span>
+
+    <span class="c1">// ARM standard vector table launch:</span>
+    <span class="c1">//   [appAddress + 0] = Initial stack pointer</span>
+    <span class="c1">//   [appAddress + 4] = Reset handler address</span>
+    <span class="p">(</span><span class="o">**</span><span class="p">(</span><span class="n">code</span> <span class="o">**</span><span class="p">)(</span><span class="n">appAddress</span> <span class="o">+</span> <span class="mi">4</span><span class="p">))();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This follows the standard ARM Cortex-M application launch convention. The target address must contain a valid vector table where the first word is the initial stack pointer and the second word is the entry point (with Thumb bit set).</p>
+
+<hr />
+
+<h2 id="phase-8-tryboot--booting-from-flash">Phase 8: TryBoot — Booting from Flash</h2>
+
+<p>When no UART download is initiated (timeout expires), <code class="language-plaintext highlighter-rouge">bootMain</code> calls <code class="language-plaintext highlighter-rouge">TryBoot(version, flashBase)</code> twice — once for internal flash (<code class="language-plaintext highlighter-rouge">0x00000000</code>) and once for external flash (<code class="language-plaintext highlighter-rouge">0x20020000</code>).</p>
+
+<h3 id="tryboot-0x00004d94">TryBoot (0x00004D94)</h3>
+
+<p>The validation chain for existing firmware is rigorous:</p>
+
+<pre><code class="language-mermaid">flowchart TD
+    A[Read flash magic at *flashBase] --&gt; B{magic == 0x5555AAAA?}
+    B --&gt;|NO| Z1[Return 0x4201\nno valid firmware]
+    B --&gt;|YES| C{DEV-only version?\ncheck mode flag}
+    C --&gt;|PROD on DEV version| Z2[Restart 0x5302]
+    C --&gt;|OK| D{Version in\n0xA535AC56–0xA535AC58?}
+    D --&gt;|YES, DEV path| E[random_delay\nCopy 0x104 bytes header]
+    D --&gt;|NO, PROD 0xA535AC59| F{SM2 OTP configured?}
+    F --&gt;|YES| G[CRC-16 check\nSM2 signature verify\nrandom_delay ×2\nCopy header]
+    F --&gt;|NO| H[RSA-2048 signature verify]
+    H --&gt;|FAIL| Z3[Restart 0x4205]
+    G --&gt; I
+    E --&gt; I
+    H --&gt;|OK| I{Anti-rollback:\nOTP_min_version\n&lt; header.version?}
+    I --&gt;|YES, rollback| Z4[Restart 0x4203]
+    I --&gt;|NO| J{DEV-only: recheck\nmode flag}
+    J --&gt;|Mismatch| Z5[Restart 0x5304]
+    J --&gt;|OK| K{SM2 OTP\nconfigured?}
+    K --&gt;|YES| L[finalize_and_jump_to_app\ntrust SM2, skip hash]
+    K --&gt;|NO| M[CRC-16 double-check\nwith random_delay]
+    M --&gt; N{Hash algo valid?\nmust be 2 or 4}
+    N --&gt;|NO| Z6[Return error 0x4204]
+    N --&gt;|YES| O[Compute SHA-256/384/512\nover entire firmware]
+    O --&gt; P[Double memcmp\nwith random_delay\nanti-glitching]
+    P --&gt;|Match| Q{Mode check}
+    P --&gt;|No match| Z7[Return error]
+    Q --&gt;|Wrong mode| Z8[Restart 0x4200]
+    Q --&gt;|OK| L
+
+    style Z1 fill:#f55,stroke:#333
+    style Z2 fill:#f55,stroke:#333
+    style Z3 fill:#f55,stroke:#333
+    style Z4 fill:#f55,stroke:#333
+    style Z5 fill:#f55,stroke:#333
+    style Z6 fill:#f55,stroke:#333
+    style Z7 fill:#f55,stroke:#333
+    style Z8 fill:#f55,stroke:#333
+    style L fill:#5a5,stroke:#333
+</code></pre>
+
+<p>Every critical check is guarded by <code class="language-plaintext highlighter-rouge">random_delay()</code> calls and double-verification patterns. The <code class="language-plaintext highlighter-rouge">Restart()</code> calls on any failure mean there is no way to continue past a failed check — the device reboots entirely.</p>
+
+<h3 id="the-glitch-attack-surface">The Glitch Attack Surface</h3>
+
+<p>For an attacker with physical access, the <code class="language-plaintext highlighter-rouge">TryBoot</code> validation chain presents the primary glitch target. The sequence of checks (magic → version → mode → signature → anti-rollback → hash → double-compare → jump) creates multiple points where a precisely-timed voltage glitch could potentially skip a branch instruction. The <code class="language-plaintext highlighter-rouge">random_delay()</code> calls make timing prediction harder, and the double-comparison pattern means a single glitch is insufficient to bypass the hash check — two consecutive glitches would be needed.</p>
+
+<hr />
+
+<h2 id="phase-9-secure-monitor-branch">Phase 9: Secure Monitor Branch</h2>
+
+<h3 id="smbranch-0x0001e388">SMBranch (0x0001E388)</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">EnterSMBranch</code> packet type leads to a completely separate operating mode. After checking OTP SMKeySection magic values (<code class="language-plaintext highlighter-rouge">0x5AA56789</code> or <code class="language-plaintext highlighter-rouge">0x5AA56786</code>):</p>
+
+<ul>
+  <li>If the magic matches, the SM2 keys are loaded from OTP, crypto self-tests are run, and the device enters an infinite USB command processing loop.</li>
+  <li>If the magic doesn’t match, <code class="language-plaintext highlighter-rouge">SVC_1()</code> is called, which triggers <code class="language-plaintext highlighter-rouge">SyscallContextDispatch</code> — a syscall interface that saves all registers to <code class="language-plaintext highlighter-rouge">0x20000000</code> and dispatches through a function pointer table.</li>
+</ul>
+
+<p>The secure monitor branch appears to be used for cryptographic operations in a controlled environment, separate from the normal boot flow.</p>
+
+<hr />
+
+<h2 id="anti-tampering-measures">Anti-Tampering Measures</h2>
+
+<p>Throughout the bootrom, several defense-in-depth mechanisms are visible:</p>
+
+<h3 id="random-delays">Random Delays</h3>
+
+<p><code class="language-plaintext highlighter-rouge">random_delay(n)</code> is called extensively before and after security-critical operations. It uses the TRNG to insert a variable number of NOP cycles, making precise timing of glitch attacks extremely difficult. The delay parameter controls the maximum number of random iterations.</p>
+
+<h3 id="double-verification">Double Verification</h3>
+
+<p>Critical comparisons (hash checks, CRC checks) are performed twice with a <code class="language-plaintext highlighter-rouge">random_delay()</code> between them. This means a single voltage glitch cannot bypass the check — two precisely-timed glitches would be needed within a very narrow window.</p>
+
+<h3 id="boot-counter">Boot Counter</h3>
+
+<p><code class="language-plaintext highlighter-rouge">SYSCTRL_BASE.RSVD_POR</code> contains a 4-bit boot attempt counter (bits [19:16]). If this counter reaches 10, <code class="language-plaintext highlighter-rouge">validate_otp_and_configure</code> triggers <code class="language-plaintext highlighter-rouge">Restart(0x5A02)</code>. This limits the total number of boot attempts (and thus glitch attempts) before the device locks itself.</p>
+
+<h3 id="jtag-disable">JTAG Disable</h3>
+
+<p>On any device that isn’t in DEV mode, <code class="language-plaintext highlighter-rouge">determine_boot_version</code> immediately sets <code class="language-plaintext highlighter-rouge">TST_BASE.TST_JTAG = 0</code>, disabling the JTAG debug port. On DEV devices, <code class="language-plaintext highlighter-rouge">Restart()</code> also clears it, but only in the restart path — meaning JTAG is available during normal operation on DEV devices.</p>
+
+<hr />
+
+<h2 id="memory-map-summary">Memory Map Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Address Range</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x00000000 - 0x0001FFFF</code></td>
+      <td>Internal flash (bootrom) / QSPI flash (firmware)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x10000000 - 0x1FFFFFFF</code></td>
+      <td>QSPI flash (XIP region)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x20000000 - 0x2001FFFF</code></td>
+      <td>Internal SRAM</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x20020000 - 0x2009FFFF</code></td>
+      <td>External SRAM (memory-mapped)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x40000000 - 0x400FFFFF</code></td>
+      <td>Peripheral registers</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x40008000</code></td>
+      <td>UART0 base</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x40008400</code></td>
+      <td>UART1 base (multiplexed with USB)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x40030200</code></td>
+      <td>BPU (Battery-backed Key Processing Unit)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0xE0000000+</code></td>
+      <td>Cortex-M system registers (NVIC, SCB, SysTick)</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>The AIR105 bootrom implements a security architecture typical of modern payment-grade MCUs: an immutable bootrom establishes a hardware root of trust, OTP memory defines the security lifecycle, and cryptographic verification ensures only authorized firmware can execute. The transition from development to production is controlled by writing progressively more restrictive values to OTP via the UART protocol.</p>
+
+<p>The UART download protocol is always accessible, but what it accepts varies dramatically by lifecycle stage. On development devices, the barrier to firmware modification is essentially zero — a CRC-16 check that the attacker can compute. On production devices, RSA-2048 or SM2 signatures are required, making firmware modification infeasible without the manufacturer’s private keys.</p>
+
+<p>The primary remaining attack surface on production devices is physical: voltage glitching during the <code class="language-plaintext highlighter-rouge">TryBoot</code> validation chain. The bootrom’s designers were clearly aware of this threat and implemented countermeasures (random delays, double verification, boot attempt counting), but the fundamental tension remains — any security check that must complete in finite time is theoretically glitchable.</p>
+
+<hr />
+
+<p><em>This analysis was performed using Ghidra with the GhydraMCP plugin for interactive reverse engineering. All function names, addresses, and behavior descriptions were derived from static analysis of the bootrom binary.</em></p>
+
+<hr />
+
+<p>Written by <a href="https://github.com/MisterMaluco">Mister Maluco</a> (GLM-5.1 Brain)
+If you want to help Teske’s Lab research using AI, feel free to sign-up for a 10% discount of GLM Coding Plan at <a href="https://teske.live/glm">https://teske.live/glm</a></p>
+
+<hr />
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>
+    <p><strong><a href="https://lucasteske.dev/2025/09/running-code-in-pax-machines">Running code in a PAX Credit Card Payment Machine</a></strong> — The original article where this reverse engineering effort started, detailing how code execution was achieved on PAX payment terminals powered by the MH1903S.</p>
+  </li>
+  <li>
+    <p><strong><a href="https://github.com/racerxdl/megahunt-bootroms/tree/main/AIR105">megahunt-bootroms/AIR105</a></strong> — The bootrom dumps used for this analysis. The analyzed target was <code class="language-plaintext highlighter-rouge">AIR105_BOOTROM.bin</code>, extracted from a Henzou AIR105 device (a silicon OEM for the MH1903S core).</p>
+  </li>
+</ul>
+
+<h3 id="luatos-air105-rom-dumps">LuatOS AIR105 ROM Dumps</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Filename</th>
+      <th>Offset</th>
+      <th>Size</th>
+      <th>SHA-1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">AIR105_BOOTROM.bin</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0x0000_0000</code></td>
+      <td>128 KB</td>
+      <td><code class="language-plaintext highlighter-rouge">129369f04f57817ac25b8c6a545b670f358b53a1</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">AIR105_BPK_RAM.bin</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0x4003_0000</code></td>
+      <td>1 KB</td>
+      <td><code class="language-plaintext highlighter-rouge">60cacbf3d72e1e7834203da608037b1bf83b40e8</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">AIR105_OTP.bin</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0x4000_8000</code></td>
+      <td>16 KB</td>
+      <td><code class="language-plaintext highlighter-rouge">e5a6616d40fe65dcaab9a179e602138e41cd7bc3</code></td>
+    </tr>
+  </tbody>
+</table>]]></content><author><name>Mister Maluco</name></author><category term="Reverse Engineering" /><category term="Hardware Hacking" /><category term="AIR105" /><category term="MH1903S" /><category term="Bootrom" /><category term="Boot Process" /><category term="Reverse Engineering" /><category term="Hardware Hacking" /><category term="Firmware" /><category term="ARM" /><category term="Embedded" /><category term="ARM Cortex-M4F" /><category term="Ghidra" /><category term="QSPI" /><category term="UART" /><category term="OTP" /><category term="Security" /><category term="Cryptography" /><category term="Embedded Systems" /><summary type="html"><![CDATA[Reverse engineer the AIR105 bootrom and MH1903S security architecture. Explore the boot process, UART download protocol, and firmware validation steps.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/9138886ea831b06c18888099fd0e26a6_MD5.jpeg" /><media:content medium="image" url="https://lucasteske.dev/assets/Running%20code%20in%20a%20PAX%20Credit%20Card%20Payment%20Machine/9138886ea831b06c18888099fd0e26a6_MD5.jpeg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Running code in a PAX Credit Card Payment Machine (part1)</title><link href="https://lucasteske.dev/2025/09/running-code-in-pax-machines" rel="alternate" type="text/html" title="Running code in a PAX Credit Card Payment Machine (part1)" /><published>2025-09-05T19:30:00+00:00</published><updated>2025-09-05T19:30:00+00:00</updated><id>https://lucasteske.dev/2025/09/running-code-in-pax-machines</id><content type="html" xml:base="https://lucasteske.dev/2025/09/running-code-in-pax-machines"><![CDATA[<h2 id="disclaimer">Disclaimer</h2>
 
 <p><strong>All procedures described here were done with public available stuff</strong> - No security flaws were actually explored here to get code execution. The processor swap technique <strong>does not bypass the tamper protections neither allow a fake machine to actually emit payments.</strong></p>
 
@@ -2639,126 +3851,4 @@ These boards are relatively cheap, about US$15 and contains a Lattice ECP5 FPGA 
 
 <span class="n">rv</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
 <span class="n">r</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
-</code></pre></div></div>]]></content><author><name>Lucas Teske</name></author><category term="CTF" /><category term="Satellite" /><category term="Hacking" /><category term="Camera" /><category term="Hacking" /><category term="CTF" /><category term="Hackasat" /><category term="CTF Writeup" /><category term="Satellite" /><category term="XTCE" /><category term="Python" /><category term="pwntools" /><category term="Telemetry" /><category term="Carnac 2.0" /><category term="Binary" /><category term="Protocol" /><category term="EPS" /><category term="Flag Generator" /><summary type="html"><![CDATA[Learn to hack the Carnac 2.0 satellite in the Talk to me, Goose CTF. Decode telemetry and send commands using Python and pwntools.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_b23VUAe-7ZvnQF4MIZO73A.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_b23VUAe-7ZvnQF4MIZO73A.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Hack a Sat - Phasors to Stun</title><link href="https://lucasteske.dev/2020/05/hack-a-sat-phasors-to-stun/" rel="alternate" type="text/html" title="Hack a Sat - Phasors to Stun" /><published>2020-05-30T16:15:00+00:00</published><updated>2020-05-30T16:15:00+00:00</updated><id>https://lucasteske.dev/2020/05/hack-a-sat-phasors-to-stun</id><content type="html" xml:base="https://lucasteske.dev/2020/05/hack-a-sat-phasors-to-stun/"><![CDATA[<h1 id="hack-a-sat--phasors-to-stun">Hack a sat  —  Phasors to Stun</h1>
-
-<p>The challenge</p>
-
-<p>I got really excited about it because it’s a SDR one. And everyone that knows me know that I love SDR stuff.</p>
-
-<p>The zip file itself contains a wav file which they told us is not an audio but an radio signal</p>
-
-<p><img src="/assets/posts/medium/1_oEKFYtXfQrg3o9EcymOpLw.png" alt="File command to show what the wave file is" /><em>File command to show what the wave file is</em></p>
-
-<p>If we open in audacity we will see a very interesting pattern:</p>
-
-<p><img src="/assets/posts/medium/1_B6iuajNIgKRnK1eDHE9RfA.png" alt="Audacity view of the wave file" /><em>Audacity view of the wave file</em></p>
-
-<p>That looks like a 2-FSK demodulated file (see <a href="https://en.wikipedia.org/wiki/Frequency-shift_keying">https://en.wikipedia.org/wiki/Frequency-shift_keying</a>). When you demodulate a 2-FSK I/Q from correctly from a Radio, it will convert the frequency to voltage leading to a pattern like the one saw.</p>
-
-<p>I said 2-FSK besides other ones, because there is clearly almost only three values there: 1, 0 and -1. The 0 is usually the transistion, and in a 2-FSK 1 and -1 represents the bits itself. We can use GNU Radio to transform that in a bitstream, but before we need to know the baud rate (or bit rate).</p>
-
-<p>That can be done manually in the audacity itself. Just find two peaks that are closer to each other than other any other. That’s probably the <strong>minimum period</strong> of the signal which usually tells us a bit change. For example:</p>
-
-<p><img src="/assets/posts/medium/1_tZUQt0MBQvI0i2JbHiDauw.png" alt="Two short peaks selected" /><em>Two short peaks selected</em></p>
-
-<p>I got one negative and one positive short peak, which would represent a 0 to 1 transition or a 1 to 0 transition. Then you can see that there is 4 samples selected (just check these dots, they’re the samples in the file) which means that there is 4 samples per bit in the wav signal. Since the wav sample rate is 32000 we can expect the baudrate to be something close to 8000. So now we have enough information then we can go to GNU Radio!</p>
-
-<p>In GNU Radio the first thing we should do is get a Wav File Source to open the file:</p>
-
-<p><img src="/assets/posts/medium/1_FFyDLx-6GeTnYS8-aUNqRA.png" alt="Wave File Source" /><em>Wave File Source</em></p>
-
-<p>I selected the option <strong>Repeat</strong> to be false, so it will not run forever repeating the file. After that we need something to synchronize our bits and find where to sample the bits we want. There are several blocks that can do that, but I usually prefer the <strong>M&amp;M Clock Recovery</strong> block. Its easy to use and since the signal does not have much noise on it, it will work perfectly. One thing to notice is that the M&amp;M usually works on complex samples, so you need to change the sample type to <strong>float</strong>. Then there is a few parameters to set:</p>
-
-<p><img src="/assets/posts/medium/1_bo6sVsrnFugs0MHKug-2Aw.png" alt="M&amp;M Clock Recovery Parameters" /><em>M&amp;M Clock Recovery Parameters</em></p>
-
-<p>The most important here is <strong>Omega</strong>. Omega represents the number of input samples per output sample (let’s call symbol). We found out that the input audio has 4 samples per symbol. So our <strong>Omega</strong> is 4. The other parameters defines how the tracking loop works. You can start with the parameters I put (is usually the defaults what I try initially) and tune afterwards. They’re mostly effective for signals that are degraded by noise which is not the case of this flag. That means basically any value should work.</p>
-
-<p>One thing worth to mention is that the <strong>Omega Relative Limit</strong> limits how much from the “last detected symbol” the current symbol can deviate. If you put higher enough, the lock will be loose and can detect wrong symbols. Since our signal basically doesn’t have any noise, we can put this value very low.</p>
-
-<p>Now we can plug the two blocks:</p>
-
-<p><img src="/assets/posts/medium/1_pLL_Dw-EBadWJaJI3l69Mw.png" alt="Clock Recovery + Wav File" /><em>Clock Recovery + Wav File</em></p>
-
-<p>The next step is to use a <strong>Binary Slicer</strong> blocks that will convert a -1 in float to a 0 byte and a 1 float to 1 byte. But before that we need to talk about bit alignment and how it affects us.</p>
-
-<p>Let’s supose we have this string:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>HELLO
-</code></pre></div></div>
-
-<p>That in binary is:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>01001000 01000101 01001100 01001100 01001111
-   H         E        L        L       O
-</code></pre></div></div>
-
-<p>If we have a stream that repeats hello two times we will have something like that:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>01001000 01000101 01001100 01001100 01001111 01001000 01000101 ...
-   H         E        L        L       O        H        E
-</code></pre></div></div>
-
-<p>When receiving continuous signals, you usually don’t know where you started fetching the data. Its possible that we started at middle of a byte instead of the start. That affects us because if we start counting a byte from the middle, we will have bytes that have pieces of to bytes. For example if we started at bit 4:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1000010001010100110001001100010011110100100001000101
-</code></pre></div></div>
-
-<p>We will be missing 4 bits from the first byte and we would not know that. And if we tried to decode it:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>10000100 01010100 11000100 11000100 11110100 10000100 0101 ...
-   �         T        �       �        �         �
-</code></pre></div></div>
-
-<p>The signal wouldn’t make sense to us. So we need to account that we might have a bit shift in that. Since our chars are 1 byte wide (8 bits) we only need to check from shift 0 to 7, since if it is bigger than that, it will be the same as N byte shift + n bit shift.</p>
-
-<p>On gnuradio we can use a <strong>Skip Head</strong> block that will skip N samples before sending the data to the next block.</p>
-
-<p><img src="/assets/posts/medium/1_VBVu-iZh_AbeQKbiBN_XbQ.png" alt="Wav + MM + Skip" /><em>Wav + MM + Skip</em></p>
-
-<p>We can start with Num Items = 0 because we don’t know if the data has been shifted. Then we can get to the next block that is the binary slicer.</p>
-
-<p><img src="/assets/posts/medium/1_FmWEN_NT_DC9HvDyMxJnUw.png" alt="Wav + MM + Skip + Slicer" /><em>Wav + MM + Skip + Slicer</em></p>
-
-<p>The binary slicer work is simple: It receive float samples. If the sample is &gt; 0 it outputs a byte with value 1. If its ≤ 0 it outputs a byte 0.</p>
-
-<p>After that we will have a stream of bits unpacked in a stream of bytes. We need to pack them together (each 8 bytes of input to form a single byte). For that we can use the <strong>Pack K Bits</strong> block.</p>
-
-<p><img src="/assets/posts/medium/1_aC8JZtn8fhN7Mb8E1xA-eA.png" alt="Wav + MM + Skip + Slicer + Pack" /><em>Wav + MM + Skip + Slicer + Pack</em></p>
-
-<p>The <strong>Pack K Bits</strong> block will fetch <strong>K</strong> input bytes, put them together and output a single byte. It is basically a Add + Shift process that after it processes <strong>K</strong> inputs, it outputs the memory and resets. It will basically transform:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>00000001 00000000 00000001 00000001 00000001 00000000 00000001 00000001
-</code></pre></div></div>
-
-<p>And make a single byte:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>10111011
-</code></pre></div></div>
-
-<p>After that we can save it to a file using the <strong>File Sink</strong> block.</p>
-
-<p><img src="/assets/posts/medium/1_2i7xMJCqsO2akqRGV8-m9Q.png" alt="Complete decode flow" /><em>Complete decode flow</em></p>
-
-<p>I selected it to <strong>Overwrite</strong> the output file, so when we change the Skip Head, it just replaces the old file.</p>
-
-<p>Now we have our complete decode flow, we can hit run in the bar.</p>
-
-<p>After that we can inspect our file by running <strong>cat</strong> on it.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat output.bin
-</code></pre></div></div>
-
-<p><img src="/assets/posts/medium/1_D32TnW8NmfxpfM7CqEl9SA.png" alt="cat output" /><em>cat output</em></p>
-
-<p>We can see that something is periodic, but it doesnt make sense. So we repeat the process increasing Num Items. And then with Num Items = 5</p>
-
-<p><img src="/assets/posts/medium/1_NV7eIw_aTHQct1asN90onw.png" alt="FLAG FOUND" /><em>FLAG FOUND</em></p>
-
-<p>We’ve found the flag!</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>THE FLAG IS: flag{xray72468alpha:GKhWwvFNBGHT44M8d5Z2y4sc9xo7T4tNrwlTw5OWuCg_9dd4Ow_aiMDgxTtL9ng2s2sEDMA0AfTrsSpjv_sNvMg}
-</code></pre></div></div>
-
-<p>Final flow:</p>
-
-<p><img src="/assets/posts/medium/1_lEYyYL0REStDYZi7xkGmag.png" alt="Final GNU Radio Flow" /><em>Final GNU Radio Flow</em></p>]]></content><author><name>Lucas Teske</name></author><category term="CTF" /><category term="Software Defined Radio" /><category term="Hacking" /><category term="Camera" /><category term="Hacking" /><category term="CTF" /><category term="Hackasat" /><category term="CTF Writeup" /><category term="Satellite" /><category term="SDR" /><category term="GNU Radio" /><category term="Radio" /><category term="FSK" /><category term="Signal Processing" /><category term="Clock Recovery" /><category term="WAV" /><category term="Binary Slicer" /><category term="Bitstream" /><category term="Demodulation" /><summary type="html"><![CDATA[Learn to hack a satellite CTF challenge using SDR and GNU Radio. Decode 2-FSK signals from WAV files to find the hidden flag.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_R1n7vaNfInOP6BCFXkjv1Q.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_R1n7vaNfInOP6BCFXkjv1Q.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+</code></pre></div></div>]]></content><author><name>Lucas Teske</name></author><category term="CTF" /><category term="Satellite" /><category term="Hacking" /><category term="Camera" /><category term="Hacking" /><category term="CTF" /><category term="Hackasat" /><category term="CTF Writeup" /><category term="Satellite" /><category term="XTCE" /><category term="Python" /><category term="pwntools" /><category term="Telemetry" /><category term="Carnac 2.0" /><category term="Binary" /><category term="Protocol" /><category term="EPS" /><category term="Flag Generator" /><summary type="html"><![CDATA[Learn to hack the Carnac 2.0 satellite in the Talk to me, Goose CTF. Decode telemetry and send commands using Python and pwntools.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_b23VUAe-7ZvnQF4MIZO73A.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_b23VUAe-7ZvnQF4MIZO73A.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>

@@ -510,6 +510,19 @@
 
 <div class="catalogue">
   
+    <a href="/pt/2011/10/amostra-de-memoria-mram-da-everspin/" class="catalogue-item catalogue-item-2">
+      <div>
+        <time datetime="2011-10-13 19:42:09 +0000" class="catalogue-time">October 13, 2011</time>
+        <h1 class="catalogue-title">Amostra de Memória MRAM da Everspin</h1>
+        <div class="catalogue-line"></div>
+        
+        <p>
+          Há muito tempo atrás pedi amostras de uma memória magnética da Everspin para fazer testes aqui, porém depois me deparei com o problema de que ela é 3.3V. De qualquer maneira agora tenho um FPGA para brincar com ela. O modelo de amostra é a MR2A16AYS35, uma MRAM de 1M de endereço e 16 Bits de “palavra”, totalizando 16Mbit ou 2 Mbytes. MRAM é um acrônimo para Magneto-resistive Random Access Memory, que é uma memória RAM não-volátil (não perde os dados quando se desliga). Ela é considerada a chave para o futuro da computação, principalmente portátil. Com ela vem o conceito de “boot-instantâneo” onde...
+        </p>
+
+      </div>
+    </a>
+  
     <a href="/pt/2011/10/fonte-3v3-do-fpga/" class="catalogue-item catalogue-item-2">
       <div>
         <time datetime="2011-10-13 18:25:34 +0000" class="catalogue-time">October 13, 2011</time>
@@ -562,19 +575,6 @@
       </div>
     </a>
   
-    <a href="/pt/2011/09/desenhando-com-canvas-do-html5/" class="catalogue-item catalogue-item-2">
-      <div>
-        <time datetime="2011-09-12 19:10:53 +0000" class="catalogue-time">September 12, 2011</time>
-        <h1 class="catalogue-title">Desenhando com Canvas do HTML5</h1>
-        <div class="catalogue-line"></div>
-        
-        <p>
-          [ Migrado do LetsHack It ] Alguns de vocês podem ter visto que tive alguns pequenos projetos usando o Canvas do HTML5 na EnergyLabs Brasil. Abaixo alguns projetos que fazem uso do Canvas: Curva do Transístor Gerador de Ondas Harmônicas Gerador de Fundo Animado Porém nunca expliquei a ninguém como os fiz. Vou começar um simulador de gráficos onde você digita a fórmula e ele desenha o gráfico, e explicarei no caminho o que estou fazendo. Acredito que será útil para muitas pessoas. Bom irei postar como iniciar o Canvas e irei dormir. Mais tarde continuarei este post do Lets...
-        </p>
-
-      </div>
-    </a>
-  
 </div>
 
 <div class="pagination">
@@ -593,10 +593,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-30 19:35:41 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-04-03 21:25:46 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-30 19:35:41 +0000
+    Last build: 2026-04-03 21:25:46 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">
@@ -625,6 +625,20 @@
   anchors.add();
 </script>
 <!-- End AnchorJS -->
+<!-- Mermaid.js Diagrams -->
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'dark',
+    securityLevel: 'loose'
+  });
+  await mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+<!-- End Mermaid.js -->
+
 <!-- Cloudflare Web Analytics -->
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "6fdff3f05d2847b58d553381bb1e8115"}'></script>
 <!-- End Cloudflare Web Analytics -->

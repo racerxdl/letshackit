@@ -510,6 +510,23 @@
 
 <div class="catalogue">
   
+    <a href="/2021/04/rotor-antenna-parte-2" class="catalogue-item catalogue-item-2">
+      <div>
+        <time datetime="2021-04-01 05:23:00 +0000" class="catalogue-time">April 01, 2021</time>
+        <h1 class="catalogue-title">Antenna Rotor - Part 2</h1>
+        <div class="catalogue-line"></div>
+        
+          <div class="post-image-div">
+            <img src="/assets/posts/tracker-mount-2/assembled-elevation-shaft.jpg" class="post-image post-image-2" alt="Black stepper motor with wires and gear shaft, surrounded by tools on a workbench.">
+          </div>
+        
+        <p>
+          Continuing the tracker project, I managed to make some significant progress. As Demilson (PY2UEP) had cut the original motors, I did the same. The azimuth motor was too rusted and I eventually destroyed one of the coils (which I wanted to salvage the wire), but in the end the shaft went out. After removing the shaft, I broke the magnet with a hammer until there was any piece left. That way, the only thing that would be left there is the shaft and the hexagon magnet support. Motor shaft showing the hexagon support For the elevation motor, I made a...
+        </p>
+
+      </div>
+    </a>
+  
     <a href="/2021/03/rotor-antenna-parte-1" class="catalogue-item catalogue-item-2">
       <div>
         <time datetime="2021-03-03 23:57:00 +0000" class="catalogue-time">March 03, 2021</time>
@@ -580,23 +597,6 @@
       </div>
     </a>
   
-    <a href="/2020/05/hack-a-sat-phasors-to-stun/" class="catalogue-item catalogue-item-2">
-      <div>
-        <time datetime="2020-05-30 16:15:00 +0000" class="catalogue-time">May 30, 2020</time>
-        <h1 class="catalogue-title">Hack a Sat - Phasors to Stun</h1>
-        <div class="catalogue-line"></div>
-        
-          <div class="post-image-div">
-            <img src="/assets/posts/medium/1_R1n7vaNfInOP6BCFXkjv1Q.png" class="post-image post-image-2" alt="Black screen with white text describing a CTF challenge about demodulating SDR data to find a flag.">
-          </div>
-        
-        <p>
-          Hack a sat  —  Phasors to Stun The challenge I got really excited about it because it’s a SDR one. And everyone that knows me know that I love SDR stuff. The zip file itself contains a wav file which they told us is not an audio but an radio signal File command to show what the wave file is If we open in audacity we will see a very interesting pattern: Audacity view of the wave file That looks like a 2-FSK demodulated file (see https://en.wikipedia.org/wiki/Frequency-shift_keying). When you demodulate a 2-FSK I/Q from correctly from a Radio, it will...
-        </p>
-
-      </div>
-    </a>
-  
 </div>
 
 <div class="pagination">
@@ -615,10 +615,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-03-30 19:35:26 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-04-03 21:25:32 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-30 19:35:26 +0000
+    Last build: 2026-04-03 21:25:32 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">
@@ -647,6 +647,20 @@
   anchors.add();
 </script>
 <!-- End AnchorJS -->
+<!-- Mermaid.js Diagrams -->
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'dark',
+    securityLevel: 'loose'
+  });
+  await mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+<!-- End Mermaid.js -->
+
 <!-- Cloudflare Web Analytics -->
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "6fdff3f05d2847b58d553381bb1e8115"}'></script>
 <!-- End Cloudflare Web Analytics -->

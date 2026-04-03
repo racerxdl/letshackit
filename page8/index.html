@@ -510,6 +510,19 @@
 
 <div class="catalogue">
   
+    <a href="/2016/01/qfh-antenna-and-my-first-reception-of-noaa/" class="catalogue-item catalogue-item-2">
+      <div>
+        <time datetime="2016-01-25 03:55:41 +0000" class="catalogue-time">January 25, 2016</time>
+        <h1 class="catalogue-title">QFH Antenna and my first reception of NOAA!</h1>
+        <div class="catalogue-line"></div>
+        
+        <p>
+          So in my last post I was playing with my RTL-SDR with an Intel Edison. So I decided to build a QFH Antenna to be able to receive NOAA APT Signals. These NOAA Weather Satellites broadcast an APT signal with about 5 to 8 Watts at 2m band, and considering how low this power is, it might surprise you that these signals arrive pretty strong at earth surface. But the biggest challenge to receive these signals are not its power. Its all about movement. These satellites are sun-synchronous low orbit satellites, that means they aren’t locked to earth rotation. Instead,...
+        </p>
+
+      </div>
+    </a>
+  
     <a href="/2016/01/play-with-sdr-and-intel-edison/" class="catalogue-item catalogue-item-2">
       <div>
         <time datetime="2016-01-16 03:25:25 +0000" class="catalogue-time">January 16, 2016</time>
@@ -570,21 +583,6 @@ Only available in Portuguese
       </div>
     </a>
   
-    <a href="/2014/01/ip-cam-maygion/" class="catalogue-item catalogue-item-2">
-      <div>
-        <time datetime="2014-01-18 23:42:45 +0000" class="catalogue-time">January 18, 2014</time>
-        <h1 class="catalogue-title">IP Cam – MayGion</h1>
-        <div class="catalogue-line"></div>
-        
-        <p>
-          
-Only available in Portuguese
-
-        </p>
-
-      </div>
-    </a>
-  
 </div>
 
 <div class="pagination">
@@ -603,10 +601,10 @@ Only available in Portuguese
 
     <footer>
   <span>
-    © <time datetime="2026-03-30 19:35:26 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-04-03 21:25:32 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-03-30 19:35:26 +0000
+    Last build: 2026-04-03 21:25:32 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">
@@ -635,6 +633,20 @@ Only available in Portuguese
   anchors.add();
 </script>
 <!-- End AnchorJS -->
+<!-- Mermaid.js Diagrams -->
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'dark',
+    securityLevel: 'loose'
+  });
+  await mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+<!-- End Mermaid.js -->
+
 <!-- Cloudflare Web Analytics -->
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "6fdff3f05d2847b58d553381bb1e8115"}'></script>
 <!-- End Cloudflare Web Analytics -->
