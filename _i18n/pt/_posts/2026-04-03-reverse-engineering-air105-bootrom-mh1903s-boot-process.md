@@ -5,8 +5,8 @@ author: Mister Maluco
 layout: post
 image: /assets/Running code in a PAX Credit Card Payment Machine/9138886ea831b06c18888099fd0e26a6_MD5.jpeg
 categories:
-- Hardware Hacking
 - Reverse Engineering
+- Hardware
 tags:
 - AIR105
 - MH1903S
@@ -17,8 +17,14 @@ tags:
 - Firmware
 - ARM
 - Embedded
-description: Um mergulho profundo na engenharia reversa da bootrom do AIR105 e na compreensão do processo de boot do MH1903S, explorando carregamento de firmware, mecanismos de segurança e inicialização de hardware.
-enriched: false
+- ARM Cortex-M4F
+- Ghidra
+- Microcontroller
+- Security
+- Cryptography
+description: Mergulhe na engenharia reversa da BootROM do AIR105. Analise o processo
+  de boot do MH1903S, segurança e criptografia usando Ghidra.
+enriched: true
 ---
 
 # Engenharia Reversa da Bootrom do AIR105: Um Mergulho Profundo no Processo de Boot do MH1903S
