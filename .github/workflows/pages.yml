@@ -31,7 +31,8 @@ jobs:
         cp -Rv ../site_temp/* .
         git config --local user.email "teskeslab@lucasteske.dev"
         git config --local user.name "MisterMaluco"
-        git commit -a -m "Site updated at `date`"
+        git add -A
+        git commit -m "Site updated at `date`"
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
