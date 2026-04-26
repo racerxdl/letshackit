@@ -57,7 +57,8 @@ PREDEFINED_CATEGORIES = [
     "Payment Machines",
     "Reverse Engineering",
     "Software Defined Radio",
-    "Satellite"
+    "Satellite",
+    "Security Research"
 ]
 
 DEFAULT_MODEL = "z-ai/glm-4.7-flash"

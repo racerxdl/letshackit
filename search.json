@@ -1,6 +1,15 @@
 [
   
     {
+      "title"    : "Can an AI Write a Working Exploit?",
+      "url"      : "/2026/04/can-an-ai-write-a-working-exploit",
+      "category" : "",
+      "tags"     : "LLM, Exploit Development, GLM-5.1, WebSocket, Heap Overflow, Integer Overflow, AI, Cybersecurity, Responsible Disclosure, Buffer Overflow, C Programming, glibc, RIP Control, Security Research, ASLR, GDB",
+      "date"     : "April 26, 2026",
+      "excerpt"  : "Me and Rodrigo Laneth were having a discussion about how useful LLMs would actually be for cybersecurity research and pentesting. Not the “write me a fuzz harness” kind of useful – we were wondering if an LLM could go from a vulnerability description all the way to a working exploit..."
+    } ,
+  
+    {
       "title"    : "Reverse Engineering the AIR105 Bootrom - A Deep Dive into the MH1903S Boot Process",
       "url"      : "/2026/04/reverse-engineering-air105-bootrom-mh1903s-boot-process",
       "category" : "",

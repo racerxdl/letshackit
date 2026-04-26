@@ -1,6 +1,15 @@
 [
   
     {
+      "title"    : "Uma IA Consegue Escrever um Exploit Funcional?",
+      "url"      : "/pt/2026/04/can-an-ai-write-a-working-exploit",
+      "category" : "",
+      "tags"     : "LLM, Exploit Development, GLM-5.1, WebSocket, Heap Overflow, Integer Overflow, AI, Cybersecurity, Responsible Disclosure, wsServer, Heap Buffer Overflow, Exploit, RIP, OpenAI, Anthropic, glibc, __free_hook, ASLR",
+      "date"     : "April 26, 2026",
+      "excerpt"  : "Eu e o Rodrigo Laneth estávamos discutindo sobre quão úteis os LLMs seriam realmente para pesquisa em segurança e pentesting. Não o tipo de útil “escreve um fuzz harness pra mim” – estávamos querendo saber se um LLM conseguiria ir de uma descrição de vulnerabilidade até um PoC de exploit..."
+    } ,
+  
+    {
       "title"    : "Engenharia Reversa da Bootrom do AIR105 - Um Mergulho Profundo no Processo de Boot do MH1903S",
       "url"      : "/pt/2026/04/reverse-engineering-air105-bootrom-mh1903s-boot-process",
       "category" : "",
