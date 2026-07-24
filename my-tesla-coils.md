@@ -5,6 +5,8 @@ author: Lucas Teske
 layout: page
 guid: http://www.teske.net.br/lucas/?page_id=278
 permalink: /my-tesla-coils
+description: tesla-coils.meta-description
+social_image: /wp-content/uploads/2016/11/5620739994_1080ae890f_o.jpg
 ---
 
 {% translate_file my-tesla-coils.md %}

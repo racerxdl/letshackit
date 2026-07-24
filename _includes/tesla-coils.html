@@ -1,0 +1,159 @@
+{% assign coil_archive = site.data.tesla_coils %}
+{% assign coil_projects = coil_archive.projects %}
+{% assign coil_milestones = coil_projects | where: "featured", true %}
+{% assign coil_experiments = coil_projects | where: "featured", false %}
+{% assign coil_recording_count = 0 %}
+{% for coil in coil_projects %}
+  {% assign coil_video_count = coil.videos | size %}
+  {% assign coil_recording_count = coil_recording_count | plus: coil_video_count %}
+{% endfor %}
+
+<section class="coils-page" aria-labelledby="coils-hero-title">
+  <section class="coils-hero">
+    <div class="coils-hero__content">
+      <span class="coils-hero__eyebrow">{% t tesla-coils.hero-eyebrow %}</span>
+      <h2 class="coils-hero__title" id="coils-hero-title">{% t tesla-coils.hero-title %}</h2>
+      <p class="coils-hero__description">{% t tesla-coils.hero-description %}</p>
+      <div class="coils-hero__actions">
+        <a class="project-button project-button--primary" href="#coil-milestones">{% t tesla-coils.milestones-button %}</a>
+        <a class="project-button" href="#coil-experiments">{% t tesla-coils.experiments-button %}</a>
+      </div>
+      <dl class="coils-stats">
+        <div>
+          <dt>{{ coil_projects.size }}</dt>
+          <dd>{% t tesla-coils.builds-label %}</dd>
+        </div>
+        <div>
+          <dt>{{ coil_recording_count }}</dt>
+          <dd>{% t tesla-coils.recordings-label %}</dd>
+        </div>
+        <div>
+          <dt>{{ coil_archive.period }}</dt>
+          <dd>{% t tesla-coils.period-label %}</dd>
+        </div>
+      </dl>
+    </div>
+    <figure class="coils-hero__visual">
+      <img src="{{ '/wp-content/uploads/2016/11/5620739994_1080ae890f_o.jpg' | prepend: site.baseurl_root }}" alt="{% t tesla-coils.hero-image-alt %}" width="1280" height="720" fetchpriority="high">
+      <figcaption>{% t tesla-coils.hero-image-caption %}</figcaption>
+    </figure>
+  </section>
+
+  <div class="coils-intro">
+    <div>
+      <span class="coils-intro__label">{% t tesla-coils.archive-label %}</span>
+      <h2>{% t tesla-coils.archive-title %}</h2>
+      <p>{% t tesla-coils.archive-description %}</p>
+    </div>
+    <p class="coils-intro__note">{% t tesla-coils.date-note %}</p>
+  </div>
+
+  <section class="coil-milestones" id="coil-milestones" aria-labelledby="coil-milestones-title">
+    <header class="project-section-header">
+      <h2 id="coil-milestones-title">{% t tesla-coils.milestones-title %}</h2>
+      <p>{% t tesla-coils.milestones-description %}</p>
+    </header>
+
+    <div class="coil-timeline">
+      {% for coil in coil_milestones %}
+        {% assign coil_description = coil.description[site.lang] %}
+        {% assign coil_date = coil.date_label[site.lang] %}
+        {% assign coil_title = coil.title[site.lang] %}
+        <article class="coil-milestone" id="coil-{{ coil.id | slugify }}">
+          <div class="coil-milestone__marker" aria-hidden="true"></div>
+          <div class="coil-milestone__layout">
+            <div class="coil-milestone__copy">
+              <div class="coil-meta">
+                <span>{{ coil.kind | escape_once }}</span>
+                {% if coil.date %}<time datetime="{{ coil.date | escape_once }}">{{ coil_date | escape_once }}</time>{% else %}<time>{{ coil_date | escape_once }}</time>{% endif %}
+              </div>
+              <h3>{{ coil_title | escape_once }}</h3>
+              {% if coil.subtitle %}<p class="coil-subtitle">{{ coil.subtitle[site.lang] | escape_once }}</p>{% endif %}
+              <p>{{ coil_description | escape_once }}</p>
+              <ul class="coil-tags" aria-label="{% t tesla-coils.technical-highlights %}">
+                {% for tag in coil.tags %}<li>{{ tag | escape_once }}</li>{% endfor %}
+              </ul>
+            </div>
+            <div class="coil-media-grid{% if coil.videos.size > 1 %} coil-media-grid--multiple{% endif %}">
+              {% for video in coil.videos %}
+                {% include tesla-video.html video=video coil=coil %}
+              {% endfor %}
+            </div>
+          </div>
+          {% if coil.photos %}
+            <div class="coil-gallery" aria-label="{% t tesla-coils.photos-label %}">
+              {% for photo in coil.photos %}
+                <a href="{{ photo.href | escape_once }}" target="_blank" rel="noopener">
+                  <img src="{{ photo.src | escape_once }}" alt="{{ photo.alt[site.lang] | escape_once }}" width="480" height="270" loading="lazy">
+                </a>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="coil-experiments" id="coil-experiments" aria-labelledby="coil-experiments-title">
+    <header class="project-section-header">
+      <h2 id="coil-experiments-title">{% t tesla-coils.experiments-title %}</h2>
+      <p>{% t tesla-coils.experiments-description %}</p>
+    </header>
+
+    <div class="coil-experiment-grid">
+      {% for coil in coil_experiments %}
+        {% assign coil_description = coil.description[site.lang] %}
+        {% assign coil_date = coil.date_label[site.lang] %}
+        {% assign coil_title = coil.title[site.lang] %}
+        <article class="coil-experiment" id="coil-{{ coil.id | slugify }}">
+          <div class="coil-meta">
+            <span>{{ coil.kind | escape_once }}</span>
+            {% if coil.date %}<time datetime="{{ coil.date | escape_once }}">{{ coil_date | escape_once }}</time>{% else %}<time>{{ coil_date | escape_once }}</time>{% endif %}
+          </div>
+          <h3>{{ coil_title | escape_once }}</h3>
+          {% if coil.subtitle %}<p class="coil-subtitle">{{ coil.subtitle[site.lang] | escape_once }}</p>{% endif %}
+          <p class="coil-experiment__description">{{ coil_description | escape_once }}</p>
+          <ul class="coil-tags" aria-label="{% t tesla-coils.technical-highlights %}">
+            {% for tag in coil.tags %}<li>{{ tag | escape_once }}</li>{% endfor %}
+          </ul>
+          <div class="coil-experiment__media">
+            {% for video in coil.videos %}
+              {% include tesla-video.html video=video coil=coil %}
+            {% endfor %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <aside class="coils-safety">
+    <span>{% t tesla-coils.safety-label %}</span>
+    <p>{% t tesla-coils.safety-description %}</p>
+  </aside>
+</section>
+
+<script>
+  (function () {
+    var root = document.currentScript.previousElementSibling;
+    if (!root || !root.classList.contains('coils-page')) return;
+
+    root.addEventListener('click', function (event) {
+      var link = event.target.closest('.coil-video');
+      if (!link || !root.contains(link) || event.defaultPrevented) return;
+      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+      var videoId = link.getAttribute('data-video-id');
+      if (!/^[A-Za-z0-9_-]{11}$/.test(videoId)) return;
+
+      event.preventDefault();
+      var frame = document.createElement('iframe');
+      frame.className = 'coil-video coil-video--frame';
+      frame.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(videoId) + '?autoplay=1';
+      frame.title = link.getAttribute('data-video-title');
+      frame.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+      frame.referrerPolicy = 'strict-origin-when-cross-origin';
+      frame.setAttribute('allowfullscreen', '');
+      link.replaceWith(frame);
+    });
+  }());
+</script>

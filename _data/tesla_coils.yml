@@ -1,0 +1,357 @@
+period: 2011–2012
+projects:
+  - id: zinc-sstc
+    title:
+      en: ZINC SSTC
+      pt: ZINC SSTC
+    subtitle:
+      en: Audio-modulated portable coil
+      pt: Bobina portátil com modulação de áudio
+    date: 2012-08-27
+    date_label:
+      en: August 27, 2012
+      pt: 27 de agosto de 2012
+    kind: SSTC
+    featured: true
+    description:
+      en: The last Tesla coil I built was a compact SSTC driven by two IRFP250N MOSFETs and a protoboard GDT driver. I designed it to travel, so I could demonstrate musical arcs away from the workshop using ZARC's audio interrupter.
+      pt: A última bobina de Tesla que construí foi uma SSTC compacta, controlada por dois MOSFETs IRFP250N e um driver de GDT em protoboard. Eu a projetei para viajar e demonstrar arcos musicais fora da oficina usando o interruptor de áudio da ZARC.
+    tags:
+      - SSTC
+      - 2 × IRFP250N
+      - Audio
+    videos:
+      - id: vFWoArNIBew
+        label:
+          en: ZINC demonstration
+          pt: Demonstração da ZINC
+
+  - id: driverless-sstc
+    title:
+      en: Driverless SSTC
+      pt: SSTC sem Driver
+    subtitle:
+      en: Direct current-transformer feedback
+      pt: Realimentação direta por transformador de corrente
+    date: 2011-11-23
+    date_label:
+      en: November 23, 2011
+      pt: 23 de novembro de 2011
+    kind: SSTC
+    featured: true
+    description:
+      en: An experimental half-wave, driverless SSTC of my own design. A current transformer on the secondary feeds the MOSFET gates directly. I never optimized the circuit, but the feedback scheme worked.
+      pt: Uma SSTC experimental de meia onda e sem driver, baseada em um circuito que eu projetei. Um transformador de corrente no secundário alimenta diretamente os gates dos MOSFETs. Nunca otimizei o circuito, mas a realimentação funcionou.
+    tags:
+      - Driverless
+      - Half-wave
+      - CT feedback
+    videos:
+      - id: poqmtvrZDk0
+        label:
+          en: Driverless SSTC test
+          pt: Teste da SSTC sem driver
+    photos:
+      - href: https://i.imgur.com/Th0JOug.png
+        src: https://i.imgur.com/Th0JOug.png
+        alt:
+          en: Driverless SSTC circuit diagram
+          pt: Diagrama do circuito da SSTC sem driver
+
+  - id: zarc-fpga-midi
+    title:
+      en: ZARC with FPGA MIDI Interrupter
+      pt: ZARC com Interruptor MIDI em FPGA
+    subtitle:
+      en: Four channels on 220 VAC mains
+      pt: Quatro canais em rede de 220 VAC
+    date: 2011-09-16
+    date_label:
+      en: September 16, 2011
+      pt: 16 de setembro de 2011
+    kind: DRSSTC
+    featured: true
+    description:
+      en: ZARC's final configuration paired a four-channel polyphonic FPGA MIDI interrupter with the controller in the coil's base. The limiter was set to 400 A; after detuning the coil slightly, measured primary current stayed below 320 A.
+      pt: A configuração final da ZARC combinava um interruptor MIDI polifônico de quatro canais em FPGA com o controlador na base da bobina. O limite era de 400 A; após dessintonizar um pouco a bobina, a corrente medida no primário ficou abaixo de 320 A.
+    tags:
+      - DRSSTC
+      - FPGA MIDI
+      - 320 A peak
+    videos:
+      - id: gAdmvSDJwfU
+        label:
+          en: FPGA MIDI performance
+          pt: Apresentação com MIDI em FPGA
+      - id: BHmwMWUPKDc
+        label:
+          en: Variac failure
+          pt: Falha do Variac
+
+  - id: zarc-tuned-base
+    title:
+      en: ZARC — Tuned Base
+      pt: ZARC — Base Sintonizada
+    subtitle:
+      en: The final 1 kW mechanical build
+      pt: A montagem mecânica final de 1 kW
+    date: 2011-04-06
+    date_label:
+      en: April 6, 2011
+      pt: 6 de abril de 2011
+    kind: DRSSTC
+    featured: true
+    description:
+      en: I rebuilt ZARC's base and refined the tuning into what became the final hardware setup—about 1 kW input, doubled 110 VAC for roughly 320 VDC on the bus, and 300 A peak through an IRG4PC50UD full bridge. It remains one of my favorite electrical engineering projects.
+      pt: Refiz a base da ZARC e refinei a sintonia até chegar à configuração final—cerca de 1 kW de entrada, 110 VAC dobrados para aproximadamente 320 VDC no barramento e pico de 300 A em uma ponte completa com IRG4PC50UD. Continua sendo um dos meus projetos favoritos de engenharia elétrica.
+    tags:
+      - DRSSTC
+      - 1 kW
+      - 300 A peak
+    videos:
+      - id: 8PSwmFOdTWc
+        label:
+          en: Tuned-base test 1
+          pt: Teste 1 da base sintonizada
+      - id: M4n_VW-3P9c
+        label:
+          en: Tuned-base test 2
+          pt: Teste 2 da base sintonizada
+    photos:
+      - href: https://www.flickr.com/photos/energylabs/5583127713/in/album-72157626476042126/
+        src: https://c2.staticflickr.com/6/5180/5583127713_041b5428d4_n.jpg
+        alt:
+          en: ZARC's rebuilt base viewed from the top-front
+          pt: Base reconstruída da ZARC vista de cima e de frente
+      - href: https://www.flickr.com/photos/energylabs/5583715958/in/album-72157626476042126/
+        src: https://c7.staticflickr.com/6/5142/5583715958_dd2a87e698_n.jpg
+        alt:
+          en: Front view of ZARC's rebuilt base
+          pt: Vista frontal da base reconstruída da ZARC
+      - href: https://www.flickr.com/photos/energylabs/5578809376/in/album-72157626476042126/
+        src: https://c1.staticflickr.com/6/5096/5578809376_7a91391356_n.jpg
+        alt:
+          en: LED illumination inside ZARC's base
+          pt: Iluminação por LEDs dentro da base da ZARC
+      - href: https://www.flickr.com/photos/energylabs/5620107121/in/album-72157626476042126/
+        src: https://c2.staticflickr.com/6/5143/5620107121_cb3cc9f639_n.jpg
+        alt:
+          en: ZARC DRSSTC producing arcs at half power
+          pt: DRSSTC ZARC produzindo arcos com metade da potência
+
+  - id: zarc-full-body-test
+    title:
+      en: ZARC — First Full-Body Test
+      pt: ZARC — Primeiro Teste com Estrutura Completa
+    subtitle:
+      en: Final enclosure, early tuning
+      pt: Estrutura final, sintonia inicial
+    date: 2011-03-04
+    date_label:
+      en: March 4, 2011
+      pt: 4 de março de 2011
+    kind: DRSSTC
+    featured: true
+    description:
+      en: ZARC reached its final physical form before its final tuning pass. The interrupter was still the rough early version, but the system produced nearly 70 cm arcs with much better stability.
+      pt: A ZARC chegou à estrutura física final antes do último ajuste de sintonia. O interruptor ainda era a versão inicial, mas o sistema produziu arcos de quase 70 cm com estabilidade muito melhor.
+    tags:
+      - DRSSTC
+      - 70 cm arcs
+      - Prototype
+    videos:
+      - id: AjZxN-Oh8hQ
+        label:
+          en: Full-body test 1
+          pt: Teste 1 da estrutura final
+      - id: W45HzzltVCU
+        label:
+          en: Full-body test 2
+          pt: Teste 2 da estrutura final
+
+  - id: musical-drsstc
+    title:
+      en: Musical DRSSTC
+      pt: DRSSTC Musical
+    date: 2011-02-26
+    date_label:
+      en: February 26, 2011
+      pt: 26 de fevereiro de 2011
+    kind: DRSSTC
+    featured: false
+    description:
+      en: The first reliably working audio-modulated DRSSTC in the ZARC line. Earlier attempts mostly ended in explosions; this prototype finally turned the interrupter into music and stable arcs.
+      pt: A primeira DRSSTC com modulação de áudio que funcionou de forma confiável na linha da ZARC. As tentativas anteriores quase sempre terminaram em explosões; este protótipo finalmente transformou o interruptor em música e arcos estáveis.
+    tags:
+      - DRSSTC
+      - Audio modulation
+    videos:
+      - id: 3jsGwaVaCh8
+        label:
+          en: Musical DRSSTC test
+          pt: Teste da DRSSTC musical
+
+  - id: mini-drsstc
+    title:
+      en: Mini DRSSTC
+      pt: Mini DRSSTC
+    date: 2011-02-26
+    date_label:
+      en: February 26, 2011
+      pt: 26 de fevereiro de 2011
+    kind: DRSSTC
+    featured: false
+    description:
+      en: A compact DRSSTC experiment from the same development period, built to explore the topology at a smaller scale.
+      pt: Uma DRSSTC compacta do mesmo período de desenvolvimento, construída para explorar a topologia em uma escala menor.
+    tags:
+      - DRSSTC
+      - Compact
+    videos:
+      - id: 9iRUjJxLCXo
+        label:
+          en: Mini DRSSTC test
+          pt: Teste da Mini DRSSTC
+
+  - id: micro-sstc
+    title:
+      en: 1.5 MHz Micro SSTC
+      pt: Micro SSTC de 1,5 MHz
+    date: 2011-02-26
+    date_label:
+      en: February 26, 2011
+      pt: 26 de fevereiro de 2011
+    kind: SSTC
+    featured: false
+    description:
+      en: A continuous-wave SSTC running at 1.5 MHz from a full bridge of IRF740 MOSFETs—an intentionally aggressive switching frequency for that device.
+      pt: Uma SSTC de onda contínua operando a 1,5 MHz com uma ponte completa de MOSFETs IRF740—uma frequência de chaveamento deliberadamente agressiva para esse componente.
+    tags:
+      - SSTC
+      - 1.5 MHz
+      - IRF740
+    videos:
+      - id: q4ZZiwBTu18
+        label:
+          en: 1.5 MHz test
+          pt: Teste em 1,5 MHz
+
+  - id: medium-sstc-3
+    title:
+      en: Medium SSTC 3
+      pt: SSTC Média 3
+    subtitle:
+      en: Audio-modulated interrupter
+      pt: Interruptor com modulação de áudio
+    date: 2011-02-26
+    date_label:
+      en: February 26, 2011
+      pt: 26 de fevereiro de 2011
+    kind: SSTC
+    featured: false
+    description:
+      en: This build reused the secondary from my other medium SSTCs and first DRSSTC, then changed the top load and added audio modulation.
+      pt: Esta montagem reutilizou o secundário das outras SSTCs médias e da minha primeira DRSSTC, mas recebeu um terminal de topo diferente e modulação de áudio.
+    tags:
+      - SSTC
+      - Audio modulation
+      - Shared secondary
+    videos:
+      - id: FZI4-mv9B-w
+        label:
+          en: Medium SSTC 3 test
+          pt: Teste da SSTC Média 3
+
+  - id: first-working-drsstc
+    title:
+      en: First Working DRSSTC
+      pt: Primeira DRSSTC Funcional
+    date_label:
+      en: 2011
+      pt: 2011
+    kind: DRSSTC
+    featured: false
+    description:
+      en: My first working DRSSTC used primary current-transformer feedback and a half bridge of STGW30NC60WD IGBTs. Doubled rectified 127 VAC supplied roughly 300 VDC to the main bus.
+      pt: Minha primeira DRSSTC funcional usava realimentação por transformador de corrente no primário e uma meia ponte de IGBTs STGW30NC60WD. A rede de 127 VAC retificada e dobrada fornecia cerca de 300 VDC ao barramento principal.
+    tags:
+      - DRSSTC
+      - 300 V bus
+      - STGW30NC60WD
+    videos:
+      - id: rj4tLlkp_sc
+        label:
+          en: First working DRSSTC
+          pt: Primeira DRSSTC funcional
+
+  - id: medium-half-wave-sstc
+    title:
+      en: Medium Half-Wave CW SSTC
+      pt: SSTC Média CW em Meia Onda
+    date: 2011-02-26
+    date_label:
+      en: February 26, 2011
+      pt: 26 de fevereiro de 2011
+    kind: SSTC
+    featured: false
+    description:
+      en: A medium 30 × 10 cm secondary driven in continuous-wave mode by two IRFP260N MOSFETs from an unfiltered half-wave rectified supply.
+      pt: Um secundário médio de 30 × 10 cm operando em onda contínua com dois MOSFETs IRFP260N e uma fonte retificada em meia onda, sem filtragem.
+    tags:
+      - SSTC
+      - CW
+      - 2 × IRFP260N
+    videos:
+      - id: z0nRNUIxOzo
+        label:
+          en: Half-wave CW test
+          pt: Teste CW em meia onda
+
+  - id: zvs-spark-gap
+    title:
+      en: ZVS Spark-Gap Tesla Coil
+      pt: Bobina de Tesla com Centelhador ZVS
+    subtitle:
+      en: Flyback-powered experiment
+      pt: Experimento alimentado por flyback
+    date: 2011-02-26
+    date_label:
+      en: February 26, 2011
+      pt: 26 de fevereiro de 2011
+    kind: SGTC
+    featured: false
+    description:
+      en: A spark-gap coil powered by a flyback transformer on a Mazzilli ZVS driver with two IRFP250N MOSFETs at 30 VDC and a 1 nF, 40 kV capacitor bank.
+      pt: Uma bobina com centelhador alimentada por um transformador flyback em um driver Mazzilli ZVS, com dois MOSFETs IRFP250N a 30 VDC e um banco de capacitores de 1 nF e 40 kV.
+    tags:
+      - SGTC
+      - Flyback
+      - 1 nF / 40 kV
+    videos:
+      - id: 7xrbQroWcrg
+        label:
+          en: ZVS spark-gap test
+          pt: Teste da bobina com centelhador ZVS
+
+  - id: zarc-600w-prototype
+    title:
+      en: ZARC — 600 W Prototype
+      pt: ZARC — Protótipo de 600 W
+    date: 2011-02-26
+    date_label:
+      en: February 26, 2011
+      pt: 26 de fevereiro de 2011
+    kind: DRSSTC
+    featured: false
+    description:
+      en: The early ZARC prototype produced nearly 50 cm arcs at 600 W. It introduced IRG4PC50U IGBTs with reverse ultrafast diodes to damp reverse voltage peaks.
+      pt: O protótipo inicial da ZARC produzia arcos de quase 50 cm com 600 W. Ele introduziu IGBTs IRG4PC50U com diodos ultrarrápidos reversos para amortecer os picos de tensão reversa.
+    tags:
+      - DRSSTC
+      - 600 W
+      - 50 cm arcs
+    videos:
+      - id: VxdQy4QUH6Q
+        label:
+          en: ZARC prototype test
+          pt: Teste do protótipo da ZARC

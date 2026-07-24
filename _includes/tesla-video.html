@@ -1,0 +1,12 @@
+{% assign video_label = include.video.label[site.lang] %}
+{% if video_label == blank %}
+  {% capture video_label %}{% t tesla-coils.watch-recording %}{% endcapture %}
+{% endif %}
+{% assign video_label = video_label | strip %}
+{% assign coil_title = include.coil.title[site.lang] %}
+{% capture video_title %}{{ coil_title }} — {{ video_label }}{% endcapture %}
+<a class="coil-video" href="https://www.youtube.com/watch?v={{ include.video.id | escape_once }}" target="_blank" rel="noopener" data-video-id="{{ include.video.id | escape_once }}" data-video-title="{{ video_title | strip | escape_once }}" aria-label="{{ video_title | strip | escape_once }}">
+  <img src="https://i.ytimg.com/vi/{{ include.video.id | escape_once }}/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">
+  <span class="coil-video__play" aria-hidden="true"></span>
+  <span class="coil-video__label">{{ video_label | escape_once }}</span>
+</a>
