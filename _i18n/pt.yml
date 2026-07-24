@@ -164,6 +164,45 @@ presentations:
   slides: "Slides"
   recording-unavailable: "Gravação indisponível"
   with: "com"
+donate-page:
+  hero-eyebrow: "Pesquisa independente · hardware aberto · documentação pública"
+  hero-title: "Ajude a dar energia ao próximo projeto."
+  hero-description: "Este site documenta minhas pesquisas em engenharia reversa, os sinais de rádio que decodifico, o hardware que construo e os erros com os quais aprendo. O apoio ajuda a cobrir componentes, equipamentos de bancada, hospedagem e o tempo necessário para publicar os detalhes."
+  sponsors-button: "Apoiar no GitHub"
+  options-button: "Ver todas as opções"
+  impact-eyebrow: "Para onde vai o apoio"
+  impact-title: "Mais tempo de bancada. Documentação melhor. Resultados abertos."
+  impact-description: "As contribuições se transformam diretamente nos recursos práticos necessários para investigar, construir e explicar o próximo projeto."
+  impact-hardware-title: "Componentes e protótipos"
+  impact-hardware-description: "Placas, componentes de RF, semicondutores, adaptadores e, às vezes, novos equipamentos de bancada."
+  impact-research-title: "Tempo de pesquisa"
+  impact-research-description: "Tempo para analisar protocolos, fazer engenharia reversa de dispositivos, testar ideias e transformar experimentos em resultados úteis."
+  impact-publishing-title: "Publicação aberta"
+  impact-publishing-description: "Hospedagem, artigos detalhados, código-fonte, capturas, diagramas e artefatos de projeto que continuam disponíveis ao público."
+  methods-eyebrow: "Escolha a melhor opção para você"
+  methods-title: "Formas de apoiar o trabalho"
+  methods-description: "Recorrente ou pontual, toda contribuição ajuda. Escolha a opção mais conveniente para você."
+  sponsors-kicker: "Recomendado para apoio recorrente"
+  sponsors-title: "GitHub Sponsors"
+  sponsors-description: "Apoie diretamente pelo GitHub para ajudar a financiar projetos e artigos técnicos. O GitHub gerencia a assinatura e os recibos."
+  sponsors-note: "Apoio recorrente · Gerenciado pelo GitHub"
+  sponsors-link: "Tornar-se patrocinador"
+  paypal-kicker: "Contribuição pontual"
+  paypal-title: "PayPal"
+  paypal-description: "Use o PayPal para uma contribuição pontual. O pagamento é processado com segurança pelo PayPal em reais."
+  paypal-button: "Continuar para o PayPal"
+  paypal-note: "Abre o pagamento do PayPal em uma nova aba"
+  pix-kicker: "Contas brasileiras"
+  pix-title: "PIX"
+  pix-description: "Faça uma transferência direta usando a chave de e-mail abaixo. O PIX está disponível em instituições financeiras brasileiras."
+  pix-key-label: "Chave de e-mail"
+  pix-info: "Saiba mais sobre o PIX"
+  copy-key: "Copiar chave"
+  copied: "Copiado"
+  copy-failed: "Falha ao copiar — selecione a chave manualmente"
+  opens-new-tab: "abre em uma nova aba"
+  closing-title: "Obrigado por ajudar este trabalho a continuar."
+  closing-description: "O apoio é sempre opcional. Os artigos, notas de projeto, códigos-fonte e pesquisas compartilhados aqui continuam disponíveis abertamente."
 langs:
   en: Inglês
   pt: Português
@@ -171,7 +210,7 @@ pages:
   home:
     title: Início
   donate:
-    description: "Quer comprar um chá pra mim?"
+    description: "Apoie as pesquisas de Lucas Teske em hardware aberto, engenharia reversa, SDR de satélites e segurança pelo GitHub Sponsors ou com contribuições pontuais."
 titles:
   pagination: Pagination
 

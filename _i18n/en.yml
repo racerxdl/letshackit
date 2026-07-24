@@ -164,6 +164,45 @@ presentations:
   slides: "Slides"
   recording-unavailable: "Recording unavailable"
   with: "with"
+donate-page:
+  hero-eyebrow: "Independent research · open hardware · public notes"
+  hero-title: "Help power the next build."
+  hero-description: "This site documents the boards I reverse engineer, the radio signals I decode, the hardware I build, and the mistakes I learn from. Support helps cover parts, test gear, hosting, and the time it takes to publish the details."
+  sponsors-button: "Sponsor on GitHub"
+  options-button: "See every option"
+  impact-eyebrow: "Where support goes"
+  impact-title: "More bench time. Better documentation. Open results."
+  impact-description: "Contributions turn directly into the practical resources needed to investigate, build, and explain the next project."
+  impact-hardware-title: "Parts and prototypes"
+  impact-hardware-description: "Boards, RF components, semiconductors, adapters, and the occasional piece of test equipment."
+  impact-research-title: "Research time"
+  impact-research-description: "Time to trace protocols, reverse engineer devices, test ideas, and turn rough experiments into useful results."
+  impact-publishing-title: "Open publishing"
+  impact-publishing-description: "Hosting, long-form write-ups, source code, captures, diagrams, and project artifacts that stay publicly available."
+  methods-eyebrow: "Choose what works for you"
+  methods-title: "Ways to support the work"
+  methods-description: "Recurring or one-time, every contribution helps. Pick the option that is most convenient for you."
+  sponsors-kicker: "Recommended for recurring support"
+  sponsors-title: "GitHub Sponsors"
+  sponsors-description: "Sponsor directly through GitHub to help fund ongoing projects and technical writing. GitHub handles the subscription and receipts."
+  sponsors-note: "Recurring support · Managed by GitHub"
+  sponsors-link: "Become a sponsor"
+  paypal-kicker: "One-time contribution"
+  paypal-title: "PayPal"
+  paypal-description: "Use PayPal for a one-time contribution. Checkout is handled securely by PayPal in Brazilian reais."
+  paypal-button: "Continue to PayPal"
+  paypal-note: "Opens PayPal checkout in a new tab"
+  pix-kicker: "Brazilian accounts"
+  pix-title: "PIX"
+  pix-description: "Transfer directly using the email key below. PIX is available from Brazilian financial institutions."
+  pix-key-label: "Email key"
+  pix-info: "Learn about PIX"
+  copy-key: "Copy key"
+  copied: "Copied"
+  copy-failed: "Copy failed — select the key manually"
+  opens-new-tab: "opens in a new tab"
+  closing-title: "Thank you for helping the work continue."
+  closing-description: "Support is always optional. The articles, project notes, source code, and research shared here remain openly available."
 langs:
   en: English
   pt: Portuguese
@@ -172,6 +211,6 @@ pages:
     title: Home
   written-by: Written by
   donate:
-    description: "Want to buy me some tea?"
+    description: "Support Lucas Teske's open hardware, reverse engineering, satellite SDR, and security research through GitHub Sponsors or one-time contributions."
 titles:
   pagination: Pagination

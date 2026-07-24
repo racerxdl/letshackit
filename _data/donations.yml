@@ -1,0 +1,15 @@
+github_sponsors:
+  url: https://github.com/sponsors/racerxdl
+
+paypal:
+  action: https://www.paypal.com/cgi-bin/webscr
+  business: "53C9DZEVRE6VA"
+  item_name:
+    en: "Iced tea, new projects, and new articles"
+    pt: "Chá gelado, novos projetos e novos artigos"
+  currency: BRL
+
+pix:
+  key: "lucas@teske.net.br"
+  info_url: https://www.bcb.gov.br/estabilidadefinanceira/pagamentosinstantaneos
+

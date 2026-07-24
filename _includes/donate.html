@@ -1,0 +1,203 @@
+{% assign donation_data = site.data.donations %}
+
+<section class="donate-page" aria-labelledby="donate-hero-title">
+  <section class="donate-hero">
+    <div class="donate-hero__content">
+      <span class="donate-hero__eyebrow">{% t donate-page.hero-eyebrow %}</span>
+      <h2 class="donate-hero__title" id="donate-hero-title">{% t donate-page.hero-title %}</h2>
+      <p class="donate-hero__description">{% t donate-page.hero-description %}</p>
+      <div class="donate-hero__actions">
+        <a class="donate-button donate-button--primary" href="{{ donation_data.github_sponsors.url | escape_once }}" target="_blank" rel="noopener" aria-label="{% t donate-page.sponsors-button %} ({% t donate-page.opens-new-tab %})">
+          <span class="donate-button__icon" aria-hidden="true">{% include sponsor-heart.svg %}</span>
+          {% t donate-page.sponsors-button %}
+        </a>
+        <a class="donate-button" href="#donation-options">{% t donate-page.options-button %}</a>
+      </div>
+    </div>
+
+    <div class="donate-hero__visual" aria-hidden="true">
+      <svg class="donate-circuit" viewBox="0 0 420 340" focusable="false">
+        <path class="donate-circuit__trace" d="M18 78h86l38 38h30M402 78h-86l-38 38h-30M18 258h88l34-34h31M402 258h-88l-34-34h-31" />
+        <path class="donate-circuit__trace donate-circuit__trace--soft" d="M62 32v58M358 32v58M62 308v-58M358 308v-58" />
+        <circle class="donate-circuit__node" cx="18" cy="78" r="5" />
+        <circle class="donate-circuit__node" cx="402" cy="78" r="5" />
+        <circle class="donate-circuit__node" cx="18" cy="258" r="5" />
+        <circle class="donate-circuit__node" cx="402" cy="258" r="5" />
+        <circle class="donate-circuit__node donate-circuit__node--pink" cx="62" cy="32" r="5" />
+        <circle class="donate-circuit__node donate-circuit__node--pink" cx="358" cy="32" r="5" />
+        <circle class="donate-circuit__node donate-circuit__node--pink" cx="62" cy="308" r="5" />
+        <circle class="donate-circuit__node donate-circuit__node--pink" cx="358" cy="308" r="5" />
+        <circle class="donate-circuit__pulse" cx="210" cy="168" r="108" />
+        <circle class="donate-circuit__pulse donate-circuit__pulse--inner" cx="210" cy="168" r="84" />
+        <path class="donate-circuit__heart" d="M210 250C194 232 128 191 128 137c0-31 23-51 52-51 16 0 27 8 30 22 4-14 15-22 31-22 28 0 51 20 51 51 0 54-66 95-82 113Z" />
+        <path class="donate-circuit__spark" d="m201 112-16 48h20l-8 48 34-61h-22l14-35Z" />
+      </svg>
+    </div>
+  </section>
+
+  <section class="donate-impact" aria-labelledby="donate-impact-title">
+    <header class="donate-section-header">
+      <span>{% t donate-page.impact-eyebrow %}</span>
+      <h2 id="donate-impact-title">{% t donate-page.impact-title %}</h2>
+      <p>{% t donate-page.impact-description %}</p>
+    </header>
+
+    <div class="donate-impact__grid">
+      <article>
+        <span class="donate-impact__index" aria-hidden="true">01</span>
+        <h3>{% t donate-page.impact-hardware-title %}</h3>
+        <p>{% t donate-page.impact-hardware-description %}</p>
+      </article>
+      <article>
+        <span class="donate-impact__index" aria-hidden="true">02</span>
+        <h3>{% t donate-page.impact-research-title %}</h3>
+        <p>{% t donate-page.impact-research-description %}</p>
+      </article>
+      <article>
+        <span class="donate-impact__index" aria-hidden="true">03</span>
+        <h3>{% t donate-page.impact-publishing-title %}</h3>
+        <p>{% t donate-page.impact-publishing-description %}</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="donate-methods" id="donation-options" aria-labelledby="donation-options-title">
+    <header class="donate-section-header donate-section-header--methods">
+      <span>{% t donate-page.methods-eyebrow %}</span>
+      <h2 id="donation-options-title">{% t donate-page.methods-title %}</h2>
+      <p>{% t donate-page.methods-description %}</p>
+    </header>
+
+    <article class="donate-sponsors-card">
+      <div class="donate-sponsors-card__icon" aria-hidden="true">{% include sponsor-heart.svg %}</div>
+      <div class="donate-sponsors-card__content">
+        <span class="donate-provider-kicker">{% t donate-page.sponsors-kicker %}</span>
+        <h3>{% t donate-page.sponsors-title %}</h3>
+        <p>{% t donate-page.sponsors-description %}</p>
+        <span class="donate-provider-note">{% t donate-page.sponsors-note %}</span>
+      </div>
+      <a class="donate-button donate-button--primary" href="{{ donation_data.github_sponsors.url | escape_once }}" target="_blank" rel="noopener" aria-label="{% t donate-page.sponsors-link %} ({% t donate-page.opens-new-tab %})">{% t donate-page.sponsors-link %}</a>
+    </article>
+
+    <div class="donate-provider-grid">
+      <article class="donate-provider-card">
+        <div class="donate-provider-card__heading">
+          <span class="donate-provider-card__mark" aria-hidden="true">PP</span>
+          <div>
+            <span class="donate-provider-kicker">{% t donate-page.paypal-kicker %}</span>
+            <h3>{% t donate-page.paypal-title %}</h3>
+          </div>
+        </div>
+        <p>{% t donate-page.paypal-description %}</p>
+        <form action="{{ donation_data.paypal.action | escape_once }}" method="post" target="_blank" rel="noopener">
+          <input name="cmd" type="hidden" value="_donations">
+          <input name="business" type="hidden" value="{{ donation_data.paypal.business | escape_once }}">
+          <input name="item_name" type="hidden" value="{{ donation_data.paypal.item_name[site.lang] | escape_once }}">
+          <input name="currency_code" type="hidden" value="{{ donation_data.paypal.currency | escape_once }}">
+          <button class="donate-button donate-button--provider" type="submit" aria-describedby="paypal-new-tab-note">{% t donate-page.paypal-button %}</button>
+        </form>
+        <span class="donate-provider-note" id="paypal-new-tab-note">{% t donate-page.paypal-note %}</span>
+      </article>
+
+      <article class="donate-provider-card">
+        <div class="donate-provider-card__heading">
+          <span class="donate-provider-card__mark donate-provider-card__mark--pix" aria-hidden="true">PIX</span>
+          <div>
+            <span class="donate-provider-kicker">{% t donate-page.pix-kicker %}</span>
+            <h3>{% t donate-page.pix-title %}</h3>
+          </div>
+        </div>
+        <p>{% t donate-page.pix-description %}</p>
+        <div class="donate-copy-value">
+          <span>
+            <small>{% t donate-page.pix-key-label %}</small>
+            <code>{{ donation_data.pix.key | escape_once }}</code>
+          </span>
+          <button class="donate-copy-button" type="button" data-copy-value="{{ donation_data.pix.key | escape_once }}" data-copy-label="{% t donate-page.copy-key %}" data-copied-label="{% t donate-page.copied %}" data-copy-failed-label="{% t donate-page.copy-failed %}" aria-live="polite">{% t donate-page.copy-key %}</button>
+        </div>
+        <a class="donate-provider-link" href="{{ donation_data.pix.info_url | escape_once }}" target="_blank" rel="noopener" aria-label="{% t donate-page.pix-info %} ({% t donate-page.opens-new-tab %})">{% t donate-page.pix-info %}</a>
+      </article>
+    </div>
+
+  </section>
+
+  <aside class="donate-thanks">
+    <span aria-hidden="true"></span>
+    <div>
+      <h2>{% t donate-page.closing-title %}</h2>
+      <p>{% t donate-page.closing-description %}</p>
+    </div>
+  </aside>
+</section>
+
+<script>
+  (function () {
+    var root = document.querySelector('.donate-page');
+    if (!root) return;
+
+    var copyAttempts = new WeakMap();
+    var resetTimers = new WeakMap();
+
+    function showCopyState(button, attempt, labelAttribute, stateClass, duration) {
+      if (copyAttempts.get(button) !== attempt) return;
+
+      button.classList.remove('is-copied', 'is-error');
+      button.textContent = button.getAttribute(labelAttribute);
+      button.classList.add(stateClass);
+
+      var resetTimer = window.setTimeout(function () {
+        if (copyAttempts.get(button) !== attempt) return;
+        button.textContent = button.getAttribute('data-copy-label');
+        button.classList.remove(stateClass);
+        resetTimers.delete(button);
+      }, duration);
+      resetTimers.set(button, resetTimer);
+    }
+
+    function copyText(value) {
+      if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(value);
+      }
+
+      return new Promise(function (resolve, reject) {
+        var activeElement = document.activeElement;
+        var field = document.createElement('textarea');
+        field.value = value;
+        field.setAttribute('readonly', '');
+        field.style.position = 'fixed';
+        field.style.opacity = '0';
+        document.body.appendChild(field);
+        field.select();
+
+        try {
+          if (!document.execCommand('copy')) throw new Error('Copy command failed');
+          resolve();
+        } catch (error) {
+          reject(error);
+        } finally {
+          field.remove();
+          if (activeElement && typeof activeElement.focus === 'function') activeElement.focus();
+        }
+      });
+    }
+
+    root.addEventListener('click', function (event) {
+      var button = event.target.closest('[data-copy-value]');
+      if (!button || !root.contains(button)) return;
+
+      var attempt = (copyAttempts.get(button) || 0) + 1;
+      var resetTimer = resetTimers.get(button);
+      copyAttempts.set(button, attempt);
+      if (resetTimer) window.clearTimeout(resetTimer);
+      resetTimers.delete(button);
+      button.classList.remove('is-copied', 'is-error');
+      button.textContent = button.getAttribute('data-copy-label');
+
+      copyText(button.getAttribute('data-copy-value')).then(function () {
+        showCopyState(button, attempt, 'data-copied-label', 'is-copied', 1800);
+      }).catch(function () {
+        showCopyState(button, attempt, 'data-copy-failed-label', 'is-error', 2600);
+      });
+    });
+  }());
+</script>
