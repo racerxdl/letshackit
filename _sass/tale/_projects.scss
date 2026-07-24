@@ -1,0 +1,408 @@
+@use 'variables' as *;
+
+.project-lede {
+  max-width: 46rem;
+  margin: 0 auto 1.5rem !important;
+  color: $text-muted;
+  font-size: 1.02rem;
+  line-height: 1.7;
+  text-align: center !important;
+}
+
+.project-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(16rem, 0.75fr);
+  min-height: 22rem;
+  margin: 1.5rem 0 2rem;
+  overflow: hidden;
+  border: 1px solid $border-bright;
+  border-radius: 10px;
+  background:
+    linear-gradient(125deg, rgba(0, 45, 8, 0.92), rgba(0, 8, 0, 0.96) 62%),
+    $bg-primary;
+  @include neon-box($neon-green, 4px);
+
+  &__content {
+    position: relative;
+    z-index: 2;
+    align-self: center;
+    padding: 2rem;
+  }
+
+  &__visual {
+    position: relative;
+    min-height: 18rem;
+    background: #000;
+
+    &::after {
+      position: absolute;
+      inset: 0;
+      content: '';
+      background: linear-gradient(90deg, rgba(0, 12, 0, 0.95), transparent 50%);
+      pointer-events: none;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      object-fit: cover;
+      filter: grayscale(1) contrast(1.15);
+      opacity: 0.82;
+    }
+  }
+
+  &__eyebrow {
+    display: block;
+    margin-bottom: 0.7rem;
+    color: $text-muted;
+    font-size: 0.72rem;
+    font-weight: bold;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    margin: 0 0 0.85rem;
+    color: $neon-green;
+    font-size: clamp(1.75rem, 5vw, 2.7rem);
+    line-height: 1.05;
+    @include neon-text($neon-green, 6px);
+  }
+
+  &__description {
+    max-width: 36rem;
+    margin: 0 0 1.25rem !important;
+    color: $text-primary;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    text-align: left !important;
+  }
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+
+    &__content {
+      padding: 1.5rem 1.25rem;
+    }
+
+    &__visual {
+      min-height: 14rem;
+      order: -1;
+
+      &::after {
+        background: linear-gradient(0deg, rgba(0, 12, 0, 0.95), transparent 55%);
+      }
+    }
+  }
+}
+
+.project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.project-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid $border-bright;
+  border-radius: 5px;
+  color: $neon-green;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-decoration: none !important;
+  @include transition(background 0.18s, border-color 0.18s, box-shadow 0.18s, color 0.18s);
+
+  &:hover,
+  &:focus-visible {
+    border-color: $neon-green;
+    background: rgba(0, 255, 65, 0.1);
+    outline: none;
+    @include neon-box($neon-green, 4px);
+  }
+
+  &--primary {
+    background: $neon-green;
+    color: $bg-primary;
+
+    &:hover,
+    &:focus-visible {
+      background: $text-primary;
+      color: $bg-primary;
+    }
+  }
+}
+
+.project-pipeline {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin: -0.5rem 0 2.25rem;
+  padding: 0;
+  list-style: none;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  overflow: hidden;
+
+  li {
+    position: relative;
+    min-width: 0;
+    border-right: 1px solid $border-color;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  a,
+  span {
+    display: flex;
+    min-height: 4rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.65rem;
+    color: $text-muted;
+    font-size: 0.72rem;
+    line-height: 1.35;
+    text-align: center;
+    text-decoration: none !important;
+  }
+
+  a {
+    @include transition(background 0.16s, color 0.16s);
+
+    &:hover,
+    &:focus-visible {
+      background: rgba(0, 255, 65, 0.08);
+      color: $neon-green;
+      outline: none;
+    }
+  }
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+
+    li {
+      border-right: none;
+      border-bottom: 1px solid $border-color;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    a,
+    span {
+      min-height: auto;
+      justify-content: flex-start;
+      text-align: left;
+    }
+  }
+}
+
+.project-section-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 2rem 0 1rem;
+
+  h2 {
+    margin: 0;
+  }
+
+  p {
+    max-width: 28rem;
+    margin: 0 !important;
+    color: $text-muted;
+    font-size: 0.8rem;
+    text-align: right !important;
+  }
+
+  @media (max-width: 640px) {
+    align-items: start;
+    flex-direction: column;
+
+    p {
+      text-align: left !important;
+    }
+  }
+}
+
+.project-grid,
+.chapter-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1rem 0 2rem;
+
+  @media (max-width: 700px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.project-card,
+.chapter-card {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 1.15rem;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  background: rgba(0, 18, 0, 0.62);
+  @include transition(background 0.18s, border-color 0.18s, box-shadow 0.18s, transform 0.18s);
+
+  &:hover {
+    border-color: $border-bright;
+    background: $bg-surface-hover;
+    transform: translateY(-2px);
+    @include neon-box($neon-green, 3px);
+  }
+
+  &__kicker {
+    display: block;
+    margin-bottom: 0.55rem;
+    color: $text-dim;
+    font-size: 0.67rem;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    margin: 0 0 0.65rem;
+    color: $neon-green;
+    font-size: 1.05rem;
+  }
+
+  p {
+    margin: 0 0 1rem !important;
+    color: $text-muted;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    text-align: left !important;
+  }
+
+  &__link {
+    margin-top: auto;
+    color: $text-primary;
+    font-size: 0.78rem;
+    font-weight: bold;
+    text-decoration: none !important;
+
+    &::after {
+      content: ' →';
+    }
+
+    &:hover,
+    &:focus-visible {
+      color: $neon-green;
+      outline: none;
+    }
+  }
+}
+
+.chapter-card {
+  padding-left: 3.4rem;
+
+  &__number {
+    position: absolute;
+    top: 1.15rem;
+    left: 1.15rem;
+    color: $border-bright;
+    font-size: 1.3rem;
+    font-weight: bold;
+    line-height: 1;
+  }
+}
+
+.project-resource-list {
+  display: grid;
+  gap: 0.65rem;
+  margin: 1rem 0 2rem;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: grid;
+    grid-template-columns: minmax(10rem, 0.55fr) minmax(0, 1.45fr);
+    gap: 1rem;
+    align-items: baseline;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid $border-color;
+  }
+
+  a {
+    font-weight: bold;
+  }
+
+  span {
+    color: $text-muted;
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 640px) {
+    li {
+      grid-template-columns: 1fr;
+      gap: 0.3rem;
+    }
+  }
+}
+
+.project-context {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 1.5rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  background: rgba(0, 255, 65, 0.04);
+  font-size: 0.75rem;
+
+  &__label {
+    color: $text-dim;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  &__work {
+    color: $neon-green;
+    font-weight: bold;
+  }
+
+  &__overview {
+    margin-left: auto;
+    color: $text-muted;
+  }
+
+  @media (max-width: 560px) {
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+    &__overview {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+}
+
+.project-note {
+  margin: 2rem 0 1rem;
+  padding: 1rem 1.1rem;
+  border-left: 3px solid $border-bright;
+  background: rgba(0, 255, 65, 0.04);
+  color: $text-muted;
+  font-size: 0.82rem;
+  line-height: 1.6;
+
+  p:last-child {
+    margin-bottom: 0 !important;
+  }
+}

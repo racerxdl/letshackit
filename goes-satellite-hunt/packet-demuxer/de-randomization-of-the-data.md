@@ -3,6 +3,7 @@ title: De-randomization of the data - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # De-randomization of the data
@@ -70,5 +71,5 @@ Now you should have the de-randomized frame.
 <div class="pagination">
     <a href="{{ '/goes-satellite-hunt/packet-demuxer' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
 
-    <a href="{{ 'reed-solomon-error-correction' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="reed-solomon-error-correction" class="right arrow">&#8594;</a>
 </div>

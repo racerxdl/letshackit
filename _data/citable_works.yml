@@ -1,0 +1,13 @@
+goes-satellite-hunt:
+  key: teske2017goessatellitehunt
+  title: GOES Satellite Hunt
+  authors:
+    - name: Lucas Teske
+      bibtex: Teske, Lucas
+  published: 2017-02-19
+  publisher: Lets Hack It
+  path: /goes-satellite-hunt/
+  url: https://lucasteske.dev/goes-satellite-hunt/
+  type: TechArticle
+  description: A practical guide to receiving, demodulating, decoding, and assembling GOES LRIT satellite data.
+  license: https://creativecommons.org/licenses/by-sa/2.5/br/

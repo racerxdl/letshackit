@@ -3,6 +3,7 @@ title: Synchronization and Clock Recovery - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # Synchronization and Clock Recovery
@@ -26,7 +27,7 @@ So you can notice that I called a new parameter **alpha**in M&M that is not a d
 Now at the output of M&M we will have our Complex Symbols pumped out with the correct rate. Now we only need to extract our values.
 
 <div class="pagination">
-    <a href="{{ 'automatic-gain-control-and-root-raised-cosine-filter' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+    <a href="automatic-gain-control-and-root-raised-cosine-filter" class="left arrow">&#8592;</a>
 
-    <a href="{{ 'symbol-output-from-gnu-radio' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="symbol-output-from-gnu-radio" class="right arrow">&#8594;</a>
 </div>

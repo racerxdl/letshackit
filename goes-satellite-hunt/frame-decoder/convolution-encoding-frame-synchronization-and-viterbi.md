@@ -3,6 +3,7 @@ title: Convolution Encoding, Frame Synchronization and Viterbi - GOES Satellite 
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 
@@ -54,5 +55,5 @@ In this chapter we will use a lot of [**libfec**](https://github.com/quiet/libfe
 <div class="pagination">
     <a href="{{ '/goes-satellite-hunt/frame-decoder' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
 
-    <a href="{{ 'encoding-the-sync-word' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="encoding-the-sync-word" class="right arrow">&#8594;</a>
 </div>

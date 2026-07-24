@@ -3,6 +3,7 @@ title: Automatic Gain Control and Root Raised Cosine Filter - GOES Satellite Hun
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # Automatic Gain Control and Root Raised Cosine Filter
@@ -21,7 +22,7 @@ For the parameters we will use **1.25e6 as sample rate**, **293883 as Symbol R
 
 
 <div class="pagination">
-    <a href="{{ 'decimating-and-filtering-to-desired-sample-rate' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+    <a href="decimating-and-filtering-to-desired-sample-rate" class="left arrow">&#8592;</a>
 
-    <a href="{{ 'synchronization-and-clock-recovery' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="synchronization-and-clock-recovery" class="right arrow">&#8594;</a>
 </div>

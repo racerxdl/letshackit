@@ -1,0 +1,132 @@
+@use 'variables' as *;
+
+.citation-block {
+  margin: 2.5rem 0 1rem;
+  border: 1px solid $border-bright;
+  border-radius: 8px;
+  background: rgba(0, 20, 0, 0.72);
+  overflow: hidden;
+
+  &[open] {
+    @include neon-box($neon-green, 4px);
+  }
+
+  &[open] .citation-block__summary::after {
+    transform: rotate(45deg);
+  }
+
+  &__summary {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 1rem;
+    color: $neon-green;
+    cursor: pointer;
+    font-family: $mono;
+    font-weight: bold;
+    list-style: none;
+    @include transition(background 0.2s, color 0.2s);
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::after {
+      content: '+';
+      margin-left: auto;
+      font-size: 1.35rem;
+      line-height: 1;
+      @include transition(transform 0.2s);
+    }
+
+    &:hover,
+    &:focus-visible {
+      background: rgba(0, 255, 65, 0.08);
+      outline: none;
+    }
+  }
+
+  &__formats {
+    color: $text-muted;
+    font-size: 0.72rem;
+    font-weight: normal;
+    letter-spacing: 0.04em;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    border-top: 1px solid $border-color;
+    background: $border-color;
+
+    @media (max-width: 760px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__format {
+    min-width: 0;
+    padding: 1rem;
+    background: rgba(0, 12, 0, 0.96);
+  }
+
+  &__format-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.7rem;
+
+    h3 {
+      margin: 0;
+      color: $text-primary;
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+  }
+
+  &__text {
+    margin: 0 !important;
+    color: $text-primary;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    text-align: left !important;
+  }
+
+  &__bibtex {
+    max-height: 14rem;
+    margin: 0;
+    padding: 0.8rem;
+    overflow: auto;
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    background: #010601;
+    color: $text-primary;
+    font-size: 0.72rem;
+    line-height: 1.55;
+    white-space: pre;
+  }
+}
+
+.citation-copy {
+  flex: 0 0 auto;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  background: transparent;
+  color: $neon-green;
+  cursor: pointer;
+  font-family: $mono;
+  font-size: 0.7rem;
+  @include transition(background 0.15s, border-color 0.15s, box-shadow 0.15s);
+
+  &:hover,
+  &:focus-visible {
+    border-color: $neon-green;
+    background: rgba(0, 255, 65, 0.1);
+    outline: none;
+    @include neon-box($neon-green, 3px);
+  }
+}

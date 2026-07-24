@@ -3,6 +3,7 @@ title: Packet Demuxer - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # Packet Demuxer
@@ -12,5 +13,5 @@ In the last chapter I showed how to get the frames from the demodulated bit stre
 <div class="pagination">
     <a href="{{ '/goes-satellite-hunt/frame-decoder/decoding-frame-data' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
 
-    <a href="{{ 'de-randomization-of-the-data' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="de-randomization-of-the-data" class="right arrow">&#8594;</a>
 </div>

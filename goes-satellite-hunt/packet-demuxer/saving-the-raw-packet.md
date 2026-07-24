@@ -3,6 +3,7 @@ title: Saving the Raw Packet - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # Saving the Raw Packet
@@ -130,7 +131,7 @@ With that you should be able to see a lot of files being out of your channel, ea
 [https://github.com/racerxdl/open-satellite-project/blob/master/GOES/standalone/channeldecoder.py](https://github.com/racerxdl/open-satellite-project/blob/master/GOES/standalone/channeldecoder.py)
 
 <div class="pagination">
-    <a href="{{ 'packet-demuxer' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+    <a href="packet-demuxer" class="left arrow">&#8592;</a>
 
     <a href="{{ '/goes-satellite-hunt/file-assembler' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
 </div>

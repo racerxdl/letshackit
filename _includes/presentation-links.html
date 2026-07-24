@@ -1,0 +1,16 @@
+{% assign links_class = include.class | default: "talk-links" %}
+{% capture video_label %}{% t presentations.video %}{% endcapture %}
+{% capture slides_label %}{% t presentations.slides %}{% endcapture %}
+<div class="{{ links_class | escape_once }}">
+  {% for video in include.presentation.videos %}
+    <a class="talk-link" href="{{ video.url | escape_once }}" aria-label="{{ video_label | strip | escape_once }}{% if video.part %} {{ video.part | escape_once }}{% endif %}: {{ include.presentation.title | escape_once }}">
+      {{ video_label }}{% if video.part %} {{ video.part | escape_once }}{% endif %}
+    </a>
+  {% endfor %}
+  {% if include.presentation.slides %}
+    <a class="talk-link" href="{{ include.presentation.slides | escape_once }}" aria-label="{{ slides_label | strip | escape_once }}: {{ include.presentation.title | escape_once }}">{{ slides_label }}</a>
+  {% endif %}
+  {% if include.presentation.recording_unavailable %}
+    <span class="talk-link talk-link--muted">{% t presentations.recording-unavailable %}</span>
+  {% endif %}
+</div>

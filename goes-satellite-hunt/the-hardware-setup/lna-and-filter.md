@@ -3,6 +3,7 @@ title: LNA and Filter - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # The LNA and Filter
@@ -28,7 +29,7 @@ Then I finished by gluing in the CanAntenna:
 And that's it!
 
 <div class="pagination">
-    <a href="{{ 'dish-feed' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+    <a href="dish-feed" class="left arrow">&#8592;</a>
 
-    <a href="{{ 'pointing-the-antenna' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="pointing-the-antenna" class="right arrow">&#8594;</a>
 </div>

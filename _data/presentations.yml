@@ -1,0 +1,224 @@
+- title: Rodando código em uma máquina de cartão de crédito
+  event: TOSCONF 06
+  year: 2026
+  date_label: 28/03/2026
+  language: pt
+  featured: true
+  videos:
+    - url: https://peertube.lhc.net.br/w/9FSknQ9zeVhoNwUQSG9GHx
+  slides: /presentations/tosconf-06/
+
+- title: Satellite Communications Reverse Engineering
+  event: GambiConf EU
+  year: 2022
+  language: en
+  featured: true
+  videos:
+    - url: https://youtu.be/qAiqKHG6uYM?t=17389
+  slides: https://docs.google.com/presentation/d/1-b7UrRDIwJ4mmdVMbgyu_MvRiSJDDp9FKBR7ifUGUCM/edit?usp=sharing
+
+- title: Fault Injection
+  event: II Semana Aratu · Boitatech
+  year: 2022
+  language: pt
+  videos:
+    - url: https://youtu.be/YcwwKnnRJjk?t=5417
+  slides: https://docs.google.com/presentation/d/1OJJfyzHfPZx7ctUYytGZ_xhn55dlfD_2A4d1KD5JdRk/edit?usp=sharing
+
+- title: Fault Injection
+  event: BSides VIX
+  year: 2022
+  language: pt
+  videos:
+    - url: https://www.youtube.com/watch?v=BFj93s1lGI8
+  slides: https://docs.google.com/presentation/d/e/2PACX-1vSAg1Liox9Uu8sHm_hgog2_O25e3mYkHBNlPXHm1gWGK0mGuG2dUvqCCFytXHvEdSDAatuwoKwIXdOw/pub?start=false&loop=false&delayms=3000
+
+- title: Rodando DOOM num osciloscópio
+  event: GambiConf Brasil
+  year: 2021
+  language: pt
+  featured: true
+  videos:
+    - url: https://www.youtube.com/watch?v=_-o3ToBC0AI
+  slides: https://docs.google.com/presentation/d/1WubSZtcYQgjfkAbIrdhhap3FjPzdgmmUIEqn6qxuTW8/edit?usp=sharing
+
+- title: 'TRUE open "stack" com RISC-V e FPGA'
+  event: Latinoware
+  year: 2021
+  language: pt
+  videos:
+    - url: https://www.youtube.com/watch?v=rmUWfHOK5Ic
+  slides: https://docs.google.com/presentation/d/e/2PACX-1vRGiBuinNEMNHDr84cPZdrZrqdfwdMwOhuSwAwhwy_fjhR3GoObExmX_o_JiF5_eTP1r-jLkB_D93E4/pub?start=false&loop=false&delayms=3000
+
+- title: Goroutines
+  event: Golang SP
+  year: 2021
+  date_label: 2021/07
+  language: pt
+  videos:
+    - url: https://www.youtube.com/watch?v=fAxXzADKdMo
+
+- title: MC 1:1
+  event: Marcel Campos
+  year: 2021
+  date_label: 28/04/2021
+  language: pt
+  videos:
+    - url: https://www.youtube.com/watch?v=Z_Qv01rwEPs
+
+- title: Hackeando Ondas com Lucas Teske
+  event: DCG5554 · Defcon Group Caxias do Sul
+  year: 2020
+  language: pt
+  recording_unavailable: true
+
+- title: 'Movimento maker: hackeando de impressoras 3D a satélites da NASA'
+  event: '#CPDigitalGoiás'
+  year: 2020
+  language: pt
+  videos:
+    - url: https://www.youtube.com/watch?v=lo5ShiO_a3c&feature=youtu.be
+
+- title: 'He4rt Talks #05 “Hackeei o satélite da Nasa”'
+  event: He4rt Devs
+  year: 2020
+  language: pt
+  videos:
+    - url: https://www.youtube.com/watch?v=qmLAG5OW8Lc
+
+- title: Hackeando Satélites da NASA
+  event: SecurityCast
+  event_url: https://securitycast.com.br/
+  year: 2020
+  language: pt
+  videos:
+    - url: https://www.youtube.com/watch?v=lujJhiD4SxY&feature=youtu.be
+  slides: https://www.teske.net.br/lucas/palestras/cpgoias1/
+
+- title: GraphQL with GoLang
+  event: GraphQLSP01
+  event_url: https://www.meetup.com/pt-BR/GraphQL-SP/
+  year: 2020
+  language: pt
+  videos:
+    - url: https://www.facebook.com/reactconf/videos/178346083229691/
+  slides: https://www.teske.net.br/lucas/palestras/GraphQLSP01/
+
+- title: Hackeando Satélites da NASA
+  event: ReactSP35
+  event_url: https://www.meetup.com/pt-BR/ReactJS-SP/
+  year: 2019
+  language: pt
+  videos:
+    - url: https://www.facebook.com/reactconf/videos/2025160057588659/
+  slides: https://www.teske.net.br/lucas/palestras/cpgoias1
+
+- title: Hackeando Satélites da NASA
+  event: Campus Party Goiás
+  year: 2019
+  language: pt
+  videos:
+    - url: https://www.youtube.com/watch?v=-jSxOK-cmWU
+  slides: https://www.teske.net.br/lucas/palestras/cpgoias1/
+
+- title: 'SegDSP: The Future of RF Monitoring'
+  event: H2HC
+  year: 2018
+  language: pt
+  videos:
+    - url: https://www.youtube.com/watch?v=zd0FujX7Qw0
+  slides: https://www.teske.net.br/lucas/palestras/cyberspectrum23
+
+- title: 'SegDSP: The Future of RF Monitoring'
+  event: 'DEF CON · Cyberspectrum #23'
+  year: 2018
+  language: en
+  videos:
+    - url: https://youtu.be/Q6ITlQYNVDQ?t=5310
+  slides: https://www.teske.net.br/lucas/palestras/cyberspectrum23
+
+- title: Hackeando Satélites da Nasa em Casa!
+  event: Campus Party Brasil
+  year: 2018
+  language: pt
+  with: Luigi Freitas Cruz
+  with_url: https://twitter.com/luigifcruz
+  videos:
+    - url: https://www.youtube.com/watch?v=6-DszQuLtgs
+  slides: https://www.teske.net.br/lucas/palestras/cpbr11/
+
+- title: Rede Mesh com Linux
+  event: Papo de Sysadmin
+  year: 2016
+  language: pt
+  slides: https://www.teske.net.br/lucas/palestras/paposysadmin2016
+
+- title: Satellite Communications Reverse Engineering
+  event: Sacicon · H2HC
+  year: 2016
+  language: en
+  videos:
+    - url: https://www.youtube.com/watch?v=SIxRyVKlpEo&feature=youtu.be&aLucas=
+  slides: https://www.teske.net.br/lucas/palestras/h2hc2016/satellite/
+
+- title: Rádio definido via Software com RTLSDR e HackRF
+  event: Technoweekend UFABC
+  year: 2016
+  language: pt
+  videos:
+    - url: https://www.youtube.com/watch?v=j56iTP2RLbs
+  slides: https://www.teske.net.br/lucas/palestras/technoweekend2016
+
+- title: FPGA e Epiphany na Computação Paralela
+  event: LatinoWare
+  year: 2015
+  date_label: 2014–2015
+  language: pt
+  videos:
+    - url: https://youtu.be/jfGGyjBTKJ4
+  slides: https://www.teske.net.br/lucas/palestras/latinoware2014/fpgaparallella/
+
+- title: “Drones” no mundo OpenSource
+  event: Latinoware
+  year: 2015
+  language: pt
+  videos:
+    - url: https://www.youtube.com/watch?v=IvVD7VetlEE
+  slides: https://www.teske.net.br/lucas/palestras/latinoware2015
+
+- title: “Drones” no mundo OpenSource
+  event: Campus Party
+  year: 2015
+  language: pt
+  videos:
+    - url: https://www.youtube.com/watch?v=jfVwSMbuMKo
+  slides: https://www.teske.net.br/lucas/palestras/latinoware2015
+
+- title: Palestra OpenCores
+  event: Latinoware
+  year: 2012
+  language: pt
+  videos:
+    - url: https://www.youtube.com/watch?v=PAq1dRlz_YQ
+  slides: https://www.teske.net.br/lucas/palestras/latinoware2012/opencores.pdf
+
+- title: Palestra OpenCores
+  event: Campus Party Brasil · CPBR5
+  year: 2012
+  language: pt
+  videos:
+    - url: https://www.youtube.com/watch?v=FQFl4qxC1Y4
+  slides: https://www.teske.net.br/lucas/palestras/latinoware2012/opencores.pdf
+
+- title: Palestra OpenCores
+  event: Flisol Salto
+  year: 2011
+  language: pt
+  videos:
+    - part: 1
+      url: https://www.youtube.com/watch?v=oF6nuX7-76M
+    - part: 2
+      url: https://www.youtube.com/watch?v=iyx7GXm_BDs
+    - part: 3
+      url: https://www.youtube.com/watch?v=0dAO3i1l9Fo
+  slides: https://www.teske.net.br/lucas/palestras/latinoware2012/opencores.pdf

@@ -3,6 +3,7 @@ title: Timestamp Record - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # Timestamp Record
@@ -19,7 +20,7 @@ This timestamp record contains a packed timestamp in CCSDS Time format.
 This timestamp is sent using a UTC timezone \(GMT\) but it's not always present in all files.
 
 <div class="pagination">
-    <a href="{{ '4-annotation-record' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+    <a href="4-annotation-record" class="left arrow">&#8592;</a>
 
-    <a href="{{ '6-ancillary-text' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="6-ancillary-text" class="right arrow">&#8594;</a>
 </div>

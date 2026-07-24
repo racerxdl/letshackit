@@ -3,65 +3,100 @@ title: GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 guid: https://www.teske.net.br/lucas/goes-satellite-hunt/
+description: goes-satellite-hunt.meta-description
+social_image: /assets/goes-satellite-hunt/g13fd.png
 ---
 
-# GOES Satellite Hunt
+<section class="project-hero" aria-labelledby="goes-title">
+  <div class="project-hero__content">
+    <span class="project-hero__eyebrow">{% t goes-satellite-hunt.hero-eyebrow %}</span>
+    <h1 class="project-hero__title" id="goes-title">GOES Satellite Hunt</h1>
+    <p class="project-hero__description">{% t goes-satellite-hunt.hero-description %}</p>
+    <div class="project-actions">
+      <a class="project-button project-button--primary" href="{{ '/goes-satellite-hunt/motivation' | prepend: site.baseurl }}">{% t goes-satellite-hunt.motivation-button %}</a>
+      <a class="project-button" href="https://github.com/opensatelliteproject">{% t goes-satellite-hunt.open-project-button %}</a>
+    </div>
+  </div>
+  <div class="project-hero__visual">
+    <img src="{{ '/assets/goes-satellite-hunt/g13fd.png' | prepend: site.baseurl_root }}" alt="{% t goes-satellite-hunt.hero-image-alt %}">
+  </div>
+</section>
 
-This book is adaptation of my blog post [GOES Satellite Hunt](http://www.teske.net.br/lucas/2016/10/goes-satellite-hunt-part-1-antenna-system/) that was published in the end of 2016 while I was reverse engineering the satellite signal. I'm doing this book to have a more organized document about GOES-13 Signals and also to keep up to date with my GOES-16 Reverse Engineering that followed the GOES-13 Reverse Engineering. This book will also be hosted at GitHub in [Create Commons Share Alike](https://creativecommons.org/licenses/by-sa/2.5/br/) license and any fixes are welcome from anyone. In the future I plan to add information about other satellites that use similar down link protocols like MSG-3 \(Meteosat 10\).
+<ol class="project-pipeline" aria-label="{% t goes-satellite-hunt.pipeline-label %}">
+  <li><a href="{{ '/goes-satellite-hunt/the-hardware-setup/' | prepend: site.baseurl }}">{% t goes-satellite-hunt.pipeline-receive %}</a></li>
+  <li><a href="{{ '/goes-satellite-hunt/the-demodulator/' | prepend: site.baseurl }}">{% t goes-satellite-hunt.pipeline-symbols %}</a></li>
+  <li><a href="{{ '/goes-satellite-hunt/frame-decoder/' | prepend: site.baseurl }}">{% t goes-satellite-hunt.pipeline-frames %}</a></li>
+  <li><a href="{{ '/goes-satellite-hunt/packet-demuxer/' | prepend: site.baseurl }}">{% t goes-satellite-hunt.pipeline-channels %}</a></li>
+  <li><a href="{{ '/goes-satellite-hunt/file-assembler/' | prepend: site.baseurl }}">{% t goes-satellite-hunt.pipeline-products %}</a></li>
+</ol>
 
-I also need to thank all people in \#hearsat @ starchat \(IRC\) for the help I got understanding SDR and Satellite Signal stuff, since when I started that I had no knowledge at all about it. Special thanks for trango \([@usa-satcom](https://twitter.com/usa_satcom)\) and mybit \([@devnulling](https://twitter.com/devnulling)\) for all the help with previous experiences in the area. Also I need to thank all my family for supporting it putting several dishes and antennas all over the roof of our house.
+<div class="project-section-header">
+  <h2>{% t goes-satellite-hunt.story-title %}</h2>
+  <p>{% t goes-satellite-hunt.story-description %}</p>
+</div>
 
-The study in this book lead to the creation of [Open Satellite Project](https://github.com/opensatelliteproject).
+<p>{% t goes-satellite-hunt.origin %}</p>
 
-[Next Part](motivation)
+<p>{% t goes-satellite-hunt.impact-prefix %} <a href="https://github.com/opensatelliteproject">{% t goes-satellite-hunt.open-project-name %}</a>. {% t goes-satellite-hunt.impact-suffix %}</p>
 
-# Summary
+<div class="project-section-header">
+  <h2>{% t goes-satellite-hunt.chapters-title %}</h2>
+  <p>{% t goes-satellite-hunt.chapters-description %}</p>
+</div>
 
-* [Motivation](motivation)
-* [The Hardware Setup](the-hardware-setup)
-  * [Assemble Process](the-hardware-setup/assemble-process)
-  * [Dish Feed](the-hardware-setup/dish-feed)
-  * [LNA and Filter](the-hardware-setup/lna-and-filter)
-  * [Pointing the Antenna](the-hardware-setup/pointing-the-antenna)
-* [The Demodulator](the-demodulator)
-  * [Binary Phase Shift Keying Modulation](the-demodulator/demodulator-in-gnu-radio)
-  * [Demodulating BPSK Signal](the-demodulator/demodulating-bpsk-signal)
-  * [GNU Radio Flow](the-demodulator/gnu-radio-flow)
-  * [Decimating and filtering to desired sample rate](the-demodulator/decimating-and-filtering-to-desired-sample-rate)
-  * [Automatic Gain Control and Root Raised Cosine Filter](the-demodulator/automatic-gain-control-and-root-raised-cosine-filter)
-  * [Synchronization and Clock Recovery](the-demodulator/synchronization-and-clock-recovery)
-  * [Symbol Output from GNU Radio](the-demodulator/symbol-output-from-gnu-radio)
-* [Frame Decoder](frame-decoder)
-  * [Convolution Encoding, Frame Synchronization and Viterbi](frame-decoder/convolution-encoding-frame-synchronization-and-viterbi)
-  * [Encoding the sync word](frame-decoder/encoding-the-sync-word)
-  * [Frame Synchronization](frame-decoder/frame-synchronization)
-  * [Decoding Frame Data](frame-decoder/decoding-frame-data)
-* [Packet Demuxer](packet-demuxer)
-  * [De-randomization of the data](packet-demuxer/de-randomization-of-the-data)
-  * [Reed Solomon Error Correction](packet-demuxer/reed-solomon-error-correction)
-  * [Virtual Channel Demuxer](packet-demuxer/virtual-channel-demuxer)
-  * [Packet Demuxer](packet-demuxer/packet-demuxer)
-  * [Saving the Raw Packet](packet-demuxer/saving-the-raw-packet)
-* [File Assembler](file-assembler)
-  * [File Header Processing](file-assembler/file-header-processing)
-  * [LritRice Compression](file-assembler/lritrice-compression)
-  * [File Name from Header](file-assembler/file-name-from-header)
-  * [Viewing the files content](file-assembler/viewing-the-files-content)
-* [File Types](file-types)
-  * [LRIT Header Description](file-types/lrit-header-description)
-    * [0 - Primary Header](file-types/lrit-header-description/primary-header)
-    * [1 - Image Structure Header](file-types/lrit-header-description/1-image-structure-header)
-    * [2 - Image Navigation Record](file-types/lrit-header-description/2-image-navigation-record)
-    * [3 - Image Data Function Record](file-types/lrit-header-description/3-image-data-function-record)
-    * [4 - Annotation Record](file-types/lrit-header-description/4-annotation-record)
-    * [5 - Timestamp Record](file-types/lrit-header-description/5-timestamp-record)
-    * [6 - Ancillary Text](file-types/lrit-header-description/6-ancillary-text)
-    * [7 - Key Header](file-types/lrit-header-description/7-key-header)
-    * [128 - Segment Identification Header](file-types/lrit-header-description/128-segment-identification-header)
-    * [128 - Segment Identification Header](file-types/lrit-header-description/128-segment-identification-header)
-    * [129 - NOAA Specific Header](file-types/lrit-header-description/129-noaa-specific-header)
-    * [130 - Header Structured Record](file-types/lrit-header-description/130-header-structured-record)
-    * [131 - Rice Compression Record](file-types/lrit-header-description/131-rice-compression-record)
-    * [132 - DCS Filename Record](file-types/lrit-header-description/132-dcs-filename-record)
-* [Ending](ending)
+<section class="chapter-grid" aria-label="{% t goes-satellite-hunt.chapters-label %}">
+  <article class="chapter-card">
+    <span class="chapter-card__number">01</span>
+    <span class="project-card__kicker">{% t goes-satellite-hunt.context-kicker %}</span>
+    <h3>{% t goes-satellite-hunt.motivation-title %}</h3>
+    <p>{% t goes-satellite-hunt.motivation-description %}</p>
+    <a class="project-card__link" href="{{ '/goes-satellite-hunt/motivation' | prepend: site.baseurl }}">{% t goes-satellite-hunt.motivation-link %}</a>
+  </article>
+  <article class="chapter-card">
+    <span class="chapter-card__number">02</span>
+    <span class="project-card__kicker">{% t goes-satellite-hunt.hardware-kicker %}</span>
+    <h3>{% t goes-satellite-hunt.hardware-title %}</h3>
+    <p>{% t goes-satellite-hunt.hardware-description %}</p>
+    <a class="project-card__link" href="{{ '/goes-satellite-hunt/the-hardware-setup/' | prepend: site.baseurl }}">{% t goes-satellite-hunt.hardware-link %}</a>
+  </article>
+  <article class="chapter-card">
+    <span class="chapter-card__number">03</span>
+    <span class="project-card__kicker">{% t goes-satellite-hunt.demodulator-kicker %}</span>
+    <h3>{% t goes-satellite-hunt.demodulator-title %}</h3>
+    <p>{% t goes-satellite-hunt.demodulator-description %}</p>
+    <a class="project-card__link" href="{{ '/goes-satellite-hunt/the-demodulator/' | prepend: site.baseurl }}">{% t goes-satellite-hunt.demodulator-link %}</a>
+  </article>
+  <article class="chapter-card">
+    <span class="chapter-card__number">04</span>
+    <span class="project-card__kicker">{% t goes-satellite-hunt.frame-kicker %}</span>
+    <h3>{% t goes-satellite-hunt.frame-title %}</h3>
+    <p>{% t goes-satellite-hunt.frame-description %}</p>
+    <a class="project-card__link" href="{{ '/goes-satellite-hunt/frame-decoder/' | prepend: site.baseurl }}">{% t goes-satellite-hunt.frame-link %}</a>
+  </article>
+  <article class="chapter-card">
+    <span class="chapter-card__number">05</span>
+    <span class="project-card__kicker">{% t goes-satellite-hunt.packets-kicker %}</span>
+    <h3>{% t goes-satellite-hunt.packets-title %}</h3>
+    <p>{% t goes-satellite-hunt.packets-description %}</p>
+    <a class="project-card__link" href="{{ '/goes-satellite-hunt/packet-demuxer/' | prepend: site.baseurl }}">{% t goes-satellite-hunt.packets-link %}</a>
+  </article>
+  <article class="chapter-card">
+    <span class="chapter-card__number">06</span>
+    <span class="project-card__kicker">{% t goes-satellite-hunt.files-kicker %}</span>
+    <h3>{% t goes-satellite-hunt.files-title %}</h3>
+    <p>{% t goes-satellite-hunt.files-description %}</p>
+    <a class="project-card__link" href="{{ '/goes-satellite-hunt/file-assembler/' | prepend: site.baseurl }}">{% t goes-satellite-hunt.files-link %}</a>
+  </article>
+</section>
+
+<div class="project-actions">
+  <a class="project-button" href="{{ '/goes-satellite-hunt/file-types/' | prepend: site.baseurl }}">{% t goes-satellite-hunt.file-reference-button %}</a>
+  <a class="project-button" href="{{ '/goes-satellite-hunt/ending' | prepend: site.baseurl }}">{% t goes-satellite-hunt.conclusion-button %}</a>
+</div>
+
+<aside class="project-note">
+  <p>{% t goes-satellite-hunt.license-prefix %} <a href="https://creativecommons.org/licenses/by-sa/2.5/br/">{% t goes-satellite-hunt.license-name %}</a>; {% t goes-satellite-hunt.license-suffix %}</p>
+  <p>{% t goes-satellite-hunt.thanks-prefix %} <strong>#hearsat</strong> {% t goes-satellite-hunt.thanks-community %} <a href="https://twitter.com/usa_satcom">@usa-satcom</a> {% t goes-satellite-hunt.thanks-and %} <a href="https://twitter.com/devnulling">@devnulling</a>, {% t goes-satellite-hunt.thanks-family %}</p>
+</aside>

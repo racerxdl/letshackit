@@ -3,6 +3,7 @@ title: Reed Solomon Error Correction - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # Reed Solomon Error Correction
@@ -56,7 +57,7 @@ For using it on LRIT frame we can do:
 In the variable **derrors** we will have how many bytes it was corrected for each RS Frames. In **rsCorrectedData** we will have the error corrected output. The value **-1** in **derrors** it means the data is corrupted beyond correction \(or the parity is corrupted beyond correction\). I usually drop the entire frame if all derrors are -1, but keep in mind that the corruption can happen in the parity only \(we can have corrupted bytes in parity that will lead to -1 in error correction\) so it would be wise to not do like I did. After that we will have the corrected LRIT Frame that is 892 bytes wide.
 
 <div class="pagination">
-    <a href="{{ 'de-randomization-of-the-data' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+    <a href="de-randomization-of-the-data" class="left arrow">&#8592;</a>
 
-    <a href="{{ 'virtual-channel-demuxer' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="virtual-channel-demuxer" class="right arrow">&#8594;</a>
 </div>

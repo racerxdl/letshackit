@@ -1,0 +1,96 @@
+{% assign citation_work = nil %}
+{% if page.citation_work %}
+  {% assign citation_work = site.data.citable_works[page.citation_work] %}
+{% endif %}
+{% if page.collection == 'posts' or citation_work %}
+  {% if citation_work %}
+    {% assign citation_title = citation_work.title %}
+    {% assign citation_date = citation_work.published %}
+    {% assign citation_url = citation_work.url %}
+    {% assign citation_publisher = citation_work.publisher | default: site.title %}
+    {% assign citation_key = citation_work.key %}
+  {% else %}
+    {% assign citation_title = page.title %}
+    {% assign citation_date = page.date %}
+    {% assign citation_publisher = site.title %}
+    {% capture citation_url %}{{ page.url | replace: 'index.html', '' | prepend: site.baseurl | prepend: site.url }}{% endcapture %}
+    {% assign citation_slug_source = page.slug | default: page.title %}
+    {% assign citation_slug = citation_slug_source | slugify | replace: '-', '' | slice: 0, 36 %}
+    {% assign citation_author_parts = page.author | default: site.author.name | split: ' ' %}
+    {% assign citation_author_family = citation_author_parts | last | downcase %}
+    {% capture generated_citation_key %}{{ citation_author_family }}{{ citation_date | date: '%Y' }}{{ citation_slug }}{% endcapture %}
+    {% assign citation_key = page.citation_key | default: generated_citation_key %}
+  {% endif %}
+  {% capture citation_authors_display %}{% if citation_work %}{% for author in citation_work.authors %}{{ author.name | default: author }}{% unless forloop.last %}{% if forloop.rindex == 2 %} and {% else %}, {% endif %}{% endunless %}{% endfor %}{% else %}{{ page.author | default: site.author.name }}{% endif %}{% endcapture %}
+  {% assign citation_authors_display = citation_authors_display | strip_newlines | strip %}
+  {% capture citation_authors_bibtex %}{% if citation_work %}{% for author in citation_work.authors %}{{ author.bibtex | default: author.name | default: author | bibtex_escape }}{% unless forloop.last %} and {% endunless %}{% endfor %}{% else %}{{ page.author | default: site.author.name | bibtex_escape }}{% endif %}{% endcapture %}
+  {% assign citation_authors_bibtex = citation_authors_bibtex | strip_newlines | strip %}
+  {% assign citation_key = citation_key | strip | downcase | slugify | replace: '-', '' %}
+  {% assign citation_url = citation_url | strip %}
+  <details class="citation-block">
+    <summary class="citation-block__summary">
+      <span>{% if citation_work %}{% t global.cite-this-work %}{% else %}{% t global.cite-this-article %}{% endif %}</span>
+      <span class="citation-block__formats">Plain text · BibTeX</span>
+    </summary>
+    <div class="citation-block__content">
+      <section class="citation-block__format" aria-labelledby="citation-text-heading-{{ citation_key }}">
+        <div class="citation-block__format-header">
+          <h3 id="citation-text-heading-{{ citation_key }}">{% t global.suggested-citation %}</h3>
+          <button type="button" class="citation-copy" data-copy-target="#citation-text-{{ citation_key }}" data-copied-label="{% t global.copied %}" aria-live="polite">{% t global.copy-citation %}</button>
+        </div>
+        <p id="citation-text-{{ citation_key }}" class="citation-block__text">{{ citation_authors_display | escape_once }}. “{{ citation_title | citation_title_punctuate | escape_once }}” <em>{{ citation_publisher | escape_once }}</em>, {{ citation_date | date: '%Y' }}. <a href="{{ citation_url | escape_once }}">{{ citation_url | escape_once }}</a>.</p>
+      </section>
+      <section class="citation-block__format" aria-labelledby="citation-bibtex-heading-{{ citation_key }}">
+        <div class="citation-block__format-header">
+          <h3 id="citation-bibtex-heading-{{ citation_key }}">BibTeX</h3>
+          <button type="button" class="citation-copy" data-copy-target="#citation-bibtex-{{ citation_key }}" data-copied-label="{% t global.copied %}" aria-live="polite">{% t global.copy-bibtex %}</button>
+        </div>
+        <pre class="citation-block__bibtex"><code id="citation-bibtex-{{ citation_key }}">@misc{ {{- citation_key -}},
+  author = { {{- citation_authors_bibtex | escape -}} },
+  title = { {{- citation_title | bibtex_escape | escape -}} },
+  year = { {{- citation_date | date: '%Y' -}} },
+  publisher = { {{- citation_publisher | bibtex_escape | escape -}} },
+  url = { {{- citation_url | bibtex_escape | escape -}} }
+}</code></pre>
+      </section>
+    </div>
+  </details>
+  <script>
+    (function () {
+      var root = document.currentScript.previousElementSibling;
+      if (!root || !root.classList.contains('citation-block')) return;
+
+      function copyText(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+          return navigator.clipboard.writeText(text);
+        }
+
+        var textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        return Promise.resolve();
+      }
+
+      root.addEventListener('click', function (event) {
+        var button = event.target.closest('[data-copy-target]');
+        if (!button || !root.contains(button)) return;
+        var target = root.querySelector(button.getAttribute('data-copy-target'));
+        if (!target) return;
+
+        var originalLabel = button.textContent;
+        copyText(target.textContent.trim()).then(function () {
+          button.textContent = button.getAttribute('data-copied-label');
+          window.setTimeout(function () {
+            button.textContent = originalLabel;
+          }, 1600);
+        });
+      });
+    }());
+  </script>
+{% endif %}

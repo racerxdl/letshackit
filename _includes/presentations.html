@@ -1,0 +1,94 @@
+{% assign presentations = site.data.presentations %}
+{% assign featured_presentations = presentations | where: "featured", true %}
+{% assign presentation_years = presentations | group_by: "year" | sort: "name" | reverse %}
+{% assign presentation_languages = presentations | group_by: "language" %}
+{% assign newest_presentation_year = presentation_years | first %}
+{% assign oldest_presentation_year = presentation_years | last %}
+
+<section class="talks-hero" aria-labelledby="talks-hero-title">
+  <div class="talks-hero__content">
+    <span class="talks-hero__eyebrow">{% t presentations.hero-eyebrow %}</span>
+    <h2 class="talks-hero__title" id="talks-hero-title">{% t presentations.hero-title %}</h2>
+    <p class="talks-hero__description">{% t presentations.hero-description %}</p>
+    <dl class="talks-stats">
+      <div>
+        <dt>{{ presentations.size }}</dt>
+        <dd>{% t presentations.talks-label %}</dd>
+      </div>
+      <div>
+        <dt>{{ oldest_presentation_year.name }}–{{ newest_presentation_year.name }}</dt>
+        <dd>{% t presentations.archive-label %}</dd>
+      </div>
+      <div>
+        <dt>{{ presentation_languages.size }}</dt>
+        <dd>{% t presentations.languages-label %}</dd>
+      </div>
+    </dl>
+  </div>
+  <figure class="talks-hero__visual">
+    <img src="{{ '/wp-content/uploads/2016/11/DSC0357-624x533.jpg' | prepend: site.baseurl_root }}" alt="{% t presentations.hero-image-alt %}">
+    <figcaption>{% t presentations.hero-image-caption %}</figcaption>
+  </figure>
+</section>
+
+<section class="talks-featured" aria-labelledby="talks-featured-title">
+  <header class="project-section-header">
+    <h2 id="talks-featured-title">{% t presentations.featured-title %}</h2>
+    <p>{% t presentations.featured-description %}</p>
+  </header>
+  <div class="talks-featured-grid">
+    {% for presentation in featured_presentations %}
+      {% assign language_label = site.data[site.lang].langs[presentation.language] %}
+      <article class="talk-card">
+        <div class="talk-card__meta">
+          <span>{{ presentation.date_label | default: presentation.year | escape_once }}</span>
+          <span lang="{{ presentation.language | escape_once }}">{{ language_label | escape_once }}</span>
+        </div>
+        <h3>{{ presentation.title | escape_once }}</h3>
+        <p class="talk-card__event">
+          {% if presentation.event_url %}<a href="{{ presentation.event_url | escape_once }}">{{ presentation.event | escape_once }}</a>{% else %}{{ presentation.event | escape_once }}{% endif %}
+          {% if presentation.with %}
+            · {% t presentations.with %}
+            {% if presentation.with_url %}<a href="{{ presentation.with_url | escape_once }}">{{ presentation.with | escape_once }}</a>{% else %}{{ presentation.with | escape_once }}{% endif %}
+          {% endif %}
+        </p>
+        {% include presentation-links.html presentation=presentation class="talk-links talk-links--featured" %}
+      </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="talks-archive" aria-labelledby="talks-archive-title">
+  <header class="project-section-header">
+    <h2 id="talks-archive-title">{% t presentations.archive-title %}</h2>
+    <p>{% t presentations.archive-description %}</p>
+  </header>
+
+  {% for presentation_year in presentation_years %}
+    <section class="talk-year" aria-labelledby="talk-year-{{ presentation_year.name | slugify }}">
+      <h3 class="talk-year__heading" id="talk-year-{{ presentation_year.name | slugify }}">{{ presentation_year.name }}</h3>
+      <div class="talk-year__list">
+        {% for presentation in presentation_year.items %}
+          {% assign language_label = site.data[site.lang].langs[presentation.language] %}
+          <article class="talk-row">
+            <div class="talk-row__body">
+              <div class="talk-row__meta">
+                <span>{{ presentation.date_label | default: presentation.year | escape_once }}</span>
+                <span lang="{{ presentation.language | escape_once }}">{{ language_label | escape_once }}</span>
+              </div>
+              <h4>{{ presentation.title | escape_once }}</h4>
+              <p>
+                {% if presentation.event_url %}<a href="{{ presentation.event_url | escape_once }}">{{ presentation.event | escape_once }}</a>{% else %}{{ presentation.event | escape_once }}{% endif %}
+                {% if presentation.with %}
+                  · {% t presentations.with %}
+                  {% if presentation.with_url %}<a href="{{ presentation.with_url | escape_once }}">{{ presentation.with | escape_once }}</a>{% else %}{{ presentation.with | escape_once }}{% endif %}
+                {% endif %}
+              </p>
+            </div>
+            {% include presentation-links.html presentation=presentation %}
+          </article>
+        {% endfor %}
+      </div>
+    </section>
+  {% endfor %}
+</section>

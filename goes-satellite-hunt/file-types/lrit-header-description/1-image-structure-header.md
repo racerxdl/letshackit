@@ -3,6 +3,7 @@ title: Image Structure Header - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # Image Structure Header
@@ -32,10 +33,10 @@ The first three fields are straight forward to understand since they're default 
 
 For _JPEG_ / _GIF_ / _ZIP_ compression types it is possible to just dump the entire Data Section of the LRIT file and process it as a normal _JPEG_ / _GIF_ / _ZIP_ file. The relay stations doesn't remove any headers and the _Data_ section is a normal file. Actually OpenSatelliteProject does that when the _Compression Type_ field is any of these three values.
 
-For Goloumb Rice \(know in NOAA libraries as LritRice\) the output is a RAW image data that should be processed acording to the fields _BitsPerPixel_, _Columns_, _Lines_. More details about the compression is described at [Rice Compression Record](/file-types/lrit-header-description/131-rice-compression-record.md), that will always come when _Compression Type_ field is LRIT RICE.
+For Goloumb Rice \(know in NOAA libraries as LritRice\) the output is a RAW image data that should be processed acording to the fields _BitsPerPixel_, _Columns_, _Lines_. More details about the compression is described at [Rice Compression Record]({{ '/goes-satellite-hunt/file-types/lrit-header-description/131-rice-compression-record' | prepend: site.baseurl }}), that will always come when _Compression Type_ field is LRIT RICE.
 
 <div class="pagination">
-    <a href="{{ 'primary-header' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+    <a href="primary-header" class="left arrow">&#8592;</a>
 
-    <a href="{{ '2-image-navigation-record' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="2-image-navigation-record" class="right arrow">&#8594;</a>
 </div>

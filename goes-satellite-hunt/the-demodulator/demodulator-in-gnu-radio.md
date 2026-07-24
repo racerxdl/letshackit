@@ -3,6 +3,7 @@ title: Binary Phase Shift Keying Modulation - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # Binary Phase Shift Keying Modulation
@@ -38,5 +39,5 @@ Same works for 8-PSK, but with 3 bits instead of 2. Usually the binary code is g
 <div class="pagination">
     <a href="{{ '/goes-satellite-hunt/the-demodulator' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
 
-    <a href="{{ 'demodulating-bpsk-signal' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="demodulating-bpsk-signal" class="right arrow">&#8594;</a>
 </div>

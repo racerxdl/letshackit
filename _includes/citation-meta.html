@@ -1,0 +1,25 @@
+{% assign academic_work = nil %}
+{% if page.citation_work %}
+  {% assign academic_work = site.data.citable_works[page.citation_work] %}
+{% endif %}
+{% if page.collection == 'posts' or academic_work and page.url == academic_work.path %}
+  {% if academic_work %}
+    {% assign academic_title = academic_work.title %}
+    {% assign academic_date = academic_work.published %}
+    {% assign academic_url = academic_work.url %}
+  {% else %}
+    {% assign academic_title = page.title %}
+    {% assign academic_date = page.date %}
+    {% capture academic_url %}{{ page.url | replace: 'index.html', '' | prepend: site.baseurl | prepend: site.url }}{% endcapture %}
+  {% endif %}
+  <meta name="citation_title" content="{{ academic_title | strip | escape_once }}">
+  {% if academic_work %}
+    {% for author in academic_work.authors %}
+  <meta name="citation_author" content="{{ author.name | default: author | escape_once }}">
+    {% endfor %}
+  {% else %}
+  <meta name="citation_author" content="{{ page.author | default: site.author.name | escape_once }}">
+  {% endif %}
+  <meta name="citation_publication_date" content="{{ academic_date | date: '%Y/%m/%d' }}">
+  <meta name="citation_public_url" content="{{ academic_url | strip | escape_once }}">
+{% endif %}

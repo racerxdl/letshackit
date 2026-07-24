@@ -3,6 +3,7 @@ title: Primary Header - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # Primary Header
@@ -41,5 +42,5 @@ The secondary headers are just inlined in the rest of the header data. Since the
 <div class="pagination">
     <a href="{{ '/goes-satellite-hunt/file-types/lrit-header-description' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
 
-    <a href="{{ '1-image-structure-header' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="1-image-structure-header" class="right arrow">&#8594;</a>
 </div>

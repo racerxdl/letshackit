@@ -30,7 +30,11 @@ layout: default
   <h1 class="post-title">{% t page.title %}</h1>
   <div class="post-line"></div>
 
+  {% include project-context.html %}
+
   {{ content }}
+
+  {% include citation.html %}
 
 </div>
 

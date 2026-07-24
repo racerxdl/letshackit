@@ -3,6 +3,7 @@ title: LritRice Compression - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # LritRice Compression
@@ -96,7 +97,7 @@ if (packet["sequenceflag_int"] == 2 or packet["sequenceflag_int"] == 3):
 The **decompressed** var will have the final filename of the decompressed file.
 
 <div class="pagination">
-    <a href="{{ 'file-header-processing' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+    <a href="file-header-processing" class="left arrow">&#8592;</a>
 
-    <a href="{{ 'file-name-from-header' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="file-name-from-header" class="right arrow">&#8594;</a>
 </div>

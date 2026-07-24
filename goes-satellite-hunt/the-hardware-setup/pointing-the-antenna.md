@@ -3,6 +3,7 @@ title: Positioning the Antenna - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # Positioning the Antenna
@@ -18,7 +19,7 @@ Another solution would be use [GPredict](http://gpredict.oz9aec.net/) or [Orbitr
 Other two things that you need to care is related to the feed itself. Since we have a linear polarized feed, the rotation of the feed matters in relation to the satellite. This is less critical and I found that even 15 degrees rotation doesn’t change a lot the signal. Other thing is the focal point of the dish. You need to adjust the feed distance from the base of the dish to also get the best signal. Mine has the probe \(the linear feed inside the can\) in the focal point \(so the can opening is far ahead\). After all, you should get something like this \(got with airspy, 10MHz bandwidth\):![](/assets/goes-satellite-hunt/sdrsharp-goes.png)![](/assets/goes-satellite-hunt/zKq7Dkv.jpg)So the next step is the whole decoding process.
 
 <div class="pagination">
-    <a href="{{ 'lna-and-filter' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+    <a href="lna-and-filter" class="left arrow">&#8592;</a>
 
     <a href="{{ '/goes-satellite-hunt/the-demodulator' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
 </div>

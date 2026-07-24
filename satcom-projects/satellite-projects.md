@@ -5,66 +5,102 @@ date: 2016-10-28T12:50:22-03:00
 author: Lucas Teske
 layout: page
 guid: http://www.teske.net.br/lucas/?page_id=204
-image: /wp-content/uploads/2016/10/Sem-título.png
+description: A curated archive of satellite reception, RF hardware, software-defined radio, GOES decoding, and weather satellite projects.
+social_image: /wp-content/uploads/2016/10/Sem-título.png
 ---
-These are my Satellite Project Page. Some of the stuff are WIP so please be gentle.
+<p class="project-lede">A curated path through the satellite work: start with reception hardware, follow the signal-processing experiments, and continue into complete weather-satellite decoding systems.</p>
 
+<section class="project-hero" aria-labelledby="goes-archive-title">
+  <div class="project-hero__content">
+    <span class="project-hero__eyebrow">Complete project · Hardware to imagery</span>
+    <h2 class="project-hero__title" id="goes-archive-title">GOES Satellite Hunt</h2>
+    <p class="project-hero__description">The strongest place to start. This book-length guide documents the full GOES-13 LRIT receive chain and the engineering lessons that later became Open Satellite Project.</p>
+    <div class="project-actions">
+      <a class="project-button project-button--primary" href="{{ '/goes-satellite-hunt/' | prepend: site.baseurl }}">Open the complete guide</a>
+      <a class="project-button" href="{{ '/satcom-projects/sample-baseband-files' | prepend: site.baseurl }}">Get sample signals</a>
+    </div>
+  </div>
+  <div class="project-hero__visual">
+    <img src="{{ '/wp-content/uploads/2016/10/Sem-título.png' | prepend: site.baseurl_root }}" alt="Home-built L-band feed and low-noise amplifier mounted on a satellite dish">
+  </div>
+</section>
 
-NOAA APT / Meteor LRPT
+<ol class="project-pipeline" aria-label="GOES Satellite Hunt chapter groups">
+  <li><a href="{{ '/goes-satellite-hunt/the-hardware-setup/' | prepend: site.baseurl }}">Dish, feed, and LNA</a></li>
+  <li><a href="{{ '/goes-satellite-hunt/the-demodulator/' | prepend: site.baseurl }}">GNU Radio receiver</a></li>
+  <li><a href="{{ '/goes-satellite-hunt/frame-decoder/' | prepend: site.baseurl }}">CCSDS frames</a></li>
+  <li><a href="{{ '/goes-satellite-hunt/packet-demuxer/' | prepend: site.baseurl }}">Virtual channels</a></li>
+  <li><a href="{{ '/goes-satellite-hunt/file-types/' | prepend: site.baseurl }}">LRIT products</a></li>
+</ol>
 
-  * [QFH Antenna and my first reception of NOAA!]({{ '/2016/01/qfh-antenna-and-my-first-reception-of-noaa/' | prepend: site.baseurl }})
-  * [Recording NOAA APT Signals With GQRX and RTLSDR in Linux]({{ '/2016/02/recording-noaa-apt-signals-with-gqrx-and-rtl-sdr-on-linux/' | prepend: site.baseurl }})
-  * Creating an APT Signal Decoder (TODO)
-  * LRPT Demodulator / Decoder (TODO)
-  * [137MHz Bandpass Filter for NOAA / METEOR]({{ '/2016/11/137mhz-bandpass-filter-for-noaa-meteor-satellites/' | prepend: site.baseurl }})
+<div class="project-section-header">
+  <h2>NOAA APT and Meteor LRPT</h2>
+  <p>Accessible VHF projects for building the receiving station and learning the signal path.</p>
+</div>
 
-GOES Satellite Hunt
+<ul class="project-resource-list">
+  <li>
+    <a href="{{ '/2016/01/qfh-antenna-and-my-first-reception-of-noaa/' | prepend: site.baseurl }}">QFH antenna and first NOAA reception</a>
+    <span>Build the antenna, track a pass, and receive the first weather image.</span>
+  </li>
+  <li>
+    <a href="{{ '/2016/02/recording-noaa-apt-signals-with-gqrx-and-rtl-sdr-on-linux/' | prepend: site.baseurl }}">Recording NOAA APT with GQRX and RTL-SDR</a>
+    <span>Configure the Linux software stack and preserve a pass for offline decoding.</span>
+  </li>
+  <li>
+    <a href="{{ '/2016/11/137mhz-bandpass-filter-for-noaa-meteor-satellites/' | prepend: site.baseurl }}">137 MHz band-pass filter</a>
+    <span>Design, build, and measure a dedicated filter for NOAA and Meteor reception.</span>
+  </li>
+</ul>
 
-* [First Page]({{ '/goes-satellite-hunt' | prepend: site.baseurl }})
-* [Motivation]({{ '/goes-satellite-hunt/motivation' | prepend: site.baseurl }})
-* [The Hardware Setup]({{ '/goes-satellite-hunt/the-hardware-setup' | prepend: site.baseurl }})
-  * [Assemble Process]({{ '/goes-satellite-hunt/the-hardware-setup/assemble-process' | prepend: site.baseurl }})
-  * [Dish Feed]({{ '/goes-satellite-hunt/the-hardware-setup/dish-feed' | prepend: site.baseurl }})
-  * [LNA and Filter]({{ '/goes-satellite-hunt/the-hardware-setup/lna-and-filter' | prepend: site.baseurl }})
-  * [Pointing the Antenna]({{ '/goes-satellite-hunt/the-hardware-setup/pointing-the-antenna' | prepend: site.baseurl }})
-* [The Demodulator]({{ '/goes-satellite-hunt/the-demodulator' | prepend: site.baseurl }})
-  * [Binary Phase Shift Keying Modulation]({{ '/goes-satellite-hunt/the-demodulator/demodulator-in-gnu-radio' | prepend: site.baseurl }})
-  * [Demodulating BPSK Signal]({{ '/goes-satellite-hunt/the-demodulator/demodulating-bpsk-signal' | prepend: site.baseurl }})
-  * [GNU Radio Flow]({{ '/goes-satellite-hunt/the-demodulator/gnu-radio-flow' | prepend: site.baseurl }})
-  * [Decimating and filtering to desired sample rate]({{ '/goes-satellite-hunt/the-demodulator/decimating-and-filtering-to-desired-sample-rate' | prepend: site.baseurl }})
-  * [Automatic Gain Control and Root Raised Cosine Filter]({{ '/goes-satellite-hunt/the-demodulator/automatic-gain-control-and-root-raised-cosine-filter' | prepend: site.baseurl }})
-  * [Synchronization and Clock Recovery]({{ '/goes-satellite-hunt/the-demodulator/synchronization-and-clock-recovery' | prepend: site.baseurl }})
-  * [Symbol Output from GNU Radio]({{ '/goes-satellite-hunt/the-demodulator/symbol-output-from-gnu-radio' | prepend: site.baseurl }})
-* [Frame Decoder]({{ '/goes-satellite-hunt/frame-decoder' | prepend: site.baseurl }})
-  * [Convolution Encoding, Frame Synchronization and Viterbi]({{ '/goes-satellite-hunt/frame-decoder/convolution-encoding-frame-synchronization-and-viterbi' | prepend: site.baseurl }})
-  * [Encoding the sync word]({{ '/goes-satellite-hunt/frame-decoder/encoding-the-sync-word' | prepend: site.baseurl }})
-  * [Frame Synchronization]({{ '/goes-satellite-hunt/frame-decoder/frame-synchronization' | prepend: site.baseurl }})
-  * [Decoding Frame Data]({{ '/goes-satellite-hunt/frame-decoder/decoding-frame-data' | prepend: site.baseurl }})
-* [Packet Demuxer]({{ '/goes-satellite-hunt/packet-demuxer' | prepend: site.baseurl }})
-  * [De-randomization of the data]({{ '/goes-satellite-hunt/packet-demuxer/de-randomization-of-the-data' | prepend: site.baseurl }})
-  * [Reed Solomon Error Correction]({{ '/goes-satellite-hunt/packet-demuxer/reed-solomon-error-correction' | prepend: site.baseurl }})
-  * [Virtual Channel Demuxer]({{ '/goes-satellite-hunt/packet-demuxer/virtual-channel-demuxer' | prepend: site.baseurl }})
-  * [Packet Demuxer]({{ '/goes-satellite-hunt/packet-demuxer/packet-demuxer' | prepend: site.baseurl }})
-  * [Saving the Raw Packet]({{ '/goes-satellite-hunt/packet-demuxer/saving-the-raw-packet' | prepend: site.baseurl }})
-* [File Assembler]({{ '/goes-satellite-hunt/file-assembler' | prepend: site.baseurl }})
-  * [File Header Processing]({{ '/goes-satellite-hunt/file-assembler/file-header-processing' | prepend: site.baseurl }})
-  * [LritRice Compression]({{ '/goes-satellite-hunt/file-assembler/lritrice-compression' | prepend: site.baseurl }})
-  * [File Name from Header]({{ '/goes-satellite-hunt/file-assembler/file-name-from-header' | prepend: site.baseurl }})
-  * [Viewing the files content]({{ '/goes-satellite-hunt/file-assembler/viewing-the-files-content' | prepend: site.baseurl }})
-* [File Types]({{ '/goes-satellite-hunt/file-types' | prepend: site.baseurl }})
-  * [LRIT Header Description]({{ '/goes-satellite-hunt/file-types/lrit-header-description' | prepend: site.baseurl }})
-    * [0 - Primary Header]({{ '/goes-satellite-hunt/file-types/lrit-header-description/primary-header' | prepend: site.baseurl }})
-    * [1 - Image Structure Header]({{ '/goes-satellite-hunt/file-types/lrit-header-description/1-image-structure-header' | prepend: site.baseurl }})
-    * [2 - Image Navigation Record]({{ '/goes-satellite-hunt/file-types/lrit-header-description/2-image-navigation-record' | prepend: site.baseurl }})
-    * [3 - Image Data Function Record]({{ '/goes-satellite-hunt/file-types/lrit-header-description/3-image-data-function-record' | prepend: site.baseurl }})
-    * [4 - Annotation Record]({{ '/goes-satellite-hunt/file-types/lrit-header-description/4-annotation-record' | prepend: site.baseurl }})
-    * [5 - Timestamp Record]({{ '/goes-satellite-hunt/file-types/lrit-header-description/5-timestamp-record' | prepend: site.baseurl }})
-    * [6 - Ancillary Text]({{ '/goes-satellite-hunt/file-types/lrit-header-description/6-ancillary-text' | prepend: site.baseurl }})
-    * [7 - Key Header]({{ '/goes-satellite-hunt/file-types/lrit-header-description/7-key-header' | prepend: site.baseurl }})
-    * [128 - Segment Identification Header]({{ '/goes-satellite-hunt/file-types/lrit-header-description/128-segment-identification-header' | prepend: site.baseurl }})
-    * [128 - Segment Identification Header]({{ '/goes-satellite-hunt/file-types/lrit-header-description/128-segment-identification-header' | prepend: site.baseurl }})
-    * [129 - NOAA Specific Header]({{ '/goes-satellite-hunt/file-types/lrit-header-description/129-noaa-specific-header' | prepend: site.baseurl }})
-    * [130 - Header Structured Record]({{ '/goes-satellite-hunt/file-types/lrit-header-description/130-header-structured-record' | prepend: site.baseurl }})
-    * [131 - Rice Compression Record]({{ '/goes-satellite-hunt/file-types/lrit-header-description/131-rice-compression-record' | prepend: site.baseurl }})
-    * [132 - DCS Filename Record]({{ '/goes-satellite-hunt/file-types/lrit-header-description/132-dcs-filename-record' | prepend: site.baseurl }})
-* [Ending]({{ '/goes-satellite-hunt/ending' | prepend: site.baseurl }})
+<div class="project-section-header">
+  <h2>GOES field notes</h2>
+  <p>Experiments and milestones that continued after the original GOES-13 receive chain.</p>
+</div>
+
+<ul class="project-resource-list">
+  <li>
+    <a href="{{ '/2016/12/new-2-2m-dish-from-embrasat/' | prepend: site.baseurl }}">A new 2.2 m dish</a>
+    <span>Hardware expansion for stronger L-band reception and future signals.</span>
+  </li>
+  <li>
+    <a href="{{ '/2017/01/goes-16-in-the-house/' | prepend: site.baseurl }}">GOES-16 in the house</a>
+    <span>Early reception and reverse engineering of the next GOES generation.</span>
+  </li>
+  <li>
+    <a href="{{ '/2017/03/goes-16-test-week/' | prepend: site.baseurl }}">GOES-16 test week</a>
+    <span>Preparing the station and decoder for the experimental HRIT broadcast.</span>
+  </li>
+  <li>
+    <a href="{{ '/2017/04/goes-16-test-week-results/' | prepend: site.baseurl }}">GOES-16 test week results</a>
+    <span>Decoded ABI products, false-color imagery, and lessons from the live test.</span>
+  </li>
+  <li>
+    <a href="{{ '/2017/04/some-lna-tests-for-hritlrit/' | prepend: site.baseurl }}">LNA tests for HRIT and LRIT</a>
+    <span>Practical gain and noise comparisons for the satellite receive chain.</span>
+  </li>
+  <li>
+    <a href="{{ '/2017/10/goes-grb-first-light/' | prepend: site.baseurl }}">GOES GRB first light</a>
+    <span>The jump to the high-rate GOES Rebroadcast service and its first decoded products.</span>
+  </li>
+</ul>
+
+<div class="project-section-header">
+  <h2>Related resources</h2>
+  <p>Original articles, reusable recordings, and the software created from the research.</p>
+</div>
+
+<section class="project-grid" aria-label="Related satellite resources">
+  <article class="project-card">
+    <span class="project-card__kicker">Original publication</span>
+    <h3>The five-part GOES blog series</h3>
+    <p>Read the original chronological posts that were reorganized and expanded into GOES Satellite Hunt.</p>
+    <a class="project-card__link" href="{{ '/2016/10/goes-satellite-hunt-part-1-antenna-system/' | prepend: site.baseurl }}">Open part one</a>
+  </article>
+  <article class="project-card">
+    <span class="project-card__kicker">Development data</span>
+    <h3>GOES baseband recordings</h3>
+    <p>Use real LRIT, HRIT, telemetry, EMWIN, and DCPR captures to test your own signal-processing code.</p>
+    <a class="project-card__link" href="{{ '/satcom-projects/sample-baseband-files' | prepend: site.baseurl }}">Browse the recordings</a>
+  </article>
+</section>

@@ -3,6 +3,7 @@ title: Segment Identification Header - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # Segment Identification Header
@@ -24,7 +25,7 @@ This header is used in Images to identify a segmented image data. It will only b
 The fields of this header is pretty straight forward. It indicates how the final image should be assembled using the segments. By running Open Satellite Project for a long time I found that all images come segmented by horizontal segments meaning that all _Start Column_ should be same across the same image segments. For identifying the Image one should use _Image ID_ field, that is the same across all segments of same image. The fields _Max Columns_ and _Max Rows_ should be used for pre-allocating the buffer \(if needed\) for assembling the final image.
 
 <div class="pagination">
-    <a href="{{ '7-key-header' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+    <a href="7-key-header" class="left arrow">&#8592;</a>
 
-    <a href="{{ '129-noaa-specific-header' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="129-noaa-specific-header" class="right arrow">&#8594;</a>
 </div>

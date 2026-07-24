@@ -3,6 +3,7 @@ title: Frame Synchronization - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # Frame Synchronization
@@ -67,7 +68,7 @@ With this piece of code, you can run **checkCorrelation\(buffer, length, corr\)
 object you will have the fields **uw0p** and **uw2p** with the positions of the highest correlation of the buffer and in **uw0mc** and **uw2mc** you will have the correlation of that position. With this two values you can know the position that your sync word is, and what is the phase shift that the Costas Loop locked into \(if uw0 is 0 degrees, if uw2 is 180 degrees\). To correct the data if the output is 180 degrees phase shifted, just invert every bit in your sequence. I do that by XOR’ing every byte with **0xFF**. Now if you output this to a file and inspect with [BitDisplay](https://github.com/racerxdl/open-satellite-project/tree/master/Toolset/BitDisplay) you will see a pattern like this:![](/assets/goes-satellite-hunt/sync-pattern.png)See that the syncword is pretty clear in the bit display? You can use that to visually identify sync words or static data inside the frames. You can also notice that there are even more static data in the frames. We will talk about it later. Now our data is ready to decode.
 
 <div class="pagination">
-    <a href="{{ 'encoding-the-sync-word' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+    <a href="encoding-the-sync-word" class="left arrow">&#8592;</a>
 
-    <a href="{{ 'decoding-frame-data' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="decoding-frame-data" class="right arrow">&#8594;</a>
 </div>

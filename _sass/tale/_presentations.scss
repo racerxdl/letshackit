@@ -1,0 +1,363 @@
+@use 'variables' as *;
+
+.talks-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(15rem, 0.9fr);
+  min-height: 23rem;
+  margin: 1.5rem 0 2.25rem;
+  overflow: hidden;
+  border: 1px solid $border-bright;
+  border-radius: 10px;
+  background:
+    linear-gradient(125deg, rgba(0, 42, 8, 0.94), rgba(0, 8, 0, 0.98) 68%),
+    $bg-primary;
+  @include neon-box($neon-green, 4px);
+
+  &__content {
+    align-self: center;
+    padding: 2rem;
+  }
+
+  &__eyebrow {
+    display: block;
+    margin-bottom: 0.7rem;
+    color: $text-muted;
+    font-size: 0.7rem;
+    font-weight: bold;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    margin: 0 0 0.9rem;
+    color: $neon-green;
+    font-size: clamp(1.65rem, 4.5vw, 2.45rem);
+    line-height: 1.08;
+    @include neon-text($neon-green, 5px);
+  }
+
+  &__description {
+    margin: 0 !important;
+    color: $text-primary;
+    font-size: 0.92rem;
+    line-height: 1.65;
+    text-align: left !important;
+  }
+
+  &__visual {
+    position: relative;
+    min-height: 23rem;
+    margin: 0;
+    background: #000;
+
+    &::after {
+      position: absolute;
+      inset: 0;
+      content: '';
+      background: linear-gradient(90deg, rgba(0, 12, 0, 0.92), transparent 56%);
+      pointer-events: none;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      object-fit: cover;
+      filter: saturate(0.75) contrast(1.08);
+      opacity: 0.88;
+    }
+
+    figcaption {
+      position: absolute;
+      z-index: 2;
+      right: 0.8rem;
+      bottom: 0.7rem;
+      max-width: 80%;
+      padding: 0.25rem 0.4rem;
+      border-radius: 3px;
+      background: rgba(0, 0, 0, 0.76);
+      color: $text-muted;
+      font-size: 0.62rem;
+      line-height: 1.35;
+      text-align: right;
+    }
+  }
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+
+    &__content {
+      padding: 1.5rem 1.25rem;
+    }
+
+    &__visual {
+      min-height: 15rem;
+      max-height: 19rem;
+      order: -1;
+
+      &::after {
+        background: linear-gradient(0deg, rgba(0, 12, 0, 0.95), transparent 62%);
+      }
+    }
+  }
+}
+
+.talks-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 1.4rem 0 0;
+  padding: 0.85rem 0 0;
+  border-top: 1px solid $border-color;
+
+  div {
+    min-width: 0;
+    padding: 0 0.6rem;
+    border-right: 1px solid $border-color;
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+      border-right: none;
+    }
+  }
+
+  dt {
+    color: $neon-green;
+    font-size: 1rem;
+    font-weight: bold;
+    line-height: 1.2;
+  }
+
+  dd {
+    margin: 0.25rem 0 0;
+    color: $text-dim;
+    font-size: 0.62rem;
+    line-height: 1.35;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 420px) {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+
+    div {
+      padding: 0 0 0.65rem;
+      border-right: none;
+      border-bottom: 1px solid $border-color;
+
+      &:last-child {
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+.talks-featured-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 1rem 0 2.25rem;
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.talk-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 1rem;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  background: rgba(0, 18, 0, 0.66);
+  @include transition(background 0.18s, border-color 0.18s, box-shadow 0.18s, transform 0.18s);
+
+  &:hover {
+    border-color: $border-bright;
+    background: $bg-surface-hover;
+    transform: translateY(-2px);
+    @include neon-box($neon-green, 3px);
+  }
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  &__meta span {
+    padding: 0.18rem 0.35rem;
+    border: 1px solid $border-color;
+    border-radius: 999px;
+    color: $text-dim;
+    font-size: 0.6rem;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    margin: 0.8rem 0 0.55rem;
+    color: $neon-green;
+    font-size: 1rem;
+    line-height: 1.35;
+  }
+
+  &__event {
+    margin: 0 0 1rem !important;
+    color: $text-muted;
+    font-size: 0.74rem;
+    line-height: 1.45;
+    text-align: left !important;
+  }
+}
+
+.talks-archive {
+  margin-top: 2rem;
+}
+
+.talk-year {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  gap: 1rem;
+  margin: 0;
+  padding: 1.15rem 0;
+  border-top: 1px solid $border-color;
+
+  &:last-child {
+    border-bottom: 1px solid $border-color;
+  }
+
+  &__heading {
+    margin: 0;
+    color: $border-bright;
+    font-size: 1.2rem;
+    line-height: 1.25;
+  }
+
+  &__list {
+    display: grid;
+    gap: 0.65rem;
+    min-width: 0;
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+}
+
+.talk-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  min-width: 0;
+  padding: 0.85rem 0.9rem;
+  border: 1px solid $border-color;
+  border-radius: 7px;
+  background: rgba(0, 18, 0, 0.5);
+  @include transition(background 0.16s, border-color 0.16s);
+
+  &:hover {
+    border-color: $border-bright;
+    background: rgba(0, 30, 0, 0.7);
+  }
+
+  &__body {
+    min-width: 0;
+  }
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-bottom: 0.45rem;
+
+    span {
+      padding: 0.16rem 0.32rem;
+      border: 1px solid $border-color;
+      border-radius: 999px;
+      color: $text-dim;
+      font-size: 0.58rem;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+  }
+
+  h4 {
+    margin: 0 0 0.35rem;
+    color: $text-primary;
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  p {
+    margin: 0 !important;
+    color: $text-muted;
+    font-size: 0.7rem;
+    line-height: 1.45;
+    text-align: left !important;
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+  }
+}
+
+.talk-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: flex-end;
+
+  &--featured {
+    justify-content: flex-start;
+    margin-top: auto;
+  }
+
+  @media (max-width: 640px) {
+    justify-content: flex-start;
+  }
+}
+
+.talk-link {
+  display: inline-flex;
+  min-height: 2rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.38rem 0.55rem;
+  border: 1px solid $border-bright;
+  border-radius: 4px;
+  color: $neon-green;
+  font-size: 0.66rem;
+  font-weight: bold;
+  line-height: 1.2;
+  text-decoration: none !important;
+  @include transition(background 0.16s, box-shadow 0.16s, color 0.16s);
+
+  &:hover,
+  &:focus-visible {
+    background: rgba(0, 255, 65, 0.1);
+    color: $text-primary;
+    outline: none;
+    @include neon-box($neon-green, 3px);
+  }
+
+  &--muted {
+    border-color: $border-color;
+    color: $text-dim;
+    cursor: default;
+
+    &:hover {
+      background: transparent;
+      box-shadow: none;
+      color: $text-dim;
+    }
+  }
+}

@@ -3,6 +3,7 @@ title: Ancillary Text - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # Ancillary Text
@@ -31,9 +32,9 @@ Example of content:
 ```
 
 <div class="pagination">
-    <a href="{{ '5-timestamp-record' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+    <a href="5-timestamp-record" class="left arrow">&#8592;</a>
 
-    <a href="{{ '7-key-header' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="7-key-header" class="right arrow">&#8594;</a>
 </div>
 
 

@@ -1,0 +1,10 @@
+{% if page.citation_work %}
+  {% assign project_work = site.data.citable_works[page.citation_work] %}
+  {% if project_work and page.url != project_work.path %}
+    <nav class="project-context" aria-label="{% t global.project-context %}">
+      <span class="project-context__label">{% t global.part-of %}</span>
+      <a class="project-context__work" href="{{ project_work.path | prepend: site.baseurl | escape_once }}">{{ project_work.title | escape_once }}</a>
+      <a class="project-context__overview" href="{{ project_work.path | prepend: site.baseurl | escape_once }}">{% t global.project-overview %} →</a>
+    </nav>
+  {% endif %}
+{% endif %}

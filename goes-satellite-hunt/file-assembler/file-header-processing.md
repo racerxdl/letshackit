@@ -3,6 +3,7 @@ title: File Header Processing - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # File Header Processing
@@ -87,10 +88,10 @@ def getHeaderData(data):
 
 With that, we have enough stuff for using in our **channeldecoder.py** and know if the file is compressed. Basically we can do a simple **import packetmanager** and use the packetmanager.py functions.
 
-More details about LRIT File Headers is described at[ LRIT Header Description](/file-types/lrit-header-description.md)
+More details about LRIT file headers are available in the [LRIT Header Description]({{ '/goes-satellite-hunt/file-types/lrit-header-description/' | prepend: site.baseurl }}).
 
 <div class="pagination">
     <a href="{{ '/goes-satellite-hunt/file-assembler' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
 
-    <a href="{{ 'lritrice-compression' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="lritrice-compression" class="right arrow">&#8594;</a>
 </div>

@@ -3,6 +3,7 @@ title: Encoding the sync word - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # Encoding the sync word
@@ -76,7 +77,7 @@ This should give you the encoded syncword as **0xfca2b63db00d9794**. But since w
 Also the program will output the Soft Symbols for that Encoded Sync Word, that is basically for every bit 0 it will have a byte 0, for every bit 1 it will have a byte 0xFF \(256\). That’s because we are sure that these are the correct bits \(so we get the maximum values\). In our decoder we’ll convert the uint64\_t encoded syncwords to a soft symbol array to use in the correlation filter.
 
 <div class="pagination">
-    <a href="{{ 'convolution-encoding-frame-synchronization-and-viterbi' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+    <a href="convolution-encoding-frame-synchronization-and-viterbi" class="left arrow">&#8592;</a>
 
-    <a href="{{ 'frame-synchronization' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="frame-synchronization" class="right arrow">&#8594;</a>
 </div>

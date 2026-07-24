@@ -3,6 +3,7 @@ title: Demodulating BPSK Signal - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # Demodulating BPSK Signal
@@ -38,7 +39,7 @@ After that we should have our symbol in the I vector of our IQ Sample.
 
 
 <div class="pagination">
-    <a href="{{ 'demodulator-in-gnu-radio' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+    <a href="demodulator-in-gnu-radio" class="left arrow">&#8592;</a>
 
-    <a href="{{ 'gnu-radio-flow' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="gnu-radio-flow" class="right arrow">&#8594;</a>
 </div>

@@ -3,6 +3,7 @@ title: Dish Feed - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # Dish Feed \(The actual receiver\)
@@ -41,7 +42,7 @@ These wave guides usually have really wide bandwidth \( mine can probably get an
 ![](/assets/goes-satellite-hunt/29783770084_fc10490cd7_z.jpg)
 
 <div class="pagination">
-    <a href="{{ 'assemble-process' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+    <a href="assemble-process" class="left arrow">&#8592;</a>
 
-    <a href="{{ 'lna-and-filter' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="lna-and-filter" class="right arrow">&#8594;</a>
 </div>

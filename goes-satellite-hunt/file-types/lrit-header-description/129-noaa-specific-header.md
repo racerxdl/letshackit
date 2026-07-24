@@ -3,6 +3,7 @@ title: NOAA Specific Header - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # NOAA Specific Header
@@ -50,7 +51,7 @@ This header is very useful for defining the type of the file and how to process 
 For more details of _Product _/ _Sub Product_ IDs please refer to Open Satellite Project Source Code \( [XRIT/PacketData/Presets.cs](https://github.com/opensatelliteproject/goesdump/blob/70a99e3eb089fd2421133e05766c38541ab32fbf/XRIT/PacketData/Presets.cs) \)
 
 <div class="pagination">
-    <a href="{{ '128-segment-identification-header' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+    <a href="128-segment-identification-header" class="left arrow">&#8592;</a>
 
-    <a href="{{ '130-header-structured-record' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="130-header-structured-record" class="right arrow">&#8594;</a>
 </div>

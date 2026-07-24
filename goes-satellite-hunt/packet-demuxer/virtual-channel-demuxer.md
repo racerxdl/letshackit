@@ -3,6 +3,7 @@ title: Virtual Channel Demuxer - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # Virtual Channel Demuxer
@@ -42,7 +43,7 @@ I usually save the last **counter** value and compare with the current one to se
 One last thing I do in the C code is to discard any frame that has 63 as VCID. The VCID 63 only contains **Fill Packets**, that is used for keeping the satellite signal continuous, even when not sending anything. The payload of the frame will always contain the same sequence \(that can be sequence of 0, 1 or 01\).
 
 <div class="pagination">
-    <a href="{{ 'reed-solomon-error-correction' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+    <a href="reed-solomon-error-correction" class="left arrow">&#8592;</a>
 
-    <a href="{{ 'packet-demuxer' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="packet-demuxer" class="right arrow">&#8594;</a>
 </div>

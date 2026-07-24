@@ -3,6 +3,7 @@ title: Rice Compression Record - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # Rice Compression Record
@@ -54,9 +55,9 @@ For the method parameters map:
 2. output - The Output Buffer
 3. inputLength - The size of the input buffer
 4. outputLength - The size of the output buffer
-5. bitsPerPixel  - How many bits per pixel \(usually 8, but can be seen at [Image Structure Header](/file-types/lrit-header-description/1-image-structure-header.md) \)
+5. bitsPerPixel  - How many bits per pixel \(usually 8, but can be seen at [Image Structure Header]({{ '/goes-satellite-hunt/file-types/lrit-header-description/1-image-structure-header' | prepend: site.baseurl }}) \)
 6. pixelsPerBlock - Number of pixels per compression block
-7. pixelsPerScanLine - Number of pixels in a line \( can also be seen at [Image Structure Header](/file-types/lrit-header-description/1-image-structure-header.md)  \) 
+7. pixelsPerScanLine - Number of pixels in a line \( can also be seen at [Image Structure Header]({{ '/goes-satellite-hunt/file-types/lrit-header-description/1-image-structure-header' | prepend: site.baseurl }})  \)
 
 The expected decompressed output size \(in bytes\) should be calculated with being:
 
@@ -65,7 +66,7 @@ The expected decompressed output size \(in bytes\) should be calculated with bei
 ```
 
 <div class="pagination">
-    <a href="{{ '130-header-structured-record' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+    <a href="130-header-structured-record" class="left arrow">&#8592;</a>
 
-    <a href="{{ '132-dcs-filename-record' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="132-dcs-filename-record" class="right arrow">&#8594;</a>
 </div>

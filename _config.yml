@@ -14,6 +14,7 @@ include:
   - _pages
   - .well-known
 
+
 sass:
   sass_dir:     _sass
   style:        compressed
@@ -75,35 +76,6 @@ exclude:
   - vendor
   - CLAUDE.md
 
-data:
-  en:
-    months:
-      - January
-      - February
-      - March
-      - April
-      - May
-      - June
-      - July
-      - August
-      - September
-      - October
-      - November
-      - December
-  pt:
-    months:
-      - Janeiro
-      - Fevereiro
-      - Março
-      - Abril
-      - Maio
-      - Junho
-      - Julho
-      - Agosto
-      - Setembro
-      - Outubro
-      - Novembro
-      - Dezembro
 
 graphviz:
   options: "-Tsvg" # 'dot' command option

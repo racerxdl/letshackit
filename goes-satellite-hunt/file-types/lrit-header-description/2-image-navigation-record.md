@@ -3,6 +3,7 @@ title: Image Navigation Record - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # Image Navigation Record
@@ -22,7 +23,7 @@ This header is one of the most interesting things you can get. It is used to map
 For calculation of the Lat/Lon Coordinates a mathematical model described in [CGMS 03 - LRIT/HRIT Global Specification](http://www.cgms-info.org/documents/pdf_cgms_03.pdf) \(page 20\) should be used. A pratical implementation can be found on [Open Satellite Project GeoTools Class](https://github.com/opensatelliteproject/goesdump/blob/master/XRIT/Geo/GeoTools.cs).
 
 <div class="pagination">
-    <a href="{{ '1-image-structure-header' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+    <a href="1-image-structure-header" class="left arrow">&#8592;</a>
 
-    <a href="{{ '3-image-data-function-record' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="3-image-data-function-record" class="right arrow">&#8594;</a>
 </div>

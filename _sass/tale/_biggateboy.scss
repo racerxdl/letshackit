@@ -1,0 +1,92 @@
+@use 'variables' as *;
+
+.project-hero--gameboy {
+  background:
+    linear-gradient(125deg, rgba(15, 56, 15, 0.96), rgba(2, 12, 2, 0.98) 66%),
+    $bg-primary;
+
+  &::before {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    content: '';
+    background: repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 3px,
+      rgba(155, 188, 15, 0.025) 3px,
+      rgba(155, 188, 15, 0.025) 4px
+    );
+    pointer-events: none;
+  }
+
+  .project-hero__eyebrow {
+    color: #8bac0f;
+  }
+
+  .project-hero__title {
+    color: #9bbc0f;
+    @include neon-text(#9bbc0f, 6px);
+  }
+
+  .project-hero__visual {
+    &::after {
+      background: linear-gradient(90deg, rgba(15, 56, 15, 0.96), transparent 58%);
+    }
+
+    img {
+      filter: saturate(1.05) contrast(1.1);
+      opacity: 0.94;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .project-hero__visual::after {
+      background: linear-gradient(0deg, rgba(15, 56, 15, 0.96), transparent 60%);
+    }
+  }
+}
+
+.project-pipeline--four {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bgb-status {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.85rem;
+  align-items: start;
+  margin: 2rem 0 1rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid $border-color;
+  border-left: 3px solid #9bbc0f;
+  border-radius: 0 7px 7px 0;
+  background: rgba(48, 98, 48, 0.12);
+
+  &__label {
+    padding: 0.22rem 0.38rem;
+    border: 1px solid rgba(155, 188, 15, 0.55);
+    border-radius: 999px;
+    color: #9bbc0f;
+    font-size: 0.62rem;
+    font-weight: bold;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  p {
+    margin: 0 !important;
+    color: $text-muted;
+    font-size: 0.8rem;
+    line-height: 1.6;
+    text-align: left !important;
+  }
+
+  @media (max-width: 520px) {
+    grid-template-columns: 1fr;
+  }
+}

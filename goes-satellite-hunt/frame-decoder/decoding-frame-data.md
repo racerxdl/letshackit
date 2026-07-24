@@ -3,6 +3,7 @@ title: Decoding Frame Data - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 
@@ -85,7 +86,7 @@ Now if you strip the first 4 bytes of each 1024 byte frame, you will have a virt
 [https://github.com/racerxdl/open-satellite-project/blob/225a36d4144c0fe0704eb50a8fbc428914f654c0/GOES/network/decoder\_tcp.c](https://github.com/racerxdl/open-satellite-project/blob/225a36d4144c0fe0704eb50a8fbc428914f654c0/GOES/network/decoder_tcp.c)
 
 <div class="pagination">
-    <a href="{{ 'frame-synchronization' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+    <a href="frame-synchronization" class="left arrow">&#8592;</a>
 
     <a href="{{ '/goes-satellite-hunt/packet-demuxer' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
 </div>

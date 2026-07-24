@@ -3,6 +3,7 @@ title: File Name from Header - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # File Name from Header
@@ -53,7 +54,7 @@ After that, you should have all files with the correct naming \(if they have in 
 _gos13chnIR04rgnNHseg001res04dat308034918927.lrit_
 
 <div class="pagination">
-    <a href="{{ 'lritrice-compression' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+    <a href="lritrice-compression" class="left arrow">&#8592;</a>
 
-    <a href="{{ 'viewing-the-files-content' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="viewing-the-files-content" class="right arrow">&#8594;</a>
 </div>

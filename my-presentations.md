@@ -5,7 +5,8 @@ author: Lucas Teske
 layout: page
 guid: http://www.teske.net.br/lucas/?page_id=273
 permalink: /my-presentations
-image: /wp-content/uploads/2016/11/DSC0357-624x533.jpg
+description: presentations.meta-description
+social_image: /wp-content/uploads/2016/11/DSC0357-624x533.jpg
 ---
 
 {% translate_file my-presentations.md %}

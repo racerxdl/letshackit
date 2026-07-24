@@ -3,6 +3,7 @@ title: The Demodulator - GOES Satellite Hunt
 date: 2017-02-19T00:00:00-03:00
 author: Lucas Teske
 layout: page
+citation_work: goes-satellite-hunt
 ---
 
 # The Demodulator
@@ -20,5 +21,5 @@ This is the LRIT Specification \(theoretically\):
 <div class="pagination">
     <a href="{{ '/goes-satellite-hunt/the-hardware-setup/pointing-the-antenna' | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
 
-    <a href="{{ 'demodulator-in-gnu-radio' | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+    <a href="demodulator-in-gnu-radio" class="right arrow">&#8594;</a>
 </div>
