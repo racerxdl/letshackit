@@ -141,21 +141,179 @@ footer,
   }
 }
 
-// ─── Social icons ────────────────────────────────────────────────────────────
-.social-icon {
+// ─── Social profiles ─────────────────────────────────────────────────────────
+.social-bar {
   @include glass;
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
+  position: relative;
+  padding: 0.8rem 1rem 0.9rem;
   margin: 1rem 0;
+  border-radius: 10px;
 
-  ul {
-    list-style: none;
-    padding: 0;
+  &::before {
+    position: absolute;
+    top: -1px;
+    right: 1rem;
+    left: 1rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba($neon-green, 0.7), transparent);
+    content: '';
+    pointer-events: none;
+  }
+}
+
+.social-bar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 0.15rem 0.6rem;
+  margin-bottom: 0.65rem;
+  border-bottom: 1px solid rgba($neon-green, 0.1);
+  font-family: $mono;
+}
+
+.social-bar__prompt,
+.social-bar__identity {
+  font-size: max(0.68rem, 12px);
+  line-height: 1;
+}
+
+.social-bar__prompt {
+  color: $text-muted;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  &::before {
+    margin-right: 0.4rem;
+    color: $neon-green;
+    content: '>';
+    @include neon-text($neon-green, 4px);
+  }
+}
+
+.social-bar__identity {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: $text-dim;
+
+  &::before {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: $neon-green;
+    box-shadow: 0 0 8px rgba($neon-green, 0.7);
+    content: '';
+  }
+}
+
+.social-bar__links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(44px, 1fr));
+  gap: 0.45rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  li {
+    min-width: 0;
+  }
+}
+
+.social-link {
+  --social-rgb: 0, 255, 65;
+
+  position: relative;
+  display: grid;
+  min-height: 44px;
+  border: 1px solid rgba(var(--social-rgb), 0.28);
+  border-radius: 8px;
+  background: rgba(var(--social-rgb), 0.06);
+  color: rgb(var(--social-rgb));
+  text-decoration: none !important;
+  place-items: center;
+  @include transition(background 0.16s, border-color 0.16s, box-shadow 0.16s, transform 0.16s);
+
+  &:hover,
+  &:focus-visible {
+    border-color: rgba(var(--social-rgb), 0.72);
+    background: rgba(var(--social-rgb), 0.14);
+    color: rgb(var(--social-rgb));
+    text-shadow: none;
+    box-shadow: 0 0 16px rgba(var(--social-rgb), 0.18);
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgb(var(--social-rgb));
+    outline-offset: 2px;
+  }
+
+  &::after {
+    position: absolute;
+    bottom: calc(100% + 0.42rem);
+    left: 50%;
+    z-index: 5;
+    padding: 0.25rem 0.45rem;
+    border: 1px solid rgba(var(--social-rgb), 0.4);
+    border-radius: 4px;
+    background: $bg-primary;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+    color: rgb(var(--social-rgb));
+    content: attr(data-social-label);
+    font-family: $mono;
+    font-size: max(0.66rem, 12px);
+    line-height: 1;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 0.2rem);
+    white-space: nowrap;
+    @include transition(opacity 0.14s, transform 0.14s);
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  svg {
+    display: block;
+    width: 20px;
+    height: 20px;
     margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    justify-content: center;
+    fill: currentColor;
+  }
+
+  &--github { --social-rgb: 240, 246, 252; }
+  &--orcid { --social-rgb: 166, 206, 57; }
+  &--linkedin { --social-rgb: 10, 102, 194; }
+  &--bluesky { --social-rgb: 2, 133, 255; }
+  &--mastodon { --social-rgb: 99, 100, 255; }
+  &--youtube { --social-rgb: 255, 0, 0; }
+  &--twitch { --social-rgb: 145, 70, 255; }
+  &--twitter { --social-rgb: 29, 155, 240; }
+  &--instagram { --social-rgb: 228, 64, 95; }
+  &--facebook { --social-rgb: 24, 119, 242; }
+  &--telegram { --social-rgb: 38, 165, 228; }
+  &--patreon { --social-rgb: 255, 66, 77; }
+  &--code-stats { --social-rgb: 198, 203, 209; }
+}
+
+.social-link__icon {
+  display: grid;
+  place-items: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .social-link,
+  .social-link::after {
+    transition: none;
+  }
+
+  .social-link:hover,
+  .social-link:focus-visible {
+    transform: none;
   }
 }
 

@@ -56,13 +56,19 @@ facebook:
 social:
   name: Lucas Teske
   links:
-    - https://twitter.com/lucasteske
-    - https://www.facebook.com/elenic.racerxdl
-    - https://instagram.com/racerxdl/
     - https://github.com/racerxdl
-    - https://keybase.io/racerxdl
+    - https://orcid.org/0009-0002-8526-7662
     - https://www.linkedin.com/in/lucas-teske-8206301b/
+    - https://bsky.app/profile/lucasteske.dev
+    - https://infosec.exchange/@lucasteske
     - https://www.youtube.com/c/TeskesLab
+    - https://twitch.tv/racerxdl
+    - https://twitter.com/lucasteske
+    - https://instagram.com/racerxdl/
+    - https://www.facebook.com/teskeslab
+    - https://www.patreon.com/teskeslab
+    - https://codestats.net/users/racerxdl
+    - https://keybase.io/racerxdl
 
 # Excludes
 exclude:

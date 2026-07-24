@@ -36,82 +36,79 @@
   </div>
 </nav>
 
-<div class="social-icon">
-  <ul>
-    <li class="btn-a btn-svg btn-twitch">
-      <a href="https://twitch.tv/racerxdl">
-        {% include social/twitch.svg %}
-        RacerXDL
+<nav class="social-bar" aria-label="{% t global.social-profiles %}">
+  <div class="social-bar__header" aria-hidden="true">
+    <span class="social-bar__prompt">{% t global.find-me-online %}</span>
+    <span class="social-bar__identity">lucasteske.dev</span>
+  </div>
+  <ul class="social-bar__links">
+    <li>
+      <a class="social-link social-link--github" href="https://github.com/racerxdl" rel="me" aria-label="GitHub — @racerxdl" data-social-label="GitHub">
+        <span class="social-link__icon" aria-hidden="true">{% include social/github.svg %}</span>
       </a>
     </li>
-    <li class="btn-a btn-svg btn-twitter">
-      <a href="https://twitter.com/lucasteske">
-        {% include social/twitter.svg %}
-        @lucasteske
+    <li>
+      <a class="social-link social-link--orcid" href="https://orcid.org/0009-0002-8526-7662" rel="me" aria-label="ORCID — 0009-0002-8526-7662" data-social-label="ORCID">
+        <span class="social-link__icon" aria-hidden="true">{% include social/orcid.svg %}</span>
       </a>
     </li>
-    <li  class="btn-a btn-svg btn-instagram">
-      <a href="https://instagram.com/racerxdl/">
-        {% include social/instagram.svg %}
-        @racerxdl
+    <li>
+      <a class="social-link social-link--linkedin" href="https://www.linkedin.com/in/lucas-teske-8206301b/" rel="me" aria-label="LinkedIn — Lucas Teske" data-social-label="LinkedIn">
+        <span class="social-link__icon" aria-hidden="true">{% include social/linkedin.svg %}</span>
       </a>
     </li>
-    <li class="btn-a btn-svg btn-facebook">
-      <a href="https://www.facebook.com/teskeslab">
-        {% include social/facebook.svg %}
-        Teske's Lab
+    <li>
+      <a class="social-link social-link--bluesky" href="https://bsky.app/profile/lucasteske.dev" rel="me" aria-label="Bluesky — @lucasteske.dev" data-social-label="Bluesky">
+        <span class="social-link__icon" aria-hidden="true">{% include social/bluesky.svg %}</span>
       </a>
     </li>
-    <li class="btn-a btn-svg btn-github">
-      <a href="https://github.com/racerxdl">
-        {% include social/github.svg %}
-        @racerxdl
+    <li>
+      <a class="social-link social-link--mastodon" href="https://infosec.exchange/@lucasteske" rel="me" aria-label="Mastodon — @lucasteske@infosec.exchange" data-social-label="Mastodon">
+        <span class="social-link__icon" aria-hidden="true">{% include social/mastodon.svg %}</span>
       </a>
     </li>
-    <li class="btn-a btn-svg btn-youtube">
-      <a href="https://www.youtube.com/c/TeskesLab">
-        {% include social/youtube.svg %}
-        Teske's Lab
+    <li>
+      <a class="social-link social-link--youtube" href="https://www.youtube.com/c/TeskesLab" rel="me" aria-label="YouTube — Teske's Lab" data-social-label="YouTube">
+        <span class="social-link__icon" aria-hidden="true">{% include social/youtube.svg %}</span>
       </a>
     </li>
-    <li class="btn-a btn-svg btn-linkedin">
-      <a href="https://www.linkedin.com/in/lucas-teske-8206301b/">
-        {% include social/linkedin.svg %}
-        Lucas Teske
+    <li>
+      <a class="social-link social-link--twitch" href="https://twitch.tv/racerxdl" rel="me" aria-label="Twitch — RacerXDL" data-social-label="Twitch">
+        <span class="social-link__icon" aria-hidden="true">{% include social/twitch.svg %}</span>
       </a>
     </li>
-    <li class="btn-a btn-svg btn-code-stats">
-      <a href="https://codestats.net/users/racerxdl">
-        {% include social/code-stats.svg %}
-        racerxdl
+    <li>
+      <a class="social-link social-link--twitter" href="https://twitter.com/lucasteske" rel="me" aria-label="Twitter — @lucasteske" data-social-label="Twitter">
+        <span class="social-link__icon" aria-hidden="true">{% include social/twitter.svg %}</span>
       </a>
     </li>
-    <li class="btn-a btn-svg btn-telegram">
-      <a href="https://t.me/hardwareHackingBrasil">
-        {% include social/telegram.svg %}
-        Hardware Hacking Brasil
+    <li>
+      <a class="social-link social-link--instagram" href="https://instagram.com/racerxdl/" rel="me" aria-label="Instagram — @racerxdl" data-social-label="Instagram">
+        <span class="social-link__icon" aria-hidden="true">{% include social/instagram.svg %}</span>
       </a>
     </li>
-    <li class="btn-a btn-svg btn-patreon">
-      <a href="https://www.patreon.com/teskeslab">
-        {% include social/patreon.svg %}
-        Patreon
+    <li>
+      <a class="social-link social-link--facebook" href="https://www.facebook.com/teskeslab" rel="me" aria-label="Facebook — Teske's Lab" data-social-label="Facebook">
+        <span class="social-link__icon" aria-hidden="true">{% include social/facebook.svg %}</span>
       </a>
     </li>
-    <li class="btn-a btn-svg btn-mastodon">
-      <a rel="me" href="https://infosec.exchange/@lucasteske">
-        {% include social/mastodon.svg %}
-        Mastodon
+    <li>
+      <a class="social-link social-link--telegram" href="https://t.me/hardwareHackingBrasil" aria-label="Telegram — Hardware Hacking Brasil" data-social-label="Telegram">
+        <span class="social-link__icon" aria-hidden="true">{% include social/telegram.svg %}</span>
       </a>
     </li>
-    <li class="btn-a btn-svg btn-bluesky">
-      <a rel="me" href="https://bsky.app/profile/lucasteske.dev">
-        {% include social/bluesky.svg %}
-        Bluesky
+    <li>
+      <a class="social-link social-link--patreon" href="https://www.patreon.com/teskeslab" rel="me" aria-label="Patreon — Teske's Lab" data-social-label="Patreon">
+        <span class="social-link__icon" aria-hidden="true">{% include social/patreon.svg %}</span>
+      </a>
+    </li>
+    <li>
+      <a class="social-link social-link--code-stats" href="https://codestats.net/users/racerxdl" rel="me" aria-label="Code::Stats — racerxdl" data-social-label="Code::Stats">
+        <span class="social-link__icon" aria-hidden="true">{% include social/code-stats.svg %}</span>
       </a>
     </li>
   </ul>
-</div>
+</nav>
 <div class="search-input">
   <input type="text" id="search-input" placeholder="{% t global.search-posts %}" aria-label="{% t global.search-posts %}">
 </div>

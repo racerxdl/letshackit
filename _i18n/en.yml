@@ -22,6 +22,8 @@ global:
   project-context: Project context
   part-of: Part of
   project-overview: Project overview
+  social-profiles: Social profiles
+  find-me-online: Find me online
 big-gate-boy:
   meta-description: "An open FPGA Game Boy experiment built around a Lattice ECP5, a Verilog CPU core, and six reverse-engineered LED panels."
   lede: "An open FPGA experiment that rebuilds the Game Boy in programmable logic and aims it at a gloriously oversized six-panel display."

@@ -22,6 +22,8 @@ global:
   project-context: Contexto do projeto
   part-of: Parte de
   project-overview: Visão geral do projeto
+  social-profiles: Perfis sociais
+  find-me-online: Encontre-me online
 big-gate-boy:
   meta-description: "Um experimento aberto de Game Boy em FPGA, construído em torno de um Lattice ECP5, uma CPU em Verilog e seis painéis de LED submetidos a engenharia reversa."
   lede: "Um experimento aberto em FPGA que reconstrói o Game Boy em lógica programável e mira em uma gloriosa tela gigante de seis painéis."

@@ -128,7 +128,8 @@
       "@type": "Person",
       "@id": {{ site.author.url | jsonify }},
       "name": {{ site.author.name | jsonify }},
-      "url": {{ site.author.url | jsonify }}
+      "url": {{ site.author.url | jsonify }},
+      "sameAs": {{ site.social.links | jsonify }}
     },
     "publisher": {
       "@type": "Organization",
