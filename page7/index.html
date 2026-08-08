@@ -48,7 +48,7 @@
   <link rel="canonical" href="https://lucasteske.dev/page7/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="October 31, 2016 GOES Satellite Hunt (Part 2 – Demodulator) In the last episode of my GOES Satellite Hunt I explained how I manage to build a reception system to get the GOES LRIT Signal. Now I will explain how to get the packets out of the LRIT signal. I...">
+  <meta name="description" content="November 02, 2016 GOES Satellite Hunt (Part 3 – Frame Decoder) In the last chapter of GOES Satellite Hunt, I explained how I did the BPSK Demodulator for the LRIT Signal. Now I will explain how to decode the output of the data we got in the last chapter. One...">
   
   
 
@@ -76,7 +76,7 @@
   <meta property="og:title" content="Home | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/page7/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="October 31, 2016 GOES Satellite Hunt (Part 2 – Demodulator) In the last episode of my GOES Satellite Hunt I explained how I manage to build a reception system to get the GOES LRIT Signal. Now I will explain how to get the packets out of the LRIT signal. I...">
+  <meta property="og:description" content="November 02, 2016 GOES Satellite Hunt (Part 3 – Frame Decoder) In the last chapter of GOES Satellite Hunt, I explained how I did the BPSK Demodulator for the LRIT Signal. Now I will explain how to decode the output of the data we got in the last chapter. One...">
   <meta property="og:image" content="https://lucasteske.dev/assets/cropped-logo.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -93,9 +93,9 @@
   <meta name="twitter:title" content="Home | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="October 31, 2016 GOES Satellite Hunt (Part 2 – Demodulator) In the last episode of my GOES Satellite Hunt I explained how I manage to build a reception system to get the GOES LRIT Signal. Now I will explain how to get the packets out of the LRIT signal. I...">
+  <meta name="twitter:description" content="November 02, 2016 GOES Satellite Hunt (Part 3 – Frame Decoder) In the last chapter of GOES Satellite Hunt, I explained how I did the BPSK Demodulator for the LRIT Signal. Now I will explain how to decode the output of the data we got in the last chapter. One...">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/cropped-logo.png">
-  <meta name="twitter:image:alt" content="October 31, 2016 GOES Satellite Hunt (Part 2 – Demodulator) In the last episode of my GOES Satellite Hunt I explained how I manage to build a reception system to get the GOES LRIT Signal. Now I will explain how to get the packets out of the LRIT signal. I...">
+  <meta name="twitter:image:alt" content="November 02, 2016 GOES Satellite Hunt (Part 3 – Frame Decoder) In the last chapter of GOES Satellite Hunt, I explained how I did the BPSK Demodulator for the LRIT Signal. Now I will explain how to decode the output of the data we got in the last chapter. One...">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -108,8 +108,8 @@
     "keywords": null,
     "inLanguage": "en",
     
-    "description": "October 31, 2016 GOES Satellite Hunt (Part 2 – Demodulator) In the last episode of my GOES Satellite Hunt I explained how I manage to build a reception system to get the GOES LRIT Signal. Now I will explain how to get the packets out of the LRIT signal. I...",
-    "articleBody": "October 31, 2016 GOES Satellite Hunt (Part 2 – Demodulator) In the last episode of my GOES Satellite Hunt I explained how I manage to build a reception system to get the GOES LRIT Signal. Now I will explain how to get the packets out of the LRIT signal. I choose the LRIT signal basically because of two reasons: It contains basically all EMWIN data + Full Disks from GOES 13 and 15. Less complexity on the demodulator side (Simple BPSK Demodulator) This is the LRIT Specification (theoretically): Demodulator in GNU Radio So first things first. We successfully acquired a LRIT signal from GOES. Our first step is to demodulate... October 18, 2016 GOES Satellite Hunt (Part 1 &#8211; Antenna System) So few people know that I started a crusade against GOES 13 Satellite. My idea was to capture the GOES 13 signal (that’s reachable in São Paulo) with a good SNR (enough to decode) and then make all the tools to demodulate, decode and output the images and other data they send. I wanted a high-res image, and the L-Band transmissions usually provide that (GOES for example is 1km/px with whole earth sphere in frame. A 10000 x 10000...",
+    "description": "November 02, 2016 GOES Satellite Hunt (Part 3 – Frame Decoder) In the last chapter of GOES Satellite Hunt, I explained how I did the BPSK Demodulator for the LRIT Signal. Now I will explain how to decode the output of the data we got in the last chapter. One...",
+    "articleBody": "November 02, 2016 GOES Satellite Hunt (Part 3 – Frame Decoder) In the last chapter of GOES Satellite Hunt, I explained how I did the BPSK Demodulator for the LRIT Signal. Now I will explain how to decode the output of the data we got in the last chapter. One thing that is worth mentioning is that most (if not all) weather satellites that transmit digital signals use the CCSDS standard packet format, or at least something based on it. For example this frame decoder can be used (with some modifications due QPSK instead BPSK) for LRPT Signals from Meteor Satellites (I plan to do a LRPT decoder as well in... October 31, 2016 GOES Satellite Hunt (Part 2 – Demodulator) In the last episode of my GOES Satellite Hunt I explained how I manage to build a reception system to get the GOES LRIT Signal. Now I will explain how to get the packets out of the LRIT signal. I choose the LRIT signal basically because of two reasons: It contains basically all EMWIN data + Full Disks from GOES 13 and 15. Less complexity on the demodulator side (Simple BPSK Demodulator) This is the LRIT Specification (theoretically): Demodulator...",
     "datePublished": null,
     "dateModified": null,
     "author": {
@@ -520,6 +520,23 @@
 
 <div class="catalogue">
   
+    <a href="/2016/11/goes-satellite-hunt-part-3-frame-decoder/" class="catalogue-item catalogue-item-2">
+      <div>
+        <time datetime="2016-11-02 20:50:34 +0000" class="catalogue-time">November 02, 2016</time>
+        <h1 class="catalogue-title">GOES Satellite Hunt (Part 3 – Frame Decoder)</h1>
+        <div class="catalogue-line"></div>
+        
+          <div class="post-image-div">
+            <img src="/wp-content/uploads/2016/11/qqk3UwA-624x135.png" class="post-image post-image-2">
+          </div>
+        
+        <p>
+          In the last chapter of GOES Satellite Hunt, I explained how I did the BPSK Demodulator for the LRIT Signal. Now I will explain how to decode the output of the data we got in the last chapter. One thing that is worth mentioning is that most (if not all) weather satellites that transmit digital signals use the CCSDS standard packet format, or at least something based on it. For example this frame decoder can be used (with some modifications due QPSK instead BPSK) for LRPT Signals from Meteor Satellites (I plan to do a LRPT decoder as well in...
+        </p>
+
+      </div>
+    </a>
+  
     <a href="/2016/10/goes-satellite-hunt-part-2-demodulator/" class="catalogue-item catalogue-item-2">
       <div>
         <time datetime="2016-10-31 01:29:18 +0000" class="catalogue-time">October 31, 2016</time>
@@ -584,23 +601,6 @@
       </div>
     </a>
   
-    <a href="/2016/02/recording-noaa-apt-signals-with-gqrx-and-rtl-sdr-on-linux/" class="catalogue-item catalogue-item-2">
-      <div>
-        <time datetime="2016-02-05 01:26:57 +0000" class="catalogue-time">February 05, 2016</time>
-        <h1 class="catalogue-title">Recording NOAA APT Signals with GQRX and RTL-SDR on Linux</h1>
-        <div class="catalogue-line"></div>
-        
-          <div class="post-image-div">
-            <img src="/wp-content/uploads/2016/02/Captura-de-tela-de-2016-02-04-18-44-17-624x408.png" class="post-image post-image-2">
-          </div>
-        
-        <p>
-          GQRX NOAA 18 Signal So you all saw my last posts [ Play with SDR and Intel Edison! QFH Antenna and my first reception of NOAA! ] but I actually didn’t explained how to capture and decode APT Signals using your computer (in this case, with Linux). So here it is! For this article I’m using Ubuntu 15.04, but actually any distro will work well (I think most of them have the needed packages) So the first thing you need to do is to get all needed hardware to start playing. I’ve already tested my i7 Skylake Laptop, a Intel Edison and LeMaker Guitar...
-        </p>
-
-      </div>
-    </a>
-  
 </div>
 
 <div class="pagination">
@@ -619,10 +619,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-07-24 05:14:00 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-08-08 21:20:21 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-07-24 05:14:00 +0000
+    Last build: 2026-08-08 21:20:21 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

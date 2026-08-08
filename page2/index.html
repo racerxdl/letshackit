@@ -48,7 +48,7 @@
   <link rel="canonical" href="https://lucasteske.dev/page2/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="January 16, 2024 STM32F0x Protected Firmware Dumper In the process of my hobby hardware hacking, I encountered a Chinese clone of a HASP HL dongle equipped with a STM32F042G6U6 processor. My intention was to clone it, and during my exploration, I discovered four pins from the SWD debug interface located...">
+  <meta name="description" content="January 16, 2024 NAND Flash Memory Analysis and Decoding - Unveiling ECC Scattering in Unknown Devices Exploring NAND Memories When in possession of a device whose internals one wishes to understand, accessing the content of the flash memory is not always straightforward. Due to the nature of NAND memories, an...">
   
   
 
@@ -76,7 +76,7 @@
   <meta property="og:title" content="Home | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/page2/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="January 16, 2024 STM32F0x Protected Firmware Dumper In the process of my hobby hardware hacking, I encountered a Chinese clone of a HASP HL dongle equipped with a STM32F042G6U6 processor. My intention was to clone it, and during my exploration, I discovered four pins from the SWD debug interface located...">
+  <meta property="og:description" content="January 16, 2024 NAND Flash Memory Analysis and Decoding - Unveiling ECC Scattering in Unknown Devices Exploring NAND Memories When in possession of a device whose internals one wishes to understand, accessing the content of the flash memory is not always straightforward. Due to the nature of NAND memories, an...">
   <meta property="og:image" content="https://lucasteske.dev/assets/cropped-logo.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -93,9 +93,9 @@
   <meta name="twitter:title" content="Home | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="January 16, 2024 STM32F0x Protected Firmware Dumper In the process of my hobby hardware hacking, I encountered a Chinese clone of a HASP HL dongle equipped with a STM32F042G6U6 processor. My intention was to clone it, and during my exploration, I discovered four pins from the SWD debug interface located...">
+  <meta name="twitter:description" content="January 16, 2024 NAND Flash Memory Analysis and Decoding - Unveiling ECC Scattering in Unknown Devices Exploring NAND Memories When in possession of a device whose internals one wishes to understand, accessing the content of the flash memory is not always straightforward. Due to the nature of NAND memories, an...">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/cropped-logo.png">
-  <meta name="twitter:image:alt" content="January 16, 2024 STM32F0x Protected Firmware Dumper In the process of my hobby hardware hacking, I encountered a Chinese clone of a HASP HL dongle equipped with a STM32F042G6U6 processor. My intention was to clone it, and during my exploration, I discovered four pins from the SWD debug interface located...">
+  <meta name="twitter:image:alt" content="January 16, 2024 NAND Flash Memory Analysis and Decoding - Unveiling ECC Scattering in Unknown Devices Exploring NAND Memories When in possession of a device whose internals one wishes to understand, accessing the content of the flash memory is not always straightforward. Due to the nature of NAND memories, an...">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -108,8 +108,8 @@
     "keywords": null,
     "inLanguage": "en",
     
-    "description": "January 16, 2024 STM32F0x Protected Firmware Dumper In the process of my hobby hardware hacking, I encountered a Chinese clone of a HASP HL dongle equipped with a STM32F042G6U6 processor. My intention was to clone it, and during my exploration, I discovered four pins from the SWD debug interface located...",
-    "articleBody": "January 16, 2024 STM32F0x Protected Firmware Dumper In the process of my hobby hardware hacking, I encountered a Chinese clone of a HASP HL dongle equipped with a STM32F042G6U6 processor. My intention was to clone it, and during my exploration, I discovered four pins from the SWD debug interface located at the bottom of the PCB. I soldered a 4-pin header to these pins for ease of access. Utilizing my Segger J-Link as a debug probe, although any JTAG adapter should suffice, I paired it with OpenOCD. Given that the chipset is recognized by OpenOCD, I crafted a script to extract all possible data, conditional upon enablement.... April 01, 2021 Antenna Rotor - Part 2 Continuing the tracker project, I managed to make some significant progress. As Demilson (PY2UEP) had cut the original motors, I did the same. The azimuth motor was too rusted and I eventually destroyed one of the coils (which I wanted to salvage the wire), but in the end the shaft went out. After removing the shaft, I broke the magnet with a hammer until there was any piece left. That way, the only thing that would be left there is the shaft and the hexagon...",
+    "description": "January 16, 2024 NAND Flash Memory Analysis and Decoding - Unveiling ECC Scattering in Unknown Devices Exploring NAND Memories When in possession of a device whose internals one wishes to understand, accessing the content of the flash memory is not always straightforward. Due to the nature of NAND memories, an...",
+    "articleBody": "January 16, 2024 NAND Flash Memory Analysis and Decoding - Unveiling ECC Scattering in Unknown Devices Exploring NAND Memories When in possession of a device whose internals one wishes to understand, accessing the content of the flash memory is not always straightforward. Due to the nature of NAND memories, an error correction algorithm is applied to all content, which can cause unintentional obfuscation of the content. Some manufacturers of processors that directly control NAND-type memories or developers of “protected” software choose to customize the way these algorithms function. In this article, we will explore the basic structure of flash memory, why error correction exists, and how to identify the scattering of the error correction algorithm used.... January 16, 2024 STM32F0x Protected Firmware Dumper In the process of my hobby hardware hacking, I encountered a Chinese clone of a HASP HL dongle equipped with a STM32F042G6U6 processor. My intention was to clone it, and during my exploration, I discovered four pins from the SWD debug interface located at the bottom of the PCB. I soldered a 4-pin header to these pins for ease of access. Utilizing my Segger J-Link as a debug probe, although any JTAG adapter should suffice, I paired...",
     "datePublished": null,
     "dateModified": null,
     "author": {
@@ -520,6 +520,23 @@
 
 <div class="catalogue">
   
+    <a href="/2024/01/decoding-and-analysis-nand-flash" class="catalogue-item catalogue-item-2">
+      <div>
+        <time datetime="2024-01-16 23:48:00 +0000" class="catalogue-time">January 16, 2024</time>
+        <h1 class="catalogue-title">NAND Flash Memory Analysis and Decoding - Unveiling ECC Scattering in Unknown Devices</h1>
+        <div class="catalogue-line"></div>
+        
+          <div class="post-image-div">
+            <img src="/assets/posts/analise-e-decodificacao-flash/flash-cell-programmed.svg" class="post-image post-image-2">
+          </div>
+        
+        <p>
+          Exploring NAND Memories When in possession of a device whose internals one wishes to understand, accessing the content of the flash memory is not always straightforward. Due to the nature of NAND memories, an error correction algorithm is applied to all content, which can cause unintentional obfuscation of the content. Some manufacturers of processors that directly control NAND-type memories or developers of “protected” software choose to customize the way these algorithms function. In this article, we will explore the basic structure of flash memory, why error correction exists, and how to identify the scattering of the error correction algorithm used....
+        </p>
+
+      </div>
+    </a>
+  
     <a href="/2024/01/stm32f0x-protected-firmware-dumper" class="catalogue-item catalogue-item-2">
       <div>
         <time datetime="2024-01-16 05:23:00 +0000" class="catalogue-time">January 16, 2024</time>
@@ -590,23 +607,6 @@
       </div>
     </a>
   
-    <a href="/2020/06/hacking-a-esp32-into-fpga-board" class="catalogue-item catalogue-item-2">
-      <div>
-        <time datetime="2020-06-14 19:17:00 +0000" class="catalogue-time">June 14, 2020</time>
-        <h1 class="catalogue-title">Hacking a ESP32 into FPGA Board</h1>
-        <div class="catalogue-line"></div>
-        
-          <div class="post-image-div">
-            <img src="/assets/posts/medium/1_ALnLx9L06FSciqeEV5OCuQ.png" class="post-image post-image-2" alt="Green circuit board with multiple black connectors, USB port, and labeled components.">
-          </div>
-        
-        <p>
-          Hacking a ESP32 into FPGA Board Colorlight Hub 5A-75B V6.1 Board Last year I saw a russian guy that found out that this cheap board (US$15~) had an Lattice ECP5 FPGA, which is compatible with Open Source Tool-chains for synthesis. He was running a RISC-V Core inside that and piping the serial through the ethernet ports. I wanted to get one and start playing by myself. These boards are relatively cheap, about US$15 and contains a Lattice ECP5 FPGA ( LFE5U-25F-6BG381C ), 4MB DRAM, Two Gigabit Ethernet and several level shifters for I/O. This is good because: That’s a very...
-        </p>
-
-      </div>
-    </a>
-  
 </div>
 
 <div class="pagination">
@@ -625,10 +625,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-07-24 05:14:00 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-08-08 21:20:21 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-07-24 05:14:00 +0000
+    Last build: 2026-08-08 21:20:21 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

@@ -1,4 +1,345 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://lucasteske.dev/feed.xml" rel="self" type="application/atom+xml" /><link href="https://lucasteske.dev/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-07-24T05:14:00+00:00</updated><id>https://lucasteske.dev/feed.xml</id><title type="html">Lets Hack It</title><subtitle>Lucas Teske&apos;s blog about electronics, hardware hacking, SDR, satellites, reverse engineering and more.</subtitle><author><name>Lucas Teske</name><email>letshackit@nvx.li</email></author><entry><title type="html">Can an AI Write a Working Exploit?</title><link href="https://lucasteske.dev/2026/04/can-an-ai-write-a-working-exploit" rel="alternate" type="text/html" title="Can an AI Write a Working Exploit?" /><published>2026-04-26T15:00:00+00:00</published><updated>2026-04-26T15:00:00+00:00</updated><id>https://lucasteske.dev/2026/04/can-an-ai-write-a-working-exploit</id><content type="html" xml:base="https://lucasteske.dev/2026/04/can-an-ai-write-a-working-exploit"><![CDATA[<p>Me and <a href="https://github.com/rlaneth">Rodrigo Laneth</a> were having a discussion about how useful LLMs would actually be for cybersecurity research and pentesting. Not the “write me a fuzz harness” kind of useful – we were wondering if an LLM could go from a vulnerability description all the way to a <strong>working exploit PoC</strong>. Not just a crash, but actual RIP control. So we decided to test it.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://lucasteske.dev/feed.xml" rel="self" type="application/atom+xml" /><link href="https://lucasteske.dev/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-08-08T21:20:21+00:00</updated><id>https://lucasteske.dev/feed.xml</id><title type="html">Lets Hack It</title><subtitle>Lucas Teske&apos;s blog about electronics, hardware hacking, SDR, satellites, reverse engineering and more.</subtitle><author><name>Lucas Teske</name><email>letshackit@nvx.li</email></author><entry><title type="html">Connecting to ShadowNode with MeshChatX</title><link href="https://lucasteske.dev/2026/08/connect-to-shadownode-with-meshchatx" rel="alternate" type="text/html" title="Connecting to ShadowNode with MeshChatX" /><published>2026-08-08T20:25:00+00:00</published><updated>2026-08-08T20:25:00+00:00</updated><id>https://lucasteske.dev/2026/08/connect-to-shadownode-with-meshchatx</id><content type="html" xml:base="https://lucasteske.dev/2026/08/connect-to-shadownode-with-meshchatx"><![CDATA[<h1 id="connecting-to-shadownode-with-meshchatx">Connecting to ShadowNode with MeshChatX</h1>
+
+<p>I wanted a simple way to show somebody that a Reticulum node is not just a configuration file and a terminal full of logs. Give the person a client, point it at a public node, and suddenly there is a page to browse and a chat hub to join.</p>
+
+<p>That is what ShadowNode is for. The public node is called <strong>ShadowLink TSK-0</strong>, and it is running from São Paulo, Brazil. The easiest desktop client for this walkthrough is <a href="https://meshchatx.com/">MeshChatX</a>, an all-in-one Reticulum client with messaging, NomadNet browsing, Relay Chat, and an interface manager.</p>
+
+<p>There is one detail that is easy to get wrong: <a href="https://shadownode.teske.live/">the ShadowNode status page</a> is an ordinary HTTPS website that publishes the connection details. <strong>MeshChatX does not connect to the HTTPS page.</strong> It connects to the Reticulum TCP endpoint shown by that page, and then uses separate Reticulum destination hashes for the hosted applications.</p>
+
+<p>So let’s connect it properly.</p>
+
+<h2 id="what-we-are-actually-connecting-to">What we are actually connecting to</h2>
+
+<p>A Reticulum node can expose several destinations. They are not interchangeable URLs, even though they all belong to the same machine.</p>
+
+<p>The status page is the source of truth because endpoints and destination hashes can change. The values below were present in the live status snapshot when I wrote this article:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Purpose</th>
+      <th>Current value</th>
+      <th>Where it goes in MeshChatX</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Public TCP uplink</td>
+      <td><code class="language-plaintext highlighter-rouge">shadownode.teske.live:4242</code></td>
+      <td>Interfaces</td>
+    </tr>
+    <tr>
+      <td>ShadowNode NomadNet page</td>
+      <td><code class="language-plaintext highlighter-rouge">a3f0e7e7556e3d53a01d83c754f2acdd</code></td>
+      <td>Nomad Network</td>
+    </tr>
+    <tr>
+      <td>ShadowNode Relay Chat hub</td>
+      <td><code class="language-plaintext highlighter-rouge">c3fd74541dafc8b7077bc8a25a2c2302</code></td>
+      <td>Relay Chat</td>
+    </tr>
+    <tr>
+      <td>NomadNet aspect</td>
+      <td><code class="language-plaintext highlighter-rouge">nomadnetwork.node</code></td>
+      <td>Nomad Network request</td>
+    </tr>
+    <tr>
+      <td>Relay Chat aspect</td>
+      <td><code class="language-plaintext highlighter-rouge">rrc.hub</code></td>
+      <td>Relay Chat hub settings</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The first value is a host and a TCP port. The next two values are 32-character Reticulum destination hashes. Do not paste the <code class="language-plaintext highlighter-rouge">https://shadownode.teske.live/</code> status-page URL into the interface host field, and do not use the NomadNet hash as the Relay Chat hash. They are different layers:</p>
+
+<pre><code class="language-mermaid">flowchart LR
+    A[MeshChatX] --&gt;|TCP port 4242| B[ShadowLink TSK-0]
+    B --&gt;|Reticulum path| C[NomadNet page]
+    B --&gt;|Reticulum link| D[RRC Relay Chat hub]
+</code></pre>
+
+<p>The status page also shows the node’s transport telemetry and upstream peers. Those details are useful when debugging the node itself, but they are not required for the first client connection.</p>
+
+<h2 id="install-meshchatx">Install MeshChatX</h2>
+
+<p>Open the <a href="https://meshchatx.com/download">MeshChatX download page</a> and install the build for your platform. The project publishes desktop packages, an AppImage, Android builds, containers, and a Python package. Use the official download page rather than an old third-party package so the interface names match this article.</p>
+
+<p>On Linux, the AppImage path is usually the least annoying one:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x ReticulumMeshChatX-<span class="k">*</span>.AppImage
+./ReticulumMeshChatX-<span class="k">*</span>.AppImage
+</code></pre></div></div>
+
+<p>The exact filename includes the release version and architecture, so adjust the glob if it matches more than one file.</p>
+
+<p>On first launch, MeshChatX asks you to create or select a local identity. That identity is part of Reticulum’s cryptographic model and is stored locally; there is no ShadowNode account to create. Let the application finish starting before adding the interface.</p>
+
+<h2 id="add-the-shadownode-uplink">Add the ShadowNode uplink</h2>
+
+<p>This is the part where MeshChatX joins the Reticulum network. I am adding an outbound interface, not opening a server port on my own computer.</p>
+
+<h3 id="pick-the-interface-type">Pick the interface type</h3>
+
+<p>MeshChatX exposes both the ordinary TCP client and the newer backbone interface:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Platform</th>
+      <th>Interface type</th>
+      <th>Mode</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Linux or Android</td>
+      <td><code class="language-plaintext highlighter-rouge">Backbone</code></td>
+      <td>Remote connection</td>
+    </tr>
+    <tr>
+      <td>Windows or macOS</td>
+      <td><code class="language-plaintext highlighter-rouge">TCP Client</code></td>
+      <td>Outbound connection</td>
+    </tr>
+    <tr>
+      <td>Any platform where Backbone is unavailable</td>
+      <td><code class="language-plaintext highlighter-rouge">TCP Client</code></td>
+      <td>Outbound connection</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Reticulum documents <code class="language-plaintext highlighter-rouge">BackboneInterface</code> as compatible with TCP client and server interfaces, but its current implementation is intended for Linux and Android. If you are on another platform, <code class="language-plaintext highlighter-rouge">TCP Client</code> is the boring and correct choice.</p>
+
+<h3 id="create-the-connection">Create the connection</h3>
+
+<p>MeshChatX’s Interfaces page is where outbound Reticulum connections are managed:</p>
+
+<p><img src="/assets/meshchatx/add-interfaces.jpg" alt="MeshChatX Interfaces page with Interfaces selected and Add Interface highlighted, showing an enabled ShadowLink Interface connected to shadownode.teske.live:4242." /></p>
+
+<p><em>The Interfaces page with the ShadowLink connection enabled.</em></p>
+
+<ol>
+  <li>Open <strong>Interfaces</strong> from the MeshChatX sidebar.</li>
+  <li>Choose <strong>Add Interface</strong>.</li>
+  <li>Give it a name such as <code class="language-plaintext highlighter-rouge">ShadowLink Interface</code>.</li>
+  <li>Select <strong>Backbone</strong> on Linux/Android, or <strong>TCP Client</strong> on Windows/macOS.</li>
+  <li>If you selected <strong>Backbone</strong>, keep <strong>Listener mode</strong> disabled. We are connecting to ShadowNode, not hosting a listener.</li>
+  <li>Enter the values below:</li>
+</ol>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Target host / Remote host</td>
+      <td><code class="language-plaintext highlighter-rouge">shadownode.teske.live</code></td>
+    </tr>
+    <tr>
+      <td>Target port</td>
+      <td><code class="language-plaintext highlighter-rouge">4242</code></td>
+    </tr>
+    <tr>
+      <td>KISS framing</td>
+      <td>Disabled</td>
+    </tr>
+    <tr>
+      <td>I2P tunneled</td>
+      <td>Disabled</td>
+    </tr>
+    <tr>
+      <td>Default bootstrap-only for new outbound TCP</td>
+      <td>Disabled for a permanent uplink</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="/assets/meshchatx/shadow-node.jpg" alt="MeshChatX Add Interface form configured as a TCP client for shadownode.teske.live on port 4242, with KISS framing, I2P tunneling, and bootstrap-only disabled." /></p>
+
+<p><em>The TCP Client values used for ShadowNode.</em></p>
+
+<p>The host is deliberately just <code class="language-plaintext highlighter-rouge">shadownode.teske.live</code>. No scheme, no slash, no <code class="language-plaintext highlighter-rouge">https://</code>. This is a raw TCP interface, not a web request.</p>
+
+<p>Leave an optional transport identity blank for this first connection. The status page publishes one for diagnostics, but a normal client does not need to pin it manually.</p>
+
+<p>MeshChatX also shows <strong>Default bootstrap-only for new outbound TCP</strong>. I turn that off when ShadowNode is going to be my permanent uplink. Reticulum’s bootstrap-only option is meant for a temporary bridge that can be detached after other automatically discovered interfaces take over. If you are using ShadowNode only to bootstrap a local mesh, leaving it enabled is reasonable; otherwise, disable it so the interface stays available.</p>
+
+<p>Click <strong>Create Connection</strong>. Back on the Interfaces page, use the power button on the new card to <strong>Enable</strong> it. If MeshChatX displays a <strong>Restart RNS</strong> or restart-required banner, restart the Reticulum instance from that page. Configuration changes cannot do much while the old interface set is still running (a classic case of the UI being technically right and still appearing to do nothing).</p>
+
+<p>The interface card should report that it is enabled and, after a moment, connected or online.</p>
+
+<h2 id="check-that-paths-are-appearing">Check that paths are appearing</h2>
+
+<p>An enabled TCP socket is not quite the same thing as a useful Reticulum path. Open <strong>Tools → RNPath</strong> and give the network a moment to populate its path table.</p>
+
+<p>If the interface is connected but the path table stays empty:</p>
+
+<ul>
+  <li>Open <a href="https://shadownode.teske.live/">the ShadowNode status page</a> and check whether the public entry is operational.</li>
+  <li>Confirm that the host is exactly <code class="language-plaintext highlighter-rouge">shadownode.teske.live</code> and the port is <code class="language-plaintext highlighter-rouge">4242</code>.</li>
+  <li>Check local DNS and outbound firewall rules for TCP connections.</li>
+  <li>Make sure you did not accidentally create a TCP server or Backbone listener instead of a client connection.</li>
+  <li>If you changed the interface while MeshChatX was running, use <strong>Restart RNS</strong> and check again.</li>
+</ul>
+
+<p>The strongest test is not the interface badge. It is reaching one of the applications hosted behind the node.</p>
+
+<h2 id="browse-the-shadownode-nomadnet-page">Browse the ShadowNode NomadNet page</h2>
+
+<p>The ShadowNode page is a NomadNet application, so it uses the NomadNet destination hash rather than the TCP endpoint.</p>
+
+<ol>
+  <li>Open <strong>Nomad Network</strong> in MeshChatX.</li>
+  <li>
+    <p>Paste the current <strong>NomadNet</strong> destination from the ShadowNode status page. At the time of writing it is:</p>
+
+    <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a3f0e7e7556e3d53a01d83c754f2acdd
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Open the default page. MeshChatX normally requests <code class="language-plaintext highlighter-rouge">/page/index.mu</code> automatically. If the UI asks for a path, enter:</p>
+
+    <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/page/index.mu
+</code></pre></div>    </div>
+  </li>
+  <li>Wait for path discovery and the Reticulum link request to complete.</li>
+</ol>
+
+<p>This is a nice diagnostic because it exercises the whole chain: MeshChatX’s Reticulum interface, the route through ShadowNode, the <code class="language-plaintext highlighter-rouge">nomadnetwork.node</code> destination, and the page request itself. A browser loading the HTTPS status page proves none of those things; the NomadNet request does.</p>
+
+<p>If it times out, go back to <strong>Tools → RNPath</strong> first. Repeating the request without a path is usually just making the same mistake faster.</p>
+
+<h2 id="join-the-shadownode-relay-chat-hub">Join the ShadowNode Relay Chat hub</h2>
+
+<p>ShadowNode also publishes an RRC Relay Chat hub. MeshChatX hides Relay Chat when the feature is disabled, so enable it before looking for the hub.</p>
+
+<p>The Relay Chat page is where hubs are added:</p>
+
+<p><img src="/assets/meshchatx/add-hub.jpg" alt="MeshChatX Relay Chat page with Relay Chat selected, Add a hub highlighted, and the ShadowLink TSK-0 hub connected." /></p>
+
+<p><em>The Relay Chat page with <strong>Add a hub</strong> and the connected ShadowLink TSK-0 hub.</em></p>
+
+<p>After clicking <strong>Add a hub</strong>, MeshChatX opens the destination form:</p>
+
+<p><img src="/assets/meshchatx/add-hub2.jpg" alt="MeshChatX Add a Relay Chat Hub dialog with the ShadowNode Relay Chat destination hash entered." /></p>
+
+<p><em>Enter the current RRC hub destination hash in the Add a Relay Chat Hub dialog.</em></p>
+
+<ol>
+  <li>Open <strong>Settings</strong>.</li>
+  <li>Under <strong>Appearance</strong>, enable <strong>Relay Chat</strong>. The setting is called <code class="language-plaintext highlighter-rouge">rrc_enabled</code> internally.</li>
+  <li>Open <strong>Relay Chat</strong> from the main navigation.</li>
+  <li>
+    <p>Click the <strong>+</strong> button or <strong>Add Hub</strong>.</p>
+  </li>
+  <li>
+    <p>Enter the current <strong>Hub Destination Hash</strong> from the status page. The current value is:</p>
+
+    <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>c3fd74541dafc8b7077bc8a25a2c2302
+</code></pre></div>    </div>
+  </li>
+  <li>Give it a name such as <code class="language-plaintext highlighter-rouge">ShadowLink TSK-0</code>.</li>
+  <li>Open the advanced fields and use <code class="language-plaintext highlighter-rouge">rrc.hub</code> as the destination name if MeshChatX asks for one.</li>
+  <li>Click <strong>Add Hub</strong>, expand the new hub, and click <strong>Connect</strong>.</li>
+  <li>Expand <strong>Available rooms</strong> and refresh the list. To join the room used in this walkthrough, enter <code class="language-plaintext highlighter-rouge">teskeslab</code>, leave <strong>Room key</strong> blank, and click <strong>+</strong>.</li>
+</ol>
+
+<p><img src="/assets/meshchatx/add-room.jpg" alt="MeshChatX Available Rooms section with the teskeslab room name entered and the add button highlighted." /></p>
+
+<p><em>Enter <code class="language-plaintext highlighter-rouge">teskeslab</code> and click <strong>+</strong> to join the room.</em></p>
+
+<p>After joining <code class="language-plaintext highlighter-rouge">teskeslab</code>, the room opens under the connected ShadowLink hub:</p>
+
+<p><img src="/assets/meshchatx/teskeslab-room.jpg" alt="MeshChatX teskeslab Relay Chat room showing the connected ShadowLink TSK-0 hub and a message." /></p>
+
+<p><em>The connected <code class="language-plaintext highlighter-rouge">teskeslab</code> room in MeshChatX.</em></p>
+
+<p>Room availability is discovered from the hub rather than guaranteed by the status page. If the hub connects but <code class="language-plaintext highlighter-rouge">teskeslab</code> does not open, refresh <strong>Available rooms</strong> and try again later. A successful hub connection still proves that the Reticulum link is working.</p>
+
+<h2 id="a-small-troubleshooting-table">A small troubleshooting table</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Symptom</th>
+      <th>What it usually means</th>
+      <th>What to check</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Interface never connects</td>
+      <td>Wrong transport settings or no TCP route</td>
+      <td>Use <code class="language-plaintext highlighter-rouge">shadownode.teske.live</code>, port <code class="language-plaintext highlighter-rouge">4242</code>, with no <code class="language-plaintext highlighter-rouge">https://</code> prefix</td>
+    </tr>
+    <tr>
+      <td>Interface is enabled but paths are empty</td>
+      <td>RNS has not restarted or the route is unavailable</td>
+      <td>Restart RNS, then inspect **Tools → RNPath**</td>
+    </tr>
+    <tr>
+      <td>NomadNet page times out</td>
+      <td>Wrong application hash or no path to it</td>
+      <td>Copy the current NomadNet hash from the status page</td>
+    </tr>
+    <tr>
+      <td>Relay Chat is not visible</td>
+      <td>The feature is disabled</td>
+      <td>**Settings → Appearance → Relay Chat**</td>
+    </tr>
+    <tr>
+      <td>Relay hub connects but has no rooms</td>
+      <td>No room is currently advertised</td>
+      <td>Refresh **Available rooms** and try again later</td>
+    </tr>
+    <tr>
+      <td>Interface disappears after another network is found</td>
+      <td>Bootstrap-only mode detached it</td>
+      <td>Edit the interface and disable **Default bootstrap-only for new outbound TCP**</td>
+    </tr>
+    <tr>
+      <td>Connection works on one network but not another</td>
+      <td>Egress filtering or DNS trouble</td>
+      <td>Test TCP 4242 reachability and check the current status page endpoint</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Do not confuse a status page outage with a Reticulum application outage. The HTTPS page and the RNS services are related, but they are different paths and different processes. The status page is still the first place to check because it publishes the live endpoint and destination hashes.</p>
+
+<h2 id="what-i-ended-up-with">What I ended up with</h2>
+
+<p>The final setup is pleasantly small:</p>
+
+<ul>
+  <li>One outbound <code class="language-plaintext highlighter-rouge">BackboneInterface</code> or <code class="language-plaintext highlighter-rouge">TCPClientInterface</code> pointing at <code class="language-plaintext highlighter-rouge">shadownode.teske.live:4242</code>.</li>
+  <li>A local MeshChatX identity stored on my device.</li>
+  <li>The ShadowNode NomadNet destination saved in the Nomad browser.</li>
+  <li>The ShadowNode RRC hub saved in Relay Chat.</li>
+</ul>
+
+<p>No account, VPN, port forwarding, or separate Reticulum daemon is required for this client setup. MeshChatX runs the Reticulum stack locally, the TCP interface gets it onto the mesh, and the application destination hashes select the page or chat service after the route exists.</p>
+
+<p>That separation is the bit that made the setup click for me: <strong>the TCP endpoint gets you onto Reticulum, while the destination hash gets you to a specific application.</strong> Once that is clear, connecting to another public node is just the same recipe with a different endpoint and different application hashes.</p>
+
+<h2 id="links">Links</h2>
+
+<ul>
+  <li><a href="https://meshchatx.com/">MeshChatX website</a></li>
+  <li><a href="https://meshchatx.com/download">MeshChatX downloads</a></li>
+  <li><a href="https://github.com/Quad4-Software/MeshChatX">MeshChatX source repository</a></li>
+  <li><a href="https://github.com/Quad4-Software/MeshChatX/blob/master/docs/en/interfaces.md">MeshChatX interface documentation</a></li>
+  <li><a href="https://reticulum.network/manual/interfaces.html">Reticulum interface manual</a></li>
+  <li><a href="https://shadownode.teske.live/">ShadowNode live status page</a></li>
+</ul>
+
+<p>See you next time!</p>]]></content><author><name>Mister Maluco</name></author><category term="Hacking" /><category term="Networking" /><category term="Programming" /><category term="Reticulum" /><category term="MeshChatX" /><category term="ShadowNode" /><category term="ShadowLink" /><category term="Mesh Networking" /><category term="NomadNet" /><category term="Relay Chat" /><category term="RRC" /><summary type="html"><![CDATA[Connect MeshChatX to the public ShadowLink TSK-0 Reticulum node, verify the uplink, browse its NomadNet page, and join its RRC hub.]]></summary></entry><entry><title type="html">Can an AI Write a Working Exploit?</title><link href="https://lucasteske.dev/2026/04/can-an-ai-write-a-working-exploit" rel="alternate" type="text/html" title="Can an AI Write a Working Exploit?" /><published>2026-04-26T15:00:00+00:00</published><updated>2026-04-26T15:00:00+00:00</updated><id>https://lucasteske.dev/2026/04/can-an-ai-write-a-working-exploit</id><content type="html" xml:base="https://lucasteske.dev/2026/04/can-an-ai-write-a-working-exploit"><![CDATA[<p>Me and <a href="https://github.com/rlaneth">Rodrigo Laneth</a> were having a discussion about how useful LLMs would actually be for cybersecurity research and pentesting. Not the “write me a fuzz harness” kind of useful – we were wondering if an LLM could go from a vulnerability description all the way to a <strong>working exploit PoC</strong>. Not just a crash, but actual RIP control. So we decided to test it.</p>
 
 <h2 id="the-ai-gatekeeping-problem">The AI Gatekeeping Problem</h2>
 
@@ -4164,258 +4505,4 @@ shutdown
 
 <p><img src="/assets/posts/tracker-mount/photo_2021-03-03_22-56-26-2.jpg" alt="Azimuth Motor" /><em>Azimuth Motor</em></p>
 
-<p><img src="/assets/posts/tracker-mount/photo_2021-03-03_22-56-26.jpg" alt="Elevation Motor" /><em>Elevation Motor</em></p>]]></content><author><name>Lucas Teske</name></author><category term="Hardware Hacking" /><category term="Satellite" /><category term="Automation" /><category term="Airspy" /><category term="EMWIN" /><category term="English" /><category term="GOES" /><category term="Hearsat" /><category term="LRIT" /><category term="RE" /><category term="Reverse Engineering" /><category term="Sat" /><category term="Satellite" /><category term="SDR" /><category term="Pelco PT175-24P" /><category term="Antenna Rotor" /><category term="Stepper Motor" /><category term="Satellite Tracking" /><category term="Low Orbit Satellites" /><category term="Open-loop" /><category term="Azimuth" /><category term="Elevation" /><category term="24V AC Motors" /><category term="Variable Frequency Driver" /><summary type="html"><![CDATA[Transforme um rotor Pelco PT175-24P em um rastreador de satélites. Veja como substituir os motores AC por passo a passo neste tutorial.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/tracker-mount/head.jpg" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/tracker-mount/head.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Introduction to FPGA</title><link href="https://lucasteske.dev/2020/10/introducao-a-fpga" rel="alternate" type="text/html" title="Introduction to FPGA" /><published>2020-10-12T02:59:00+00:00</published><updated>2020-10-12T02:59:00+00:00</updated><id>https://lucasteske.dev/2020/10/introducao-a-fpga</id><content type="html" xml:base="https://lucasteske.dev/2020/10/introducao-a-fpga"><![CDATA[<p>(So far) Only available in <a href="/pt/2020/10/introducao-a-fpga">Portuguese</a></p>]]></content><author><name>Lucas Teske</name></author><category term="FPGA" /><category term="Hacking" /><category term="FPGA" /><category term="ICEWolf" /><category term="IceStick" /><category term="ECP5" /><category term="Lattice" /><category term="Hardware" /><category term="Eletrônica" /><category term="Verilog" /><category term="Field-Programmable Gate Array" /><category term="Digital Design" /><category term="VHDL" /><category term="Hardware Description Language" /><category term="CPLD" /><category term="ASIC" /><category term="Parallel Computing" /><category term="VLSI" /><summary type="html"><![CDATA[Learn about Field-Programmable Gate Arrays (FPGAs). Explore digital design, logic gates, and hardware programming with Verilog or VHDL.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/FPGA.jpg" /><media:content medium="image" url="https://lucasteske.dev/assets/FPGA.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Hacking a ESP32 into FPGA Board</title><link href="https://lucasteske.dev/2020/06/hacking-a-esp32-into-fpga-board" rel="alternate" type="text/html" title="Hacking a ESP32 into FPGA Board" /><published>2020-06-14T19:17:00+00:00</published><updated>2020-06-14T19:17:00+00:00</updated><id>https://lucasteske.dev/2020/06/hacking-a-esp32-into-fpga-board</id><content type="html" xml:base="https://lucasteske.dev/2020/06/hacking-a-esp32-into-fpga-board"><![CDATA[<h1 id="hacking-a-esp32-into-fpga-board">Hacking a ESP32 into FPGA Board</h1>
-
-<p>Colorlight Hub 5A-75B V6.1 Board</p>
-
-<p>Last year I saw a russian guy that found out that this cheap board (US$15~) had an Lattice ECP5 FPGA, which is compatible with Open Source Tool-chains for synthesis. He was running a RISC-V Core inside that and piping the serial through the ethernet ports. I wanted to get one and start playing by myself.
-These boards are relatively cheap, about US$15 and contains a Lattice ECP5 FPGA ( LFE5U-25F-6BG381C ), 4MB DRAM, Two Gigabit Ethernet and several level shifters for I/O. This is good because:</p>
-
-<ol>
-  <li>That’s a very cheap board by the specs</li>
-  <li>You can use open-source synth toolchain</li>
-  <li>There is lots of 5V bi-directional level shifters</li>
-</ol>
-
-<p>I decided to give a shot and buy one from Aliexpress. Sadly because of the pandemic COVID-19, the package is long time delayed (still haven’t arrived yet, 3 months after I bought). Luckily I found it on Mercado Livre (the Brazilian eBay) to sell at a reasonable price.</p>
-
-<p>When it arrived, I first tried to run the classic Hardware Hello World: The led blink. For that I got this project to test it: <a href="https://github.com/antonblanchard/ghdl-yosys-blink">https://github.com/antonblanchard/ghdl-yosys-blink</a></p>
-
-<p>I did a fork to add the board constraints, and also a FT232R bitbang mode to OpenOCD (since it was the only JTAG adapter I had at the moment)[ see <a href="https://github.com/racerxdl/ghdl-yosys-blink">https://github.com/racerxdl/ghdl-yosys-blink</a> ]</p>
-
-<p>I didn’t have to reverse engineer the board, since someone already did all the reverse engineering: <a href="https://github.com/q3k/chubby75/blob/master/5a-75b/hardware_V6.1.md">https://github.com/q3k/chubby75/blob/master/5a-75b/hardware_V6.1.md</a></p>
-
-<p>The JTAG Headers are easy to access, and all pinouts are mapped. Great!</p>
-
-<p>After few minutes tuning the ghdl-yosis-blink example I managed to make it work on my board. Still it was running on ram memory only and I wanted to write to SPI Flash. Lattice allows to write the SPI Flash using the jtag, so I started searching over the internet stuff that could convert the generated bitstream to program the flash. After testing lots of tools, I found out this simple tool did the job: <a href="https://github.com/f32c/tools/tree/master/ujprog">https://github.com/f32c/tools/tree/master/ujprog</a></p>
-
-<p>I just had to run:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ujprog <span class="nt">-d</span> <span class="nt">-j</span> flash <span class="nt">-s</span> vhdl_blink-flash.svf vhdl_blink.bit
-</code></pre></div></div>
-
-<p>And the generated vhdl_blink-flash.svf was persisting into the flash memory.</p>
-
-<center>
-  <blockquote class="twitter-tweet"><p lang="en" dir="ltr">After few days I managed to write thr SPI Flash using FT232H. Full <a href="https://twitter.com/hashtag/opensource?src=hash&amp;ref_src=twsrc%5Etfw">#opensource</a> stuff to program that board. Also only US$15. <a href="https://t.co/RujsOGwH1D">pic.twitter.com/RujsOGwH1D</a></p>&mdash; Cybernetic Lover (@lucasteske) <a href="https://twitter.com/lucasteske/status/1268616857583419393?ref_src=twsrc%5Etfw">June 4, 2020</a></blockquote> <script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-</center>
-
-<p>Now that everything was working, I decided to make a bigger hack: I wanted an ESP32 to be attached in the board and program through network. It would also be nice if I could redirect a serial port to the network (useful for debug).</p>
-
-<p>The first thing I did is chose a GPIO pair to be the TX/RX from the serial port. The ESP32 has three serial ports, but on my board only two of them were exposed (Serial 0 and 2). The Serial 0 port is attached to the USB-Serial converter onboard, so I decided to use the Serial 2 to communicate with the FPGA. After looking at the pinout, most of the Level Shifters pins are common (the address lines are half of the pins) and the ones close to the lower part of the board (which would be easier to solder) were the address lines. After poking around, I decided to remove the J4 connector and U23 level shifter (the ESP32 is 3.3V, remember that!)</p>
-
-<p><img src="/assets/posts/medium/0_wK9QPXyVChE4n8py.jpeg" alt="U23 and J4 removed" /><em>U23 and J4 removed</em></p>
-
-<p>I also decided to remove J3 to make easier to solder the bypass wires at that connector. Then I soldered all bypass wires to make it 3.3V instead 5V</p>
-
-<p><img src="/assets/posts/medium/1_tT_gWmR6KPWXKKoewW-KDQ.png" alt="Bypass wires soldered in U23" /><em>Bypass wires soldered in U23</em></p>
-
-<p>The 33 Ohm resistors are nice since it could avoid short circuits when wrong pins are associated to serial port. So I decided to keep them as is. After checking that all pins were OK and not shorted, I decided to use hot-glue to secure them:</p>
-
-<p><img src="/assets/posts/medium/1_53DN-rC8MrNRfFdVmzN-Uw.png" alt="Hot-glue raw pieces" /><em>Hot-glue raw pieces</em></p>
-
-<p>I always found out that using a heat-gun with 200ºC was better to hot-glue than the hot-glue gun. Also I would avoid heating the wires too much and letting them go.</p>
-
-<p><img src="/assets/posts/medium/1_7O77I22KdFxtNz4-G2cSeA.png" alt="Heat gun with hot-glue" /><em>Heat gun with hot-glue</em></p>
-
-<p>After cooling down, the results look really good:</p>
-
-<p><img src="/assets/posts/medium/1_sCDf7DO_2mY2FoOTLN357Q.png" alt="Hot-glue on bypass wires" /><em>Hot-glue on bypass wires</em></p>
-
-<p>Then I went to the back-side of the board to solder the VCC/GND pair and the TX/RX pair wires. Luckily the power input for this board is 3.6 to 6V and then I can use the VIN from ESP32 (which is attached to USB +5V) to power it. The power connector is also close to J4 we removed.</p>
-
-<p><img src="/assets/posts/medium/1_sADN_JL_MLf9TP5r7FVymQ.png" alt="Power Connector and Serial Port" /><em>Power Connector and Serial Port</em></p>
-
-<p>Then with some double-sided tape, I could attach the ESP32 to the side of the board and solder the wires to the right pins.</p>
-
-<p><img src="/assets/posts/medium/1_86Ir5XIqvHCLbMsbWxs5MA.png" alt="ESP32 fixed with double-sided table and wires soldered" /><em>ESP32 fixed with double-sided table and wires soldered</em></p>
-
-<p>Now I just had to choose some pins for the JTAG and we would be good to go! After searching for some safe pins on ESP32 I choose these:</p>
-
-<ul>
-  <li>TDI =&gt; D33</li>
-  <li>TDO =&gt; D32</li>
-  <li>TCK =&gt; D27</li>
-  <li>TMS =&gt; D26</li>
-</ul>
-
-<p>And I soldered the wires as best looking as I could.</p>
-
-<p><img src="https://cdn-images-1.medium.com/max/2544/0_ERp9fzhTj8EL0i1G" alt="" /></p>
-
-<p>I also had to solder the GND of the ESP32 into the GND of the JTAG header (I had a problem the FT232R that was solved by attaching the GND to the header there)</p>
-
-<p><img src="/assets/posts/medium/1_Ltxy34-3hHoAalgDOHqG7A.png" alt="JTAG Power Header" /><em>JTAG Power Header</em></p>
-
-<p><img src="/assets/posts/medium/1_Sae7vuGGrvCUuYZdOiGPVA.png" alt="GND wire soldered" /><em>GND wire soldered</em></p>
-
-<p>With all wires soldered, I could start playing with software!</p>
-
-<p>At first I tried the OpenOCD Remote Bitbang which connects to TCP socket and start issuing bitbang commands by using a single ASCII character. For some reason I couldn’t make it work right. If you want to try by yourself:</p>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;WiFi.h&gt;</span><span class="cp">
-</span>
-<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">ssid</span>     <span class="o">=</span> <span class="s">"XX"</span><span class="p">;</span>
-<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">password</span> <span class="o">=</span> <span class="s">"XX"</span><span class="p">;</span>
-
-<span class="n">WiFiServer</span> <span class="nf">server</span><span class="p">(</span><span class="mi">3335</span><span class="p">);</span>
-
-<span class="cp">#define PIN_SRST 21
-#define PIN_TDI 33
-#define PIN_TDO 32
-#define PIN_TCK 27
-#define PIN_TMS 26
-#define PIN_LED 2
-</span>
-<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">115200</span><span class="p">);</span>
-    <span class="n">delay</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
-
-    <span class="n">pinMode</span><span class="p">(</span><span class="n">PIN_SRST</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
-    <span class="n">pinMode</span><span class="p">(</span><span class="n">PIN_TDI</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
-    <span class="n">pinMode</span><span class="p">(</span><span class="n">PIN_TDO</span><span class="p">,</span> <span class="n">INPUT_PULLUP</span><span class="p">);</span>
-    <span class="n">pinMode</span><span class="p">(</span><span class="n">PIN_TCK</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
-    <span class="n">pinMode</span><span class="p">(</span><span class="n">PIN_TMS</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
-    <span class="n">pinMode</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
-    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_SRST</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TDI</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TCK</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TMS</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-    <span class="c1">// We start by connecting to a WiFi network</span>
-
-    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Connecting to "</span><span class="p">);</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">ssid</span><span class="p">);</span>
-
-    <span class="n">WiFi</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="n">ssid</span><span class="p">,</span> <span class="n">password</span><span class="p">);</span>
-
-    <span class="k">while</span> <span class="p">(</span><span class="n">WiFi</span><span class="p">.</span><span class="n">status</span><span class="p">()</span> <span class="o">!=</span> <span class="n">WL_CONNECTED</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
-        <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"."</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">""</span><span class="p">);</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"WiFi connected."</span><span class="p">);</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"IP address: "</span><span class="p">);</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">WiFi</span><span class="p">.</span><span class="n">localIP</span><span class="p">());</span>
-    <span class="n">server</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">WiFiClient</span> <span class="n">client</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">available</span><span class="p">();</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">client</span><span class="p">)</span> <span class="p">{</span>                     <span class="c1">// if you get a client,</span>
-        <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"New Client."</span><span class="p">);</span>  <span class="c1">// print a message out the serial port</span>
-        <span class="k">while</span> <span class="p">(</span><span class="n">client</span><span class="p">.</span><span class="n">connected</span><span class="p">())</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">client</span><span class="p">.</span><span class="n">available</span><span class="p">())</span> <span class="p">{</span>
-                <span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
-                <span class="k">switch</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="k">case</span> <span class="sc">'B'</span><span class="p">:</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-                      <span class="k">break</span><span class="p">;</span>
-                    <span class="k">case</span> <span class="sc">'b'</span><span class="p">:</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-                      <span class="k">break</span><span class="p">;</span>
-                    <span class="k">case</span> <span class="sc">'R'</span><span class="p">:</span>
-                      <span class="n">client</span><span class="p">.</span><span class="n">print</span><span class="p">((</span><span class="n">digitalRead</span><span class="p">(</span><span class="n">PIN_TDO</span><span class="p">)</span> <span class="o">==</span> <span class="n">HIGH</span><span class="p">)</span> <span class="o">?</span> <span class="sc">'1'</span> <span class="o">:</span> <span class="sc">'0'</span><span class="p">);</span>
-                      <span class="k">break</span><span class="p">;</span>
-                    <span class="k">case</span> <span class="sc">'Q'</span><span class="p">:</span>
-                      <span class="k">break</span><span class="p">;</span>
-                    <span class="k">case</span> <span class="sc">'0'</span><span class="p">:</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TMS</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TDI</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TCK</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-                      <span class="k">break</span><span class="p">;</span>
-                    <span class="k">case</span> <span class="sc">'1'</span><span class="p">:</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TMS</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TDI</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TCK</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-                      <span class="k">break</span><span class="p">;</span>
-                    <span class="k">case</span> <span class="sc">'2'</span><span class="p">:</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TMS</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TDI</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TCK</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-                      <span class="k">break</span><span class="p">;</span>
-                    <span class="k">case</span> <span class="sc">'3'</span><span class="p">:</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TMS</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TDI</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TCK</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-                      <span class="k">break</span><span class="p">;</span>
-                    <span class="k">case</span> <span class="sc">'4'</span><span class="p">:</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TMS</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TDI</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TCK</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-                      <span class="k">break</span><span class="p">;</span>
-                    <span class="k">case</span> <span class="sc">'5'</span><span class="p">:</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TMS</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TDI</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TCK</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-                      <span class="k">break</span><span class="p">;</span>
-                    <span class="k">case</span> <span class="sc">'6'</span><span class="p">:</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TMS</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TDI</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TCK</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-                      <span class="k">break</span><span class="p">;</span>
-                    <span class="k">case</span> <span class="sc">'7'</span><span class="p">:</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TMS</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TDI</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_TCK</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-                      <span class="k">break</span><span class="p">;</span>
-                    <span class="k">case</span> <span class="sc">'r'</span><span class="p">:</span>
-                    <span class="k">case</span> <span class="sc">'t'</span><span class="p">:</span>
-                      <span class="c1">// SRST=0, which confusingly means to *exit* reset (as /RESET and /TRST are active-low)</span>
-                      <span class="c1">// We don't have a TRST connection, so 'r' and 't' do the same thing.</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_SRST</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-                      <span class="c1">//digitalWrite(PIN_CHIP_EN, HIGH);</span>
-                      <span class="k">break</span><span class="p">;</span>
-                    <span class="k">case</span> <span class="sc">'s'</span><span class="p">:</span>
-                    <span class="k">case</span> <span class="sc">'u'</span><span class="p">:</span>
-                      <span class="c1">// SRST=1 -- enter RESET state</span>
-                      <span class="c1">// Likewise for 's' and 'u'.</span>
-                      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_SRST</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-                      <span class="c1">//digitalWrite(PIN_CHIP_EN, LOW);</span>
-                      <span class="k">break</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Client disconnected"</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p>So yesterday someone sent me a link that was not related to that, but I found this lib:
-<a href="http://www.clifford.at/libxsvf/"><strong>Lib(X)SVF - A library for implementing SVF and XSVF JTAG players</strong>
-<em>JTAG (IEEE 1149.1, aka “Boundary Scan”) is a standard IC testing, debugging and programming port. SVF (Serial Vector…</em>www.clifford.at</a></p>
-
-<p>Basically it was written by the same person that did the reverse engineer for ICE40 FPGA Bitstream (and several others) and make a nice lib to “play” the SVF and XSVF files. It was pretty straightforward to implement a programmer using the ESP32. Basically you only had to implement a few functions and the player would work.</p>
-
-<p>I went through a lot of work to make it nice to use, so I will not explain in details here. But the source code is available here: <a href="https://github.com/racerxdl/esp32-rjtag">https://github.com/racerxdl/esp32-rjtag</a></p>
-
-<p>Basically you can run:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>upload.py /dev/ttyUSB0 file.svf
-</code></pre></div></div>
-
-<p>And it will write the FPGA for you. Here is a video of working:</p>
-
-<center>
-  <blockquote class="twitter-tweet"><p lang="en" dir="ltr">FINALLY. Now I can use the ESP32 as JTAG programmer for Lattice FPGA. Soon I will able to program through wifi and pipe a serial debug port as well. <a href="https://t.co/zs41v47BvU">pic.twitter.com/zs41v47BvU</a></p>&mdash; Cybernetic Lover (@lucasteske) <a href="https://twitter.com/lucasteske/status/1272019368617095173?ref_src=twsrc%5Etfw">June 14, 2020</a></blockquote> <script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-</center>
-
-<p>I also added a simple command to switch the ESP32 from programming mode to Serial Passthrough. This way, after programming it can pipe all FPGA Serial Calls to the ESP32 serial. Then I did this small Serial Hello World for testing it:
-<a href="https://github.com/racerxdl/fpga-serial-hello"><strong>racerxdl/fpga-serial-hello</strong></a></p>
-
-<p>Which basically keeps sending Hello World through the serial port forever. And it does work!</p>
-
-<p><img src="/assets/posts/medium/1_Z8RdW5i7NQh7KUEC5v5NFg.png" alt="Hello World output from FPGA" /><em>Hello World output from FPGA</em></p>
-
-<p>My next steps is to make this work through network instead of serial port. Which would be really amazing!</p>]]></content><author><name>Lucas Teske</name></author><category term="FPGA" /><category term="Hardware Hacking" /><category term="Programming" /><category term="Hacking" /><category term="FPGA" /><category term="ICEWolf" /><category term="IceStick" /><category term="ECP5" /><category term="Lattice" /><category term="ESP32" /><category term="Colorlight" /><category term="Lattice ECP5" /><category term="JTAG" /><category term="OpenOCD" /><category term="Remote Bitbang" /><category term="Soldering" /><category term="Hardware Modification" /><category term="WiFi" /><category term="Serial Communication" /><category term="VHDL" /><category term="GHDL" /><summary type="html"><![CDATA[Learn how to hack a Colorlight FPGA board by soldering an ESP32 and using it as a networked JTAG debugger for open-source tools.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/medium/1_ALnLx9L06FSciqeEV5OCuQ.png" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/medium/1_ALnLx9L06FSciqeEV5OCuQ.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+<p><img src="/assets/posts/tracker-mount/photo_2021-03-03_22-56-26.jpg" alt="Elevation Motor" /><em>Elevation Motor</em></p>]]></content><author><name>Lucas Teske</name></author><category term="Hardware Hacking" /><category term="Satellite" /><category term="Automation" /><category term="Airspy" /><category term="EMWIN" /><category term="English" /><category term="GOES" /><category term="Hearsat" /><category term="LRIT" /><category term="RE" /><category term="Reverse Engineering" /><category term="Sat" /><category term="Satellite" /><category term="SDR" /><category term="Pelco PT175-24P" /><category term="Antenna Rotor" /><category term="Stepper Motor" /><category term="Satellite Tracking" /><category term="Low Orbit Satellites" /><category term="Open-loop" /><category term="Azimuth" /><category term="Elevation" /><category term="24V AC Motors" /><category term="Variable Frequency Driver" /><summary type="html"><![CDATA[Transforme um rotor Pelco PT175-24P em um rastreador de satélites. Veja como substituir os motores AC por passo a passo neste tutorial.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/posts/tracker-mount/head.jpg" /><media:content medium="image" url="https://lucasteske.dev/assets/posts/tracker-mount/head.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Introduction to FPGA</title><link href="https://lucasteske.dev/2020/10/introducao-a-fpga" rel="alternate" type="text/html" title="Introduction to FPGA" /><published>2020-10-12T02:59:00+00:00</published><updated>2020-10-12T02:59:00+00:00</updated><id>https://lucasteske.dev/2020/10/introducao-a-fpga</id><content type="html" xml:base="https://lucasteske.dev/2020/10/introducao-a-fpga"><![CDATA[<p>(So far) Only available in <a href="/pt/2020/10/introducao-a-fpga">Portuguese</a></p>]]></content><author><name>Lucas Teske</name></author><category term="FPGA" /><category term="Hacking" /><category term="FPGA" /><category term="ICEWolf" /><category term="IceStick" /><category term="ECP5" /><category term="Lattice" /><category term="Hardware" /><category term="Eletrônica" /><category term="Verilog" /><category term="Field-Programmable Gate Array" /><category term="Digital Design" /><category term="VHDL" /><category term="Hardware Description Language" /><category term="CPLD" /><category term="ASIC" /><category term="Parallel Computing" /><category term="VLSI" /><summary type="html"><![CDATA[Learn about Field-Programmable Gate Arrays (FPGAs). Explore digital design, logic gates, and hardware programming with Verilog or VHDL.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://lucasteske.dev/assets/FPGA.jpg" /><media:content medium="image" url="https://lucasteske.dev/assets/FPGA.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>

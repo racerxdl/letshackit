@@ -284,6 +284,11 @@
         <lastmod>2026-04-26T15:00:00+00:00</lastmod>
       </url>
     
+      <url>
+        <loc>https://lucasteske.dev/2026/08/connect-to-shadownode-with-meshchatx</loc>
+        <lastmod>2026-08-08T20:25:00+00:00</lastmod>
+      </url>
+    
   
 
   
@@ -350,7 +355,7 @@
   
     <url>
       <loc>https://lucasteske.dev/about</loc>
-      <lastmod>2026-07-24T05:14:15+00:00</lastmod>
+      <lastmod>2026-08-08T21:20:38+00:00</lastmod>
     </url>
   
     <url>
@@ -455,26 +460,11 @@
   
     <url>
       <loc>https://lucasteske.dev/</loc>
-      <lastmod>2026-07-24T05:14:15+00:00</lastmod>
+      <lastmod>2026-08-08T21:20:38+00:00</lastmod>
     </url>
   
     <url>
-      <loc>https://lucasteske.dev/calculators/</loc>
-      <lastmod>2017-04-23T06:48:07+00:00</lastmod>
-    </url>
-  
-    <url>
-      <loc>https://lucasteske.dev/satcom-projects/</loc>
-      <lastmod>2017-02-18T17:56:33+00:00</lastmod>
-    </url>
-  
-    <url>
-      <loc>https://lucasteske.dev/biggateboy</loc>
-      <lastmod>2021-01-16T21:25:00+00:00</lastmod>
-    </url>
-  
-    <url>
-      <loc>https://lucasteske.dev/goes-satellite-hunt/frame-decoder/</loc>
+      <loc>https://lucasteske.dev/goes-satellite-hunt/packet-demuxer/</loc>
       <lastmod>2017-02-19T03:00:00+00:00</lastmod>
     </url>
   
@@ -489,17 +479,17 @@
     </url>
   
     <url>
-      <loc>https://lucasteske.dev/goes-satellite-hunt/the-hardware-setup/</loc>
-      <lastmod>2017-02-19T03:00:00+00:00</lastmod>
-    </url>
-  
-    <url>
       <loc>https://lucasteske.dev/goes-satellite-hunt/the-demodulator/</loc>
       <lastmod>2017-02-19T03:00:00+00:00</lastmod>
     </url>
   
     <url>
-      <loc>https://lucasteske.dev/goes-satellite-hunt/packet-demuxer/</loc>
+      <loc>https://lucasteske.dev/goes-satellite-hunt/frame-decoder/</loc>
+      <lastmod>2017-02-19T03:00:00+00:00</lastmod>
+    </url>
+  
+    <url>
+      <loc>https://lucasteske.dev/goes-satellite-hunt/the-hardware-setup/</loc>
       <lastmod>2017-02-19T03:00:00+00:00</lastmod>
     </url>
   
@@ -514,8 +504,23 @@
     </url>
   
     <url>
+      <loc>https://lucasteske.dev/calculators/</loc>
+      <lastmod>2017-04-23T06:48:07+00:00</lastmod>
+    </url>
+  
+    <url>
+      <loc>https://lucasteske.dev/biggateboy</loc>
+      <lastmod>2021-01-16T21:25:00+00:00</lastmod>
+    </url>
+  
+    <url>
       <loc>https://lucasteske.dev/lyd6168</loc>
       <lastmod>2021-01-16T21:25:00+00:00</lastmod>
+    </url>
+  
+    <url>
+      <loc>https://lucasteske.dev/satcom-projects/</loc>
+      <lastmod>2017-02-18T17:56:33+00:00</lastmod>
     </url>
   
     <url>
@@ -630,57 +635,57 @@
   
     <url>
       <loc>https://lucasteske.dev/page2/</loc>
-      <lastmod>2026-07-24T05:14:15+00:00</lastmod>
+      <lastmod>2026-08-08T21:20:38+00:00</lastmod>
     </url>
   
     <url>
       <loc>https://lucasteske.dev/page3/</loc>
-      <lastmod>2026-07-24T05:14:15+00:00</lastmod>
+      <lastmod>2026-08-08T21:20:38+00:00</lastmod>
     </url>
   
     <url>
       <loc>https://lucasteske.dev/page4/</loc>
-      <lastmod>2026-07-24T05:14:15+00:00</lastmod>
+      <lastmod>2026-08-08T21:20:38+00:00</lastmod>
     </url>
   
     <url>
       <loc>https://lucasteske.dev/page5/</loc>
-      <lastmod>2026-07-24T05:14:15+00:00</lastmod>
+      <lastmod>2026-08-08T21:20:38+00:00</lastmod>
     </url>
   
     <url>
       <loc>https://lucasteske.dev/page6/</loc>
-      <lastmod>2026-07-24T05:14:15+00:00</lastmod>
+      <lastmod>2026-08-08T21:20:38+00:00</lastmod>
     </url>
   
     <url>
       <loc>https://lucasteske.dev/page7/</loc>
-      <lastmod>2026-07-24T05:14:15+00:00</lastmod>
+      <lastmod>2026-08-08T21:20:38+00:00</lastmod>
     </url>
   
     <url>
       <loc>https://lucasteske.dev/page8/</loc>
-      <lastmod>2026-07-24T05:14:15+00:00</lastmod>
+      <lastmod>2026-08-08T21:20:38+00:00</lastmod>
     </url>
   
     <url>
       <loc>https://lucasteske.dev/page9/</loc>
-      <lastmod>2026-07-24T05:14:15+00:00</lastmod>
+      <lastmod>2026-08-08T21:20:38+00:00</lastmod>
     </url>
   
     <url>
       <loc>https://lucasteske.dev/page10/</loc>
-      <lastmod>2026-07-24T05:14:15+00:00</lastmod>
+      <lastmod>2026-08-08T21:20:38+00:00</lastmod>
     </url>
   
     <url>
       <loc>https://lucasteske.dev/page11/</loc>
-      <lastmod>2026-07-24T05:14:15+00:00</lastmod>
+      <lastmod>2026-08-08T21:20:38+00:00</lastmod>
     </url>
   
     <url>
       <loc>https://lucasteske.dev/page12/</loc>
-      <lastmod>2026-07-24T05:14:15+00:00</lastmod>
+      <lastmod>2026-08-08T21:20:38+00:00</lastmod>
     </url>
   
 </urlset>

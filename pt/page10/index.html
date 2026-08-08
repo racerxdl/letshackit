@@ -48,7 +48,7 @@
   <link rel="canonical" href="https://lucasteske.dev/pt/page10/">
   <meta name="generator" content="Jekyll v4.4.1">
   <meta name="author" content="Lucas Teske">
-  <meta name="description" content="October 16, 2011 Interruptor MIDI Polifônico com PIC 16F628A – Introdução Bom, muitos sabem que eu fiz um Interruptor MIDI (ou sintetizador como preferir) com um FPGA. Porém poucos tem acesso a um FPGA principalmente para fazer algo tão *simples*, então resolvi fazer um com PIC 16F628A. No começo queria...">
+  <meta name="description" content="October 16, 2011 Interruptor MIDI Polifônico com PIC 16F628A (Interface) Neste tópico colocarei apenas como é a interface do interruptor descrito anteriormente. Para um interruptor monofônico, ligamos o Enable em Vcc e ignoramos o BUSY. Para polifônicos, colocamos o Enable do primeiro no Vcc, e nos seguintes ligamos no BUSY do anterior. Nas saídas fazemos...">
   
   
 
@@ -76,7 +76,7 @@
   <meta property="og:title" content="Início | Lets Hack It">
   <meta property="og:url" content="https://lucasteske.dev/pt/page10/">
   <meta property="og:site_name" content="Lets Hack It">
-  <meta property="og:description" content="October 16, 2011 Interruptor MIDI Polifônico com PIC 16F628A – Introdução Bom, muitos sabem que eu fiz um Interruptor MIDI (ou sintetizador como preferir) com um FPGA. Porém poucos tem acesso a um FPGA principalmente para fazer algo tão *simples*, então resolvi fazer um com PIC 16F628A. No começo queria...">
+  <meta property="og:description" content="October 16, 2011 Interruptor MIDI Polifônico com PIC 16F628A (Interface) Neste tópico colocarei apenas como é a interface do interruptor descrito anteriormente. Para um interruptor monofônico, ligamos o Enable em Vcc e ignoramos o BUSY. Para polifônicos, colocamos o Enable do primeiro no Vcc, e nos seguintes ligamos no BUSY do anterior. Nas saídas fazemos...">
   <meta property="og:image" content="https://lucasteske.dev/assets/cropped-logo.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -93,9 +93,9 @@
   <meta name="twitter:title" content="Início | Lets Hack It">
   <meta name="twitter:site" content="@lucasteske">
   <meta name="twitter:creator" content="@lucasteske">
-  <meta name="twitter:description" content="October 16, 2011 Interruptor MIDI Polifônico com PIC 16F628A – Introdução Bom, muitos sabem que eu fiz um Interruptor MIDI (ou sintetizador como preferir) com um FPGA. Porém poucos tem acesso a um FPGA principalmente para fazer algo tão *simples*, então resolvi fazer um com PIC 16F628A. No começo queria...">
+  <meta name="twitter:description" content="October 16, 2011 Interruptor MIDI Polifônico com PIC 16F628A (Interface) Neste tópico colocarei apenas como é a interface do interruptor descrito anteriormente. Para um interruptor monofônico, ligamos o Enable em Vcc e ignoramos o BUSY. Para polifônicos, colocamos o Enable do primeiro no Vcc, e nos seguintes ligamos no BUSY do anterior. Nas saídas fazemos...">
   <meta name="twitter:image" content="https://lucasteske.dev/assets/cropped-logo.png">
-  <meta name="twitter:image:alt" content="October 16, 2011 Interruptor MIDI Polifônico com PIC 16F628A – Introdução Bom, muitos sabem que eu fiz um Interruptor MIDI (ou sintetizador como preferir) com um FPGA. Porém poucos tem acesso a um FPGA principalmente para fazer algo tão *simples*, então resolvi fazer um com PIC 16F628A. No começo queria...">
+  <meta name="twitter:image:alt" content="October 16, 2011 Interruptor MIDI Polifônico com PIC 16F628A (Interface) Neste tópico colocarei apenas como é a interface do interruptor descrito anteriormente. Para um interruptor monofônico, ligamos o Enable em Vcc e ignoramos o BUSY. Para polifônicos, colocamos o Enable do primeiro no Vcc, e nos seguintes ligamos no BUSY do anterior. Nas saídas fazemos...">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -108,8 +108,8 @@
     "keywords": null,
     "inLanguage": "pt",
     
-    "description": "October 16, 2011 Interruptor MIDI Polifônico com PIC 16F628A – Introdução Bom, muitos sabem que eu fiz um Interruptor MIDI (ou sintetizador como preferir) com um FPGA. Porém poucos tem acesso a um FPGA principalmente para fazer algo tão *simples*, então resolvi fazer um com PIC 16F628A. No começo queria...",
-    "articleBody": "October 16, 2011 Interruptor MIDI Polifônico com PIC 16F628A – Introdução Bom, muitos sabem que eu fiz um Interruptor MIDI (ou sintetizador como preferir) com um FPGA. Porém poucos tem acesso a um FPGA principalmente para fazer algo tão *simples*, então resolvi fazer um com PIC 16F628A. No começo queria fazer com um PIC menor, mas os menores não tem Receptor Serial via hardware, então ficaria mais complicado implementar. Outro ponto, é que o preço dos PIC’s menores são praticamente os mesmos, então era só uma questão de espaço mesmo. Usando um PIC maior, fica mais espaço livre para futuras modificações caso seja necessário. O PIC 16F628A tem 2KB... October 13, 2011 Amostra de Memória MRAM da Everspin Há muito tempo atrás pedi amostras de uma memória magnética da Everspin para fazer testes aqui, porém depois me deparei com o problema de que ela é 3.3V. De qualquer maneira agora tenho um FPGA para brincar com ela. O modelo de amostra é a MR2A16AYS35, uma MRAM de 1M de endereço e 16 Bits de “palavra”, totalizando 16Mbit ou 2 Mbytes. MRAM é um acrônimo para Magneto-resistive Random Access Memory, que é uma memória RAM não-volátil (não perde os dados quando se desliga). Ela...",
+    "description": "October 16, 2011 Interruptor MIDI Polifônico com PIC 16F628A (Interface) Neste tópico colocarei apenas como é a interface do interruptor descrito anteriormente. Para um interruptor monofônico, ligamos o Enable em Vcc e ignoramos o BUSY. Para polifônicos, colocamos o Enable do primeiro no Vcc, e nos seguintes ligamos no BUSY do anterior. Nas saídas fazemos...",
+    "articleBody": "October 16, 2011 Interruptor MIDI Polifônico com PIC 16F628A (Interface) Neste tópico colocarei apenas como é a interface do interruptor descrito anteriormente. Para um interruptor monofônico, ligamos o Enable em Vcc e ignoramos o BUSY. Para polifônicos, colocamos o Enable do primeiro no Vcc, e nos seguintes ligamos no BUSY do anterior. Nas saídas fazemos uma operação OR, e as entradas MIDI são ligadas todas juntas. O Gate OR pode ser substituído por dois diodos para esse uso sem problemas, como mostrado abaixo: Boa sorte na montagem! Código fonte completo: MIDI INT.rar ou Project Source Créditos ao Uzzors2k pela ideia de cascatear microprocessadores para polifonia. October 16, 2011 Interruptor MIDI Polifônico com PIC 16F628A – Introdução Bom, muitos sabem que eu fiz um Interruptor MIDI (ou sintetizador como preferir) com um FPGA. Porém poucos tem acesso a um FPGA principalmente para fazer algo tão *simples*, então resolvi fazer um com PIC 16F628A. No começo queria fazer com um PIC menor, mas os menores não tem Receptor Serial via hardware, então ficaria mais complicado implementar. Outro ponto, é que o preço dos PIC’s menores são praticamente os mesmos, então era só uma questão de espaço mesmo. Usando um PIC maior, fica mais espaço livre para futuras modificações caso seja necessário....",
     "datePublished": null,
     "dateModified": null,
     "author": {
@@ -520,6 +520,38 @@
 
 <div class="catalogue">
   
+    <a href="/pt/2011/10/interruptor-midi-polifonico-com-pic-16f628a-interface/" class="catalogue-item catalogue-item-2">
+      <div>
+        <time datetime="2011-10-16 19:10:39 +0000" class="catalogue-time">October 16, 2011</time>
+        <h1 class="catalogue-title">Interruptor MIDI Polifônico com PIC 16F628A (Interface)</h1>
+        <div class="catalogue-line"></div>
+        
+        <p>
+          Neste tópico colocarei apenas como é a interface do interruptor descrito anteriormente.
+
+
+
+Para um interruptor monofônico, ligamos o Enable em Vcc e ignoramos o BUSY. Para polifônicos, colocamos o Enable do primeiro no Vcc, e nos seguintes ligamos no BUSY do anterior. Nas saídas fazemos uma operação OR, e as entradas MIDI são ligadas todas juntas.
+
+
+
+
+
+O Gate OR pode ser substituído por dois diodos para esse uso sem problemas, como mostrado abaixo:
+
+
+
+Boa sorte na montagem!
+
+Código fonte completo: MIDI INT.rar ou Project Source
+
+Créditos ao Uzzors2k pela ideia de cascatear microprocessadores para polifonia.
+
+        </p>
+
+      </div>
+    </a>
+  
     <a href="/pt/2011/10/interruptor-midi-polifonico-com-pic-16f628a/" class="catalogue-item catalogue-item-2">
       <div>
         <time datetime="2011-10-16 18:17:52 +0000" class="catalogue-time">October 16, 2011</time>
@@ -572,19 +604,6 @@
       </div>
     </a>
   
-    <a href="/pt/2011/10/funcao-javascript-para-multiplos-e-submultiplos-2/" class="catalogue-item catalogue-item-2">
-      <div>
-        <time datetime="2011-10-09 22:24:31 +0000" class="catalogue-time">October 09, 2011</time>
-        <h1 class="catalogue-title">Função Javascript para Múltiplos e Submúltiplos</h1>
-        <div class="catalogue-line"></div>
-        
-        <p>
-          Bom, vocês devem ter visto meu tópico anterior sobre Função Javascript para Submúltiplos e eu resolvi fazer uma função mais completa. Agora abrangendo mais submúltiplos e também abrangendo múltiplos. O conceito é o mesmo do anterior, gerar o valor com múltiplo ou submúltiplo e arredondar para duas casas decimais apenas. A função fica assim: function toNotationUnit(v) { var unit; var submultiplo = ["","m","µ","n","p","f","a","z","y"]; var multiplo = ["","k","M","G","T","P","E","Z","Y"] var counter= 0; var value = v; if(value &lt; 1) { while(value &lt; 1) { counter++; value=value*1e3; if(counter==8) break; } unit = submultiplo[counter]; }else{ while(value &gt;= 1000) { counter++; value=value/1e3; if(counter==8) break; } unit...
-        </p>
-
-      </div>
-    </a>
-  
 </div>
 
 <div class="pagination">
@@ -603,10 +622,10 @@
 
     <footer>
   <span>
-    © <time datetime="2026-07-24 05:14:15 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-08-08 21:20:38 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-07-24 05:14:15 +0000
+    Last build: 2026-08-08 21:20:38 +0000
   </span>
   <!-- hehehe -->
   <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">

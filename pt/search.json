@@ -1,6 +1,15 @@
 [
   
     {
+      "title"    : "Conectando ao ShadowNode com o MeshChatX",
+      "url"      : "/pt/2026/08/connect-to-shadownode-with-meshchatx",
+      "category" : "",
+      "tags"     : "Reticulum, MeshChatX, ShadowNode, ShadowLink, Mesh Networking, NomadNet, Relay Chat, RRC",
+      "date"     : "August 08, 2026",
+      "excerpt"  : "Conectando ao ShadowNode com o MeshChatXEu queria uma forma simples de mostrar para alguém que um nó Reticulum não é apenas um arquivo de configuração e um terminal cheio de logs. Dê um cliente para a pessoa, aponte-o para um nó público e, de repente, existe uma página para navegar..."
+    } ,
+  
+    {
       "title"    : "Uma IA Consegue Escrever um Exploit Funcional?",
       "url"      : "/pt/2026/04/can-an-ai-write-a-working-exploit",
       "category" : "",
