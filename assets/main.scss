@@ -20,39 +20,13 @@ body {
 /* ── Matrix rain background ───────────────────────────────────────────────── */
 .matrix-bg {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
+  display: block;
   width: 100vw;
   height: 100vh;
   z-index: 1;
   pointer-events: none;
   user-select: none;
-  overflow: hidden;
-}
-
-.matrix-col {
-  position: absolute;
-  left: var(--left);
-  writing-mode: vertical-rl;
-  text-orientation: upright;
-  white-space: nowrap;
-  font-family: 'Courier New', Courier, monospace, 'Microsoft YaHei', 'PingFang SC', sans-serif;
-  font-weight: bold;
-  color: var(--color);
-  font-size: max(var(--size), 1vw);
-  opacity: var(--opacity);
-  filter: blur(var(--blur));
-  animation: matrix-fall var(--duration) linear infinite;
-  animation-delay: var(--delay);
-}
-
-@keyframes matrix-fall {
-  0%   { top: -150vh; }
-  100% { top:  150vh; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .matrix-col { animation: none; top: 20vh; }
 }
 
 // Legacy .site wrapper — keep it transparent, no white card
