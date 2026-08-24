@@ -1,0 +1,27 @@
+---
+---
+{
+  "linkset": [
+    {
+      "anchor": "{{ site.url }}/search.json",
+      "service-desc": [
+        {
+          "href": "{{ site.url }}/api/search/openapi.json",
+          "type": "application/json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "{{ site.url }}/api/search/",
+          "type": "text/html"
+        }
+      ],
+      "status": [
+        {
+          "href": "{{ site.url }}/health-check",
+          "type": "text/plain"
+        }
+      ]
+    }
+  ]
+}
