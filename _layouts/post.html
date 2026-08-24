@@ -13,7 +13,7 @@ layout: default
 
 {% capture page_title %}{% if locale_title != blank %}{% t page.title %}{% elsif page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}{% endcapture %}
 
-<div class="post">
+<article class="post">
   <h1 class="post-title">{{ page_title }}</h1>
   <div class="post-info">
     {% if page.image %}
@@ -43,9 +43,9 @@ layout: default
 
   {% include share.html %}
 
-</div>
+</article>
 
-<div class="pagination">
+<nav class="pagination" aria-label="{% t titles.pagination %}">
   {% if page.next.url %}
     <a href="{{ page.next.url | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
   {% endif %}
@@ -54,4 +54,4 @@ layout: default
   {% endif %}
 
   <a href="#" class="top">Top</a>
-</div>
+</nav>

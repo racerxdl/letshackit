@@ -28,4 +28,4 @@ A successful request returns HTTP 200 with a JSON array. Every array item contai
 | `date` | string | Publication date formatted as `Month DD, YYYY`. |
 | `excerpt` | string | Plain-text article excerpt, truncated to 50 words. |
 
-The complete machine-readable contract is available in the [OpenAPI description](/api/search/openapi.json). Service availability is reported by the [health endpoint](/health-check).
+The complete machine-readable contract is available in the [OpenAPI description](/openapi.json). Service availability is reported by the [health endpoint](/health-check).

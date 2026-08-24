@@ -104,52 +104,81 @@
   <meta name="twitter:image:alt"   content="{{ page_description | escape_once }}"/>
 
   <!-- JSON-LD -->
+  {% assign person_id = site.url | append: '/#person' %}
+  {% assign website_id = site.url | append: '/#website' %}
+  {% assign work_id = structured_work.url | append: '#article' %}
+  {% assign is_article = false %}
+  {% if page.layout == 'post' or structured_work %}
+    {% assign is_article = true %}
+  {% endif %}
+  {% capture page_entity_id %}{{ canonical_url }}{% if is_article %}#article{% endif %}{% endcapture %}
+  {% assign page_entity_id = page_entity_id | strip %}
+  {% assign published_at = page.date | default: structured_work.published %}
+  {% assign modified_at = page.last_modified_at | default: published_at %}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": {% if structured_work %}{{ structured_work.type | default: 'TechArticle' | jsonify }}{% elsif page.layout == 'post' %}"BlogPosting"{% else %}"WebPage"{% endif %},
-    "url": {{ canonical_url | jsonify }},
-    "name": {{ page_title | jsonify }},
-    "headline": {{ page_title | jsonify }},
-    "keywords": {{ page.tags | jsonify }},
-    "inLanguage": {{ site.lang | jsonify }},
-    {% if structured_work and page.url != structured_work.path %}
-    "isPartOf": {
-      "@type": {{ structured_work.type | default: 'TechArticle' | jsonify }},
-      "name": {{ structured_work.title | jsonify }},
-      "url": {{ structured_work.url | jsonify }}
-    },
-    {% endif %}
-    "description": {{ page_description | strip_newlines | strip | jsonify }},
-    "articleBody": {{ content | strip_html | truncatewords: 200 | jsonify }},
-    "datePublished": {{ page.date | jsonify }},
-    "dateModified": {{ page.last_modified_at | default: page.date | jsonify }},
-    "author": {
-      "@type": "Person",
-      "@id": {{ site.author.url | jsonify }},
-      "name": {{ site.author.name | jsonify }},
-      "url": {{ site.author.url | jsonify }},
-      "sameAs": {{ site.social.links | jsonify }}
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": {{ site.title | jsonify }},
-      "url": {{ site.url | jsonify }},
-      "logo": {
-        "@type": "ImageObject",
-        "width": 32,
-        "height": 32,
-        "url": "{{ site.url }}/assets/favicon-32x32.png"
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": {{ website_id | jsonify }},
+        "url": {{ site.url | append: '/' | jsonify }},
+        "name": {{ site.title | jsonify }},
+        "description": {{ site.description | jsonify }},
+        "inLanguage": {{ site.languages | jsonify }},
+        "publisher": {
+          "@id": {{ person_id | jsonify }}
+        }
+      },
+      {
+        "@type": "Person",
+        "@id": {{ person_id | jsonify }},
+        "name": {{ site.author.name | jsonify }},
+        "url": {{ site.author.url | jsonify }},
+        "sameAs": {{ site.social.links | jsonify }}
+      },
+      {
+        "@type": {% if structured_work %}{{ structured_work.type | default: 'TechArticle' | jsonify }}{% elsif page.layout == 'post' %}"BlogPosting"{% else %}"WebPage"{% endif %},
+        "@id": {{ page_entity_id | jsonify }},
+        "url": {{ canonical_url | jsonify }},
+        "name": {{ page_title | jsonify }},
+        "description": {{ page_description | strip_newlines | strip | jsonify }},
+        "inLanguage": {{ site.lang | jsonify }},
+        "isPartOf": {% if structured_work and page.url != structured_work.path %}[
+          {
+            "@id": {{ website_id | jsonify }}
+          },
+          {
+            "@type": {{ structured_work.type | default: 'TechArticle' | jsonify }},
+            "@id": {{ work_id | jsonify }},
+            "name": {{ structured_work.title | jsonify }},
+            "url": {{ structured_work.url | jsonify }}
+          }
+        ]{% else %}{
+          "@id": {{ website_id | jsonify }}
+        }{% endif %},
+        "author": {
+          "@id": {{ person_id | jsonify }}
+        },
+        "publisher": {
+          "@id": {{ person_id | jsonify }}
+        },
+        "image": {
+          "@type": "ImageObject",
+          "url": {{ page_image | jsonify }}
+        }{% if is_article %},
+        "headline": {{ page_title | jsonify }},
+        "keywords": {{ page.tags | jsonify }},
+        "articleBody": {{ content | strip_html | truncatewords: 200 | jsonify }},
+        "datePublished": {{ published_at | date_to_xmlschema | jsonify }},
+        "dateModified": {{ modified_at | date_to_xmlschema | jsonify }},
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": {{ canonical_url | jsonify }}
+        }
+        {% endif %}
       }
-    },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": {{ canonical_url | jsonify }}
-    },
-    "image": {
-      "@type": "ImageObject",
-      "url": {{ page_image | jsonify }}
-    }
+    ]
   }
   </script>
 

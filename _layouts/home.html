@@ -1,7 +1,8 @@
 ---
 layout: default
 ---
-<BR/>
+<h1 class="visually-hidden">{{ site.title }}</h1>
+<br>
 <div id="twitch-embed" class="twitch-embed"></div>
 
 <!-- Load the Twitch embed script -->
@@ -28,28 +29,28 @@ layout: default
     })
 </script>
 
-<div class="catalogue">
+<section class="catalogue">
   {% for post in paginator.posts %}
-    <a href="{{ post.url | prepend: site.baseurl }}" class="catalogue-item catalogue-item-2">
-      <div>
+    <a href="{{ post.url | prepend: site.baseurl }}" class="catalogue-item catalogue-item-2" aria-label="{{ post.title | escape }}">
+      <article>
         <time datetime="{{ post.date }}" class="catalogue-time">{{ post.date | date: "%B %d, %Y" }}</time>
-        <h1 class="catalogue-title">{{ post.title }}</h1>
+        <h2 class="catalogue-title">{{ post.title }}</h2>
         <div class="catalogue-line"></div>
         {% if post.image %}
           <div class="post-image-div">
-            <img src="{{ post.image }}" class="post-image post-image-2"/>
+            <img src="{{ post.image }}" class="post-image post-image-2" alt=""/>
           </div>
         {% endif %}
         <p>
           {{ post.content | strip_html | truncatewords: 100 }}
         </p>
 
-      </div>
+      </article>
     </a>
   {% endfor %}
-</div>
+</section>
 
-<div class="pagination">
+<nav class="pagination" aria-label="{% t titles.pagination %}">
   {% if paginator.previous_page %}
     <a href="{{ paginator.previous_page_path | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
   {% endif %}
@@ -58,4 +59,4 @@ layout: default
   {% endif %}
 
   <span>{{ paginator.page }}</span>
-</div>
+</nav>

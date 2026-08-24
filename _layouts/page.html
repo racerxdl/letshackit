@@ -9,10 +9,10 @@ layout: default
   {{ page.date | date: "%Y" }}
 {% endcapture %}
 
-<div class="post">
+<article class="post">
   <div class="post-info">
     {% if page.image %}
-      <img src="{{ page.image }}"/>
+      <img src="{{ page.image }}" alt="{% t page.title %}"/>
     {% endif %}
     <span>{% t global.written-by %}</span>
     {% if page.author %}
@@ -36,9 +36,9 @@ layout: default
 
   {% include citation.html %}
 
-</div>
+</article>
 
-<div class="pagination">
+<nav class="pagination" aria-label="{% t titles.pagination %}">
   {% if page.next.url %}
     <a href="{{ page.next.url | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
   {% endif %}
@@ -47,4 +47,4 @@ layout: default
   {% endif %}
 
   <a href="#" class="top">Top</a>
-</div>
+</nav>

@@ -6,7 +6,7 @@
     Last build: {{ site.time }}
   </span>
   <!-- hehehe -->
-  <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">
+  <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2" alt="" aria-hidden="true">
 </footer>
 
 <script src="/assets/simple-jekyll-search.min.js"></script>
@@ -29,8 +29,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe>
 <script src="{{ site.baseurl_root }}/assets/anchor.min.js"></script>
 <script>
   anchors.options.placement = 'left';
-  anchors.add('h1');
-  anchors.add();
+  anchors.add('h1:not(.visually-hidden), h2:not(.catalogue-title), h3, h4, h5, h6');
 </script>
 <!-- End AnchorJS -->
 <!-- Mermaid.js Diagrams -->
