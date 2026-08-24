@@ -25,6 +25,9 @@ All published content and read-only discovery resources are available without au
 
 - [Authentication status](https://lucasteske.dev/auth.md): Anonymous access and credential guidance.
 - [Crawler and AI-use policy](https://lucasteske.dev/robots.txt): Crawl permissions, sitemap location, and content-use signals.
+- [TDM reservation declaration](https://lucasteske.dev/.well-known/tdmrep.json): Text and data mining rights are not reserved for public content.
+
+This site does not expose an A2A or MCP task service. The public Search API is a read-only article index, not an autonomous agent interface.
 
 ## Content representations
 
