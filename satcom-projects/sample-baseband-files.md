@@ -4,7 +4,7 @@ description: "Written by Lucas Teske on 20 December 2016 Sample Baseband Files S
 image: "https://lucasteske.dev/wp-content/uploads/2016/12/0xAmxzb-624x463.png"
 ---
 
-![](/wp-content/uploads/2016/12/0xAmxzb-624x463.png)Written by Lucas Teske   
+![Sample Baseband Files](/wp-content/uploads/2016/12/0xAmxzb-624x463.png)Written by Lucas Teske   
 on 20 December 2016
 
 # Sample Baseband Files

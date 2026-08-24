@@ -4,7 +4,7 @@
       "anchor": "https://lucasteske.dev/search.json",
       "service-desc": [
         {
-          "href": "https://lucasteske.dev/api/search/openapi.json",
+          "href": "https://lucasteske.dev/openapi.json",
           "type": "application/json"
         }
       ],

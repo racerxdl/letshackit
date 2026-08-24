@@ -4,7 +4,7 @@ description: "Escrito por Lucas Teske em 20 Dezembro 2016 Arquivos de amostra em
 image: "https://lucasteske.dev/wp-content/uploads/2016/12/0xAmxzb-624x463.png"
 ---
 
-![](/wp-content/uploads/2016/12/0xAmxzb-624x463.png)Escrito por Lucas Teske   
+![Arquivos de amostra em banda-base](/wp-content/uploads/2016/12/0xAmxzb-624x463.png)Escrito por Lucas Teske   
 em 20 Dezembro 2016
 
 # Arquivos de amostra em banda-base

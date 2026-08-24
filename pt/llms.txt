@@ -1,0 +1,31 @@
+# Let's Hack It
+
+> Lucas Teske's public technical blog about electronics, hardware hacking, software-defined radio, satellites, reverse engineering, and security research.
+
+All published content and read-only discovery resources are available without authentication. Prefer the Markdown representation advertised by each HTML page when one is available.
+
+## Primary content
+
+- [Latest articles](https://lucasteske.dev/): Recent English-language posts and the article archive.
+- [Portuguese edition](https://lucasteske.dev/pt/): Portuguese translations and original posts.
+- [Satellite projects](https://lucasteske.dev/satcom-projects): Satellite reception and decoding projects.
+- [Electronics calculators](https://lucasteske.dev/calculators): Public electronics calculators and reference tools.
+- [Presentations](https://lucasteske.dev/my-presentations): Technical talks and presentation material.
+- [About Lucas Teske](https://lucasteske.dev/about): Author identity and background.
+
+## Machine-readable resources
+
+- [XML sitemap](https://lucasteske.dev/sitemap_index.xml): Complete page discovery.
+- [API catalog](https://lucasteske.dev/.well-known/api-catalog): RFC 9727 catalog of public APIs.
+- [OpenAPI description](https://lucasteske.dev/openapi.json): Contract for the read-only search index.
+- [Search API documentation](https://lucasteske.dev/api/search/): Human-readable API usage.
+- [Search index](https://lucasteske.dev/search.json): Public article metadata.
+
+## Agent guidance
+
+- [Authentication status](https://lucasteske.dev/auth.md): Anonymous access and credential guidance.
+- [Crawler and AI-use policy](https://lucasteske.dev/robots.txt): Crawl permissions, sitemap location, and content-use signals.
+
+## Content representations
+
+HTML content pages advertise an alternate Markdown representation with a standard `rel="alternate"` link whose media type is `text/markdown`. The corresponding `.md` URL is suitable for agents that do not need presentation markup.

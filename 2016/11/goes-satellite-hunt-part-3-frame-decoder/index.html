@@ -180,46 +180,69 @@
   <meta name="twitter:image:alt" content="Master the GOES satellite frame decoder! This guide explains convolution encoding, Viterbi decoding, and CCSDS packet synchronization for LRIT signals.">
 
   <!-- JSON-LD -->
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "url": "https://lucasteske.dev/2016/11/goes-satellite-hunt-part-3-frame-decoder/",
-    "name": "GOES Satellite Hunt (Part 3 – Frame Decoder) | Lets Hack It",
-    "headline": "GOES Satellite Hunt (Part 3 – Frame Decoder) | Lets Hack It",
-    "keywords": ["AGC","Airspy","Automatic Gain Control","Bug","Compile","Convolutional Code","Convolutional Encoding","EMWIN","English","GNU Radio","Gnuradio","GOES","GRC","Hearsat","LRIT","Osmocom","RE","Reed Solomon","Reverse Engineering","Root Raised Cosine Filter","RRC Filter","RS","Sat","Satellite","SDR","Statistics","Viterbi","CCSDS","Frame Synchronization","Generator Polynomials","libfec","C++","Digital Signal Processing","Weather Satellite"],
-    "inLanguage": "en",
-    
-    "description": "Master the GOES satellite frame decoder! This guide explains convolution encoding, Viterbi decoding, and CCSDS packet synchronization for LRIT signals.",
-    "articleBody": "GOES Satellite Hunt (Part 3 – Frame Decoder) Written by Lucas Teske on 2 November 2016 In the last chapter of GOES Satellite Hunt, I explained how I did the BPSK Demodulator for the LRIT Signal. Now I will explain how to decode the output of the data we got in the last chapter. One thing that is worth mentioning is that most (if not all) weather satellites that transmit digital signals use the CCSDS standard packet format, or at least something based on it. For example this frame decoder can be used (with some modifications due QPSK instead BPSK) for LRPT Signals from Meteor Satellites (I plan to do a LRPT decoder as well in the future, and I will post about it). I will not describe my entire code here, just the pieces for decoding the data. I will also not write the entire code here, since it can be checked on GitHub. So before start see the picture below (again). We will some info from it as well. LRIT Signal Specifications Convolution Encoding, Frame Synchronization and Viterbi The first thing we need to do is sync our frame starts. For making easier to find the packet start,...",
-    "datePublished": "2016-11-02 20:50:34 +0000",
-    "dateModified": "2016-11-02 20:50:34 +0000",
-    "author": {
-      "@type": "Person",
-      "@id": "https://lucasteske.dev",
-      "name": "Lucas Teske",
-      "url": "https://lucasteske.dev",
-      "sameAs": ["https://github.com/racerxdl","https://orcid.org/0009-0002-8526-7662","https://www.linkedin.com/in/lucas-teske-8206301b/","https://bsky.app/profile/lucasteske.dev","https://infosec.exchange/@lucasteske","https://www.youtube.com/c/TeskesLab","https://twitch.tv/racerxdl","https://twitter.com/lucasteske","https://instagram.com/racerxdl/","https://www.facebook.com/teskeslab","https://www.patreon.com/teskeslab","https://codestats.net/users/racerxdl","https://keybase.io/racerxdl"]
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Lets Hack It",
-      "url": "https://lucasteske.dev",
-      "logo": {
-        "@type": "ImageObject",
-        "width": 32,
-        "height": 32,
-        "url": "https://lucasteske.dev/assets/favicon-32x32.png"
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://lucasteske.dev/#website",
+        "url": "https://lucasteske.dev/",
+        "name": "Lets Hack It",
+        "description": "Lucas Teske's blog about electronics, hardware hacking, SDR, satellites, reverse engineering and more.",
+        "inLanguage": ["en","pt"],
+        "publisher": {
+          "@id": "https://lucasteske.dev/#person"
+        }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://lucasteske.dev/#person",
+        "name": "Lucas Teske",
+        "url": "https://lucasteske.dev",
+        "sameAs": ["https://github.com/racerxdl","https://orcid.org/0009-0002-8526-7662","https://www.linkedin.com/in/lucas-teske-8206301b/","https://bsky.app/profile/lucasteske.dev","https://infosec.exchange/@lucasteske","https://www.youtube.com/c/TeskesLab","https://twitch.tv/racerxdl","https://twitter.com/lucasteske","https://instagram.com/racerxdl/","https://www.facebook.com/teskeslab","https://www.patreon.com/teskeslab","https://codestats.net/users/racerxdl","https://keybase.io/racerxdl"]
+      },
+      {
+        "@type": "BlogPosting",
+        "@id": "https://lucasteske.dev/2016/11/goes-satellite-hunt-part-3-frame-decoder/#article",
+        "url": "https://lucasteske.dev/2016/11/goes-satellite-hunt-part-3-frame-decoder/",
+        "name": "GOES Satellite Hunt (Part 3 – Frame Decoder) | Lets Hack It",
+        "description": "Master the GOES satellite frame decoder! This guide explains convolution encoding, Viterbi decoding, and CCSDS packet synchronization for LRIT signals.",
+        "inLanguage": "en",
+        "isPartOf": {
+          "@id": "https://lucasteske.dev/#website"
+        },
+        "author": {
+          "@id": "https://lucasteske.dev/#person"
+        },
+        "publisher": {
+          "@id": "https://lucasteske.dev/#person"
+        },
+        "image": {
+          "@type": "ImageObject",
+          "url": "https://lucasteske.dev/wp-content/uploads/2016/11/qqk3UwA-624x135.png"
+        },
+        "headline": "GOES Satellite Hunt (Part 3 – Frame Decoder) | Lets Hack It",
+        "keywords": ["AGC","Airspy","Automatic Gain Control","Bug","Compile","Convolutional Code","Convolutional Encoding","EMWIN","English","GNU Radio","Gnuradio","GOES","GRC","Hearsat","LRIT","Osmocom","RE","Reed Solomon","Reverse Engineering","Root Raised Cosine Filter","RRC Filter","RS","Sat","Satellite","SDR","Statistics","Viterbi","CCSDS","Frame Synchronization","Generator Polynomials","libfec","C++","Digital Signal Processing","Weather Satellite"],
+        "articleBody": "GOES Satellite Hunt (Part 3 – Frame Decoder) Written by Lucas Teske on 2 November 2016 In the last chapter of GOES Satellite Hunt, I explained how I did the BPSK Demodulator for the LRIT Signal. Now I will explain how to decode the output of the data we got in the last chapter. One thing that is worth mentioning is that most (if not all) weather satellites that transmit digital signals use the CCSDS standard packet format, or at least something based on it. For example this frame decoder can be used (with some modifications due QPSK instead BPSK) for LRPT Signals from Meteor Satellites (I plan to do a LRPT decoder as well in the future, and I will post about it). I will not describe my entire code here, just the pieces for decoding the data. I will also not write the entire code here, since it can be checked on GitHub. So before start see the picture below (again). We will some info from it as well. LRIT Signal Specifications Convolution Encoding, Frame Synchronization and Viterbi The first thing we need to do is sync our frame starts. For making easier to find the packet start,...",
+        "datePublished": "2016-11-02T20:50:34+00:00",
+        "dateModified": "2016-11-02T20:50:34+00:00",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://lucasteske.dev/2016/11/goes-satellite-hunt-part-3-frame-decoder/"
+        }
+        
       }
-    },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "https://lucasteske.dev/2016/11/goes-satellite-hunt-part-3-frame-decoder/"
-    },
-    "image": {
-      "@type": "ImageObject",
-      "url": "https://lucasteske.dev/wp-content/uploads/2016/11/qqk3UwA-624x135.png"
-    }
+    ]
   }
   </script>
 
@@ -277,7 +300,7 @@
     <!-- Canvas-rendered matrix rain remains decorative, not page text. -->
     <canvas class="matrix-bg" aria-hidden="true"></canvas>
     <a href="https://github.com/racerxdl/letshackit" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#70B7FD; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
-    <main class="site">
+    <header class="site">
       
 <nav class="nav-header">
   <div class="nav-header-inner">
@@ -425,7 +448,7 @@
   </ul>
 </nav>
 <div class="search-input">
-  <input type="text" id="search-input" placeholder="Search blog posts..." aria-label="Search blog posts...">
+  <input type="search" id="search-input" name="q" placeholder="Search blog posts..." aria-label="Search blog posts..." autocomplete="off" enterkeyhint="search">
 </div>
 <ul id="results-container" class="results-container"></ul>
 
@@ -442,13 +465,15 @@
   })();
 </script>
 
+    </header>
+    <main class="site">
       
 
 
 
 
 
-<div class="post">
+<article class="post">
   <h1 class="post-title">GOES Satellite Hunt (Part 3 – Frame Decoder)</h1>
   <div class="post-info">
     
@@ -873,9 +898,9 @@ float signalErrors = (100.f * errors) / 8192;
   </ul>
 </div>
 
-</div>
+</article>
 
-<div class="pagination">
+<nav class="pagination" aria-label="Pagination">
   
     <a href="/2016/11/goes-satellite-hunt-part-4-packet-demuxer/" class="left arrow">←</a>
   
@@ -884,20 +909,20 @@ float signalErrors = (100.f * errors) / 8192;
   
 
   <a href="#" class="top">Top</a>
-</div>
+</nav>
 
       <br><br>
     </main>
 
     <footer>
   <span>
-    © <time datetime="2026-08-24 18:39:15 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    © <time datetime="2026-08-24 20:37:02 +0000">2026</time> Lucas Teske. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
   </span><br>
   <span class="site-build">
-    Last build: 2026-08-24 18:39:15 +0000
+    Last build: 2026-08-24 20:37:02 +0000
   </span>
   <!-- hehehe -->
-  <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2">
+  <img src="https://ipv4.games/claim?name=racerxdl" height="2" width="2" alt="" aria-hidden="true">
 </footer>
 
 <script src="/assets/simple-jekyll-search.min.js"></script>
@@ -919,8 +944,7 @@ float signalErrors = (100.f * errors) / 8192;
 <script src="/assets/anchor.min.js"></script>
 <script>
   anchors.options.placement = 'left';
-  anchors.add('h1');
-  anchors.add();
+  anchors.add('h1:not(.visually-hidden), h2:not(.catalogue-title), h3, h4, h5, h6');
 </script>
 <!-- End AnchorJS -->
 <!-- Mermaid.js Diagrams -->
