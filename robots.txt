@@ -2,6 +2,7 @@
 ---
 
 User-agent: *
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 Allow: /
 Disallow: /wp-content/
 Crawl-delay: 1
