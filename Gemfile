@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 gem "json"
+gem "reverse_markdown", "~> 3.0"
 gem "bigdecimal"
 gem "tale", ">= 0.2.0"
 gem "jekyll-feed", ">= 0.13.0"
