@@ -1,0 +1,25 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://lucasteske.dev/search.json",
+      "service-desc": [
+        {
+          "href": "https://lucasteske.dev/api/search/openapi.json",
+          "type": "application/json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://lucasteske.dev/api/search/",
+          "type": "text/html"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://lucasteske.dev/health-check",
+          "type": "text/plain"
+        }
+      ]
+    }
+  ]
+}

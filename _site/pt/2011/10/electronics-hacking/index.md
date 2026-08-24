@@ -1,0 +1,48 @@
+---
+title: "Electronics Hacking | Lets Hack It"
+description: "Hackeando eletrônica: solderando um sensor CMOS VGA para uso em FPGA. Saiba mais sobre filtros Bayer e processamento de imagem."
+image: "https://lucasteske.dev/assets/cropped-logo.png"
+---
+
+# Electronics Hacking
+
+Escrito por Lucas Teske   
+em 13 Outubro 2011
+
+Bom, decidi postar hacks de eletrônica aqui também. Até por que são mais&nbsp;frequentes&nbsp;que os meus hacks. Ai vai umas fotos de um sensor CMOS que soldei numa placa pra facilitar, e verei um dia de brincar com ela:
+
+![image](https://media.tumblr.com/tumblr_lt0n9vc8yv1qh7srd.jpg)
+
+![image](https://media.tumblr.com/tumblr_lt0nbkzIYb1qh7srd.jpg)
+
+É um Sensor CMOS VGA Colorido, que roda em 3.3V. A sua interface também é CMOS (muitas vezes o sensor é cmos, mas a interface é analógica) e como o nível de tensão é 3v3 é&nbsp;fácil&nbsp;de eu trabalhar com um FPGA. Devo ter tirado isso de uma webcam ou câmera de vigilância, não lembro.
+
+A resolução é 644×484 pixels, porém ela tem uma área morta como qualquer câmera, logo não é tudo isso que é&nbsp;aproveitável. Outro ponto positivo, diz o datasheet que ela é capaz de chegar a 30FPS de taxa de amostragem, o que me leva a pensar que não foi uma webcam, e sim uma câmera de&nbsp;vigilância.
+
+De qualquer maneira não irei brincar com ela hoje, e não tenho previsões. Preciso estudar muito ainda como funciona os sensores. A unica coisa que sei até agora é que ela trabalha com varredura dos sub-pixels, a cada clock tenho 10 Bits que demonstram a intensidade do sub-pixel.
+
+Porém o datasheet é meio confuso, em alguns lugares parece que eu tenho o dado do pixel, e em outros parece o dado do sub-pixel. De qualquer maneira, não é apenas tacar numa tela o dado, é preciso processar ele antes. Esse sensor usa um filtro bayer padrão o que nos dá para cada pixel, dois sub-pixels verde, um vermelho e um azul. Num estudo rápido que fiz, o motivo de ter dois sub-pixels verdes e apenas um das outras cores, é o fato do olho humano ser mais sensível a cor verde devido ao numero de cones (mais sensíveis a cor verde) ser o dobro do numero de bastonetes. Então precisarei ver o que vou fazer.
+
+De qualquer maneira, se alguém quiser o datasheet (não são muitos sites que tem o detalhado, então upei o detalhado no [Project Source](http://www.energylabs.com.br/project)) ele está nesta pasta:
+
+[http://www.energylabs.com.br/project/?dir=Outros/Datasheets](http://www.energylabs.com.br/project/?dir=Outros/Datasheets)
+
+É isso ae!
+
+## Cite este artigo
+
+### Citação sugerida
+
+Lucas Teske. “Electronics Hacking.” _Lets Hack It_, 2011. [https://lucasteske.dev/pt/2011/10/electronics-hacking/](https://lucasteske.dev/pt/2011/10/electronics-hacking/).
+
+### BibTeX
+
+```
+@misc{teske2011electronicshacking,
+  author = {Lucas Teske},
+  title = {Electronics Hacking},
+  year = {2011},
+  publisher = {Lets Hack It},
+  url = {https://lucasteske.dev/pt/2011/10/electronics-hacking/}
+}
+```

@@ -1,0 +1,83 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Let's Hack It Search API",
+    "version": "1.0.0",
+    "description": "Read-only access to the public article search index."
+  },
+  "servers": [
+    {
+      "url": "https://lucasteske.dev"
+    }
+  ],
+  "paths": {
+    "/search.json": {
+      "get": {
+        "summary": "List searchable articles",
+        "description": "Returns the public articles included in the English-language site search index.",
+        "operationId": "listSearchArticles",
+        "responses": {
+          "200": {
+            "description": "Searchable article metadata",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SearchArticle"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SearchArticle": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "title",
+          "url",
+          "category",
+          "tags",
+          "date",
+          "excerpt"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Article title."
+          },
+          "url": {
+            "type": "string",
+            "format": "uri-reference",
+            "description": "Site-relative article URL."
+          },
+          "category": {
+            "type": "string",
+            "description": "Article category, or an empty string when uncategorized."
+          },
+          "tags": {
+            "type": "string",
+            "description": "Comma-separated article tags."
+          },
+          "date": {
+            "type": "string",
+            "description": "Publication date formatted as Month DD, YYYY.",
+            "examples": [
+              "August 08, 2026"
+            ]
+          },
+          "excerpt": {
+            "type": "string",
+            "description": "Plain-text article excerpt, truncated to 50 words."
+          }
+        }
+      }
+    }
+  }
+}
